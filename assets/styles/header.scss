@@ -1,0 +1,47 @@
+header {
+	height: 75px;
+	border: 1px solid $black;
+	position: fixed;
+	background: $white;
+
+	nav {
+		height: 100%;
+		display: inline-block;
+
+		.logo-wrapper {
+			display: inline-block;
+			margin: 0px 0 0 40px;
+
+			img {
+				height: 70px;
+			}
+		}
+
+	}
+
+	.input-group {
+		width: 300px;
+	    left: 0px;
+	    right: 0px;
+	    margin: auto;
+
+
+		.input-group__input {
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			border-radius: 10px;
+			color: $gray;
+
+			i {
+				color: $black !important;
+			}
+
+			input {
+    			color: $black;
+			}
+		}
+
+		.input-group__details {
+			display: none;
+		}
+	}
+}
