@@ -1,4 +1,4 @@
-# Theatre Hub Client
+# Theater Hub Client
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/theater-hub-client.svg?style=for-the-badge)]() [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/theater-hub-client.svg?style=for-the-badge)]() [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
@@ -21,7 +21,7 @@ Actors, dancers, technicians, directors, scriptwriters, machinists will all find
 
 People willing to contribute to projects they like via donations, or with volunteer or paid services will have their own place on the platform.
 
-This repo holds the Client of Theatre Hub.
+This repo holds the Client of Theater Hub.
 
 [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
