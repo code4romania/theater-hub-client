@@ -1,0 +1,81 @@
+.primary {
+    background-color: $primary !important;
+    border-color: $primary !important;
+}
+
+.input-group {
+    
+    input, textarea {
+        border-bottom: 2px solid $primary;
+    }
+
+    &.input-group--error {
+
+        input {
+            border-bottom: 2px solid $error;
+        }
+    }
+
+    .input-group__details {
+        color: $error;
+
+        &:before, &:after {
+            background-color: transparent !important;
+        } 
+    }
+}
+
+button {
+    background-color: $primary;
+    color: $white;
+
+    &.btn--disabled {
+        background-color: $disabled !important;
+    }
+}
+
+.link-button {
+    text-decoration: none;
+    color: $primary;
+}
+
+
+.action-button {
+    color: $black;
+}
+
+#profile-description-field {
+    max-height: 100px;
+}
+
+.field-title {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.v-menu__content {
+    top: 0px !important;
+    left: 0px !important;
+
+    .v-date-picker-table {
+        
+        button {
+            background-color: transparent;
+        }
+
+        .v-btn.v-btn--active {
+            background-color: $primary;
+        }
+    }
+}
+
+.v-textarea .v-input__slot {
+    background: transparent !important;
+}
+
+.vue-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

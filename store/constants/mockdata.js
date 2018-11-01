@@ -241,5 +241,5 @@ export const users = [
     email: '',
     phone: '',
     website: ''
-  },
+  }
 ]

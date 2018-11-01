@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
   /*
   ** Headers of the page
@@ -32,16 +34,28 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    vendor: ['vuetify'],
+    vendor: [
+      'vuetify'
+    ],
     extend (config, ctx) {
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
-          //loader: 'eslint-loader',
+          // loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
       }
     }
+  },
+  modules: [
+    '@nuxtjs/axios'
+  ],
+  axios: {
+    baseURL: process.env.API_BASE_URL
+    // proxy: true
+  },
+  proxy: {
+
   }
 }
