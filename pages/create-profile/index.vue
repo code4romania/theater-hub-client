@@ -42,10 +42,10 @@
                     <v-flex xs12 :key="i" v-for="(step, i) in educationSteps">
                         <v-layout row>
                             <v-flex xs12 sm6 md6 lg3 class="px-2">
-                                <v-text-field v-model="step.institutionName" :rules="institutionNameRules" label="Institution name" required></v-text-field>
+                                <v-text-field v-model="step.title" :rules="educationTitleRules" label="Title" required></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md6 lg3 class="px-2">
-                                <v-text-field v-model="step.jobTitle" :rules="jobTitleRules" label="Title" required></v-text-field>
+                                <v-text-field v-model="step.institutionName" :rules="institutionNameRules" label="Institution name" required></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md6 lg3 class="px-2">
                                 <v-menu :close-on-content-click="false" v-model="step.isStartDateMenuOpen" :nudge-right="40"
@@ -94,7 +94,7 @@
                             <v-flex xs12 sm3 md3 lg3 class="px-2">
                                 <v-menu :close-on-content-click="false" v-model="award.isAwardDateMenuOpen" :nudge-right="40"
                                     lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                                    <v-text-field slot="activator" type="month" v-model="award.date" label="Start Date" prepend-icon="event" readonly>
+                                    <v-text-field slot="activator" type="month" v-model="award.date" label="Date" prepend-icon="event" readonly>
                                     </v-text-field>
                                     <v-date-picker v-model="award.date" type="month" @input="award.isAwardDateMenuOpen = false">
                                     </v-date-picker>
@@ -148,7 +148,7 @@ export default {
       v => true
     ],
     educationSteps: [{
-      jobTitle: '',
+      title: '',
       institutionName: '',
       description: '',
       startDate: new Date().toISOString().substr(0, 7),
@@ -170,7 +170,7 @@ export default {
     institutionNameRules: [
       v => true
     ],
-    jobTitleRules: [
+    educationTitleRules: [
       v => true
     ],
     profilePictureDropzoneOptions: {
@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     isEducationStepValid: function (educationStep) {
-      return educationStep.jobTitle !== '' && educationStep.institutionName !== ''
+      return educationStep.title !== '' && educationStep.institutionName !== ''
     },
     isAwardValid: function (award) {
       return award.title !== '' && award.issuer !== ''
@@ -217,7 +217,7 @@ export default {
       }
 
       this.educationSteps.push({
-        jobTitle: '',
+        title: '',
         institutionName: '',
         startDate: new Date().toISOString().substr(0, 7),
         endDate: new Date().toISOString().substr(0, 7),
