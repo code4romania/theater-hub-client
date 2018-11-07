@@ -243,3 +243,5 @@ export const users = [
     website: ''
   }
 ]
+
+export const skills = ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor']

@@ -3,6 +3,15 @@
     border-color: $primary !important;
 }
 
+.v-btn--flat {
+    background-color: transparent;
+    color: black;
+}
+
+.error--text {
+    color: $red !important;
+}
+
 .input-group {
     
     input, textarea {
@@ -28,10 +37,6 @@
 button {
     background-color: $primary;
     color: $white;
-
-    &.btn--disabled {
-        background-color: $disabled !important;
-    }
 }
 
 .link-button {
@@ -73,9 +78,28 @@ button {
     background: transparent !important;
 }
 
+.v-autocomplete .v-menu {
+    position: absolute !important;
+}
+
+.v-autocomplete__content {
+    top: 70px !important;
+    left: -12px !important;
+}
+
+.v-autocomplete__content .v-input__slot {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    background: none !important;
+}
+
 .vue-dropzone {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.v-stepper, .v-stepper__items, .v-stepper__wrapper {
+    overflow: visible !important;
 }

@@ -12,5 +12,12 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {},
-  globals: {}
+  globals: {},
+  overrides: {
+    files: ["*"],
+    rules: {
+      "no-tabs": "off",
+      "indent": "off"
+    }
+  }
 }

@@ -1,3 +1,11 @@
+export var SocialMediaCategory = {
+  'Instagram': 1,
+  'Youtube': 2,
+  'Facebook': 3,
+  'Linkedin': 4,
+  'Vimeo': 5
+}
+
 export class Wish {
   constructor (title, description) {
     this.title = title

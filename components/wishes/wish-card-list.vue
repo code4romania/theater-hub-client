@@ -11,42 +11,42 @@
 
 
 <script>
-	import WishCard from './wish-card.vue'
+import WishCard from './wish-card.vue'
 import { wishes } from '~/store/constants/mockdata'
 
 export default {
-	  components: {
-	    WishCard
-	  },
-	  data: () => ({
-    wishes,
-    displayedWishes: wishes.slice(0, 9),
-    page: 1,
-    isLoading: false
-	  }),
-	  methods: {
-    onShowMoreClick: function () {
-      this.loadMore()
-    },
-	    loadMore: function () {
-	      this.isLoading = true
-	      let pageSize = 9
-	      if (pageSize > this.wishes.length - this.displayedWishes.length) {
-	        pageSize = this.wishes.length - this.displayedWishes.length
-	      } else {
-	        this.page++
-	      }
-	
-	      if (pageSize !== 0) {
-	        this.displayedWishes = this.displayedWishes.concat(this.wishes.slice(this.displayedWishes.length, this.displayedWishes.length + pageSize))
-	      }
-	      this.isLoading = false
-	    },
-	    hasLoadedAll: function () {
-	      return this.displayedWishes.length === this.wishes.length
-	    }
-	  }
-	}
+		components: {
+			WishCard
+		},
+		data: () => ({
+			wishes,
+			displayedWishes: wishes.slice(0, 9),
+			page: 1,
+			isLoading: false
+		}),
+		methods: {
+			onShowMoreClick: function () {
+				this.loadMore()
+			},
+			loadMore: function () {
+				this.isLoading = true
+				let pageSize = 9
+				if (pageSize > this.wishes.length - this.displayedWishes.length) {
+					pageSize = this.wishes.length - this.displayedWishes.length
+				} else {
+					this.page++
+				}
+
+				if (pageSize !== 0) {
+					this.displayedWishes = this.displayedWishes.concat(this.wishes.slice(this.displayedWishes.length, this.displayedWishes.length + pageSize))
+				}
+				this.isLoading = false
+			},
+			hasLoadedAll: function () {
+				return this.displayedWishes.length === this.wishes.length
+			}
+		}
+}
 </script>
 
 <style scoped>
