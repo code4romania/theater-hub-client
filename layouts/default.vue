@@ -5,7 +5,7 @@
         <v-flex xs4>
           <nav>
             <a class="logo-wrapper" href="/">
-              <img src="../static/theater_hub_logo-1.jpg" />
+              <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
             </a>
           </nav>
         </v-flex>
