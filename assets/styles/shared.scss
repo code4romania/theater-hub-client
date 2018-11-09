@@ -1,3 +1,7 @@
+body {
+    background-color: $background;
+}
+
 .primary {
     background-color: $primary !important;
     border-color: $primary !important;
@@ -56,6 +60,7 @@ button {
 .field-title {
     margin-bottom: 20px;
     display: block;
+    font-weight: 500;
 }
 
 .v-menu__content {
@@ -102,4 +107,8 @@ button {
 
 .v-stepper, .v-stepper__items, .v-stepper__wrapper {
     overflow: visible !important;
+}
+
+.main-container {
+    max-width: 960px;
 }

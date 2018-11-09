@@ -17,10 +17,15 @@ module.exports = {
     ]
   },
   plugins: [
-    '~/plugins/vuetify.js'
+    '~/plugins/vuetify.js',
+    {
+      src: '~/plugins/vue-gallery.js',
+      ssr: false
+    }
   ],
   css: [
     'node_modules/vuetify/dist/vuetify.min.css',
+    'node_modules/blueimp-gallery/css/blueimp-gallery.min.css',
     '~/assets/styles/styles.scss'
   ],
   /*
