@@ -37,9 +37,14 @@ export var SocialMediaManager = {
     if (!this.isValidURL(url, SocialMediaCategory.Youtube)) {
       return
     }
-
-    var urlSegments = url.split('=')
-    var videoID = urlSegments[urlSegments.length - 1]
+    var videoID = ''
+    var urlSegments = url.split('v=')
+    var index = urlSegments[urlSegments.length - 1].indexOf('&')
+    if (index !== -1) {
+      videoID = urlSegments[urlSegments.length - 1].substring(0, index)
+    } else {
+      videoID = urlSegments[urlSegments.length - 1]
+    }
 
     return 'https://www.youtube.com/embed/' + videoID
   },
@@ -48,9 +53,26 @@ export var SocialMediaManager = {
       return
     }
 
+    var videoID = ''
     var urlSegments = url.split('/')
-    var videoID = urlSegments[urlSegments.length - 1]
+    var index = urlSegments[urlSegments.length - 1].indexOf('&')
+    if (index !== -1) {
+      videoID = urlSegments[urlSegments.length - 1].substring(0, index)
+    } else {
+      videoID = urlSegments[urlSegments.length - 1]
+    }
 
     return 'https://player.vimeo.com/video/' + videoID
+  },
+  extractEmbedURLFromUnknownProvider (url) {
+    var embedLink = ''
+
+    if (this.isValidURL(url, SocialMediaCategory.Youtube)) {
+      embedLink = this.extractYoutubeEmbedURL(url)
+    } else if (this.isValidURL(url, SocialMediaCategory.Vimeo)) {
+      embedLink = this.extractVimeoEmbedURL(url)
+    }
+
+    return embedLink
   }
 }

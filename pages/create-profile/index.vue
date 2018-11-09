@@ -1,6 +1,6 @@
 <template>
-  <section class="create-profile">
-    <v-container fluid id="create-profile-container" class="pa-5">
+  <section class="create-profile-section">
+    <v-container id="create-profile-container" class="main-container pa-5">
         <v-layout row wrap>
             <v-flex xs12 align-end flexbox>
                 <v-stepper v-model="wizardStep">
@@ -141,7 +141,7 @@
                                     <span class="field-title">Video gallery</span>
                                     <v-flex xs12 :key="i" v-for="(video, i) in videoGallery">
                                         <v-text-field v-model="video.link" :rules="videoLinkRules" label="Video link*" v-on:change="onVideoLinkChange(video)" required></v-text-field>
-                                        <iframe v-if="video.isValid" width="420" height="315" :src="video.embedLink"></iframe>
+                                        <iframe v-if="video.isValid" :src="video.embedLink" width="420" height="315" allowfullscreen></iframe>
                                     </v-flex>
                                 </v-flex>
                                 <v-flex xs12>
@@ -529,7 +529,6 @@ export default {
         link: '',
         embedLink: '',
         isValid: false
-
       })
     },
     onVideoLinkChange: function (video) {
@@ -561,7 +560,7 @@ export default {
 
 <style lang="scss">
 
-    .create-profile {
+    .create-profile-section {
 
         .v-stepper, .v-stepper__header {
             box-shadow: none;
@@ -585,10 +584,6 @@ export default {
                 transform: translateY(-18px) scale(.75);
             }
         }
-    }
-
-	#create-profile-container {
-        max-width: 960px;
     }
 
     #profile-picture-dropzone {

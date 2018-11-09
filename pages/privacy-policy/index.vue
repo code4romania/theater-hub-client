@@ -2,9 +2,9 @@
   <section class="privacy-policy">
     <v-container fluid privacy-policy-container class="mt-5 pa-5">
         <v-layout row wrap>
-            <v-felx>
+            <v-flex>
                 <h1 class="mb-3">Privacy Policy</h1>
-            </v-felx>
+            </v-flex>
             <v-flex xs12>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui. 
