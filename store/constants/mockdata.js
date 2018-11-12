@@ -258,7 +258,7 @@ export const userProfile = {
   youtube: 'https://www.youtube.com/',
   facebook: 'https://www.facebook.com/',
   linkedin: 'https://www.linkedin.com/',
-  selectedSkills: ['comedy', 'drama', 'acting'],
+  skills: ['comedy', 'drama', 'acting'],
   photoGallery: [
       {
           src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
@@ -314,3 +314,78 @@ export const userProfile = {
     endDate: new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
   }]
 }
+
+export const communityMembers = [
+  {
+    firstName: 'John1',
+    lastName: 'Doe1',
+    skills: ['comedy', 'drama', 'acting', 'dancing', 'directing', 'lighting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John2',
+    lastName: 'Doe2',
+    skills: ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John3',
+    lastName: 'Doe3',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John4',
+    lastName: 'Doe4',
+    skills: ['comedy', 'drama'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John5',
+    lastName: 'Doe5',
+    skills: ['comedy'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John6',
+    lastName: 'Doe6',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John7',
+    lastName: 'Doe7',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John8',
+    lastName: 'Doe8',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John9',
+    lastName: 'Doe9',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John10',
+    lastName: 'Doe10',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John11',
+    lastName: 'Doe11',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  },
+  {
+    firstName: 'John12',
+    lastName: 'Doe2',
+    skills: ['comedy', 'drama', 'acting'],
+    profilePhoto: 'https://fillmurray.com/200/300'
+  }
+]
