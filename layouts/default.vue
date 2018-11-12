@@ -9,10 +9,7 @@
             </a>
           </nav>
         </v-flex>
-        <v-flex xs4>
-          <v-text-field type="search" append-icon="search" hide-details single-line placeholder="Search..." id="search-box"></v-text-field>
-        </v-flex>
-        <v-flex xs2 class="sign-in-container action-button">
+        <v-flex xs2 offset-xs5 class="sign-in-container action-button">
           <nuxt-link to="/login" id="login-btn" class="link-button">Login</nuxt-link>
         </v-flex>
         <v-flex xs1 class="sign-up-container action-button">

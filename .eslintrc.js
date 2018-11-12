@@ -17,7 +17,10 @@ module.exports = {
     files: ["*"],
     rules: {
       "no-tabs": "off",
-      "indent": "off"
+      "indent": "off",
+      "semi": "off",
+      "no-multi-spaces": "off",
+      "no-multiple-empty-lines": "off"
     }
   }
 }
