@@ -55,9 +55,12 @@
                 </v-flex>
 
                 <v-flex xs12 class="mt-5">
-                    <v-layout row>
+                    <v-layout row wrap>
                         <v-flex xs12>
-                            Skills: <span class="skill-list">{{ skillList }}</span>
+                            <span class="field-title">Skills</span>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-chip :key="i" v-for="(skill, i) in profile.skills" class="skill">{{ skill }}</v-chip>
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -113,7 +116,7 @@
                         <v-flex xs12 v-if="profile.awards.length !== 0 || profile.education.length !== 0">
                             <v-timeline dense>
 
-                                <v-timeline-item  v-if="profile.awards.length !== 0" medium fill-dot right>
+                                <v-timeline-item  v-if="profile.awards.length !== 0" medium hide-dot right class="timeline-header-item">
                                     <v-card class="timeline-header-card elevation-2">
                                         <v-card-title class="primary">
                                             <h2 class="timeline-header">Awards</h2>
@@ -128,7 +131,7 @@
                                                 <v-flex xs12>
                                                     <span class="award-title">{{ award.title }}</span>, <span class="award-issuer ml-1">{{ award.issuer }}</span>
                                                     -
-                                                    <span class="timeline-date" slot="opposite">{{ getTimelineDate(award.date) }}</span>
+                                                    <span class="timeline-date">{{ getTimelineDate(award.date) }}</span>
                                                 </v-flex>
                                             </v-layout>
                                         </v-card-title>
@@ -140,7 +143,7 @@
                                     </v-card>
                                 </v-timeline-item>
 
-                                <v-timeline-item  v-if="profile.educationSteps.length !== 0" medium fill-dot right>
+                                <v-timeline-item  v-if="profile.educationSteps.length !== 0" medium hide-dot right class="timeline-header-item">
                                     <v-card class="timeline-header-card elevation-2">
                                         <v-card-title class="primary">
                                             <h2 class="timeline-header">Education</h2>
@@ -214,35 +217,35 @@ export default {
             },
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY')
-        }
+            }
         },
         computed: {
             fullName: function () {
                 return `${this.profile.firstName} ${this.profile.lastName}`
-        },
+            },
             skillList: function () {
-                return this.profile.selectedSkills.join(', ')
-        },
+                return this.profile.skills.join(', ')
+            },
             age: function () {
                 var currentDateMoment = moment(new Date())
-            var birthDateMoment = moment(this.profile.birthDate)
-            return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears())
-        },
+                var birthDateMoment = moment(this.profile.birthDate)
+                return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears())
+            },
             portfolioImages: function () {
                 return this.profile.photoGallery.map(p => p.src)
-        },
+            },
             portfolioVideos: function () {
                 return this.profile.videoGallery.map(v => {
                     return {
                         link: v,
                         embedLink: SocialMediaManager.extractEmbedURLFromUnknownProvider(v)
                     }
-            })
-        }
+                })
+            }
         },
         mounted () {
-            this.initializeData()
-    }
+            this.initializeData();
+        }
     }
 </script>
 
@@ -286,8 +289,11 @@ export default {
             font-size: 24px;
         }
 
-        .timeline-header-card::after {
-            border-right-color: #9575cd;
+        .timeline-header-item {
+
+            .timeline-header-card::after, .timeline-header-card::before {
+                display: none;
+            }
         }
 
         .timeline-header {

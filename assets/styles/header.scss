@@ -1,10 +1,11 @@
 header {
 	height: 75px;
-	border: 1px solid $black;
-	position: fixed;
 	background: $background;
 	width: 100%;
 	z-index: 1000;
+	-webkit-box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
+	box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
 
 	nav {
 		height: 100%;
