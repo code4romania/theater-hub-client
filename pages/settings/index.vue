@@ -1,9 +1,9 @@
 <template>
-  <section class="terms-of-use">
-    <v-container fluid terms-of-use-container class="mt-5 pa-5">
+  <section class="settings-section">
+    <v-container fluid settings-container class="mt-5 pa-5">
         <v-layout row wrap>
             <v-flex>
-                <h1 class="mb-3">Terms of use</h1>
+                <h1 class="mb-3">Settings</h1>
             </v-flex>
             <v-flex xs12>
                 <p>
@@ -38,11 +38,12 @@
 <script>
 
     export default {
-        middleware: 'visitor'
+        middleware: 'authenticated'
     }
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
 
 </style>

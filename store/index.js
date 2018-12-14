@@ -1,16 +1,26 @@
-import Vuex from 'vuex'
+import { BaseService }  from '../api/services';
 
-const createStore = () => {
-  return new Vuex.Store({
-    state: {
-      counter: 0
-    },
-    mutations: {
-      increment (state) {
-        state.counter++
-      }
-    }
-  })
-}
+export const state = () => ({
+  isLoading: false,
+  welcomeMessage: ''
+});
 
-export default createStore
+export const mutations = {
+  SET_WELCOME_MESSAGE: (state, message) => {
+    state.welcomeMessage = message;
+  },
+  UPDATE_LOADING: (state, isLoading) => {
+    this.isLoading = isLoading;
+  }
+};
+
+export const actions = {
+  async getWelcomeMessage ({ commit }) {
+    var message = await BaseService.getWelcomeMessage();
+
+    commit('SET_WELCOME_MESSAGE', message);
+  },
+  updateIsLoading ({ commit }, payload) {
+    commit('UPDATE_LOADING', payload);
+  }
+};

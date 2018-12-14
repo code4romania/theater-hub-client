@@ -38,6 +38,10 @@ body {
     }
 }
 
+.error-message {
+    color: $red;
+}
+
 button {
     background-color: $primary;
     color: $white;
@@ -79,8 +83,13 @@ button {
     }
 }
 
+.create-profile-section .v-menu__content {
+    left: -90px !important;
+}
+
 .v-textarea .v-input__slot {
     background: transparent !important;
+    padding-left: 0px !important;
 }
 
 .v-autocomplete .v-menu {
@@ -88,7 +97,8 @@ button {
 }
 
 .v-autocomplete__content {
-    left: -12px !important;
+    top: 22px !important;
+    left: 0px !important;
 }
 
 .v-autocomplete__content .v-input__slot {
@@ -104,10 +114,36 @@ button {
     flex-wrap: wrap;
 }
 
-.v-stepper, .v-stepper__items, .v-stepper__wrapper {
-    overflow: visible !important;
-}
-
 .main-container {
     max-width: 960px;
+}
+
+.v-tooltip--bottom .v-tooltip__content {
+    top: 32px !important;
+    left: 0px !important;
+}
+
+#skills-autocomplete-wrapper {
+    .v-select__selections .v-chip {
+        display: none;
+    }
+
+    .v-text-field .v-label--active {
+        transform: none;
+        -webkit-transform: none;
+    }
+
+    .v-input--is-focused .v-label--active{
+        -webkit-transform: translateY(-18px) scale(.75);
+        transform: translateY(-18px) scale(.75);
+    }
+}
+
+.removable-row {
+    display: flex;
+
+    .remove-icon {
+        cursor: pointer;
+        font-size: 31px;
+    }
 }

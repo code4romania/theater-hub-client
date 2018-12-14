@@ -1,4 +1,6 @@
-require('dotenv').config()
+import { getConfig } from './config/env';
+
+const config = getConfig();
 
 module.exports = {
   /*
@@ -21,7 +23,9 @@ module.exports = {
     {
       src: '~/plugins/vue-gallery.js',
       ssr: false
-    }
+    },
+    '~/plugins/axios.js',
+    '~/plugins/services-axios.js'
   ],
   css: [
     'node_modules/vuetify/dist/vuetify.min.css',
@@ -49,18 +53,23 @@ module.exports = {
           test: /\.(js|vue)$/,
           // loader: 'eslint-loader',
           exclude: /(node_modules)/
-        })
+        });
       }
     }
   },
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
-  axios: {
-    baseURL: process.env.API_BASE_URL
-    // proxy: true
+  env: {
+    baseURL: config.application.baseURL,
+    apiURL: config.API.baseURL
   },
-  proxy: {
-
+  axios: {
+    baseURL: config.API.baseURL,
+    credentials: false
   }
+  // router: {
+  //   middleware: ['auth']
+  // }
 }

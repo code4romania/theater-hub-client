@@ -1,9 +1,19 @@
-export var SocialMediaCategory = {
-  'Instagram': 1,
-  'Youtube': 2,
-  'Facebook': 3,
-  'Linkedin': 4,
-  'Vimeo': 5
+export var ProfileSectionType = {
+  'GeneralInformation': 0,
+  'Skills': 1,
+  'PhotoGallery': 2,
+  'VideoGallery': 3,
+  'Awards': 4,
+  'Experience': 5,
+  'Education': 6
+}
+
+export var SocialMediaCategoryType = {
+  'Instagram': 0,
+  'Youtube': 1,
+  'Facebook': 2,
+  'Linkedin': 3,
+  'Vimeo': 4
 }
 
 export class Wish {
