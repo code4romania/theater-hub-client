@@ -247,72 +247,131 @@ export const users = [
 export const skills = ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor']
 
 export const userProfile = {
-  firstName: 'Andrei',
-  lastName: 'Mitrea',
-  email: 'andrei.mitrea@imbuelabs.com',
-  phoneNumber: '0123456789',
-  birthDate: '1958-11-08',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam finibus non libero eget lacinia. Donec aliquet tincidunt lacinia. Praesent orci eros, consectetur vel leo quis, vehicula porta libero. Nullam faucibus cursus porta. Nunc posuere dui mauris, eget lacinia nunc pharetra at. Ut non luctus turpis, vitae mollis augue. Quisque lacinia finibus ipsum, id placerat ex dictum id. Sed semper scelerisque porta. Aliquam eu suscipit eros, sed varius odio. Curabitur tincidunt ultrices laoreet. Curabitur quis odio nisi. In ut tellus sem. Donec sed dapibus augue.',
-  website: 'http://theaterhub.ro/',
-  instagram: 'https://www.instagram.com',
-  youtube: 'https://www.youtube.com/',
-  facebook: 'https://www.facebook.com/',
-  linkedin: 'https://www.linkedin.com/',
-  skills: ['comedy', 'drama', 'acting'],
-  photoGallery: [
-      {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-      },
-      {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-      },
-      {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-      },
-      {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-      }
-  ],
-  videoGallery: [
-    'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
-    'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
-    'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
-    'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s'
-  ],
-  awards: [
-    {
-      title: 'Award 1',
-      issuer: 'Issuer 1',
-      description: '',
-      date: new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
-    },
-    {
-      title: 'Award 2',
-      issuer: 'Issuer 2',
-      description: 'This has to be the award I am most proud of!',
-      date: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
-    },
-    {
-      title: 'Award 3',
-      issuer: 'Issuer 3',
-      description: '',
-      date: new Date(new Date().getFullYear() - 7, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
-    }
-  ],
-  educationSteps: [{
-    title: 'Title 1',
-    institutionName: 'Institution 1',
-    description: '',
-    startDate: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
-    endDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
+    profileGeneralInformation: {
+      firstName: 'Andrei',
+      lastName: 'Mitrea',
+      birthDate: '1958-11-08',
+      phoneNumber: '0123456789',
+      email: 'andrei.mitrea@imbuelabs.com',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam finibus non libero eget lacinia. Donec aliquet tincidunt lacinia. Praesent orci eros, consectetur vel leo quis, vehicula porta libero. Nullam faucibus cursus porta. Nunc posuere dui mauris, eget lacinia nunc pharetra at. Ut non luctus turpis, vitae mollis augue. Quisque lacinia finibus ipsum, id placerat ex dictum id. Sed semper scelerisque porta. Aliquam eu suscipit eros, sed varius odio. Curabitur tincidunt ultrices laoreet. Curabitur quis odio nisi. In ut tellus sem. Donec sed dapibus augue.',
+      instagramLink: 'https://www.instagram.com',
+      youtubeLink: 'https://www.youtube.com/',
+      facebookLink: 'https://www.facebook.com/',
+      linkedinLink: 'https://www.linkedin.com/',
+      website: 'http://theaterhub.ro/'
   },
-  {
-    title: 'Title 2',
-    institutionName: 'Institution 2',
-    description: 'Learned a lot here.',
-    startDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
-    endDate: new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
-  }]
+  profileSkills: {
+    selectedSkills: ['comedy', 'drama', 'acting']
+  },
+  profilePhotoGallery: {
+      photoGallery: [
+        {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
+        },
+        {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
+        },
+        {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
+        },
+        {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
+        }
+    ]
+  },
+  profileVideoGallery: {
+      videoGallery: [{
+          link: 'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
+          embedLink: '',
+          isValid: true
+      },
+      {
+        link: 'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
+        embedLink: '',
+        isValid: true
+      },
+      {
+        link: 'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
+        embedLink: '',
+        isValid: true
+      },
+      {
+        link: 'https://www.youtube.com/watch?v=evwkX8-AKd8&t=559s',
+        embedLink: '',
+        isValid: true
+    }
+  ]
+  },
+  profileAwards: {
+      awards: [
+          {
+              title: 'Award 1',
+              issuer: 'Issuer 1',
+              description: '',
+              date: new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+              isValid: false,
+              isAwardDateMenuOpen: false
+          },
+          {
+            title: 'Award 2',
+            issuer: 'Issuer 2',
+            description: 'This has to be the award I am most proud of!',
+            date: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+            isValid: false,
+            isAwardDateMenuOpen: false
+          },
+          {
+            title: 'Award 3',
+            issuer: 'Issuer 3',
+            description: '',
+            date: new Date(new Date().getFullYear() - 7, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+            isValid: false,
+            isAwardDateMenuOpen: false
+        }
+      ]
+  },
+  profileExperience: {
+    experienceSteps: [
+      {
+        position: 'Actor',
+        employerName: 'National Theater',
+        description: 'Good times were had.',
+        startDate: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+        endDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
+      },
+      {
+        position: 'Director',
+        employerName: 'National Theater',
+        description: '',
+        startDate: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+        endDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7)
+      }
+    ]
+  },
+  profileEducation: {
+      educationSteps: [
+          {
+              title: 'Title 1',
+              institutionName: 'Institution 1',
+              description: '',
+              startDate: new Date(new Date().getFullYear() - 5, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+              endDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+              isValid: false,
+              isStartDateMenuOpen: false,
+              isEndDateMenuOpen: false
+          },
+          {
+            title: 'Title 2',
+            institutionName: 'Institution 2',
+            description: 'Learned a lot here.',
+            startDate: new Date(new Date().getFullYear() - 3, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+            endDate: new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 7),
+            isValid: false,
+            isStartDateMenuOpen: false,
+            isEndDateMenuOpen: false
+          }
+      ]
+  }
 }
 
 export const communityMembers = [

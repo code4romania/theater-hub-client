@@ -1,7 +1,8 @@
 <template>
   <div class="nuxt-wrapper">
     <header>
-      <v-layout>
+
+      <v-layout v-if="!isAuthenticated">
         <v-flex xs4>
           <nav>
             <a class="logo-wrapper" href="/">
@@ -16,6 +17,47 @@
           <nuxt-link to="/signup" id="sign-up-btn" class="link-button">Sign up</nuxt-link>
         </v-flex>
       </v-layout>
+
+      <v-layout v-if="isAuthenticated">
+        <v-flex xs4>
+          <nav>
+            <a class="logo-wrapper" href="/">
+              <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+            </a>
+          </nav>
+        </v-flex>
+        <v-flex xs1 offset-xs6 class="community-container action-button">
+          <nuxt-link to="/community" id="community-btn" class="link-button">Community</nuxt-link>
+        </v-flex>
+        <v-flex xs2 class="sign-up-container action-button">
+          <v-menu offset-y>
+            <v-flex xs12 slot="activator">
+              <v-avatar size="40px" color="primary">
+                <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+              </v-avatar>
+              <span>Hi, {{ myFullName }}</span>
+            </v-flex>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <nuxt-link to="/profile" class="link-button">Profile</nuxt-link>
+                </v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <nuxt-link to="/settings" class="link-button">Settings</nuxt-link>
+                </v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <a id="logout-btn" v-on:click="onLogoutClick" class="link-button">Logout</a>
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>
+      </v-layout>
+
     </header>
     <main>
       <v-content>
@@ -29,6 +71,8 @@
 
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     components: {
     },
@@ -36,7 +80,20 @@
       return {
       }
     },
+    computed: {
+      ...mapGetters({
+        isAuthenticated: 'authentication/isAuthenticated',
+        myFullName: 'users/myFullName',
+        myProfileImage: 'users/myProfileImage'
+      })
+    },
     methods: {
+      onLogoutClick: function () {
+        this.$store.dispatch('authentication/logout');
+        this.$router.replace({ path: 'login' });
+      }
+    },
+    mounted: function () {
     }
   }
 </script>
@@ -88,7 +145,7 @@
     background-color: #35495e;
   }
 
-  .sign-in-container {
+  .sign-in-container, .community-container {
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
@@ -112,6 +169,10 @@
 
       align-items: center;
       justify-content: center;
+  }
+
+  #logout-btn {
+    cursor: pointer;
   }
 
 </style>

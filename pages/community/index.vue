@@ -61,12 +61,14 @@
 </template>
 
 <script>
-    import { communityMembers, skills } from '~/store/constants/mockdata'
+    import { communityMembers, skills } from '~/store/constants/mockdata';
+    import { mapGetters } from 'vuex';
 
     export default {
         components: {
 
         },
+        middleware: 'authenticated',
         data: () => ({
             communityMembers,
 			displayedCommunityMembers: [],
@@ -78,6 +80,8 @@
             isSortByNameAscending: true,
 			isLoading: false
         }),
+        fetch ({ store, redirect }) {
+        },
         methods: {
             initializeData: function () {
                 this.communityMembers = this.communityMembers.map(m => {
@@ -131,6 +135,9 @@
             this.initializeData();
         },
         computed: {
+            ...mapGetters({
+                isAuthenticated: 'authentication/isAuthenticated'
+            }),
             filteredMembers: function () {
                 return this.communityMembers.filter((member) => {
                     return member.fullName.match(this.searchTerm);
