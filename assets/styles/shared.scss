@@ -147,3 +147,12 @@ button {
         font-size: 31px;
     }
 }
+
+.profile-information-group-header {
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+        font-size: 24px;
+    }
+}

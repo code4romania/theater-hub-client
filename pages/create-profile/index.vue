@@ -108,13 +108,13 @@
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step step="7">Security</v-stepper-step>
+                    <v-stepper-step step="7">Settings</v-stepper-step>
 
                     <v-stepper-content step="7" class="pl-5">
                         <v-layout row wrap>
 
-                            <ProfileSecurity :profileSecurity="profileSecurity"
-                                                @updateProfileSecurity="updateProfileSecurity"/>
+                            <ProfilePrivacy :profilePrivacy="profilePrivacy"
+                                                @updateProfilePrivacy="updateProfilePrivacy"/>
 
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 6">Back</v-btn>
@@ -141,7 +141,7 @@ import ProfileVideoGallery from '~/components/profile/profile-video-gallery.vue'
 import ProfileAwards from '~/components/profile/profile-awards.vue';
 import ProfileExperience from '~/components/profile/profile-experience.vue';
 import ProfileEducation from '~/components/profile/profile-education.vue';
-import ProfileSecurity from '~/components/profile/profile-security.vue';
+import ProfilePrivacy from '~/components/profile/profile-privacy.vue';
 import ServerSideErrors from '~/components/errors/server-side-errors.vue';
 import { SocialMediaManager, Helpers, Validators } from '~/utils';
 import { SocialMediaCategoryType } from '~/store/entities';
@@ -156,7 +156,7 @@ export default {
     ProfileAwards,
     ProfileExperience,
     ProfileEducation,
-    ProfileSecurity,
+    ProfilePrivacy,
     ServerSideErrors
   },
   data: () => ({
@@ -226,11 +226,11 @@ export default {
             }
         ]
     },
-    profileSecurity: {
-        profileVisibility: 1,
-        emailVisibility: 1,
-        birthDateVisibility: 1,
-        phoneNumberVisibility: 1
+    profilePrivacy: {
+        profileVisibility: 0,
+        emailVisibility: 0,
+        birthDateVisibility: 0,
+        phoneNumberVisibility: 0
     }
   }),
   async fetch ({ error, store, query }) {
@@ -371,10 +371,10 @@ export default {
                     EndDate: e.endDate
                 };
             }),
-            ProfileVisibility: this.profileSecurity.profileVisibility,
-            EmailVisibility: this.profileSecurity.emailVisibility,
-            BirthDateVisibility: this.profileSecurity.birthDateVisibility,
-            PhoneNumberVisibility: this.profileSecurity.phoneNumberVisibility
+            ProfileVisibility: this.profilePrivacy.profileVisibility,
+            EmailVisibility: this.profilePrivacy.emailVisibility,
+            BirthDateVisibility: this.profilePrivacy.birthDateVisibility,
+            PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility
 
         }).then(() => {
             if (!this.users.createProfileErrors) {
@@ -403,8 +403,8 @@ export default {
     updateProfileEducation: function (model) {
         this.profileEducation = Helpers.cloneObject(model);
     },
-    updateProfileSecurity: function (model) {
-        this.profileSecurity = Helpers.cloneObject(model);
+    updateProfilePrivacy: function (model) {
+        this.profilePrivacy = Helpers.cloneObject(model);
     }
   },
   computed: {

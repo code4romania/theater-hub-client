@@ -9,7 +9,7 @@ export const mutations = {
   SET_WELCOME_MESSAGE: (state, message) => {
     state.welcomeMessage = message;
   },
-  UPDATE_LOADING: (state, isLoading) => {
+  SET_LOADING: (state, isLoading) => {
     this.isLoading = isLoading;
   }
 };
@@ -21,6 +21,6 @@ export const actions = {
     commit('SET_WELCOME_MESSAGE', message);
   },
   updateIsLoading ({ commit }, payload) {
-    commit('UPDATE_LOADING', payload);
+    commit('SET_LOADING', payload);
   }
 };
