@@ -1,8 +1,10 @@
 
 export class Endpoints {
-    static GetWelcomeMessage = '';
+    static GetWelcomeMessage    = '';
 
     static Login                = '/authentication';
+
+    static CheckUserPassword    = '/authentication/password/validity';
 
     static Register             = '/users/register';
 
@@ -12,5 +14,13 @@ export class Endpoints {
 
     static ResetPassword        = '/users/password/reset';
 
+    static ChangePassword       = '/users/password/change';
+
     static CreateProfile        = '/users/profile/create';
+
+    static GetSettings          = '/users/settings';
+
+    static UpdateSettings       = '/users/settings';
+
+    static DeleteMe             = '/users/me';
 };

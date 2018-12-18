@@ -60,7 +60,7 @@
       },
       methods: {
         initializePageState: function () {
-          this.$store.dispatch('users/updateForgotPasswordErrors', '');
+          this.$store.dispatch('users/setForgotPasswordErrors', '');
         },
         submit: function () {
           this.$refs.forgotPasswordForm.validate();

@@ -587,15 +587,6 @@ export default {
         margin-right: 10px;
     }
 
-    .profile-information-group-header {
-        display: flex;
-        justify-content: space-between;
-
-        h2 {
-            font-size: 24px;
-        }
-    }
-
     .skills-row .skill:first-child {
         margin-left: 0px;
     }

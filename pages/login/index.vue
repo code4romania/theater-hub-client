@@ -61,7 +61,7 @@
       },
       methods: {
         initializePageState: function () {
-          this.$store.dispatch('authentication/updateLoginErrors', '');
+          this.$store.dispatch('authentication/setLoginErrors', '');
         },
         submit: function () {
           this.$refs.loginForm.validate();
@@ -75,7 +75,7 @@
             Password: this.password
           }).then(() => {
             if (this.$store.getters['authentication/isAuthenticated']) {
-              this.$store.dispatch('authentication/updateLoginErrors', '');
+              this.$store.dispatch('authentication/setLoginErrors', '');
               this.$router.replace({ path: 'projects' });
             }
           });

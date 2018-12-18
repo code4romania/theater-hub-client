@@ -103,7 +103,7 @@
       },
       methods: {
         initializePageState () {
-          this.$store.dispatch('users/updateSignupErrors', '');
+          this.$store.dispatch('users/setSignupErrors', '');
         },
         validateConfirmPassword () {
           if (!this.confirmPassword) {
