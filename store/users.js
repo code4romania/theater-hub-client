@@ -8,86 +8,137 @@ export const state = () => ({
     signupErrors: [],
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
-    createProfileErrors: []
+    createProfileErrors: [],
+    updateSettingsErrors: [],
+    changePasswordErrors: [],
+    deleteMeErrors: []
 });
 
 export const mutations = {
-    UPDATE_SIGNUP_ERRORS: (state, errors) => {
+    SET_SIGNUP_ERRORS: (state, errors) => {
         state.signupErrors = errors;
     },
-    UPDATE_FORGOT_PASSWORD_ERRORS: (state, errors) => {
+    SET_FORGOT_PASSWORD_ERRORS: (state, errors) => {
         state.forgotPasswordErrors = errors;
     },
-    UPDATE_RESET_PASSWORD_ERRORS: (state, errors) => {
+    SET_RESET_PASSWORD_ERRORS: (state, errors) => {
         state.resetPasswordErrors = errors;
     },
-    UPDATE_IS_FINISH_REGISTRATION_SUCCESSFUL: (state, value) => {
+    SET_CHANGE_PASSWORD_ERRORS: (state, errors) => {
+        state.changePasswordErrors = errors;
+    },
+    SET_IS_FINISH_REGISTRATION_SUCCESSFUL: (state, value) => {
         state.isFinishRegistrationSuccessful = value;
     },
-    UPDATE_CREATE_PROFILE_ERRORS: (state, errors) => {
+    SET_CREATE_PROFILE_ERRORS: (state, errors) => {
         state.createProfileErrors = errors;
+    },
+    SET_UPDATE_SETTINGS_ERRORS: (state, errors) => {
+        state.updateSettingsErrors = errors;
+    },
+    SET_DELETE_ME_ERRORS: (state, errors) => {
+        state.deleteMeErrors = errors;
     },
     SET_ME: (state, value) => {
         state.me = { ...value };
     },
     SET_MY_PROFILE_IMAGE: (state, value) => {
         state.myProfileImage = value;
+    },
+    CLEAR_USERS_DATA: (state) => {
+        state.me             = null;
+        state.myProfileImage = '';
     }
 };
 
 export const actions = {
     async signup ({ commit, dispatch }, request) {
         await UserService.register(request).then(response => {
-            dispatch('updateSignupErrors', '');
+            dispatch('setSignupErrors', '');
         }).catch(error => {
-            dispatch('updateSignupErrors', error.response.data.errors);
+            dispatch('setSignupErrors', error.response.data.errors);
         });
     },
     async finishRegistration ({ commit, dispatch }, request) {
         await UserService.finishRegistration(request).then(response => {
             dispatch('authentication/setToken', response.Token, { root: true });
             dispatch('setMe', jwtDecode(response.Token));
-            dispatch('updateIsFinishRegistrationSuccessful', true);
+            dispatch('setIsFinishRegistrationSuccessful', true);
         }).catch(() => {
-            dispatch('updateIsFinishRegistrationSuccessful', false);
+            dispatch('setIsFinishRegistrationSuccessful', false);
         });
     },
     async forgotPassword ({ commit, dispatch }, request) {
         await UserService.forgotPassword(request).then(response => {
-            dispatch('updateForgotPasswordErrors', '');
+            dispatch('setForgotPasswordErrors', '');
         }).catch(error => {
-            dispatch('updateForgotPasswordErrors', error.response.data.errors);
+            dispatch('setForgotPasswordErrors', error.response.data.errors);
         });
     },
     async resetPassword ({ commit, dispatch }, request) {
         await UserService.resetPassword(request).then(response => {
-            dispatch('updateResetPasswordErrors', '');
+            dispatch('setResetPasswordErrors', '');
         }).catch(error => {
-            dispatch('updateResetPasswordErrors', error.response.data.errors);
+            dispatch('setResetPasswordErrors', error.response.data.errors);
+        });
+    },
+    async changePassword ({ commit, dispatch }, request) {
+        await UserService.changePassword(request).then(response => {
+            dispatch('authentication/setToken', response.Token, { root: true });
+            dispatch('setMe', jwtDecode(response.Token));
+            dispatch('setChangePasswordErrors', '');
+        }).catch(error => {
+            dispatch('setChangePasswordErrors', error.response.data.errors);
         });
     },
     async createProfile ({ commit, dispatch }, request) {
         await UserService.createProfile(request).then(response => {
-            dispatch('updateCreateProfileErrors', '');
+            dispatch('setCreateProfileErrors', '');
             dispatch('setMyProfileImage', request.ProfileImage.Image);
         }).catch(error => {
-            dispatch('updateCreateProfileErrors', error.response.data.errors);
+            dispatch('setCreateProfileErrors', error.response.data.errors);
         });
     },
-    updateSignupErrors: ({ commit }, errors) => {
-        commit('UPDATE_SIGNUP_ERRORS', errors);
+    async getSettings ({ commit, dispatch }, request) {
+        return UserService.getSettings();
     },
-    updateForgotPasswordErrors: ({ commit }, errors) => {
-        commit('UPDATE_FORGOT_PASSWORD_ERRORS', errors);
+    async updateSettings ({ commit, dispatch }, request) {
+        await UserService.updateSettings(request).then(response => {
+            dispatch('setUpdateSettingsErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateSettingsErrors', error.response.data.errors);
+        });
     },
-    updateResetPasswordErrors: ({ commit }, errors) => {
-        commit('UPDATE_RESET_PASSWORD_ERRORS', errors);
+    async deleteMe ({ commit, dispatch }, request) {
+        await UserService.deleteMe().then(() => {
+            dispatch('setDeleteMeErrors', '');
+        }).catch(error => {
+            dispatch('setDeleteMeErrors', error.response.data.errors);
+        });
     },
-    updateCreateProfileErrors: ({ commit }, errors) => {
-        commit('UPDATE_CREATE_PROFILE_ERRORS', errors);
+    setSignupErrors: ({ commit }, errors) => {
+        commit('SET_SIGNUP_ERRORS', errors);
     },
-    updateIsFinishRegistrationSuccessful: ({ commit }, value) => {
-        commit('UPDATE_IS_FINISH_REGISTRATION_SUCCESSFUL', value);
+    setForgotPasswordErrors: ({ commit }, errors) => {
+        commit('SET_FORGOT_PASSWORD_ERRORS', errors);
+    },
+    setResetPasswordErrors: ({ commit }, errors) => {
+        commit('SET_RESET_PASSWORD_ERRORS', errors);
+    },
+    setChangePasswordErrors: ({ commit }, errors) => {
+        commit('SET_CHANGE_PASSWORD_ERRORS', errors);
+    },
+    setCreateProfileErrors: ({ commit }, errors) => {
+        commit('SET_CREATE_PROFILE_ERRORS', errors);
+    },
+    setUpdateSettingsErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_SETTINGS_ERRORS', errors);
+    },
+    setDeleteMeErrors: ({ commit }, errors) => {
+        commit('SET_DELETE_ME_ERRORS', errors);
+    },
+    setIsFinishRegistrationSuccessful: ({ commit }, value) => {
+        commit('SET_IS_FINISH_REGISTRATION_SUCCESSFUL', value);
     },
     setMe: ({ commit }, value) => {
         commit('SET_ME', value);
@@ -95,6 +146,10 @@ export const actions = {
     setMyProfileImage: ({ commit }, value) => {
         commit('SET_MY_PROFILE_IMAGE', value);
         localStorage.setItem('myProfileImage', value);
+    },
+    clearUsersData: ({ commit }) => {
+        commit('CLEAR_USERS_DATA');
+        localStorage.removeItem('myProfileImage');
     }
 };
 
@@ -102,12 +157,12 @@ export const getters = {
     me (state) {
         return localStorage.getItem('theaterHubToken') ? jwtDecode(localStorage.getItem('theaterHubToken')) : null;
     },
-    myFullName (state) {
-        if (!state.me) {
+    myFullName (state, getters) {
+        if (!getters.me) {
             return '';
         }
 
-        return `${state.me.firstName} ${state.me.lastName}`;
+        return `${getters.me.firstName} ${getters.me.lastName}`;
     },
     myProfileImage (state) {
         return localStorage.getItem('myProfileImage') ? localStorage.getItem('myProfileImage') : null;

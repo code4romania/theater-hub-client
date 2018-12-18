@@ -32,10 +32,10 @@
         <v-flex xs2 class="sign-up-container action-button">
           <v-menu offset-y>
             <v-flex xs12 slot="activator">
+              <span>Hi, {{ myFullName }}</span>
               <v-avatar size="40px" color="primary">
                 <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
               </v-avatar>
-              <span>Hi, {{ myFullName }}</span>
             </v-flex>
             <v-list>
               <v-list-tile>

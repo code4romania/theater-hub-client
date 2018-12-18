@@ -61,7 +61,7 @@
       },
       methods: {
         initializePageState: function () {
-          this.$store.dispatch('users/updateResetPasswordErrors', '');
+          this.$store.dispatch('users/setResetPasswordErrors', '');
         },
         validateConfirmPassword () {
           if (!this.confirmPassword) {

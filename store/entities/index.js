@@ -16,6 +16,12 @@ export var SocialMediaCategoryType = {
   'Vimeo': 4
 }
 
+export var VisibilityType = {
+  'Everyone': 0,
+  'Community': 1,
+  'Private': 2
+}
+
 export class Wish {
   constructor (title, description) {
     this.title = title
