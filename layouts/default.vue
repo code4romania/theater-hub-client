@@ -11,10 +11,10 @@
           </nav>
         </v-flex>
         <v-flex xs2 offset-xs5 class="sign-in-container action-button">
-          <nuxt-link to="/login" id="login-btn" class="link-button">Login</nuxt-link>
+          <nuxt-link to="/login" id="login-btn" class="menu-link">Login</nuxt-link>
         </v-flex>
         <v-flex xs1 class="sign-up-container action-button">
-          <nuxt-link to="/signup" id="sign-up-btn" class="link-button">Sign up</nuxt-link>
+          <nuxt-link to="/signup" id="sign-up-btn" class="menu-link">Sign up</nuxt-link>
         </v-flex>
       </v-layout>
 
@@ -26,13 +26,18 @@
             </a>
           </nav>
         </v-flex>
-        <v-flex xs1 offset-xs6 class="community-container action-button">
-          <nuxt-link to="/community" id="community-btn" class="link-button">Community</nuxt-link>
+        <v-flex xs1 offset-xs5 class="projects-container action-button">
+          <nuxt-link to="/projects" id="projects-btn" class="menu-link">Projects</nuxt-link>
+        </v-flex>
+        <v-flex xs1 class="community-container action-button">
+          <nuxt-link to="/community" id="community-btn" class="menu-link">Community</nuxt-link>
         </v-flex>
         <v-flex xs2 class="sign-up-container action-button">
           <v-menu offset-y>
             <v-flex xs12 slot="activator">
-              <span>Hi, {{ myFullName }}</span>
+              <div class="header-name-container">
+                <span>Hi, {{ myFullName }}</span>
+              </div>
               <v-avatar size="40px" color="primary">
                 <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
               </v-avatar>
@@ -40,17 +45,17 @@
             <v-list>
               <v-list-tile>
                 <v-list-tile-title>
-                  <nuxt-link to="/profile" class="link-button">Profile</nuxt-link>
+                  <nuxt-link to="/profile" class="menu-link">Profile</nuxt-link>
                 </v-list-tile-title>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-title>
-                  <nuxt-link to="/settings" class="link-button">Settings</nuxt-link>
+                  <nuxt-link to="/settings" class="menu-link">Settings</nuxt-link>
                 </v-list-tile-title>
               </v-list-tile>
               <v-list-tile>
                 <v-list-tile-title>
-                  <a id="logout-btn" v-on:click="onLogoutClick" class="link-button">Logout</a>
+                  <a id="logout-btn" v-on:click="onLogoutClick" class="menu-link">Logout</a>
                 </v-list-tile-title>
               </v-list-tile>
             </v-list>
@@ -145,7 +150,7 @@
     background-color: #35495e;
   }
 
-  .sign-in-container, .community-container {
+  .sign-in-container, .community-container, .projects-container {
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;
@@ -173,6 +178,15 @@
 
   #logout-btn {
     cursor: pointer;
+  }
+
+  .header-name-container {
+    max-width: 200px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
   }
 
 </style>

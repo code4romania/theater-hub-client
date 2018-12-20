@@ -23,18 +23,19 @@ export const actions = {
   async login ({ commit, dispatch }, request) {
     await AuthenticationService.authenticate(request).then(response => {
       dispatch('setToken', response.Token);
+      dispatch('setLoginErrors', '');
       dispatch('users/setMe', jwtDecode(response.Token), { root: true });
       dispatch('users/setMyProfileImage', response.profileImage, { root: true });
-      dispatch('setLoginErrors', '');
+      dispatch('applicationData/getApplicationData', null, { root: true });
     }).catch(error => {
       dispatch('setLoginErrors', error.response.data.errors);
     });
   },
   async checkUserPassword ({ commit, dispatch }, request) {
     await AuthenticationService.checkUserPassword(request).then(response => {
-      dispatch('setCheckUserPasswordErrorsErrors', '');
+      dispatch('setCheckUserPasswordErrors', '');
     }).catch(error => {
-      dispatch('setCheckUserPasswordErrorsErrors', error.response.data.errors);
+      dispatch('setCheckUserPasswordErrors', error.response.data.errors);
     });
   },
   setToken ({ commit }, token) {
@@ -44,7 +45,7 @@ export const actions = {
   setLoginErrors: ({ commit }, errors) => {
     commit('SET_LOGIN_ERRORS', errors);
   },
-  setCheckUserPasswordErrorsErrors: ({ commit }, errors) => {
+  setCheckUserPasswordErrors: ({ commit }, errors) => {
     commit('SET_CHECK_USER_PASSWORD_ERRORS', errors);
   },
   logout: ({ commit, dispatch }) => {

@@ -56,17 +56,17 @@
     import { Helpers } from '~/utils';
 
     export default {
-            props: ['profilePrivacy'],
-            data: function () {
-                return {
-                    profilePrivacyModel: Helpers.cloneObject(this.profilePrivacy)
-                };
-            },
-            methods: {
-                updateProfilePrivacyModel: function () {
-                    this.$emit('updateProfilePrivacy', this.profilePrivacyModel);
-                }
+        props: ['profilePrivacy'],
+        data: function () {
+            return {
+                profilePrivacyModel: Helpers.cloneObject(this.profilePrivacy)
+            };
+        },
+        methods: {
+            updateProfilePrivacyModel: function () {
+                this.$emit('updateProfilePrivacy', this.profilePrivacyModel);
             }
+        }
     }
 </script>
 

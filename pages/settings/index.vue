@@ -272,7 +272,7 @@
                 this.deleteAccountPassword  = '';
             },
             onDeleteAccountClick: function () {
-                this.$store.dispatch('authentication/setCheckUserPasswordErrorsErrors', '');
+                this.$store.dispatch('authentication/setCheckUserPasswordErrors', '');
                 this.$store.dispatch('users/setDeleteMeErrors', '');
                 this.cancelAllUnsavedChanges();
                 this.isDeletingAccount = true;

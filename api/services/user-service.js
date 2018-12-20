@@ -34,6 +34,10 @@ export class UserService extends BaseService {
         return this.$axios.$patch(Endpoints.UpdateSettings, request);
     }
 
+    static async getMyProfile (request) {
+        return this.$axios.$get(Endpoints.GetMyProfile);
+    }
+
     static async deleteMe (request) {
         return this.$axios.$delete(Endpoints.DeleteMe);
     }

@@ -64,6 +64,7 @@ export const actions = {
             dispatch('authentication/setToken', response.Token, { root: true });
             dispatch('setMe', jwtDecode(response.Token));
             dispatch('setIsFinishRegistrationSuccessful', true);
+            dispatch('applicationData/getApplicationData', null, { root: true });
         }).catch(() => {
             dispatch('setIsFinishRegistrationSuccessful', false);
         });
@@ -108,6 +109,9 @@ export const actions = {
         }).catch(error => {
             dispatch('setUpdateSettingsErrors', error.response.data.errors);
         });
+    },
+    async getMyProfile ({ commit, dispatch }, request) {
+        return UserService.getMyProfile();
     },
     async deleteMe ({ commit, dispatch }, request) {
         await UserService.deleteMe().then(() => {

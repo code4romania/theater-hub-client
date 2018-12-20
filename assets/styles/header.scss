@@ -47,4 +47,13 @@ header {
 			display: none;
 		}
 	}
+
+	.menu-link {
+		text-decoration: none;
+		color: $black;
+
+		&.nuxt-link-active {
+			color: $primary;
+		}
+	}
 }

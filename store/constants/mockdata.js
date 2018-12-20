@@ -244,7 +244,7 @@ export const users = [
   }
 ]
 
-export const skills = ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor']
+export const skills = ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor'];
 
 export const userProfile = {
     profileGeneralInformation: {
