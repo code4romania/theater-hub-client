@@ -2,6 +2,8 @@
 export class Endpoints {
     static GetWelcomeMessage    = '';
 
+    static GetSkills            = '/applicationdata/skills';
+
     static Login                = '/authentication';
 
     static CheckUserPassword    = '/authentication/password/validity';
@@ -21,6 +23,8 @@ export class Endpoints {
     static GetSettings          = '/users/settings';
 
     static UpdateSettings       = '/users/settings';
+
+    static GetMyProfile         = '/users/me';
 
     static DeleteMe             = '/users/me';
 };

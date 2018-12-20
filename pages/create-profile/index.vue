@@ -34,7 +34,7 @@
 
                     <v-stepper-content step="2" class="pl-5">
                         <v-layout row wrap class="pl-2 pb-5">
-                            <ProfileSkills :profileSkills="profileSkills"
+                            <ProfileSkills :profileSkills="profileSkills" :skills="this.applicationData.skills"
                                                 @updateProfileSkills="updateProfileSkills"/>
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 1">Back</v-btn>
@@ -180,51 +180,16 @@ export default {
         photoGallery: []
     },
     profileVideoGallery: {
-        videoGallery: [{
-            link: '',
-            embedLink: '',
-            isValid: false
-        }]
+        videoGallery: []
     },
     profileAwards: {
-        awards: [
-            {
-                title: '',
-                issuer: '',
-                description: '',
-                date: new Date().toISOString().substr(0, 7),
-                isValid: false,
-                isAwardDateMenuOpen: false
-            }
-        ]
+        awards: []
     },
     profileExperience: {
-        experienceSteps: [
-            {
-                position: '',
-                employerName: '',
-                description: '',
-                startDate: new Date().toISOString().substr(0, 7),
-                endDate: new Date().toISOString().substr(0, 7),
-                isValid: false,
-                isStartDateMenuOpen: false,
-                isEndDateMenuOpen: false
-            }
-        ]
+        experienceSteps: []
     },
     profileEducation: {
-        educationSteps: [
-            {
-                title: '',
-                institutionName: '',
-                description: '',
-                startDate: new Date().toISOString().substr(0, 7),
-                endDate: new Date().toISOString().substr(0, 7),
-                isValid: false,
-                isStartDateMenuOpen: false,
-                isEndDateMenuOpen: false
-            }
-        ]
+        educationSteps: []
     },
     profilePrivacy: {
         profileVisibility: 0,
@@ -254,27 +219,23 @@ export default {
     isWizardStepValid: function () {
       switch (this.wizardStep) {
         case 1:
-          return this.profileGeneralInformation.phoneNumber &&
+            return this.profileGeneralInformation.phoneNumber &&
                         Validators.isValidPhoneNumber(this.profileGeneralInformation.phoneNumber) &&
                         (!this.profileGeneralInformation.website || Validators.isValidURL(this.profileGeneralInformation.website)) &&
                         (!this.profileGeneralInformation.description || this.profileGeneralInformation.description.length <= 500) &&
                         this.areAllSocialMediaLinksValid();
         case 2:
-          return this.profileSkills.selectedSkills.length !== 0;
+            return this.profileSkills.selectedSkills.length !== 0;
         case 3:
-          var isStepValid = true;
-
-          for (var index = 0; index < this.profileVideoGallery.videoGallery.length; index++) {
-            if (this.profileVideoGallery.videoGallery[index].link !== '') {
-              isStepValid = isStepValid && SocialMediaManager.isVideoValid(this.profileVideoGallery.videoGallery[index].link);
-            }
-          }
-
-          return isStepValid;
+            return this.areAllVideosValid();
         case 4:
-          return this.areAllEducationStepsValid();
+            return this.areAllAwardsValid();
+        case 5:
+            return this.areAllExperienceStepsValid();
+        case 6:
+            return this.areAllEducationStepsValid();
         default:
-          return this.areAllAwardsValid();
+            return true;
       }
     },
     areAllSocialMediaLinksValid: function () {
@@ -300,28 +261,62 @@ export default {
 
         return true;
     },
-    areAllEducationStepsValid: function () {
-        var isValid = true;
-        var index   = 0;
+    isAwardValid: function (award) {
+        return award.title !== '' && award.issuer !== '';
+    },
+    isExperienceStepValid: function (experienceStep) {
+        return experienceStep.position !== '' && experienceStep.employerName !== '';
+    },
+    isEducationStepValid: function (educationStep) {
+        return educationStep.title !== '' && educationStep.institutionName !== '';
+    },
+    areAllVideosValid: function () {
+        var isStepValid = true;
+        var index       = 0;
 
-        while (index < this.profileEducation.educationSteps.length && isValid) {
-            if (this.profileEducation.educationSteps[index].title !== '' || this.profileEducation.educationSteps[index].institutionName !== '') {
-                isValid = isValid && this.isEducationStepValid(this.profileEducation.educationSteps[index]);
-            }
+        while (index < this.profileVideoGallery.videoGallery.length && isStepValid) {
+            var video   = this.profileVideoGallery.videoGallery[index];
+            isStepValid = isStepValid && SocialMediaManager.isVideoValid(video.link) && !video.inEditMode;
 
             index++;
         }
 
-        return isValid;
+        return isStepValid;
     },
     areAllAwardsValid: function () {
         var isValid = true;
         var index   = 0;
 
         while (index < this.profileAwards.awards.length && isValid) {
-            if (this.profileAwards.awards[index].title !== '' || this.profileAwards.awards[index].issuer !== '') {
-                isValid = isValid && this.isAwardValid(this.profileAwards.awards[index]);
-            }
+            var award = this.profileAwards.awards[index];
+            isValid   = isValid && this.isAwardValid(award) && !award.inEditMode;
+
+            index++;
+        }
+
+        return isValid;
+    },
+    areAllExperienceStepsValid: function () {
+        var isValid         = true;
+        var index           = 0;
+        var experienceSteps = this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length - 1);
+
+        while (index < experienceSteps.length && isValid) {
+            isValid = isValid && this.isExperienceStepValid(experienceSteps[index]);
+
+            index++;
+        }
+
+        return isValid;
+    },
+    areAllEducationStepsValid: function () {
+        var isValid         = true;
+        var index           = 0;
+        var educationSteps  = this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length - 1);
+
+        while (index < educationSteps.length && isValid) {
+            isValid = isValid && this.isEducationStepValid(educationSteps[index]);
+
             index++;
         }
 
@@ -340,12 +335,12 @@ export default {
             YoutubeLink: this.profileGeneralInformation.youtubeLink ? this.profileGeneralInformation.youtubeLink : null,
             FacebookLink: this.profileGeneralInformation.facebookLink ? this.profileGeneralInformation.facebookLink : null,
             LinkedinLink: this.profileGeneralInformation.linkedinLink ? this.profileGeneralInformation.linkedinLink : null,
-            Skills: this.profileSkills.selectedSkills,
+            Skills: this.profileSkills.selectedSkills.map(s => s.ID),
             PhotoGallery: this.profilePhotoGallery.photoGallery,
             VideoGallery: this.profileVideoGallery.videoGallery.filter(v => v.isValid).map(v => {
                 return { Video: v.link };
             }),
-            Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length - 2).map(a => {
+            Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length - 1).map(a => {
                 return {
                     Title: a.title,
                     Issuer: a.issuer,
@@ -353,7 +348,7 @@ export default {
                     Date: a.date
                 };
             }),
-            Experience: this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length - 2).map(e => {
+            Experience: this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length - 1).map(e => {
                 return {
                     Position: e.position,
                     Employer: e.employerName,
@@ -362,7 +357,7 @@ export default {
                     EndDate: e.endDate
                 };
             }),
-            Education: this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length - 2).map(e => {
+            Education: this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length - 1).map(e => {
                 return {
                     Title: e.title,
                     Institution: e.institutionName,
@@ -408,7 +403,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['users'])
+    ...mapState([ 'applicationData', 'users' ])
   }
 }
 </script>

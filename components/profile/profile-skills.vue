@@ -2,9 +2,9 @@
     <v-layout row wrap>
         <v-flex xs12 id="skills-autocomplete-wrapper">
             <v-autocomplete
-                v-model="profileSkillsModel.selectedSkills"
+                v-model="selectedSkillNames"
                 @input="updateProfileSkillsModel"
-                :items="skills"
+                :items="skillNameList"
                 chips
                 multiple
                 persistent-hint
@@ -17,7 +17,7 @@
             </v-autocomplete>
         </v-flex>
         <v-flex xs12 mt-3>
-            <v-chip close :key="i" v-for="(skill, i) in profileSkillsModel.selectedSkills"
+            <v-chip close :key="i" v-for="(skill, i) in selectedSkillNames"
                                                         @input="removeSkill(skill)">{{ skill }}</v-chip>
         </v-flex>
     </v-layout>
@@ -26,24 +26,34 @@
 
 <script>
     import { Helpers } from '~/utils';
-    import { skills } from '~/store/constants/mockdata';
 
     export default {
-            props: ['profileSkills'],
+            props: ['profileSkills', 'skills'],
             data: function () {
                 return {
                     profileSkillsModel: Helpers.cloneObject(this.profileSkills),
-                    skills: skills.sort()
+                    selectedSkillNames: this.profileSkills.selectedSkills.map(s => s.Name)
                 };
             },
             methods: {
                 updateProfileSkillsModel: function () {
+                    this.profileSkillsModel.selectedSkills = this.skills.filter(s => {
+                        return this.selectedSkillNames.indexOf(s.Name) !== -1;
+                    });
+
                     this.$emit('updateProfileSkills', this.profileSkillsModel);
                 },
                 removeSkill: function (item) {
-                    this.profileSkillsModel.selectedSkills.splice(this.profileSkillsModel.selectedSkills.indexOf(item), 1);
+                    this.profileSkillsModel.selectedSkills.splice(this.profileSkillsModel.selectedSkills.map(s => s.Name).indexOf(item), 1);
                     this.profileSkillsModel.selectedSkills = [...this.profileSkillsModel.selectedSkills];
+                    this.selectedSkillNames                = this.profileSkillsModel.selectedSkills.map(s => s.Name);
+
                     this.updateProfileSkillsModel();
+                }
+            },
+            computed: {
+                skillNameList: function () {
+                    return this.skills.map(s => s.Name).sort();
                 }
             }
     }

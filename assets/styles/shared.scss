@@ -83,8 +83,12 @@ button {
     }
 }
 
-.create-profile-section .v-menu__content {
+.create-profile-section .date-menu-container .v-menu__content {
     left: -90px !important;
+}
+
+.create-profile-section .v-menu__content  {
+    left: 0px !important;
 }
 
 .v-textarea .v-input__slot {
@@ -139,13 +143,17 @@ button {
     }
 }
 
-.removable-row {
+.profile-focused-row {
     display: flex;
 
     .remove-icon {
         cursor: pointer;
         font-size: 31px;
     }
+}
+
+.editing-profile-row {
+    display: none;
 }
 
 .profile-information-group-header {
@@ -155,4 +163,10 @@ button {
     h2 {
         font-size: 24px;
     }
+}
+
+
+.profile-row-actions {
+    display: flex;
+    justify-content: flex-end;
 }

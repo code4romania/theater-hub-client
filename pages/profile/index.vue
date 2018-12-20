@@ -2,9 +2,6 @@
     <section class="profile-section">
         <v-container id="profile-container" class="main-container pa-5">
             <v-layout row wrap>
-                <v-btn absolute large fab top right color="primary" class="download-resume">
-                    <v-icon>cloud_download</v-icon>
-                </v-btn>
                 <v-flex xs12 v-if="!isEditingGeneralInformation">
                     <v-layout row class="profile-information-group">
                         <v-avatar size="200px" color="primary">
@@ -39,6 +36,9 @@
                                 <a v-if="profile.profileGeneralInformation.youtubeLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.youtubeLink" target="_blank">
                                     <img :src="require('~/assets/images/social-1_logo-youtube.svg')" />
                                 </a>
+                            </v-flex>
+                            <v-flex xs12 class="profile-information-row">
+                                <v-btn id="download-resume-button" class="primary ml-0" medium @click="onDownloadResumeClick">DOWNLOAD RESUME</v-btn>
                             </v-flex>
                         </v-flex>
                         <v-btn outline small fab class="mt-2" v-on:click="onEditGeneralInformationClick"><v-icon>edit</v-icon></v-btn>
@@ -167,7 +167,7 @@
                 </v-flex>
 
                 <v-flex xs12 v-if="isEditingVideoGallery">
-                   <v-layout row wrap elevation-5 pa-5>
+                   <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
                             <h2>Edit Video Gallery</h2>
                             <div>
@@ -351,8 +351,9 @@ import ProfileVideoGallery from '~/components/profile/profile-video-gallery.vue'
 import ProfileAwards from '~/components/profile/profile-awards.vue';
 import ProfileExperience from '~/components/profile/profile-experience.vue';
 import ProfileEducation from '~/components/profile/profile-education.vue';
-import { userProfile, skills } from '~/store/constants/mockdata';
+import { skills } from '~/store/constants/mockdata';
 import { SocialMediaManager, Helpers } from '~/utils';
+import { mapState } from 'vuex';
 
 export default {
         components: {
@@ -369,7 +370,7 @@ export default {
         middleware: 'authenticated',
         data: () => ({
             skills,
-            profile: userProfile,
+            profile: {},
             editedProfile: {},
             index: null,
             photoGalleryDropzoneOptions: {
@@ -391,12 +392,83 @@ export default {
             isEditingExperience: false,
             isEditingEducation: false
         }),
-        asyncData: (context) => {
-            return { project: 'nuxt' }
+        asyncData: ({ store, query }) => {
+            return store.dispatch('users/getMyProfile').then((response) => {
+                var profile = {};
+
+                profile.profileGeneralInformation   = {
+                    profileImage: response.ProfileImage,
+                    birthDate: response.BirthDate,
+                    phoneNumber: response.PhoneNumber,
+                    description: response.Description,
+                    website: response.Website,
+                    firstName: response.FirstName,
+                    lastName: response.LastName,
+                    email: response.Email,
+                    instagramLink: response.InstagramLink,
+                    youtubeLink: response.YoutubeLink,
+                    facebookLink: response.FacebookLink,
+                    linkedinLink: response.LinkedinLink
+                };
+
+                profile.profileSkills = {
+                    selectedSkills: response.Skills
+                };
+
+                profile.profilePhotoGallery = {
+                    photoGallery: response.PhotoGallery
+                };
+
+                profile.profileVideoGallery = {
+                    videoGallery: response.VideoGallery.map(v => {
+                        return {
+                            link: v.Video
+                        };
+                    })
+                };
+
+                profile.profileAwards = {
+                    awards: response.Awards.map(a => {
+                        return {
+                            title: a.Title,
+                            issuer: a.Issuer,
+                            description: a.Description,
+                            date: a.Date
+                        };
+                    })
+                };
+
+                profile.profileExperience = {
+                    experienceSteps: response.Experience.map(e => {
+                        return {
+                            position: e.Position,
+                            employerName: e.Employer,
+                            description: e.Description,
+                            startDate: e.StartDate,
+                            endDate: e.EndDate
+                        };
+                    })
+                };
+
+                profile.profileEducation = {
+                    educationSteps: response.Education.map(e => {
+                        return {
+                            title: e.Title,
+                            institutionName: e.Institution,
+                            description: e.Description,
+                            startDate: e.StartDate,
+                            endDate: e.EndDate
+                        };
+                    })
+                };
+
+                return {
+                    profile
+                };
+            });
         },
         methods: {
             initializeData: function () {
-
             },
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY');
@@ -524,9 +596,13 @@ export default {
             },
             updateProfileEducation: function (model) {
                 this.editedProfile.profileEducation = Helpers.cloneObject(model);
+            },
+            onDownloadResumeClick: function () {
+
             }
         },
         computed: {
+            ...mapState(['authentication', 'users']),
             fullName: function () {
                 return `${this.profile.profileGeneralInformation.firstName} ${this.profile.profileGeneralInformation.lastName}`;
             },
@@ -539,7 +615,8 @@ export default {
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             portfolioImages: function () {
-                return this.profile.profilePhotoGallery.photoGallery.map(p => p.src);
+                return this.profile.profilePhotoGallery.photoGallery
+                        .map(p => `data:image/;base64,${p.Image.data}`);
             },
             portfolioVideos: function () {
                 return this.profile.profileVideoGallery.videoGallery.map(v => {
