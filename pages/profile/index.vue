@@ -10,7 +10,9 @@
                         </v-avatar>
                         <v-flex xs12 class="ml-5 pl-5">
                             <v-flex xs12 class="profile-information-row">
-                                <span class="full-name-field">{{ fullName }}</span>, <span class="age-field">{{ age }} years</span>
+                                <span class="full-name-field">{{ fullName }}</span>
+                                <span>,</span>
+                                <span class="age-field">{{ age }} years</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
                                 <span class="field-label">Email: </span>
@@ -39,6 +41,9 @@
                                 </a>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
+                                <nuxt-link :to="`/profile/${profile.ID}`" class="preview-profile-link" target="_blank">
+                                    <v-btn id="preview-profile-button" class="primary ml-0" medium>PREVIEW PROFILE</v-btn>
+                                </nuxt-link>
                                 <v-btn id="download-resume-button" class="primary ml-0" medium @click="onDownloadResumeClick">DOWNLOAD RESUME</v-btn>
                             </v-flex>
                         </v-flex>
@@ -125,11 +130,11 @@
                         </v-flex>
                         <v-flex xs12 pt-4 class="photo-gallery-row">
                             <no-ssr>
-                                <gallery :images="portfolioImages" :index="index" @close="index = null"></gallery>
+                                <gallery :images="portfolioImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
                             </no-ssr>
                             <v-container v-if="hasPhotoGallery" grid-list-sm fluid>
                                 <v-layout row wrap>
-                                    <v-flex xs3 v-for="(image, imageIndex) in portfolioImages" :key="`photo-${imageIndex}`" @click="index = imageIndex">
+                                    <v-flex xs3 v-for="(image, imageIndex) in portfolioImages" :key="`photo-${imageIndex}`" @click="portfolioImagesIndex = imageIndex">
                                         <v-img :src="image" :lazy-src="image" aspect-ratio="1">
                                             <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
                                                 <v-progress-circular indeterminate></v-progress-circular>
@@ -171,7 +176,7 @@
                         </v-flex>
                         <v-flex xs12 pt-4 v-if="hasVideoGallery" class="video-gallery-row">
                             <v-layout row wrap
-                                :key="`video-${videoIndex}`" v-for="(video, videoIndex) in this.profile.profileVideoGallery.videoGallery"
+                                :key="`video-${videoIndex}`" v-for="(video, videoIndex) in profile.profileVideoGallery.videoGallery"
                                 @mouseover="video.isHovered = true"  @mouseout="video.isHovered = false">
                                 <v-layout row wrap v-if="!video.inEditMode && !video.inDeleteMode">
                                     <v-flex xs12 sm10 md10 lg10 pa-1>
@@ -493,7 +498,7 @@ export default {
         data: () => ({
             profile: {},
             editedProfile: {},
-            index: null,
+            portfolioImagesIndex: null,
             isEditingGeneralInformation: false,
             isEditingSkills: false,
 			isEditingPhotoGallery: false,
@@ -516,7 +521,9 @@ export default {
             var response = store.state.users.myProfile;
             var skills   = store.getters['applicationData/skills'];
 
-            var profile = {};
+            var profile = {
+                ID: response.ID
+            };
 
             profile.profileGeneralInformation   = {
                 profileImage: response.ProfileImage || {},
@@ -1275,6 +1282,10 @@ export default {
 
     .social-media-icon-wrapper {
         margin-right: 10px;
+    }
+
+    .preview-profile-link {
+        text-decoration: none;
     }
 
     .skills-row .skill:first-child {

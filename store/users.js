@@ -4,6 +4,7 @@ import { UserAccountStatusType } from '../store/entities';
 export const state = () => ({
     me: null,
     myProfile: null,
+    communityMemberProfile: null,
     isFinishRegistrationSuccessful: false,
     isEditingProfileSection: false,
     signupErrors: [],
@@ -73,6 +74,9 @@ export const mutations = {
     },
     SET_MY_PROFILE: (state, value) => {
         state.myProfile      = value;
+    },
+    SET_COMMUNITY_MEMBER_PROFILE: (state, value) => {
+        state.communityMemberProfile = value;
     },
     ENABLE_ME: (state) => {
         state.me.AccountStatus = UserAccountStatusType.Enabled;
@@ -208,6 +212,11 @@ export const actions = {
             dispatch('setMyProfile', response);
         });
     },
+    async getCommunityMemberProfile ({ commit, dispatch }, id) {
+        return UserService.getCommunityMemberProfile(id).then(response => {
+            dispatch('setCommunityMemberProfile', response);
+        });
+    },
     async deleteMe ({ commit, dispatch }, request) {
         await UserService.deleteMe().then(() => {
             dispatch('setDeleteMeErrors', '');
@@ -269,6 +278,9 @@ export const actions = {
     },
     setMyProfile: ({ commit }, value) => {
         commit('SET_MY_PROFILE', value);
+    },
+    setCommunityMemberProfile: ({ commit }, value) => {
+        commit('SET_COMMUNITY_MEMBER_PROFILE', value);
     },
     clearUsersData: ({ commit }) => {
         commit('CLEAR_USERS_DATA');
