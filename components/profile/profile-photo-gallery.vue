@@ -1,7 +1,6 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12 mb-3>
-            <span class="field-title">Photo gallery</span>
             <dropzone id="photo-gallery-dropzone" ref="photoGalleryDropzone"
                 :options="photoGalleryDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true"
                 width="200px" height="80px">
@@ -27,12 +26,29 @@
                     profilePhotoGalleryModel: Helpers.cloneObject(this.profilePhotoGallery),
                     photoGalleryDropzoneOptions: {
                         url: '/',
-                        maxFilesize: 1,
+                        maxFilesize: 2,
                         addRemoveLinks: true,
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
+                        initializePhotoGallery: (dropzone) => {
+                            this.profilePhotoGallery.photoGallery.forEach(photo => {
+                                var fileSize = atob(photo.Image).length;
+                                var file     = { url: `data:image/;base64,${photo.Image}`, size: fileSize, upload: { uuid: photo.ID } };
+                                dropzone.emit('addedfile', file);
+                                dropzone.emit('thumbnail', file, file.url);
+                                dropzone.createThumbnailFromUrl(file, file.url, null, null);
+                                dropzone.emit('complete', file);
+                                dropzone.files.push(file);
+                            });
+                        },
                         thumbnailEventHandler: (dataUrl, id) => {
+                            var ids = this.profilePhotoGallery.photoGallery.map(p => p.ID);
+
+                            if (ids.indexOf(id) !== -1) {
+                                return;
+                            }
+
                             this.profilePhotoGallery.photoGallery.push({
-                                'Image': dataUrl,
+                                'Image': dataUrl.replace('data:image/png;base64,', ''),
                                 'ID': id
                             });
                         },
@@ -47,6 +63,8 @@
                             this.on('removedfile', (file) => {
                                 this.options.removedfileEventHandler(file);
                             });
+
+                            this.options.initializePhotoGallery(this);
                         }
                     }
                 };

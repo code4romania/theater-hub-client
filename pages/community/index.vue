@@ -68,7 +68,7 @@
         components: {
 
         },
-        middleware: 'authenticated',
+        middleware: ['authenticated', 'enabled'],
         data: () => ({
             communityMembers,
 			displayedCommunityMembers: [],

@@ -1,5 +1,4 @@
 import { AuthenticationService } from '../api/services';
-var jwtDecode                    = require('jwt-decode');
 
 export const state = () => ({
   token: '',
@@ -23,10 +22,8 @@ export const actions = {
   async login ({ commit, dispatch }, request) {
     await AuthenticationService.authenticate(request).then(response => {
       dispatch('setToken', response.Token);
-      dispatch('setLoginErrors', '');
-      dispatch('users/setMe', jwtDecode(response.Token), { root: true });
-      dispatch('users/setMyProfileImage', response.profileImage, { root: true });
       dispatch('applicationData/getApplicationData', null, { root: true });
+      dispatch('setLoginErrors', '');
     }).catch(error => {
       dispatch('setLoginErrors', error.response.data.errors);
     });
@@ -58,12 +55,10 @@ export const actions = {
 
 export const getters = {
   token (state) {
-    return localStorage.getItem('theaterHubToken');
+    return state.token || localStorage.getItem('theaterHubToken');
   },
-  isAuthenticated (state) {
-    var isAuthenticated = !!state.token || !!localStorage.getItem('theaterHubToken');
-
-    return isAuthenticated;
+  isAuthenticated (state, getters) {
+    return !!getters.token;
   }
 
 };

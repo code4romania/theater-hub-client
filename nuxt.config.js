@@ -67,9 +67,7 @@ module.exports = {
   },
   axios: {
     baseURL: config.API.baseURL,
+    proxyHeaders: false,
     credentials: false
   }
-  // router: {
-  //   middleware: ['auth']
-  // }
 }

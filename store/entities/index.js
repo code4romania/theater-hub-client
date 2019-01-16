@@ -22,6 +22,14 @@ export var VisibilityType = {
   'Private': 2
 }
 
+export var UserAccountStatusType = {
+  'Registered': 0,
+  'Confirmed': 1,
+  'Enabled': 2,
+  'Disabled': 3,
+  'Deleted': 4
+}
+
 export class Wish {
   constructor (title, description) {
     this.title = title
@@ -35,5 +43,13 @@ export class EducationStep {
     this.title = title
     this.startDate = startDate
     this.endDate = endDate
+  }
+}
+
+export class UpdateProfileSection {
+  constructor (addedEntities, removedEntities, updatedEntities) {
+    this.AddedEntities   = addedEntities;
+    this.RemovedEntities = removedEntities;
+    this.UpdatedEntities = updatedEntities;
   }
 }

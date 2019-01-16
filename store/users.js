@@ -1,14 +1,22 @@
-import { UserService }  from '../api/services';
-var jwtDecode           = require('jwt-decode');
+import { UserService }           from '../api/services';
+import { UserAccountStatusType } from '../store/entities';
 
 export const state = () => ({
-    me: {},
-    myProfileImage: '',
+    me: null,
+    myProfile: null,
     isFinishRegistrationSuccessful: false,
+    isEditingProfileSection: false,
     signupErrors: [],
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
     createProfileErrors: [],
+    updateMyGeneralInformationErrors: [],
+    updateMySkillsErrors: [],
+    updateMyPhotoGalleryErrors: [],
+    updateMyVideoGalleryErrors: [],
+    updateMyAwardsErrors: [],
+    updateMyExperienceErrors: [],
+    updateMyEducationErrors: [],
     updateSettingsErrors: [],
     changePasswordErrors: [],
     deleteMeErrors: []
@@ -33,6 +41,27 @@ export const mutations = {
     SET_CREATE_PROFILE_ERRORS: (state, errors) => {
         state.createProfileErrors = errors;
     },
+    SET_UPDATE_MY_GENERAL_INFORMATION_ERRORS: (state, errors) => {
+        state.updateMyGeneralInformationErrors = errors;
+    },
+    SET_UPDATE_MY_SKILLS_ERRORS: (state, errors) => {
+        state.updateMySkillsErrors = errors;
+    },
+    SET_UPDATE_MY_PHOTO_GALLERY_ERRORS: (state, errors) => {
+        state.updateMyPhotoGalleryErrors = errors;
+    },
+    SET_UPDATE_MY_VIDEO_GALLERY_ERRORS: (state, errors) => {
+        state.updateMyVideoGalleryErrors = errors;
+    },
+    SET_UPDATE_MY_AWARDS_ERRORS: (state, errors) => {
+        state.updateMyAwardsErrors = errors;
+    },
+    SET_UPDATE_MY_EXPERIENCE_ERRORS: (state, errors) => {
+        state.updateMyExperienceErrors = errors;
+    },
+    SET_UPDATE_MY_EDUCATION_ERRORS: (state, errors) => {
+        state.updateMyEducationErrors = errors;
+    },
     SET_UPDATE_SETTINGS_ERRORS: (state, errors) => {
         state.updateSettingsErrors = errors;
     },
@@ -40,14 +69,22 @@ export const mutations = {
         state.deleteMeErrors = errors;
     },
     SET_ME: (state, value) => {
-        state.me = { ...value };
+        state.me             = value;
     },
-    SET_MY_PROFILE_IMAGE: (state, value) => {
-        state.myProfileImage = value;
+    SET_MY_PROFILE: (state, value) => {
+        state.myProfile      = value;
+    },
+    ENABLE_ME: (state) => {
+        state.me.AccountStatus = UserAccountStatusType.Enabled;
     },
     CLEAR_USERS_DATA: (state) => {
         state.me             = null;
-        state.myProfileImage = '';
+    },
+    INITIATE_PROFILE_SECTION_EDIT_SESSION: (state) => {
+        state.isEditingProfileSection = true;
+    },
+    END_PROFILE_SECTION_EDIT_SESSION: (state) => {
+        state.isEditingProfileSection = false;
     }
 };
 
@@ -62,9 +99,9 @@ export const actions = {
     async finishRegistration ({ commit, dispatch }, request) {
         await UserService.finishRegistration(request).then(response => {
             dispatch('authentication/setToken', response.Token, { root: true });
-            dispatch('setMe', jwtDecode(response.Token));
-            dispatch('setIsFinishRegistrationSuccessful', true);
+            dispatch('getMe');
             dispatch('applicationData/getApplicationData', null, { root: true });
+            dispatch('setIsFinishRegistrationSuccessful', true);
         }).catch(() => {
             dispatch('setIsFinishRegistrationSuccessful', false);
         });
@@ -86,7 +123,7 @@ export const actions = {
     async changePassword ({ commit, dispatch }, request) {
         await UserService.changePassword(request).then(response => {
             dispatch('authentication/setToken', response.Token, { root: true });
-            dispatch('setMe', jwtDecode(response.Token));
+            dispatch('getMe');
             dispatch('setChangePasswordErrors', '');
         }).catch(error => {
             dispatch('setChangePasswordErrors', error.response.data.errors);
@@ -94,10 +131,61 @@ export const actions = {
     },
     async createProfile ({ commit, dispatch }, request) {
         await UserService.createProfile(request).then(response => {
+            dispatch('authentication/setToken', response.Token, { root: true });
+            dispatch('setMe', response.Me);
             dispatch('setCreateProfileErrors', '');
-            dispatch('setMyProfileImage', request.ProfileImage.Image);
         }).catch(error => {
             dispatch('setCreateProfileErrors', error.response.data.errors);
+        });
+    },
+    async updateMyGeneralInformation ({ commit, dispatch }, request) {
+        await UserService.updateMyGeneralInformation(request).then(response => {
+            dispatch('setUpdateMyGeneralInformationErrors', '');
+            dispatch('setMe', response);
+        }).catch(error => {
+            dispatch('setUpdateMyGeneralInformationErrors', error.response.data.errors);
+        });
+    },
+    async updateMySkills ({ commit, dispatch }, request) {
+        await UserService.updateMySkills(request).then(response => {
+            dispatch('setUpdateMySkillsErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMySkillsErrors', error.response.data.errors);
+        });
+    },
+    async updateMyPhotoGallery ({ commit, dispatch }, request) {
+        await UserService.updateMyPhotoGallery(request).then(response => {
+            dispatch('setUpdateMyPhotoGalleryErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMyPhotoGalleryErrors', error.response.data.errors);
+        });
+    },
+    async updateMyVideoGallery ({ commit, dispatch }, request) {
+        await UserService.updateMyVideoGallery(request).then(response => {
+            dispatch('setUpdateMyVideoGalleryErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMyVideoGalleryErrors', error.response.data.errors);
+        });
+    },
+    async updateMyAwards ({ commit, dispatch }, request) {
+        await UserService.updateMyAwards(request).then(response => {
+            dispatch('setUpdateMyAwardsErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMyAwardsErrors', error.response.data.errors);
+        });
+    },
+    async updateMyExperience ({ commit, dispatch }, request) {
+        await UserService.updateMyExperience(request).then(response => {
+            dispatch('setUpdateMyExperienceErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMyExperienceErrors', error.response.data.errors);
+        });
+    },
+    async updateMyEducation ({ commit, dispatch }, request) {
+        await UserService.updateMyEducation(request).then(response => {
+            dispatch('setUpdateMyEducationErrors', '');
+        }).catch(error => {
+            dispatch('setUpdateMyEducationErrors', error.response.data.errors);
         });
     },
     async getSettings ({ commit, dispatch }, request) {
@@ -110,8 +198,15 @@ export const actions = {
             dispatch('setUpdateSettingsErrors', error.response.data.errors);
         });
     },
+    async getMe ({ commit, dispatch }) {
+        return UserService.getMe().then(response => {
+            dispatch('setMe', response);
+        });
+    },
     async getMyProfile ({ commit, dispatch }, request) {
-        return UserService.getMyProfile();
+        return UserService.getMyProfile().then(response => {
+            dispatch('setMyProfile', response);
+        });
     },
     async deleteMe ({ commit, dispatch }, request) {
         await UserService.deleteMe().then(() => {
@@ -119,6 +214,9 @@ export const actions = {
         }).catch(error => {
             dispatch('setDeleteMeErrors', error.response.data.errors);
         });
+    },
+    async enableMe ({ commit, dispatch }, request) {
+        commit('ENABLE_ME');
     },
     setSignupErrors: ({ commit }, errors) => {
         commit('SET_SIGNUP_ERRORS', errors);
@@ -135,6 +233,27 @@ export const actions = {
     setCreateProfileErrors: ({ commit }, errors) => {
         commit('SET_CREATE_PROFILE_ERRORS', errors);
     },
+    setUpdateMyGeneralInformationErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_GENERAL_INFORMATION_ERRORS', errors);
+    },
+    setUpdateMySkillsErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_SKILLS_ERRORS', errors);
+    },
+    setUpdateMyPhotoGalleryErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_PHOTO_GALLERY_ERRORS', errors);
+    },
+    setUpdateMyVideoGalleryErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_VIDEO_GALLERY_ERRORS', errors);
+    },
+    setUpdateMyAwardsErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_AWARDS_ERRORS', errors);
+    },
+    setUpdateMyExperienceErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_EXPERIENCE_ERRORS', errors);
+    },
+    setUpdateMyEducationErrors: ({ commit }, errors) => {
+        commit('SET_UPDATE_MY_EDUCATION_ERRORS', errors);
+    },
     setUpdateSettingsErrors: ({ commit }, errors) => {
         commit('SET_UPDATE_SETTINGS_ERRORS', errors);
     },
@@ -146,29 +265,58 @@ export const actions = {
     },
     setMe: ({ commit }, value) => {
         commit('SET_ME', value);
+        localStorage.setItem('me', JSON.stringify(value));
     },
-    setMyProfileImage: ({ commit }, value) => {
-        commit('SET_MY_PROFILE_IMAGE', value);
-        localStorage.setItem('myProfileImage', value);
+    setMyProfile: ({ commit }, value) => {
+        commit('SET_MY_PROFILE', value);
     },
     clearUsersData: ({ commit }) => {
         commit('CLEAR_USERS_DATA');
-        localStorage.removeItem('myProfileImage');
+    },
+    initiateProfileSectionEditSession ({ commit, dispatch }) {
+        commit('INITIATE_PROFILE_SECTION_EDIT_SESSION');
+        dispatch('setMainOverlayVisibility', true, { root: true });
+    },
+    endProfileSectionEditSession ({ commit, dispatch }) {
+        commit('END_PROFILE_SECTION_EDIT_SESSION');
+        dispatch('setMainOverlayVisibility', false, { root: true });
     }
 };
 
 export const getters = {
     me (state) {
-        return localStorage.getItem('theaterHubToken') ? jwtDecode(localStorage.getItem('theaterHubToken')) : null;
+        return state.me || JSON.parse(localStorage.getItem('me'));
     },
     myFullName (state, getters) {
-        if (!getters.me) {
+        if (!getters.me || !getters.me.FirstName) {
             return '';
         }
 
-        return `${getters.me.firstName} ${getters.me.lastName}`;
+        return `${getters.me.FirstName} ${getters.me.LastName}`;
     },
-    myProfileImage (state) {
-        return localStorage.getItem('myProfileImage') ? localStorage.getItem('myProfileImage') : null;
+    myProfileImage (state, getters) {
+        return getters.me.ProfileImage;
+    },
+    isRegistered (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.AccountStatus === UserAccountStatusType.Registered;
+    },
+    isConfirmed (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.AccountStatus === UserAccountStatusType.Confirmed;
+    },
+    isEnabled (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.AccountStatus === UserAccountStatusType.Enabled;
     }
+
 };

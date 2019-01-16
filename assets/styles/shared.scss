@@ -7,6 +7,17 @@ body {
     border-color: $primary !important;
 }
 
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
+    background-color: #000;
+    opacity: 0.8;
+}
+
 .v-btn--flat {
     background-color: transparent;
     color: black;
@@ -42,6 +53,10 @@ body {
     color: $red;
 }
 
+.hidden {
+    display: none;
+}
+
 button {
     background-color: $primary;
     color: $white;
@@ -51,7 +66,6 @@ button {
     text-decoration: none;
     color: $primary;
 }
-
 
 .action-button {
     color: $black;
@@ -165,8 +179,13 @@ button {
     }
 }
 
-
 .profile-row-actions {
     display: flex;
     justify-content: flex-end;
+}
+
+.edited-profile-section {
+    z-index: 200;
+    background-color: $white;
+    border-radius: 10px;
 }

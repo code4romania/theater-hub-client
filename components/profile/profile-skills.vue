@@ -32,7 +32,7 @@
             data: function () {
                 return {
                     profileSkillsModel: Helpers.cloneObject(this.profileSkills),
-                    selectedSkillNames: this.profileSkills.selectedSkills.map(s => s.Name)
+                    selectedSkillNames: this.profileSkills.selectedSkills.map(s => s.Name).sort()
                 };
             },
             methods: {
@@ -46,7 +46,7 @@
                 removeSkill: function (item) {
                     this.profileSkillsModel.selectedSkills.splice(this.profileSkillsModel.selectedSkills.map(s => s.Name).indexOf(item), 1);
                     this.profileSkillsModel.selectedSkills = [...this.profileSkillsModel.selectedSkills];
-                    this.selectedSkillNames                = this.profileSkillsModel.selectedSkills.map(s => s.Name);
+                    this.selectedSkillNames                = this.profileSkillsModel.selectedSkills.map(s => s.Name).sort();
 
                     this.updateProfileSkillsModel();
                 }
