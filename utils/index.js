@@ -36,8 +36,9 @@ export var SocialMediaManager = {
   },
   extractYoutubeEmbedURL (url) {
     if (!this.isValidURL(url, SocialMediaCategoryType.Youtube)) {
-      return
+      return;
     }
+
     var videoID     = '';
     var urlSegments = url.split('v=');
     var index       = urlSegments[urlSegments.length - 1].indexOf('&');
@@ -51,7 +52,7 @@ export var SocialMediaManager = {
   },
   extractVimeoEmbedURL (url) {
     if (!this.isValidURL(url, SocialMediaCategoryType.Vimeo)) {
-      return
+      return;
     }
 
     var videoID     = '';
@@ -121,3 +122,30 @@ export var Validators = {
   }
 
 }
+
+export var HtmlHelpers = {
+  cloneElementDimensions (source, target) {
+    target.style.width  = `${source.offsetWidth}px`;
+    target.style.height = `${source.offsetHeight}px`;
+    target.style.left   = source.offsetLeft;
+    target.style.top    = source.offsetTop;
+  },
+  cloneBodyDimensions (target) {
+    var body = document.getElementsByTagName('body')[0];
+
+    this.cloneElementDimensions(body, target);
+  },
+  isVerticallyFullyInViewport (element) {
+    var clientRect = element.getBoundingClientRect();
+
+    return clientRect.top >= 0 && clientRect.bottom <= window.innerHeight;
+  },
+  scrollToElement (element, offsetY = 0) {
+    window.scrollTo(0, element.offsetTop - offsetY);
+  }
+}
+
+export var NuxtDropzoneHelpers = {
+  addExistingFiles (dropzone, files) {
+  }
+};

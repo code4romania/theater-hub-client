@@ -138,6 +138,7 @@
                     };
 
                     experienceStep.inEditMode = true;
+                    this.updateProfileExperienceModel();
                 },
                 onCancelEditExperienceStepClick: function () {
                     this.profileExperienceModel.experienceSteps[this.experienceFactory.index].inEditMode = false;

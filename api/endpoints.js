@@ -1,30 +1,70 @@
 
 export class Endpoints {
-    static GetWelcomeMessage    = '';
+    static GetWelcomeMessage            = '';
 
-    static GetSkills            = '/applicationdata/skills';
+    static GetSkills                    = '/applicationdata/skills';
 
-    static Login                = '/authentication';
+    static Login                        = '/authentication';
 
-    static CheckUserPassword    = '/authentication/password/validity';
+    static CheckUserPassword            = '/authentication/password/validity';
 
-    static Register             = '/users/register';
+    static Register                     = '/users/register';
 
-    static FinishRegistration   = '/users/register/finish';
+    static FinishRegistration           = '/users/register/finish';
 
-    static ForgotPassword       = '/users/password/forgot';
+    static ForgotPassword               = '/users/password/forgot';
 
-    static ResetPassword        = '/users/password/reset';
+    static ResetPassword                = '/users/password/reset';
 
-    static ChangePassword       = '/users/password/change';
+    static ChangePassword               = '/users/password/change';
 
-    static CreateProfile        = '/users/profile/create';
+    static CreateProfile                = '/users/profile/create';
 
-    static GetSettings          = '/users/settings';
+    static UpdateMyGeneralInformation   = '/users/me/general';
 
-    static UpdateSettings       = '/users/settings';
+    static UpdateMySkills               = '/users/me/skills';
 
-    static GetMyProfile         = '/users/me';
+    static UpdateMyPhotoGallery         = '/users/me/photogallery';
 
-    static DeleteMe             = '/users/me';
+    static UpdateMyVideoGallery         = '/users/me/videogallery';
+
+    static UpdateMyAwards               = '/users/me/awards';
+
+    static UpdateMyExperience           = '/users/me/experience';
+
+    static UpdateMyEducation            = '/users/me/education';
+
+    static GetSettings                  = '/users/settings';
+
+    static UpdateSettings               = '/users/settings';
+
+    static GetMyProfile                 = '/users/me/profile';
+
+    static GetMe                        = '/users/me';
+
+    static DeleteMe                     = '/users/me';
+
+    static CreateVideo                  = '/videos';
+
+    static UpdateVideo                  = '/videos';
+
+    static DeleteVideoByID              = '/videos';
+
+    static CreateAward                  = '/awards';
+
+    static UpdateAward                  = '/awards';
+
+    static DeleteAwardByID              = '/awards';
+
+    static CreateEducationStep          = '/education';
+
+    static UpdateEducationStep          = '/education';
+
+    static DeleteEducationStepByID      = '/education';
+
+    static CreateExperienceStep         = '/experience';
+
+    static UpdateExperienceStep         = '/experience';
+
+    static DeleteExperienceStepByID     = '/experience';
 };

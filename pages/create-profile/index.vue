@@ -22,8 +22,9 @@
 
                     <v-stepper-content step="1" class="pl-5">
                         <v-layout row wrap>
-                            <ProfileGeneralInformation :profileGeneralInformation="profileGeneralInformation"
-                                                @updateProfileGeneralInformation="updateProfileGeneralInformation"/>
+                            <ProfileGeneralInformation  :profileGeneralInformation="profileGeneralInformation"
+                                                        :displayNameFields="false"
+                                                        @updateProfileGeneralInformation="updateProfileGeneralInformation"/>
                             <v-flex xs12 my-5>
                                 <v-btn color="primary" @click="wizardStep = 2" :disabled="!isWizardStepValid()">Next</v-btn>
                             </v-flex>
@@ -34,7 +35,7 @@
 
                     <v-stepper-content step="2" class="pl-5">
                         <v-layout row wrap class="pl-2 pb-5">
-                            <ProfileSkills :profileSkills="profileSkills" :skills="this.applicationData.skills"
+                            <ProfileSkills :profileSkills="profileSkills" :skills="skills"
                                                 @updateProfileSkills="updateProfileSkills"/>
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 1">Back</v-btn>
@@ -48,10 +49,12 @@
                     <v-stepper-content step="3" class="pl-5">
                         <v-layout row wrap>
                             <v-flex xs12>
+                                <span class="field-title">Photo gallery</span>
                                 <ProfilePhotoGallery :profilePhotoGallery="profilePhotoGallery"
                                                     @updateProfilePhotoGallery="updateProfilePhotoGallery"/>
                             </v-flex>
                             <v-flex xs12>
+                                <span class="field-title">Video gallery</span>
                                 <ProfileVideoGallery :profileVideoGallery="profileVideoGallery"
                                                     @updateProfileVideoGallery="updateProfileVideoGallery"/>
                             </v-flex>
@@ -145,7 +148,7 @@ import ProfilePrivacy from '~/components/profile/profile-privacy.vue';
 import ServerSideErrors from '~/components/errors/server-side-errors.vue';
 import { SocialMediaManager, Helpers, Validators } from '~/utils';
 import { SocialMediaCategoryType } from '~/store/entities';
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   components: {
@@ -200,20 +203,32 @@ export default {
   }),
   async fetch ({ error, store, query }) {
     var isAuthenticated             = store.getters['authentication/isAuthenticated'];
+    var isRegistered                = store.getters['users/isRegistered'];
+    var isConfirmed                 = store.getters['users/isConfirmed'];
     var hasFinishRegistrationQuery  = query && query.email && query.registrationID;
 
     if (!isAuthenticated && !hasFinishRegistrationQuery) {
         return error({ statusCode: 404 });
     }
 
-    await store.dispatch('users/finishRegistration', {
-        Email: query.email,
-        RegistrationID: query.registrationID
-    }).then(() => {
-        if (!store.state.users.isFinishRegistrationSuccessful) {
-            return error({ statusCode: 404 });
-        }
-    });
+    if (isAuthenticated && !isRegistered && !isConfirmed) {
+        return error({ statusCode: 404 });
+    }
+
+    if (isAuthenticated && isRegistered && !hasFinishRegistrationQuery) {
+        return error({ statusCode: 404 });
+    }
+
+    if (hasFinishRegistrationQuery && (!isAuthenticated || isRegistered)) {
+        await store.dispatch('users/finishRegistration', {
+            Email: query.email,
+            RegistrationID: query.registrationID
+        }).then(() => {
+            if (!store.state.users.isFinishRegistrationSuccessful) {
+                return error({ statusCode: 404 });
+            }
+        });
+    }
   },
   methods: {
     isWizardStepValid: function () {
@@ -271,56 +286,68 @@ export default {
         return educationStep.title !== '' && educationStep.institutionName !== '';
     },
     areAllVideosValid: function () {
-        var isStepValid = true;
-        var index       = 0;
+        var index = 0;
 
-        while (index < this.profileVideoGallery.videoGallery.length && isStepValid) {
+        while (index < this.profileVideoGallery.videoGallery.length) {
             var video   = this.profileVideoGallery.videoGallery[index];
-            isStepValid = isStepValid && SocialMediaManager.isVideoValid(video.link) && !video.inEditMode;
+            var isValid = SocialMediaManager.isVideoValid(video.link) && !video.inEditMode;
+
+            if (!isValid) {
+                return false;
+            }
 
             index++;
         }
 
-        return isStepValid;
+        return true;
     },
     areAllAwardsValid: function () {
-        var isValid = true;
         var index   = 0;
 
-        while (index < this.profileAwards.awards.length && isValid) {
-            var award = this.profileAwards.awards[index];
-            isValid   = isValid && this.isAwardValid(award) && !award.inEditMode;
+        while (index < this.profileAwards.awards.length) {
+            var award    = this.profileAwards.awards[index];
+            var isValid  = this.isAwardValid(award) && !award.inEditMode;
+
+            if (!isValid) {
+                return false;
+            }
 
             index++;
         }
 
-        return isValid;
+        return true;
     },
     areAllExperienceStepsValid: function () {
-        var isValid         = true;
-        var index           = 0;
-        var experienceSteps = this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length - 1);
+        var index = 0;
 
-        while (index < experienceSteps.length && isValid) {
-            isValid = isValid && this.isExperienceStepValid(experienceSteps[index]);
+        while (index < this.profileExperience.experienceSteps.length) {
+            var experienceStep = this.profileExperience.experienceSteps[index];
+            var isValid        = this.isExperienceStepValid(experienceStep) && !experienceStep.inEditMode;
+
+            if (!isValid) {
+                return false;
+            }
 
             index++;
         }
 
-        return isValid;
+        return true;
     },
     areAllEducationStepsValid: function () {
-        var isValid         = true;
-        var index           = 0;
-        var educationSteps  = this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length - 1);
+        var index = 0;
 
-        while (index < educationSteps.length && isValid) {
-            isValid = isValid && this.isEducationStepValid(educationSteps[index]);
+        while (index < this.profileEducation.educationSteps.length) {
+            var educationStep = this.profileEducation.educationSteps[index];
+            var isValid       = this.isEducationStepValid(educationStep) && !educationStep.inEditMode;
+
+            if (!isValid) {
+                return false;
+            }
 
             index++;
         }
 
-        return isValid;
+        return true;
     },
     async createProfile () {
         await this.$store.dispatch('users/createProfile', {
@@ -340,7 +367,7 @@ export default {
             VideoGallery: this.profileVideoGallery.videoGallery.filter(v => v.isValid).map(v => {
                 return { Video: v.link };
             }),
-            Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length - 1).map(a => {
+            Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length).map(a => {
                 return {
                     Title: a.title,
                     Issuer: a.issuer,
@@ -348,7 +375,7 @@ export default {
                     Date: a.date
                 };
             }),
-            Experience: this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length - 1).map(e => {
+            Experience: this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length).map(e => {
                 return {
                     Position: e.position,
                     Employer: e.employerName,
@@ -357,7 +384,7 @@ export default {
                     EndDate: e.endDate
                 };
             }),
-            Education: this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length - 1).map(e => {
+            Education: this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length).map(e => {
                 return {
                     Title: e.title,
                     Institution: e.institutionName,
@@ -371,8 +398,10 @@ export default {
             BirthDateVisibility: this.profilePrivacy.birthDateVisibility,
             PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility
 
-        }).then(() => {
+        })
+        .then(() => {
             if (!this.users.createProfileErrors) {
+                this.$store.dispatch('users/enableMe');
                 this.$router.replace({ path: 'projects' });
             }
         });
@@ -403,7 +432,10 @@ export default {
     }
   },
   computed: {
-    ...mapState([ 'applicationData', 'users' ])
+    ...mapState([ 'applicationData', 'users' ]),
+    ...mapGetters({
+      skills: 'applicationData/skills'
+    })
   }
 }
 </script>
