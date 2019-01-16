@@ -140,6 +140,7 @@
                     };
 
                     educationStep.inEditMode = true;
+                    this.updateProfileEducationModel();
                 },
                 onCancelEditEducationStepClick: function () {
                     this.profileEducationModel.educationSteps[this.educationFactory.index].inEditMode = false;

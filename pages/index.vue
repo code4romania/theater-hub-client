@@ -34,7 +34,9 @@
 
   export default {
     async fetch ({ store, redirect }) {
-      if (store.getters['authentication/isAuthenticated']) {
+      if (store.getters['authentication/isAuthenticated'] && !store.getters['users/isEnabled']) {
+        return redirect('/create-profile');
+      } else if (store.getters['authentication/isAuthenticated']) {
         return redirect('/projects');
       }
     }

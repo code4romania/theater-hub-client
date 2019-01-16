@@ -24,8 +24,22 @@ export const actions = {
     },
     setSkills: ({ commit }, value) => {
         commit('SET_SKILLS', value);
+        localStorage.setItem('skills', JSON.stringify(value));
     },
     clearApplicationData: ({ commit }) => {
         commit('CLEAR_APPLICATION_DATA');
+        localStorage.removeItem('skills');
+    }
+};
+
+export const getters = {
+    skills (state) {
+        var skills = state.skills;
+
+        if (skills.length === 0 && localStorage.getItem('skills')) {
+            skills = JSON.parse(localStorage.getItem('skills'));
+        }
+
+        return skills;
     }
 };

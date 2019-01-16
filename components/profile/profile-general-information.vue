@@ -8,11 +8,19 @@
                 </dropzone>
             </v-flex>
             <v-flex xs6 mb-3>
+                <v-flex xs12 v-if="displayNameFields">
+                    <v-text-field v-model="profileGeneralInformationModel.firstName" @input="updateProfileGeneralInformationModel"
+                                                                :rules="firstNameRules" label="First name*" validate-on-blur required></v-text-field>
+                </v-flex>
+                <v-flex xs12 v-if="displayNameFields">
+                    <v-text-field v-model="profileGeneralInformationModel.lastName" @input="updateProfileGeneralInformationModel" 
+                                                                :rules="lastNameRules" label="Last name*" validate-on-blur required></v-text-field>
+                </v-flex>
                 <v-flex xs12>
                     <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
                         lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                         <v-text-field slot="activator" v-model="profileGeneralInformationModel.birthDate"
-                                       :rules="birthDateRules" label="Date of birth" prepend-icon="event" readonly>
+                                                                :rules="birthDateRules" label="Date of birth" prepend-icon="event" readonly>
                         </v-text-field>
                         <v-date-picker v-model="profileGeneralInformationModel.birthDate" @input="updateProfileGeneralInformationModel">
                         </v-date-picker>
@@ -20,7 +28,7 @@
                 </v-flex>
                 <v-flex xs12>
                     <v-text-field v-model="profileGeneralInformationModel.phoneNumber" @input="updateProfileGeneralInformationModel"
-                                :rules="phoneNumberRules" label="Phone Number*" validate-on-blur required></v-text-field>
+                                                                :rules="phoneNumberRules" label="Phone Number*" validate-on-blur required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                     <v-text-field v-model="profileGeneralInformationModel.website" @input="updateProfileGeneralInformationModel"
@@ -73,7 +81,7 @@
             components: {
                 Dropzone
             },
-            props: ['profileGeneralInformation'],
+            props: ['profileGeneralInformation', 'displayNameFields'],
             data: function () {
                 return {
                     profileGeneralInformationModel: Helpers.cloneObject(this.profileGeneralInformation),
@@ -82,37 +90,60 @@
                         v => !!v || 'Phone number is required',
                         v => Validators.isValidPhoneNumber(v) || 'Phone number must be valid'
                     ],
+                    firstNameRules: [
+                        v => !!v || 'First name is required',
+                        v => v.length <= 50 || 'First name should have at most 50 characters'
+                    ],
+                    lastNameRules: [
+                        v => !!v || 'Last name is required',
+                        v => v.length <= 50 || 'Last name should have at most 50 characters'
+                    ],
                     birthDateRules: [
                         v => Validators.isValidBirthDate(v) || 'You must be at least 18 years old'
                     ],
                     websiteRules: [
-                        v => v === '' || Validators.isValidURL(v) || 'Website must be valid'
+                        v => !v || Validators.isValidURL(v) || 'Website must be valid'
                     ],
                     descriptionRules: [
-                        v => v === '' || v.length <= 500 || "Description's maximum length is of 500 characters"
+                        v => !v || v.length <= 500 || "Description's maximum length is of 500 characters"
                     ],
                     instagramLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || 'Invalid Instagram link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || 'Invalid Instagram link'
                     ],
                     youtubeLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || 'Invalid Youtube link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || 'Invalid Youtube link'
                     ],
                     facebookLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || 'Invalid Facebook link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || 'Invalid Facebook link'
                     ],
                     linkedinLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || 'Invalid Linkedin link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || 'Invalid Linkedin link'
                     ],
                     profileImageDropzoneOptions: {
                         url: '/',
-                        maxFilesize: 1,
+                        maxFilesize: 2,
                         addRemoveLinks: true,
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
+                        initializeProfileImage: (dropzone) => {
+                            if (this.profileGeneralInformation.profileImage.Image) {
+                                var fileSize = atob(this.profileGeneralInformation.profileImage.Image).length;
+                                var file     = { url: `data:image/;base64,${this.profileGeneralInformation.profileImage.Image}`, size: fileSize };
+                                dropzone.emit('addedfile', file);
+                                dropzone.emit('thumbnail', file, file.url);
+                                dropzone.createThumbnailFromUrl(file, file.url, null, null);
+                                dropzone.emit('complete', file);
+                                dropzone.files.push(file);
+                            }
+                        },
                         thumbnailEventHandler: (dataUrl) => {
-                            this.profileGeneralInformationModel.profileImage = dataUrl;
+                            this.profileGeneralInformationModel.profileImage.Image = dataUrl.replace('data:image/png;base64,', '');
+
+                            this.updateProfileGeneralInformationModel();
                         },
                         removedfileEventHandler: (file) => {
-                            this.profileGeneralInformationModel.profileImage = '';
+                            this.profileGeneralInformationModel.profileImage.Image = '';
+
+                            this.updateProfileGeneralInformationModel();
                         },
                         maxFiles: 1,
                         thumbnailWidth: 160,
@@ -131,6 +162,8 @@
                                     this.removeFile(this.files[0]);
                                 }
                             });
+
+                            this.options.initializeProfileImage(this);
                         }
                     }
                 };
@@ -144,7 +177,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
     #profile-image-dropzone {
         width: 250px;
@@ -155,6 +188,7 @@
         .dz-message {
             margin: 0px;
         }
+
     }
 
 </style>

@@ -63,22 +63,25 @@
         initializePageState: function () {
           this.$store.dispatch('authentication/setLoginErrors', '');
         },
-        submit: function () {
+        async submit () {
           this.$refs.loginForm.validate();
 
           if (!this.valid) {
             return;
           }
 
-          this.$store.dispatch('authentication/login', {
+          await this.$store.dispatch('authentication/login', {
             Email: this.email,
             Password: this.password
-          }).then(() => {
-            if (this.$store.getters['authentication/isAuthenticated']) {
-              this.$store.dispatch('authentication/setLoginErrors', '');
-              this.$router.replace({ path: 'projects' });
-            }
           });
+
+          if (this.$store.getters['authentication/isAuthenticated']) {
+            this.$store.dispatch('authentication/setLoginErrors', '');
+
+            this.$store.dispatch('users/getMe').then(() => {
+              this.$router.replace({ path: 'projects' });
+            });
+          }
         }
       },
       mounted: function () {

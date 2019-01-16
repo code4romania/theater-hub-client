@@ -1,7 +1,6 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12 mt-5>
-            <span class="field-title">Video gallery</span>
             <v-flex xs12 :key="i" v-for="(video, i) in profileVideoGalleryModel.videoGallery">
                 <v-layout row wrap mt-3 ma-1 pa-5 v-bind:class="{'editing-profile-row': video.inEditMode}" class="elevation-1">
                     <v-layout xs12 class="video-link-row profile-focused-row">

@@ -3,7 +3,7 @@
     <v-container id="settings-container" class="main-container pa-5">
         <v-layout row wrap>
 
-            <v-flex xs12 v-if="!isEditingPrivacy">
+            <v-flex xs12 v-if="isEnabled && !isEditingPrivacy">
                 <v-layout row wrap class="profile-information-group">
                     <v-flex xs12 mb-3 class="profile-information-group-header">
                         <h2>Privacy</h2>
@@ -44,7 +44,7 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 v-if="isEditingPrivacy">
+            <v-flex xs12 v-if="isEnabled && isEditingPrivacy">
                <v-layout row wrap elevation-5 pa-5>
                     <v-flex xs12 class="profile-information-group-header">
                         <h2>Edit Privacy</h2>
@@ -63,9 +63,14 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 py-4>
+            <v-flex xs12 py-4 v-if="isEnabled">
                 <v-divider></v-divider>
             </v-flex>
+
+            <v-flex xs12 py-4 v-if="!isEnabled" class="mb-5">
+                <h1>Settings</h1>
+            </v-flex>
+
 
             <v-flex xs12 v-if="!isChangingPassword">
                 <v-btn id="change-password-button" class="primary settings-section-button" large @click="onChangePasswordClick">CHANGE PASSWORD</v-btn>
@@ -153,7 +158,7 @@
     import ProfilePrivacy from '~/components/profile/profile-privacy.vue';
     import { Helpers, Validators } from '~/utils';
     import { VisibilityType } from '~/store/entities';
-    import { mapState } from 'vuex';
+    import { mapGetters, mapState } from 'vuex';
     import * as _ from 'lodash';
 
     export default {
@@ -161,7 +166,7 @@
             ProfilePrivacy,
             ServerSideErrors
         },
-        middleware: 'authenticated',
+        middleware: ['authenticated'],
         asyncData ({ store, query }) {
             return store.dispatch('users/getSettings').then((response) => {
                 return {
@@ -197,6 +202,9 @@
             isDeleteAccountFormValid: false
         }),
         computed: {
+            ...mapGetters({
+                isEnabled: 'users/isEnabled'
+            }),
             ...mapState(['authentication', 'users'])
         },
         methods: {

@@ -18,7 +18,7 @@
         </v-flex>
       </v-layout>
 
-      <v-layout v-if="isAuthenticated">
+      <v-layout v-if="isAuthenticated && isEnabled">
         <v-flex xs4>
           <nav>
             <a class="logo-wrapper" href="/">
@@ -38,8 +38,9 @@
               <div class="header-name-container">
                 <span>Hi, {{ myFullName }}</span>
               </div>
-              <v-avatar size="40px" color="primary">
-                <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+              <v-avatar size="30px">
+                <img :src="require('~/assets/images/default-avatar.svg')" v-if="!myProfileImage" />
+                <img :src="`data:image/;base64,${myProfileImage}`" v-if="myProfileImage" />
               </v-avatar>
             </v-flex>
             <v-list>
@@ -63,6 +64,43 @@
         </v-flex>
       </v-layout>
 
+      <v-layout v-if="isAuthenticated && !isEnabled">
+        <v-flex xs4>
+          <nav>
+            <a class="logo-wrapper" href="/">
+              <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+            </a>
+          </nav>
+        </v-flex>
+        <v-flex xs1 offset-xs5 class="create-profile-container action-button">
+          <nuxt-link to="/create-profile" id="create-profile-btn" class="menu-link">Create profile</nuxt-link>
+        </v-flex>
+        <v-flex xs2 class="sign-up-container action-button">
+          <v-menu offset-y>
+            <v-flex xs12 slot="activator">
+              <div class="header-name-container">
+                <span>Hi, {{ myFullName }}</span>
+              </div>
+              <v-avatar size="30px">
+                <img :src="require('~/assets/images/default-avatar.svg')" />
+              </v-avatar>
+            </v-flex>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <nuxt-link to="/settings" class="menu-link">Settings</nuxt-link>
+                </v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <a id="logout-btn" v-on:click="onLogoutClick" class="menu-link">Logout</a>
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-flex>
+      </v-layout>
+
     </header>
     <main>
       <v-content>
@@ -71,12 +109,13 @@
         </v-container>
       </v-content>
     </main>
+    <div id="main-overlay" class="overlay" v-if="displayMainOverlay"></div>
   </div>
 </template>
 
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapState } from 'vuex';
 
   export default {
     components: {
@@ -86,8 +125,12 @@
       }
     },
     computed: {
+      ...mapState({
+        displayMainOverlay: 'displayMainOverlay'
+      }),
       ...mapGetters({
         isAuthenticated: 'authentication/isAuthenticated',
+        isEnabled: 'users/isEnabled',
         myFullName: 'users/myFullName',
         myProfileImage: 'users/myProfileImage'
       })
@@ -150,7 +193,7 @@
     background-color: #35495e;
   }
 
-  .sign-in-container, .community-container, .projects-container {
+  .sign-in-container, .community-container, .projects-container, .create-profile-container {
       display: -ms-flexbox;
       display: -webkit-flex;
       display: flex;

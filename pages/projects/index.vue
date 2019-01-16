@@ -40,7 +40,7 @@
 <script>
 
     export default {
-        middleware: 'authenticated'
+        middleware: ['authenticated', 'enabled']
     }
 
 </script>

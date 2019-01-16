@@ -26,6 +26,34 @@ export class UserService extends BaseService {
         return this.$axios.$post(Endpoints.CreateProfile, request);
     }
 
+    static async updateMyGeneralInformation (request) {
+        return this.$axios.$post(Endpoints.UpdateMyGeneralInformation, request);
+    }
+
+    static async updateMySkills (request) {
+        return this.$axios.$post(Endpoints.UpdateMySkills, request);
+    }
+
+    static async updateMyPhotoGallery (request) {
+        return this.$axios.$post(Endpoints.UpdateMyPhotoGallery, request);
+    }
+
+    static async updateMyVideoGallery (request) {
+        return this.$axios.$post(Endpoints.UpdateMyVideoGallery, request);
+    }
+
+    static async updateMyAwards (request) {
+        return this.$axios.$post(Endpoints.UpdateMyAwards, request);
+    }
+
+    static async updateMyExperience (request) {
+        return this.$axios.$post(Endpoints.UpdateMyExperience, request);
+    }
+
+    static async updateMyEducation (request) {
+        return this.$axios.$post(Endpoints.UpdateMyEducation, request);
+    }
+
     static async getSettings () {
         return this.$axios.$get(Endpoints.GetSettings);
     }
@@ -36,6 +64,10 @@ export class UserService extends BaseService {
 
     static async getMyProfile (request) {
         return this.$axios.$get(Endpoints.GetMyProfile);
+    }
+
+    static async getMe () {
+        return this.$axios.$get(Endpoints.GetMe);
     }
 
     static async deleteMe (request) {
