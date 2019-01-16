@@ -70,6 +70,10 @@ export class UserService extends BaseService {
         return this.$axios.$get(Endpoints.GetMe);
     }
 
+    static async getCommunityMemberProfile (id) {
+        return this.$axios.$get(`${Endpoints.GetCommunityMemberProfile}/${id}`);
+    }
+
     static async deleteMe (request) {
         return this.$axios.$delete(Endpoints.DeleteMe);
     }
