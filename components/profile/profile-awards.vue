@@ -6,7 +6,7 @@
                     <v-card class="elevation-1">
                         <v-card-title>
                             <v-layout row wrap>
-                                <v-flex xs10>
+                                <v-flex xs10 pt-3>
                                     <span class="award-title">{{ award.title }}</span>, <span class="award-issuer ml-1">{{ award.issuer }}</span>
                                     -
                                     <span class="timeline-date">{{ getTimelineDate(award.date) }}</span>

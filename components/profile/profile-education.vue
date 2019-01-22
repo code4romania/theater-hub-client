@@ -7,7 +7,7 @@
                     <v-card class="elevation-1">
                         <v-card-title>
                             <v-layout row wrap>
-                                <v-flex xs10>
+                                <v-flex xs10 pt-3>
                                     <span class="education-title">{{ step.title }}</span>, <span class="education-institution ml-1">{{ step.institutionName }}</span>
                                 </v-flex>
                                 <v-flex xs2 class="profile-row-actions">

@@ -42,6 +42,8 @@ export class Endpoints {
 
     static GetMe                        = '/users/me';
 
+    static GetCommunityMembers          = '/users/community';
+
     static GetCommunityMemberProfile    = '/users/profile';
 
     static DeleteMe                     = '/users/me';
