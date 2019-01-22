@@ -40,7 +40,7 @@
               </div>
               <v-avatar size="30px">
                 <img :src="require('~/assets/images/default-avatar.svg')" v-if="!myProfileImage" />
-                <img :src="`data:image/;base64,${myProfileImage}`" v-if="myProfileImage" />
+                <img :src="`data:image/;base64,${myProfileImage.Image}`" v-if="myProfileImage" />
               </v-avatar>
             </v-flex>
             <v-list>
