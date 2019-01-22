@@ -166,7 +166,7 @@ export default {
     isCreatingProfile: false,
     wizardStep: 1,
     profileGeneralInformation: {
-        profileImage: '',
+        profileImage: {},
         birthDate: new Date(new Date().getFullYear() - 30, new Date().getMonth(), new Date().getDate()).toISOString().substr(0, 10),
         phoneNumber: '',
         description: '',
@@ -352,7 +352,7 @@ export default {
     async createProfile () {
         await this.$store.dispatch('users/createProfile', {
             ProfileImage: {
-                Image: this.profileGeneralInformation.profileImage
+                Image: this.profileGeneralInformation.profileImage.Image
             },
             BirthDate: this.profileGeneralInformation.birthDate,
             PhoneNumber: this.profileGeneralInformation.phoneNumber,

@@ -4,6 +4,8 @@ import { UserAccountStatusType } from '../store/entities';
 export const state = () => ({
     me: null,
     myProfile: null,
+    communityMembers: [],
+    communitySize: 0,
     communityMemberProfile: null,
     isFinishRegistrationSuccessful: false,
     isEditingProfileSection: false,
@@ -74,6 +76,12 @@ export const mutations = {
     },
     SET_MY_PROFILE: (state, value) => {
         state.myProfile      = value;
+    },
+    SET_COMMUNITY_MEMBERS: (state, value) => {
+        state.communityMembers = value;
+    },
+    SET_COMMUNITY_SIZE: (state, value) => {
+        state.communitySize = value;
     },
     SET_COMMUNITY_MEMBER_PROFILE: (state, value) => {
         state.communityMemberProfile = value;
@@ -212,6 +220,12 @@ export const actions = {
             dispatch('setMyProfile', response);
         });
     },
+    async getCommunityMembers ({ commit, dispatch }, query) {
+        return UserService.getCommunityMembers(query).then(response => {
+            dispatch('setCommunityMembers', response.Members);
+            dispatch('setCommunitySize', response.CommunitySize);
+        });
+    },
     async getCommunityMemberProfile ({ commit, dispatch }, id) {
         return UserService.getCommunityMemberProfile(id).then(response => {
             dispatch('setCommunityMemberProfile', response);
@@ -278,6 +292,12 @@ export const actions = {
     },
     setMyProfile: ({ commit }, value) => {
         commit('SET_MY_PROFILE', value);
+    },
+    setCommunityMembers: ({ commit }, value) => {
+        commit('SET_COMMUNITY_MEMBERS', value);
+    },
+    setCommunitySize: ({ commit }, value) => {
+        commit('SET_COMMUNITY_SIZE', value);
     },
     setCommunityMemberProfile: ({ commit }, value) => {
         commit('SET_COMMUNITY_MEMBER_PROFILE', value);
