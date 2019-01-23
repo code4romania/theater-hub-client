@@ -1,7 +1,7 @@
 <template>
   <section class="create-profile-section">
     <v-container id="create-profile-container" class="main-container pa-1">
-        <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile" class="create-account-success">
+        <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && !isCreatedProfile" class="create-account-success">
             <v-flex text-xs-center>
                 <h1 mb-3>Account created</h1>
             </v-flex>
@@ -14,7 +14,7 @@
                 <v-btn color="primary" dark large @click="isCreatingProfile = true">CREATE PROFILE</v-btn>
             </v-flex>
         </v-layout>
-        <v-layout row wrap v-if="isCreatingProfile" class="create-profile-main-layout">
+        <v-layout row wrap v-if="isCreatingProfile && !isCreatedProfile" class="create-profile-main-layout">
             <v-flex xs12 align-end flexbox pt-5>
                 <v-stepper v-model="wizardStep" vertical>
 
@@ -131,6 +131,19 @@
                 </v-stepper>
             </v-flex>
         </v-layout>
+        <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && isCreatedProfile" class="create-account-success">
+            <v-flex text-xs-center>
+                <h1 mb-3>Profile created</h1>
+            </v-flex>
+            <v-flex xs12 mt-5>
+                <p>
+                    Your profile has been created. You can now enjoy all the functionalities Theater Hub has to offer.
+                </p> 
+            </v-flex>
+            <v-flex xs12 mt-5 text-xs-center>
+                <v-btn color="primary" dark large @click="onGoToSiteClick()">DONE</v-btn>
+            </v-flex>
+        </v-layout>
     </v-container>
   </section>
 </template>
@@ -164,6 +177,7 @@ export default {
   },
   data: () => ({
     isCreatingProfile: false,
+    isCreatedProfile: false,
     wizardStep: 1,
     profileGeneralInformation: {
         profileImage: {},
@@ -402,7 +416,8 @@ export default {
         .then(() => {
             if (!this.users.createProfileErrors) {
                 this.$store.dispatch('users/enableMe');
-                this.$router.replace({ path: 'projects' });
+                this.isCreatingProfile = false;
+                this.isCreatedProfile = true;
             }
         });
     },
@@ -429,6 +444,9 @@ export default {
     },
     updateProfilePrivacy: function (model) {
         this.profilePrivacy = Helpers.cloneObject(model);
+    },
+    onGoToSiteClick: function() {
+        this.$router.replace({ path: 'projects' });
     }
   },
   computed: {
