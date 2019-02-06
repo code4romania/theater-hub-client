@@ -6,7 +6,7 @@
                     <v-layout row class="profile-information-group">
                         <v-avatar size="200px">
                             <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                            <img :src="`data:image/;base64,${profileImage}`" v-if="profileImage" />
+                            <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
                         </v-avatar>
                         <v-flex xs12 class="ml-5 pl-5">
                             <v-flex xs12 class="profile-information-row">
@@ -77,7 +77,7 @@
                                 </v-btn>
                             </div>
                         </v-flex>
-                        <v-flex xs12 pt-4 class="skills-row">
+                        <v-flex xs12 pt-4>
                             <ProfileGeneralInformation  :profileGeneralInformation="editedProfile.profileGeneralInformation"
                                                         :displayNameFields="true"
                                                         @updateProfileGeneralInformation="updateProfileGeneralInformation"/>
@@ -494,7 +494,8 @@ export default {
             ProfileEducationEdit,
             ProfileEducationDelete
         },
-        middleware: ['authenticated', 'enabled'],
+        layout: 'user',
+        middleware: ['authenticated', 'enabled', 'user'],
         data: () => ({
             profile: {},
             editedProfile: {},
@@ -1184,11 +1185,12 @@ export default {
                         !Validators.isValidPhoneNumber(this.editedProfile.profileGeneralInformation.phoneNumber) ||
                         !isWebsiteFieldValid ||
                         !isDescriptionFieldValid ||
-                        !this.areAllSocialMediaLinksValid();
+                        !this.areAllSocialMediaLinksValid() ||
+                        !Validators.isValidBirthDate(this.editedProfile.profileGeneralInformation.birthDate);
             }
         },
         computed: {
-            ...mapState(['authentication', 'users']),
+            ...mapState(['users']),
             ...mapGetters({
                 skills: 'applicationData/skills'
             }),
@@ -1212,7 +1214,7 @@ export default {
             },
             portfolioImages: function () {
                 return this.profile.profilePhotoGallery.photoGallery
-                        .map(p => `data:image/;base64,${p.Image}`);
+                        .map(p => `data:image/png;base64,${p.Image}`);
             },
             isEditingProfileSection: function () {
                 return this.isEditingGeneralInformation || this.isEditingSkills || this.isEditingPhotoGallery ||

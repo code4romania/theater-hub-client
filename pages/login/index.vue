@@ -41,6 +41,7 @@
       components: {
         ServerSideErrors
       },
+      layout: 'visitor',
       middleware: 'visitor',
       data: () => ({
         valid: false,
@@ -75,12 +76,17 @@
             Password: this.password
           });
 
-          if (this.$store.getters['authentication/isAuthenticated']) {
-            this.$store.dispatch('authentication/setLoginErrors', '');
+          if (!this.$store.getters['authentication/isAuthenticated']) {
+            return;
+          }
 
-            this.$store.dispatch('users/getMe').then(() => {
-              this.$router.replace({ path: 'projects' });
-            });
+          this.$store.dispatch('authentication/setLoginErrors', '');
+          await this.$store.dispatch('users/getMe');
+
+          if (this.$store.getters['users/isUser']) {
+            this.$router.replace({ path: 'projects' });
+          } else if (this.$store.getters['users/isAdmin']) {
+            this.$router.replace({ path: 'administration/users' });
           }
         }
       },

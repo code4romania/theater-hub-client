@@ -102,6 +102,10 @@ export var Validators = {
     lowerCasePassword !== upperCasePassword;
   },
   isValidPhoneNumber (phoneNumber) {
+    if (!phoneNumber) {
+      return false;
+    }
+
     phoneNumber = phoneNumber.replace(/\s/g, '');
     if (phoneNumber[0] === '+') {
       phoneNumber = phoneNumber.substring(1, phoneNumber.length);
