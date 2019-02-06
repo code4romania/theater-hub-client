@@ -43,7 +43,7 @@
                             <nuxt-link :to="`/profile/${member.ID}`">
                                 <v-avatar size="120px">
                                     <img :src="require('~/assets/images/default-avatar.svg')" v-if="!member.ProfileImage" />
-                                    <img :src="`data:image/;base64,${member.ProfileImage}`" v-if="member.ProfileImage" />
+                                    <img :src="`data:image/png;base64,${member.ProfileImage}`" v-if="member.ProfileImage" />
                                 </v-avatar>
                             </nuxt-link>
                         </v-flex>
@@ -71,13 +71,21 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
 
     export default {
         components: {
 
         },
-        middleware: ['authenticated', 'enabled'],
+        layout: ({ store }) => {
+            if (!store.getters['authentication/isAuthenticated']) {
+                return 'visitor';
+            } else if (store.getters['users/isAdmin']) {
+                return 'administration';
+            } else {
+                return 'user';
+            }
+        },
+        middleware: ['visitor-or-enabled-user'],
         data: () => ({
             communityMembers: [],
             communitySize: 0,
@@ -180,9 +188,6 @@
             }
 		},
         computed: {
-            ...mapGetters({
-                isAuthenticated: 'authentication/isAuthenticated'
-            }),
             displayedCommunityMembers: function () {
                 return this.communityMembers.map(m => {
                     var memberSkills = this.skills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);

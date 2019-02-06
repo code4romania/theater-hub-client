@@ -40,7 +40,16 @@
 <script>
 
     export default {
-        middleware: ['authenticated', 'enabled']
+        layout: ({ store }) => {
+            if (!store.getters['authentication/isAuthenticated']) {
+                return 'visitor';
+            } else if (store.getters['users/isAdmin']) {
+                return 'administration';
+            } else {
+                return 'user';
+            }
+        },
+        middleware: ['visitor-or-enabled-user']
     }
 
 </script>

@@ -3,7 +3,7 @@
     <v-container fluid privacy-policy-container class="mt-5 pa-5">
         <v-layout row wrap>
             <v-flex>
-                <h1 class="mb-3">Privacy Policy</h1>
+                <h1 class="mb-3">Projects dashboard</h1>
             </v-flex>
             <v-flex xs12>
                 <p>
@@ -38,15 +38,8 @@
 <script>
 
     export default {
-        layout: ({ store }) => {
-            if (!store.getters['authentication/isAuthenticated']) {
-                return 'visitor';
-            } else if (store.getters['users/isAdmin']) {
-                return 'administration';
-            } else {
-                return 'user';
-            }
-        }
+        layout: 'administration',
+        middleware: ['authenticated', 'admin']
     }
 
 </script>

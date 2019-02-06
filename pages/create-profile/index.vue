@@ -141,7 +141,9 @@
                 </p> 
             </v-flex>
             <v-flex xs12 mt-5 text-xs-center>
-                <v-btn color="primary" dark large @click="onGoToSiteClick()">DONE</v-btn>
+                <nuxt-link to="/projects" class="done-button-link">
+                    <v-btn color="primary" dark large>DONE</v-btn>
+                </nuxt-link>
             </v-flex>
         </v-layout>
     </v-container>
@@ -175,6 +177,7 @@ export default {
     ProfilePrivacy,
     ServerSideErrors
   },
+  layout: 'user',
   data: () => ({
     isCreatingProfile: false,
     isCreatedProfile: false,
@@ -219,7 +222,13 @@ export default {
     var isAuthenticated             = store.getters['authentication/isAuthenticated'];
     var isRegistered                = store.getters['users/isRegistered'];
     var isConfirmed                 = store.getters['users/isConfirmed'];
+    var isEnabled                   = store.getters['users/isEnabled'];
+    var isAdmin                     = store.getters['users/isAdmin'];
     var hasFinishRegistrationQuery  = query && query.email && query.registrationID;
+
+    if (isEnabled || isAdmin) {
+        return error({ statusCode: 404 });
+    }
 
     if (!isAuthenticated && !hasFinishRegistrationQuery) {
         return error({ statusCode: 404 });
@@ -444,9 +453,6 @@ export default {
     },
     updateProfilePrivacy: function (model) {
         this.profilePrivacy = Helpers.cloneObject(model);
-    },
-    onGoToSiteClick: function() {
-        this.$router.replace({ path: 'projects' });
     }
   },
   computed: {
@@ -470,6 +476,10 @@ export default {
             box-shadow: none;
             -webkit-box-shadow: none;
         }
+    }
+
+    .done-button-link {
+        text-decoration: none;
     }
 
 </style>

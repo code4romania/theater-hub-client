@@ -1,5 +1,6 @@
-import { UserService }           from '../api/services';
-import { UserAccountStatusType } from '../store/entities';
+import { UserService }             from '../api/services';
+import { UserAccountStatusType,
+                    UserRoleType } from '../store/entities';
 
 export const state = () => ({
     me: null,
@@ -12,6 +13,7 @@ export const state = () => ({
     signupErrors: [],
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
+    setPasswordErrors: [],
     createProfileErrors: [],
     updateMyGeneralInformationErrors: [],
     updateMySkillsErrors: [],
@@ -34,6 +36,9 @@ export const mutations = {
     },
     SET_RESET_PASSWORD_ERRORS: (state, errors) => {
         state.resetPasswordErrors = errors;
+    },
+    SET_ADD_PASSWORD_ERRORS: (state, errors) => {
+        state.setPasswordErrors = errors;
     },
     SET_CHANGE_PASSWORD_ERRORS: (state, errors) => {
         state.changePasswordErrors = errors;
@@ -130,6 +135,13 @@ export const actions = {
             dispatch('setResetPasswordErrors', '');
         }).catch(error => {
             dispatch('setResetPasswordErrors', error.response.data.errors);
+        });
+    },
+    async setPassword ({ commit, dispatch }, request) {
+        await UserService.setPassword(request).then(response => {
+            dispatch('updateSetPasswordErrors', '');
+        }).catch(error => {
+            dispatch('updateSetPasswordErrors', error.response.data.errors);
         });
     },
     async changePassword ({ commit, dispatch }, request) {
@@ -250,6 +262,9 @@ export const actions = {
     setResetPasswordErrors: ({ commit }, errors) => {
         commit('SET_RESET_PASSWORD_ERRORS', errors);
     },
+    updateSetPasswordErrors: ({ commit }, errors) => {
+        commit('SET_ADD_PASSWORD_ERRORS', errors);
+    },
     setChangePasswordErrors: ({ commit }, errors) => {
         commit('SET_CHANGE_PASSWORD_ERRORS', errors);
     },
@@ -304,6 +319,7 @@ export const actions = {
     },
     clearUsersData: ({ commit }) => {
         commit('CLEAR_USERS_DATA');
+        localStorage.removeItem('me');
     },
     initiateProfileSectionEditSession ({ commit, dispatch }) {
         commit('INITIATE_PROFILE_SECTION_EDIT_SESSION');
@@ -349,6 +365,20 @@ export const getters = {
         }
 
         return getters.me.AccountStatus === UserAccountStatusType.Enabled;
+    },
+    isUser (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.Role === UserRoleType.User;
+    },
+    isAdmin (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.Role === UserRoleType.Admin || getters.me.Role === UserRoleType.SuperAdmin;
     }
 
 };
