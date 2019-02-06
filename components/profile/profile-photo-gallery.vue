@@ -28,11 +28,12 @@
                         url: '/',
                         maxFilesize: 2,
                         addRemoveLinks: true,
+                        autoProcessQueue: false,
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
                             this.profilePhotoGallery.photoGallery.forEach(photo => {
                                 var fileSize = atob(photo.Image).length;
-                                var file     = { url: `data:image/;base64,${photo.Image}`, size: fileSize, upload: { uuid: photo.ID } };
+                                var file     = { url: `data:image/png;base64,${photo.Image}`, size: fileSize, upload: { uuid: photo.ID } };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -64,6 +65,10 @@
                                 this.options.removedfileEventHandler(file);
                             });
 
+                            this.on('sending', () => {
+                                return false;
+                            });
+
                             this.options.initializePhotoGallery(this);
                         }
                     }
@@ -77,6 +82,14 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+    #photo-gallery-dropzone {
+
+        .dz-progress {
+            display: none;
+        }
+
+    }
 
 </style>

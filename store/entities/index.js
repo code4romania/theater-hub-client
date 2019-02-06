@@ -16,6 +16,20 @@ export var SocialMediaCategoryType = {
   'Vimeo': 4
 }
 
+export var SortOrientationType = {
+  'ASC': 0,
+  'DESC': 1
+}
+
+export var UserSortCriterion = {
+  'None': 0,
+  'Name': 1,
+  'Email': 2,
+  'Role': 3,
+  'AccountStatus': 4,
+  'ProfileVisibility': 5
+}
+
 export var VisibilityType = {
   'Everyone': 0,
   'Community': 1,
@@ -23,11 +37,18 @@ export var VisibilityType = {
 }
 
 export var UserAccountStatusType = {
-  'Registered': 0,
-  'Confirmed': 1,
-  'Enabled': 2,
-  'Disabled': 3,
-  'Deleted': 4
+  'Managed': 0,
+  'Registered': 1,
+  'Confirmed': 2,
+  'Enabled': 3,
+  'Disabled': 4,
+  'Deleted': 5
+}
+
+export var UserRoleType = {
+  'User': 0,
+  'Admin': 1,
+  'SuperAdmin': 2
 }
 
 export class Wish {

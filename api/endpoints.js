@@ -16,6 +16,8 @@ export class Endpoints {
 
     static ResetPassword                = '/users/password/reset';
 
+    static SetPassword                  = '/users/password/set';
+
     static ChangePassword               = '/users/password/change';
 
     static CreateProfile                = '/users/profile/create';
@@ -71,4 +73,12 @@ export class Endpoints {
     static UpdateExperienceStep         = '/experience';
 
     static DeleteExperienceStepByID     = '/experience';
+
+    static Administration = {
+        GetUsers: '/administration/users',
+        AddUser: '/administration/user',
+        EnableUser: '/administration/user/{1}/enable',
+        DisableUser: '/administration/user/{1}/disable',
+        DeleteUser: '/administration/user/{1}/delete'
+    }
 };

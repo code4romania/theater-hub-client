@@ -67,6 +67,7 @@
       components: {
         ServerSideErrors
       },
+      layout: 'visitor',
       middleware: 'visitor',
       data: () => ({
         valid: false,
