@@ -20,7 +20,7 @@
                     <v-layout row class="profile-information-group">
                         <v-avatar size="200px">
                             <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                            <img :src="`data:image/;base64,${profileImage}`" v-if="profileImage" />
+                            <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
                         </v-avatar>
                         <v-flex xs12 class="ml-5 pl-5">
                             <v-flex xs12 class="profile-information-row">
@@ -267,6 +267,16 @@
     import { SocialMediaManager } from '~/utils';
 
     export default {
+        layout: ({ store }) => {
+            if (!store.getters['authentication/isAuthenticated']) {
+                return 'visitor';
+            } else if (store.getters['users/isAdmin']) {
+                return 'administration';
+            } else {
+                return 'user';
+            }
+        },
+        middleware: ['visitor-or-enabled-user'],
         data: () => ({
             portfolioImagesIndex: null
         }),
@@ -389,7 +399,7 @@
             },
             portfolioImages: function () {
                 return this.profile.profilePhotoGallery.photoGallery
-                        .map(p => `data:image/;base64,${p.Image}`);
+                        .map(p => `data:image/png;base64,${p.Image}`);
             },
             hasBirthDate: function () {
                 return !!this.profile.profileGeneralInformation.birthDate;

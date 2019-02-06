@@ -38,7 +38,15 @@
 <script>
 
     export default {
-        middleware: 'visitor'
+        layout: ({ store }) => {
+            if (!store.getters['authentication/isAuthenticated']) {
+                return 'visitor';
+            } else if (store.getters['users/isAdmin']) {
+                return 'administration';
+            } else {
+                return 'user';
+            }
+        }
     }
 
 </script>

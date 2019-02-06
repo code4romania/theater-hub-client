@@ -3,7 +3,7 @@
     <v-container id="settings-container" class="main-container pa-5">
         <v-layout row wrap>
 
-            <v-flex xs12 v-if="isEnabled && !isEditingPrivacy">
+            <v-flex xs12 v-if="isUser && isEnabled && !isEditingPrivacy">
                 <v-layout row wrap class="profile-information-group">
                     <v-flex xs12 mb-3 class="profile-information-group-header">
                         <h2>Privacy</h2>
@@ -44,7 +44,7 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 v-if="isEnabled && isEditingPrivacy">
+            <v-flex xs12 v-if="isUser && isEnabled && isEditingPrivacy">
                <v-layout row wrap elevation-5 pa-5>
                     <v-flex xs12 class="profile-information-group-header">
                         <h2>Edit Privacy</h2>
@@ -63,14 +63,13 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 py-4 v-if="isEnabled">
+            <v-flex xs12 py-4 v-if="isUser && isEnabled">
                 <v-divider></v-divider>
             </v-flex>
 
-            <v-flex xs12 py-4 v-if="!isEnabled" class="mb-5">
+            <v-flex xs12 v-if="!isUser || !isEnabled" class="mb-5">
                 <h1>Settings</h1>
             </v-flex>
-
 
             <v-flex xs12 v-if="!isChangingPassword">
                 <v-btn id="change-password-button" class="primary settings-section-button" large @click="onChangePasswordClick">CHANGE PASSWORD</v-btn>
@@ -166,6 +165,13 @@
             ProfilePrivacy,
             ServerSideErrors
         },
+        layout: ({ store }) => {
+            if (store.getters['users/isAdmin']) {
+                return 'administration';
+            }
+
+            return 'user';
+        },
         middleware: ['authenticated'],
         asyncData ({ store, query }) {
             return store.dispatch('users/getSettings').then((response) => {
@@ -203,7 +209,8 @@
         }),
         computed: {
             ...mapGetters({
-                isEnabled: 'users/isEnabled'
+                isEnabled: 'users/isEnabled',
+                isUser: 'users/isUser'
             }),
             ...mapState(['authentication', 'users'])
         },
@@ -299,7 +306,7 @@
                         this.$store.dispatch('users/deleteMe').then(() => {
                             if (!this.users.deleteMeErrors) {
                                 this.$store.dispatch('authentication/logout');
-                                this.$router.replace({ path: 'login' });
+                                this.$router.push({ path: '/login' });
                             }
                         });
                     }

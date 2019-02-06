@@ -1,14 +1,14 @@
 <template>
-  <section class="reset-password-section">
-    <v-container fluid reset-password-container elevation-4 class="mt-5 pa-5">
+  <section class="set-password-section">
+    <v-container fluid set-password-container elevation-4 class="mt-5 pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">Reset password</h1>
+            <h1 class="mb-3">Set password</h1>
 
             <v-layout>
 
                 <v-flex xs12 v-if="!isSuccessfulSubmit" pt-2>
-                    <v-form ref="resetPasswordForm" v-model="valid">
+                    <v-form ref="setPasswordForm" v-model="valid">
                         <v-flex xs12>
                             <v-text-field v-model="password"  :rules="passwordRules" label="Password*" validate-on-blur required type="password"></v-text-field>
                         </v-flex>
@@ -19,16 +19,11 @@
                         <v-flex xs12 mt-3>
                             <v-btn @click="submit" class="ml-0" color="primary">SUBMIT</v-btn>
                         </v-flex>
-                        <v-flex v-if="users.resetPasswordErrors">
-                            <ServerSideErrors :errors="users.resetPasswordErrors"/>
+                        <v-flex v-if="users.setPasswordErrors">
+                            <ServerSideErrors :errors="users.setPasswordErrors"/>
                         </v-flex>
                     </v-form>
                 </v-flex>
-
-                <v-flex xs12 align-end flexbox v-if="isSuccessfulSubmit" pt-2>
-                      Your password has been successfully changed.
-                </v-flex>
-
             </v-layout>
           </v-flex>
         </v-layout>
@@ -60,9 +55,16 @@
       computed: {
         ...mapState(['users'])
       },
+     async fetch ({ error, store, query }) {
+         var hasFinishRegistrationQuery = query && query.email && query.registrationID;
+
+         if (!hasFinishRegistrationQuery) {
+             return error({ statusCode: 404 });
+         }
+     },
       methods: {
         initializePageState: function () {
-          this.$store.dispatch('users/setResetPasswordErrors', '');
+          this.$store.dispatch('users/updateSetPasswordErrors', '');
         },
         validateConfirmPassword () {
           if (!this.confirmPassword) {
@@ -76,20 +78,20 @@
           return [true];
         },
         submit: function () {
-          this.$refs.resetPasswordForm.validate();
+          this.$refs.setPasswordForm.validate();
 
           if (!this.valid) {
             return;
           }
 
-          this.$store.dispatch('users/resetPassword', {
-            Password: this.password,
-            ConfirmPassword: this.confirmPassword,
-            ResetForgottenPasswordID: this.$route.query.resetForgottenPasswordID,
-            Email: this.$route.query.email
+          this.$store.dispatch('users/setPassword', {
+              Password: this.password,
+              ConfirmPassword: this.confirmPassword,
+              RegistrationID: this.$route.query.registrationID,
+              Email: this.$route.query.email
           }).then(() => {
-              if (!this.users.resetPasswordErrors) {
-                this.isSuccessfulSubmit = true;
+              if (!this.users.setPasswordErrors) {
+                this.$router.push({ path: `/create-profile/?registrationID=${this.$route.query.registrationID}&email=${this.$route.query.email}` });
               }
           });
         }
@@ -102,7 +104,7 @@
 
 <style lang="scss" scoped>
 
-	.reset-password-container {
+	.set-password-container {
         max-width: 700px;
     }
 

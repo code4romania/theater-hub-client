@@ -33,8 +33,12 @@
 <script>
 
   export default {
+    layout: 'visitor',
+    middleware: 'visitor',
     async fetch ({ store, redirect }) {
-      if (store.getters['authentication/isAuthenticated'] && !store.getters['users/isEnabled']) {
+      if (store.getters['users/isAdmin']) {
+        return redirect('/administration/users');
+      } else if (store.getters['authentication/isAuthenticated'] && !store.getters['users/isEnabled']) {
         return redirect('/create-profile');
       } else if (store.getters['authentication/isAuthenticated']) {
         return redirect('/projects');

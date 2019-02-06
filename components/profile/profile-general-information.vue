@@ -123,11 +123,12 @@
                         url: '/',
                         maxFilesize: 2,
                         addRemoveLinks: true,
+                        autoProcessQueue: false,
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializeProfileImage: (dropzone) => {
                             if (this.profileGeneralInformation.profileImage.Image) {
                                 var fileSize = atob(this.profileGeneralInformation.profileImage.Image).length;
-                                var file     = { url: `data:image/;base64,${this.profileGeneralInformation.profileImage.Image}`, size: fileSize };
+                                var file     = { url: `data:image/png;base64,${this.profileGeneralInformation.profileImage.Image}`, size: fileSize };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -163,6 +164,10 @@
                                 }
                             });
 
+                            this.on('sending', () => {
+                                return false;
+                            });
+
                             this.options.initializeProfileImage(this);
                         }
                     }
@@ -187,6 +192,10 @@
 
         .dz-message {
             margin: 0px;
+        }
+
+        .dz-progress {
+            display: none;
         }
 
     }
