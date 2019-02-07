@@ -251,7 +251,7 @@
         },
         mounted () {
             window.onscroll = _.throttle(() => {
-                if (this.isEditingProfileSection) {
+                if (this.isEditingGeneralInformation) {
                     this.$store.dispatch('syncMainOverlaySize');
                 }
             }, 100);

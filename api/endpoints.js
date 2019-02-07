@@ -77,8 +77,8 @@ export class Endpoints {
     static Administration = {
         GetUsers: '/administration/users',
         AddUser: '/administration/user',
-        EnableUser: '/administration/user/{1}/enable',
-        DisableUser: '/administration/user/{1}/disable',
-        DeleteUser: '/administration/user/{1}/delete'
+        EnableUser: '/administration/user/{0}/enable',
+        DisableUser: '/administration/user/{0}/disable',
+        DeleteUser: '/administration/user/{0}/delete'
     }
 };
