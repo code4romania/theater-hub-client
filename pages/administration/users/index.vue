@@ -22,7 +22,7 @@
                     no-results-text="No users matching your criteria"
                     class="elevation-1">
                         <template slot="items" slot-scope="dashboard">
-                            <tr class="users-dashboard-row" @click="onDashboarduserClick(dashboard.item)">
+                            <tr class="users-dashboard-row" @click="onDashboardUserClick(dashboard.item)" v-if="!isEditedUser(dashboard.item)">
                                 <td>
                                     <v-avatar size="30px">
                                         <img :src="require('~/assets/images/default-avatar.svg')" v-if="!dashboard.item.ProfileImage" />
@@ -45,6 +45,96 @@
                                         <v-flex xs12 md6 lg4>
                                             <v-btn id="delete-user-button" small class="dashboard-action-button"
                                                         @click="onDeleteUserClick($event, dashboard.item)">DELETE</v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="dashboard.item.isEnabling" class="edited-dashboard-user">
+                                <td colspan="6" text-xs-left>
+                                    <div class="user-action-content">
+                                        Are you sure you wish to enable {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                    </div>
+                                    <div class="user-action-content">
+                                        <v-textarea
+                                            id="text-area-field"
+                                            v-model="actionMessage"
+                                            auto-grow box
+                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                        </v-textarea>
+                                    </div>
+                                </td>
+                                <td class="text-xs-left">
+                                    <v-layout>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="confirm-enable-user-button"
+                                                    v-on:click="onConfirmEnableUserClick(dashboard.item)" :disabled="isConfirmButtonDisabled()">
+                                                <v-icon>done</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="cancel-enable-user-button" v-on:click="onCancelEnableUserClick(dashboard.item)">
+                                                <v-icon>clear</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="dashboard.item.isDisabling" class="edited-dashboard-user">
+                                <td colspan="6" text-xs-left>
+                                    <div class="user-action-content">
+                                        Are you sure you wish to disable {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                    </div>
+                                    <div class="user-action-content">
+                                        <v-textarea
+                                            id="text-area-field"
+                                            v-model="actionMessage"
+                                            auto-grow box
+                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                        </v-textarea>
+                                    </div>
+                                </td>
+                                <td class="text-xs-left">
+                                    <v-layout>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="confirm-disable-user-button"
+                                                v-on:click="onConfirmDisableUserClick(dashboard.item)" :disabled="isConfirmButtonDisabled()">
+                                                <v-icon>done</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="cancel-disable-user-button" v-on:click="onCancelDisableUserClick(dashboard.item)">
+                                                <v-icon>clear</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </td>
+                            </tr>
+                            <tr v-if="dashboard.item.isDeleting" class="edited-dashboard-user">
+                                <td colspan="6" text-xs-left>
+                                    <div class="user-action-content">
+                                        Are you sure you wish to delete {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                    </div>
+                                    <div class="user-action-content">
+                                        <v-textarea
+                                            id="text-area-field"
+                                            v-model="actionMessage"
+                                            auto-grow box
+                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                        </v-textarea>
+                                    </div>
+                                </td>
+                                <td class="text-xs-left">
+                                    <v-layout>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="confirm-delete-user-button"
+                                                    v-on:click="onConfirmDeleteUserClick(dashboard.item)" :disabled="isConfirmButtonDisabled()">
+                                                <v-icon>done</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                        <v-flex xs12 md6 lg4>
+                                            <v-btn outline small fab class="cancel-delete-user-button" v-on:click="onCancelDeleteUserClick(dashboard.item)">
+                                                <v-icon>clear</v-icon>
+                                            </v-btn>
                                         </v-flex>
                                     </v-layout>
                                 </td>
@@ -80,7 +170,12 @@
                 { text: 'Profile visibility', value: 'ProfileVisibility' },
                 { text: 'Actions', value: 'Actions', sortable: false }
             ],
-            searchTerm: ''
+            searchTerm: '',
+            editedUser: null,
+            actionMessage: '',
+            messageRules: [
+                v => !v || v.length <= 500 || 'Message must not exceed 500 characters'
+            ]
         }),
         watch: {
             dashboardUsersTablePagination: {
@@ -106,26 +201,111 @@
 
                 await this.$store.dispatch('administration/getDashboardUsers', requestQuery);
 
-                this.dashboardUsers = this.$store.state.administration.dashboardUsers;
+                this.dashboardUsers = this.$store.state.administration.dashboardUsers.map(u => {
+                    return {
+                        ...u,
+                        isEnabling: false,
+                        isDisabling: false,
+                        isDeleting: false
+                    };
+                });
                 this.dashboardUsersTotal = this.$store.state.administration.dashboardUsersTotal;
             },
             onSearchKeyup: function (event) {
                 this.updateUsersDashboardTable();
             },
-            onDashboarduserClick: function (user) {
+            onDashboardUserClick: function (user) {
                 window.open(`/profile/${user.ID}`, '_blank')
             },
             onEnableUserClick: function (event, user) {
                 event.preventDefault();
                 event.stopPropagation();
+                this.cancelUserEditMode(this.editedUser);
+                this.actionMessage = '';
+
+                this.$store.dispatch('administration/initiateAdministrationEditSession');
+                user.isEnabling = true;
+                this.editedUser = user;
             },
             onDisableUserClick: function (event, user) {
                 event.preventDefault();
                 event.stopPropagation();
+                this.cancelUserEditMode(this.editedUser);
+                this.actionMessage = '';
+
+                this.$store.dispatch('administration/initiateAdministrationEditSession');
+                user.isDisabling = true;
+                this.editedUser = user;
             },
             onDeleteUserClick: function (event, user) {
                 event.preventDefault();
                 event.stopPropagation();
+                this.cancelUserEditMode(this.editedUser);
+                this.actionMessage = '';
+
+                this.$store.dispatch('administration/initiateAdministrationEditSession');
+                user.isDeleting = true;
+                this.editedUser = user;
+            },
+            async onConfirmEnableUserClick (user) {
+                var request  = {
+                    id: user.ID,
+                    body: {
+                        Message: this.actionMessage
+                    }
+                };
+
+                await this.$store.dispatch('administration/enableUser', request);
+
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                this.editedUser = null;
+
+                this.updateUsersDashboardTable();
+            },
+            onCancelEnableUserClick: function (user) {
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                user.isEnabling = false;
+                this.editedUser = null;
+            },
+            async onConfirmDisableUserClick (user) {
+                var request  = {
+                    id: user.ID,
+                    body: {
+                        Message: this.actionMessage
+                    }
+                };
+
+                await this.$store.dispatch('administration/disableUser', request);
+
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                this.editedUser = null;
+
+                this.updateUsersDashboardTable();
+            },
+            onCancelDisableUserClick: function (user) {
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                user.isDisabling = false;
+                this.editedUser = null;
+            },
+            async onConfirmDeleteUserClick (user) {
+                var request  = {
+                    id: user.ID,
+                    body: {
+                        Message: this.actionMessage
+                    }
+                };
+
+                await this.$store.dispatch('administration/deleteUser', request);
+
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                this.editedUser = null;
+
+                this.updateUsersDashboardTable();
+            },
+            onCancelDeleteUserClick: function (user) {
+                this.$store.dispatch('administration/endAdministrationEditSession');
+                user.isDeleting = false;
+                this.editedUser = null;
             },
             getRoleElementText: function (value) {
                 return (_.invert(UserRoleType))[value];
@@ -141,6 +321,21 @@
             },
             showDisabledUserButton: function (user) {
                 return user.AccountStatus === UserAccountStatusType.Enabled;
+            },
+            cancelUserEditMode: function (user) {
+                if (!user) {
+                    return;
+                }
+
+                user.isEnabling  = false;
+                user.isDisabling = false;
+                user.isDeleting  = false;
+            },
+            isEditedUser: function (user) {
+                return user.isEnabling || user.isDisabling || user.isDeleting;
+            },
+            isConfirmButtonDisabled: function () {
+                return this.actionMessage.length > 500;
             }
         }
     }
@@ -160,6 +355,20 @@
     #delete-user-button {
         background-color: #F00;
         color: #FFF;
+    }
+
+    .user-action-content {
+        text-align: left;
+        font-size: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .edited-dashboard-user {
+        z-index: 200;
+        background-color: #FFF;
+        border-radius: 10px;
+        height: 100px;
     }
 
 </style>

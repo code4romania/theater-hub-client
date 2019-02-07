@@ -6,7 +6,8 @@ export const state = () => ({
     addUserErrors: [],
     enableUserErrors: [],
     disableUserErrors: [],
-    deleteUserErrors: []
+    deleteUserErrors: [],
+    isAdministrationEditing: false
 });
 
 export const mutations = {
@@ -27,6 +28,12 @@ export const mutations = {
     },
     SET_DELETE_USER_ERRORS: (state, errors) => {
         state.deleteUserErrors = errors;
+    },
+    INITIATE_ADMINISTRATION_EDIT_SESSION: (state) => {
+        state.isAdministrationEditing = true;
+    },
+    END_ADMINISTRATION_EDIT_SESSION: (state) => {
+        state.isAdministrationEditing = false;
     }
 };
 
@@ -38,22 +45,22 @@ export const actions = {
             dispatch('setAddUserErrors', error.response.data.errors);
         });
     },
-    async enableUser ({ commit, dispatch }, id) {
-        await AdministrationService.enableUser(id).then(response => {
+    async enableUser ({ commit, dispatch }, request) {
+        await AdministrationService.enableUser(request.id, request.body).then(response => {
             dispatch('setEnableUserErrors', '');
         }).catch(error => {
             dispatch('setEnableUserErrors', error.response.data.errors);
         });
     },
-    async disableUser ({ commit, dispatch }, id) {
-        await AdministrationService.disableUser(id).then(response => {
+    async disableUser ({ commit, dispatch }, request) {
+        await AdministrationService.disableUser(request.id, request.body).then(response => {
             dispatch('setDisableUserErrors', '');
         }).catch(error => {
             dispatch('setDisableUserErrors', error.response.data.errors);
         });
     },
-    async deleteUser ({ commit, dispatch }, id) {
-        await AdministrationService.deleteUser(id).then(response => {
+    async deleteUser ({ commit, dispatch }, request) {
+        await AdministrationService.deleteUser(request.id, request.body).then(response => {
             dispatch('setDeleteUserErrors', '');
         }).catch(error => {
             dispatch('setDeleteUserErrors', error.response.data.errors);
@@ -82,6 +89,12 @@ export const actions = {
     },
     setDeleteUserErrors: ({ commit }, errors) => {
         commit('SET_DELETE_USER_ERRORS', errors);
+    },
+    initiateAdministrationEditSession ({ commit, dispatch }) {
+        commit('INITIATE_ADMINISTRATION_EDIT_SESSION');
+    },
+    endAdministrationEditSession ({ commit, dispatch }) {
+        commit('END_ADMINISTRATION_EDIT_SESSION');
     }
 };
 

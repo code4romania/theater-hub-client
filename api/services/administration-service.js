@@ -10,15 +10,15 @@ export class AdministrationService extends BaseService {
         return this.$axios.$post(Endpoints.Administration.AddUser, request);
     }
 
-    static async enableUser (id) {
-        return this.$axios.$get(Endpoints.Administration.EnableUser.replace('{0}', id));
+    static async enableUser (id, request) {
+        return this.$axios.$post(Endpoints.Administration.EnableUser.replace('{0}', id), request);
     }
 
-    static async disableUser (id) {
-        return this.$axios.$get(Endpoints.Administration.DisableUser.replace('{0}', id));
+    static async disableUser (id, request) {
+        return this.$axios.$post(Endpoints.Administration.DisableUser.replace('{0}', id), request);
     }
 
-    static async deleteUser (id) {
-        return this.$axios.$get(Endpoints.Administration.DeleteUser.replace('{0}', id));
+    static async deleteUser (id, request) {
+        return this.$axios.$post(Endpoints.Administration.DeleteUser.replace('{0}', id), request);
     }
 }
