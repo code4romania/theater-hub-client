@@ -3,11 +3,12 @@ import { AdministrationService } from '../api/services';
 export const state = () => ({
     dashboardUsers: [],
     dashboardUsersTotal: 0,
-    addUserErrors: [],
+    inviteUserErrors: [],
     enableUserErrors: [],
     disableUserErrors: [],
     deleteUserErrors: [],
-    isAdministrationEditing: false
+    isAdministrationEditing: false,
+    isAdministrationAddingUser: false
 });
 
 export const mutations = {
@@ -17,8 +18,8 @@ export const mutations = {
     SET_DASHBOARD_USERS_TOTAL: (state, value) => {
         state.dashboardUsersTotal = value;
     },
-    SET_ADD_USER_ERRORS: (state, errors) => {
-        state.addUserErrors = errors;
+    SET_INVITE_USER_ERRORS: (state, errors) => {
+        state.inviteUserErrors = errors;
     },
     SET_ENABLE_USER_ERRORS: (state, errors) => {
         state.enableUserErrors = errors;
@@ -34,15 +35,21 @@ export const mutations = {
     },
     END_ADMINISTRATION_EDIT_SESSION: (state) => {
         state.isAdministrationEditing = false;
+    },
+    INITIATE_ADMINISTRATION_INVITE_USER_SESSION: (state) => {
+        state.isAdministrationAddingUser = true;
+    },
+    END_ADMINISTRATION_INVITE_USER_SESSION: (state) => {
+        state.isAdministrationAddingUser = false;
     }
 };
 
 export const actions = {
-    async addUser ({ commit, dispatch }, request) {
-        await AdministrationService.addUser(request).then(response => {
-            dispatch('setAddUserErrors', '');
+    async inviteUser ({ commit, dispatch }, request) {
+        await AdministrationService.inviteUser(request).then(response => {
+            dispatch('setInviteUserErrors', '');
         }).catch(error => {
-            dispatch('setAddUserErrors', error.response.data.errors);
+            dispatch('setInviteUserErrors', error.response.data.errors);
         });
     },
     async enableUser ({ commit, dispatch }, request) {
@@ -78,8 +85,8 @@ export const actions = {
     setDashboardUsersTotal: ({ commit }, value) => {
         commit('SET_DASHBOARD_USERS_TOTAL', value);
     },
-    setAddUserErrors: ({ commit }, errors) => {
-        commit('SET_ADD_USER_ERRORS', errors);
+    setInviteUserErrors: ({ commit }, errors) => {
+        commit('SET_INVITE_USER_ERRORS', errors);
     },
     setEnableUserErrors: ({ commit }, errors) => {
         commit('SET_ENABLE_USER_ERRORS', errors);
@@ -95,6 +102,14 @@ export const actions = {
     },
     endAdministrationEditSession ({ commit, dispatch }) {
         commit('END_ADMINISTRATION_EDIT_SESSION');
+    },
+    initiateAdministrationInviteUserSession ({ commit, dispatch }) {
+        commit('INITIATE_ADMINISTRATION_INVITE_USER_SESSION');
+        dispatch('setMainOverlayVisibility', true, { root: true });
+    },
+    endAdministrationInviteUserSession ({ commit, dispatch }) {
+        commit('END_ADMINISTRATION_INVITE_USER_SESSION');
+        dispatch('setMainOverlayVisibility', false, { root: true });
     }
 };
 

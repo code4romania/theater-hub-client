@@ -11,6 +11,7 @@ export const state = () => ({
     isFinishRegistrationSuccessful: false,
     isEditingProfileSection: false,
     signupErrors: [],
+    managedUserSignupErrors: [],
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
     setPasswordErrors: [],
@@ -30,6 +31,9 @@ export const state = () => ({
 export const mutations = {
     SET_SIGNUP_ERRORS: (state, errors) => {
         state.signupErrors = errors;
+    },
+    SET_MANAGED_USER_SIGNUP_ERRORS: (state, errors) => {
+        state.managedUserSignupErrors = errors;
     },
     SET_FORGOT_PASSWORD_ERRORS: (state, errors) => {
         state.forgotPasswordErrors = errors;
@@ -111,6 +115,15 @@ export const actions = {
             dispatch('setSignupErrors', '');
         }).catch(error => {
             dispatch('setSignupErrors', error.response.data.errors);
+        });
+    },
+    async managedUserSignup ({ commit, dispatch }, request) {
+        await UserService.managedUserSignup(request).then(response => {
+            dispatch('authentication/setToken', response.Token, { root: true });
+            dispatch('applicationData/getApplicationData', null, { root: true });
+            dispatch('setManagedUserSignupErrors', '');
+        }).catch(error => {
+            dispatch('setManagedUserSignupErrors', error.response.data.errors);
         });
     },
     async finishRegistration ({ commit, dispatch }, request) {
@@ -256,6 +269,9 @@ export const actions = {
     setSignupErrors: ({ commit }, errors) => {
         commit('SET_SIGNUP_ERRORS', errors);
     },
+    setManagedUserSignupErrors: ({ commit }, errors) => {
+        commit('SET_MANAGED_USER_SIGNUP_ERRORS', errors);
+    },
     setForgotPasswordErrors: ({ commit }, errors) => {
         commit('SET_FORGOT_PASSWORD_ERRORS', errors);
     },
@@ -345,6 +361,13 @@ export const getters = {
     myProfileImage (state, getters) {
         return getters.me.ProfileImage;
     },
+    isManaged (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.AccountStatus === UserAccountStatusType.Managed;
+    },
     isRegistered (state, getters) {
         if (!getters.me) {
             return false;
@@ -379,6 +402,13 @@ export const getters = {
         }
 
         return getters.me.Role === UserRoleType.Admin || getters.me.Role === UserRoleType.SuperAdmin;
+    },
+    isSuperAdmin (state, getters) {
+        if (!getters.me) {
+            return false;
+        }
+
+        return getters.me.Role === UserRoleType.SuperAdmin;
     }
 
 };

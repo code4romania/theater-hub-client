@@ -6,8 +6,8 @@ export class AdministrationService extends BaseService {
         return this.$axios.$get(`${Endpoints.Administration.GetUsers}?searchTerm=${query.searchTerm}&sortCriterion=${query.sortCriterion}&sortOrientation=${query.sortOrientation}&page=${query.page}&pageSize=${query.pageSize}`);
     }
 
-    static async addUser (request) {
-        return this.$axios.$post(Endpoints.Administration.AddUser, request);
+    static async inviteUser (request) {
+        return this.$axios.$post(Endpoints.Administration.InviteUser, request);
     }
 
     static async enableUser (id, request) {
