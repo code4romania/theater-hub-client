@@ -1,13 +1,57 @@
 <template>
   <section class="users-dashboard">
     <v-container fluid users-dashboard-container class="mt-5 pa-5">
-        <v-layout row wrap>
+        <v-layout column wrap>
             <v-flex>
                 <h1 class="mb-3">Users dashboard</h1>
             </v-flex>
-            <v-flex xs4>
-                <v-text-field v-model="searchTerm" append-icon="search" label="Search..." single-line hide-details @keyup="onSearchKeyup"></v-text-field>
-            </v-flex>
+
+            <v-layout mt-3>
+
+                <v-flex xs8 v-if="!isInviteUser">
+                    <v-btn id="invite-user-button" class="primary" large @click="onInviteUserClick">INVITE USER</v-btn>
+                </v-flex>
+
+                <v-flex xs12 v-if="isInviteUser" class="invite-user-card-container">
+                    <v-layout row wrap elevation-5 pa-5>
+                        <v-flex xs12 class="profile-information-group-header">
+                            <h2>Invite User</h2>
+                            <div>
+                                <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onConfirmInviteUserClick" :disabled="isConfirmInviteUserDisabled()"><v-icon>done</v-icon></v-btn>
+                                <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelInviteUserClick"><v-icon>clear</v-icon></v-btn>
+                            </div>
+                        </v-flex>
+                        <v-flex xs12 pt-3>
+                            <v-form ref="inviteUserForm" v-model="isInviteUserFormValid">
+                                <v-flex xs12>
+                                    <v-text-field v-model="newUserEmail" :rules="emailRules" label="Email*" validate-on-blur required></v-text-field>
+                                </v-flex>
+                                <v-layout row wrap class="section-visibility-row mt-4" v-if="isSuperAdmin">
+                                    <v-flex xs1>
+                                        <span class="field-title">User role:</span>
+                                    </v-flex>
+                                    <v-flex xs11>
+                                        <v-radio-group v-model="newUserRole" row class="ml-3 mt-0 pt-0">
+                                            <v-radio :key="0" :value="0" :label="`User`"></v-radio>
+                                            <v-radio :key="1" :value="1" :label="`Admin`"></v-radio>
+                                        </v-radio-group>
+                                    </v-flex>
+                                </v-layout>
+                                <v-flex xs12 v-if="administration.inviteUserErrors">
+                                    <ServerSideErrors :errors="administration.inviteUserErrors"/>
+                                </v-flex>
+                            </v-form>
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+
+                <v-flex xs4 v-if="!isInviteUser">
+                    <v-text-field id="users-search-box"
+                        v-model="searchTerm" append-icon="search" label="Search..." single-line hide-details @keyup="onSearchKeyup"></v-text-field>
+                </v-flex>
+
+            </v-layout>
+
             <v-flex xs12 mt-5>
                 <v-data-table
                     must-sort
@@ -142,6 +186,7 @@
                         </template>
                 </v-data-table>
             </v-flex>
+
         </v-layout>
     </v-container>
   </section>
@@ -149,13 +194,21 @@
 
 <script>
     import _ from 'lodash';
+    import { mapGetters, mapState } from 'vuex';
     import { UserAccountStatusType, UserRoleType, VisibilityType } from '~/store/entities';
+    import { HtmlHelpers, Validators } from '~/utils';
+    import ServerSideErrors from '~/components/errors/server-side-errors.vue';
 
     export default {
+        components: {
+            ServerSideErrors
+        },
         layout: 'administration',
         middleware: ['authenticated', 'admin'],
         data: () => ({
             isLoading: false,
+            isInviteUser: false,
+            isInviteUserFormValid: false,
             dashboardUsers: [],
             dashboardUsersTotal: 0,
             dashboardUsersTablePagination: {
@@ -171,11 +224,19 @@
                 { text: 'Actions', value: 'Actions', sortable: false }
             ],
             searchTerm: '',
+            newUserEmail: '',
+            newUserRole: 0,
             editedUser: null,
             actionMessage: '',
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => v.length <= 100 || 'E-mail should have at most 100 characters',
+                v => Validators.isValidEmailAddress(v) || 'E-mail must be valid'
+            ],
             messageRules: [
                 v => !v || v.length <= 500 || 'Message must not exceed 500 characters'
-            ]
+            ],
+            roles: ['User', 'Admin']
         }),
         watch: {
             dashboardUsersTablePagination: {
@@ -186,8 +247,54 @@
         },
         mounted () {
             this.updateUsersDashboardTable();
+
+            window.onscroll = _.throttle(() => {
+                if (this.isInviteUser) {
+                    this.$store.dispatch('syncMainOverlaySize');
+                }
+            }, 100);
+        },
+        computed: {
+            ...mapState(['administration', 'user']),
+            ...mapGetters({
+                isSuperAdmin: 'users/isSuperAdmin'
+            })
         },
         methods: {
+            onInviteUserClick: function () {
+                this.$store.dispatch('administration/setInviteUserErrors', '');
+                this.newUserEmail   = '';
+                this.newUserRole    = UserRoleType.User;
+                this.isInviteUser = true;
+                this.$store.dispatch('administration/initiateAdministrationInviteUserSession');
+
+                setTimeout(() => {
+                    var element = document.getElementsByClassName('invite-user-card-container')[0];
+
+                    if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
+                        HtmlHelpers.scrollToElement(element);
+                    }
+                }, 0);
+            },
+            async onConfirmInviteUserClick () {
+                var request  = {
+                    Email: this.newUserEmail,
+                    Role: this.newUserRole
+                };
+
+                await this.$store.dispatch('administration/inviteUser', request);
+
+                if (!this.administration.inviteUserErrors) {
+                    this.isInviteUser = false;
+                    this.$store.dispatch('administration/endAdministrationInviteUserSession');
+
+                    this.updateUsersDashboardTable();
+                }
+            },
+            onCancelInviteUserClick: function () {
+                this.isInviteUser = false;
+                this.$store.dispatch('administration/endAdministrationInviteUserSession');
+            },
             async updateUsersDashboardTable () {
                 const { sortBy, descending, page } = this.dashboardUsersTablePagination;
 
@@ -336,6 +443,9 @@
             },
             isConfirmButtonDisabled: function () {
                 return this.actionMessage.length > 500;
+            },
+            isConfirmInviteUserDisabled: function () {
+                return !this.newUserEmail || this.newUserEmail.length > 100 || !Validators.isValidEmailAddress(this.newUserEmail);
             }
         }
     }
@@ -343,6 +453,10 @@
 </script>
 
 <style lang="scss">
+
+    #users-search-box {
+        width: 400px;
+    }
 
     .users-dashboard-row {
         cursor: pointer;
@@ -365,10 +479,16 @@
     }
 
     .edited-dashboard-user {
-        z-index: 200;
-        background-color: #FFF;
-        border-radius: 10px;
         height: 100px;
+    }
+
+    .invite-user-card-container {
+        z-index: 200;
+
+        &>div {
+            background-color: #FFF;
+            border-radius: 10px;
+        }
     }
 
 </style>

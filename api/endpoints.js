@@ -10,6 +10,8 @@ export class Endpoints {
 
     static Register                     = '/users/register';
 
+    static ManagedUserSignup            = '/users/register/managed';
+
     static FinishRegistration           = '/users/register/finish';
 
     static ForgotPassword               = '/users/password/forgot';
@@ -76,7 +78,7 @@ export class Endpoints {
 
     static Administration = {
         GetUsers: '/administration/users',
-        AddUser: '/administration/user',
+        InviteUser: '/administration/user/invite',
         EnableUser: '/administration/user/{0}/enable',
         DisableUser: '/administration/user/{0}/disable',
         DeleteUser: '/administration/user/{0}/delete'

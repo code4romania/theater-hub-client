@@ -6,6 +6,10 @@ export class UserService extends BaseService {
         return this.$axios.$post(Endpoints.Register, request);
     }
 
+    static async managedUserSignup (request) {
+        return this.$axios.$post(Endpoints.ManagedUserSignup, request);
+    }
+
     static async finishRegistration (request) {
         return this.$axios.$post(Endpoints.FinishRegistration, request);
     }
