@@ -8,7 +8,7 @@
 
             <v-layout mt-3>
 
-                <v-flex xs8 v-if="!isInviteUser">
+                <v-flex xs12 sm12 md8 v-if="!isInviteUser">
                     <v-btn id="invite-user-button" class="primary" large @click="onInviteUserClick">INVITE USER</v-btn>
                 </v-flex>
 
@@ -45,7 +45,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs4 v-if="!isInviteUser">
+                <v-flex xs12 sm12 md4 v-if="!isInviteUser">
                     <v-text-field id="users-search-box"
                         v-model="searchTerm" append-icon="search" label="Search..." single-line hide-details @keyup="onSearchKeyup"></v-text-field>
                 </v-flex>

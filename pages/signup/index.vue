@@ -1,7 +1,7 @@
 <template>
   <section class="signup">
     <v-container fluid signup-container elevation-4 class="mt-5 pa-5">
-        <v-layout>
+        <v-layout column>
           <v-flex xs12 align-end flexbox>
             <h1 class="mb-3">Sign Up</h1>
 
@@ -37,7 +37,7 @@
                         </v-checkbox>
                     </v-flex>
                     <v-flex xs12 mt-3>
-                        <v-btn @click="submit" class="ml-0" color="primary">SUBMIT</v-btn>
+                        <v-btn @click="submit" class="signup-button ml-0" color="primary">SUBMIT</v-btn>
                     </v-flex>
                     <v-flex v-if="users.signupErrors">
                       <ServerSideErrors :errors="users.signupErrors"/>
@@ -51,6 +51,27 @@
 
             </v-layout>
           </v-flex>
+          <v-flex xs12 mt-1 class="social-media-signup-divider" v-if="!isSuccessfulSubmit">
+              OR
+          </v-flex>
+          <v-layout row wrap mt-1 v-if="!isSuccessfulSubmit">
+            <v-flex xs6 pr-2>
+                <a href="https://localhost:443/api/authentication/facebook" class="facebook-signup-link social-media-signup-link">
+                  <v-btn class="facebook-signup-button social-media-signup-button">
+                    <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
+                    Continue with Facebook
+                  </v-btn>
+                </a>
+            </v-flex>
+            <v-flex xs6 pl-2>
+                <a href="https://localhost:443/api/authentication/google" class="google-signup-link social-media-signup-link">
+                  <v-btn class="google-signup-button social-media-signup-button">
+                    <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />
+                    Sign up with Google
+                  </v-btn>
+                </a>
+            </v-flex>
+          </v-layout>
         </v-layout>
     </v-container>
   </section>
@@ -99,6 +120,19 @@
         ],
         isSuccessfulSubmit: false
       }),
+      async fetch ({ store, query, app }) {
+       if (query && query.token) {
+          store.dispatch('authentication/setToken', query.token);
+          store.dispatch('applicationData/getApplicationData', null, { root: true });
+          await store.dispatch('users/getMe');
+
+          if (store.getters['users/isUser']) {
+            app.router.replace({ path: 'projects' });
+          } else if (store.getters['users/isAdmin']) {
+            app.router.replace({ path: 'administration/users' });
+          }
+       }
+      },
       computed: {
         ...mapState(['users'])
       },
@@ -148,6 +182,46 @@
 
 	.signup-container {
         max-width: 700px;
+  }
+
+  .signup-button {
+    width: 100%;
+  }
+
+  .social-media-signup-divider {
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .social-media-signup-link {
+    text-decoration: none;
+  }
+
+  .social-media-signup-button {
+      border-radius: 5px;
+      font-size: 16px;
+      text-transform: initial;
+      width: 100%;
+      letter-spacing: .25px;
+      margin-left: 0px;
+
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 21px;
+      }
     }
+
+  .facebook-signup-button {
+    background-color: #4267B2 !important;
+    color: #FFF;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+
+  .google-signup-button {
+    background-color: #FFF !important;
+    color: #000;
+    font-family: Helvetica, Arial, sans-serif;
+  }
 
 </style>

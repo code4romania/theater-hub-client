@@ -359,6 +359,10 @@ export const getters = {
         return `${getters.me.FirstName} ${getters.me.LastName}`;
     },
     myProfileImage (state, getters) {
+        if (!getters.me || !getters.me.ProfileImage) {
+            return '';
+        }
+
         return getters.me.ProfileImage;
     },
     isManaged (state, getters) {
