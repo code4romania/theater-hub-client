@@ -1,211 +1,223 @@
 html {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
-    word-spacing: 1px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
 }
 
-*, *:before, *:after {
-    box-sizing: border-box;
-    margin: 0;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
 }
 
 body {
-    background-color: $background;
+  background-color: $background;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Titillium Web', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.3;
+  font-weight: 600;
 }
 
 .primary {
-    background-color: $primary !important;
-    border-color: $primary !important;
+  background-color: $primary !important;
+  border-color: $primary !important;
 }
 
 .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0px;
-    top: 0px;
-    z-index: 100;
-    background-color: $black;
-    opacity: 0.8;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 100;
+  background-color: $black;
+  opacity: 0.8;
 }
 
 .v-btn--flat {
-    background-color: transparent;
-    color: black;
+  background-color: transparent;
+  color: black;
 }
 
 .error--text {
-    color: $red !important;
+  color: $red !important;
 }
 
 .input-group {
-    
-    input, textarea {
-        border-bottom: 2px solid $primary;
+  input,
+  textarea {
+    border-bottom: 2px solid $primary;
+  }
+
+  &.input-group--error {
+    input {
+      border-bottom: 2px solid $error;
     }
+  }
 
-    &.input-group--error {
+  .input-group__details {
+    color: $error;
 
-        input {
-            border-bottom: 2px solid $error;
-        }
+    &:before,
+    &:after {
+      background-color: transparent !important;
     }
-
-    .input-group__details {
-        color: $error;
-
-        &:before, &:after {
-            background-color: transparent !important;
-        } 
-    }
+  }
 }
 
 .error-message {
-    color: $red;
+  color: $red;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 button {
-    background-color: $primary;
-    color: $white;
+  background-color: $primary;
+  color: $white;
 }
 
 .link-button {
-    text-decoration: none;
-    color: $primary;
+  text-decoration: none;
+  color: $primary;
 }
 
 .action-button {
-    color: $black;
+  color: $black;
 }
 
 #profile-description-field {
-    max-height: 100px;
+  max-height: 100px;
 }
 
 .field-title {
-    margin-bottom: 20px;
-    display: block;
-    font-weight: 500;
+  margin-bottom: 20px;
+  display: block;
+  font-weight: 500;
 }
 
 .v-menu__content {
-    top: 0px !important;
-    left: 0px !important;
+  top: 0px !important;
+  left: 0px !important;
 
-    .v-date-picker-table {
-        
-        button {
-            background-color: transparent;
-        }
-
-        .v-btn.v-btn--active {
-            background-color: $primary;
-        }
+  .v-date-picker-table {
+    button {
+      background-color: transparent;
     }
+
+    .v-btn.v-btn--active {
+      background-color: $primary;
+    }
+  }
 }
 
 .create-profile-section .date-menu-container .v-menu__content {
-    left: -90px !important;
+  left: -90px !important;
 }
 
-.create-profile-section .v-menu__content  {
-    left: 0px !important;
+.create-profile-section .v-menu__content {
+  left: 0px !important;
 }
 
 .v-textarea .v-input__slot {
-    background: transparent !important;
-    padding-left: 0px !important;
+  background: transparent !important;
+  padding-left: 0px !important;
 }
 
 .v-autocomplete .v-menu {
-    position: absolute !important;
+  position: absolute !important;
 }
 
 .v-autocomplete__content {
-    top: 22px !important;
-    left: 0px !important;
+  top: 22px !important;
+  left: 0px !important;
 }
 
 .v-autocomplete__content .v-input__slot {
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    background: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background: none !important;
 }
 
 .vue-dropzone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .main-container {
-    max-width: 960px;
+  max-width: 960px;
 }
 
 .v-tooltip--bottom .v-tooltip__content {
-    top: 32px !important;
-    left: 0px !important;
+  top: 32px !important;
+  left: 0px !important;
 }
 
 #skills-autocomplete-wrapper {
-    .v-select__selections .v-chip {
-        display: none;
-    }
+  .v-select__selections .v-chip {
+    display: none;
+  }
 
-    .v-text-field .v-label--active {
-        transform: none;
-        -webkit-transform: none;
-    }
+  .v-text-field .v-label--active {
+    transform: none;
+    -webkit-transform: none;
+  }
 
-    .v-input--is-focused .v-label--active{
-        -webkit-transform: translateY(-18px) scale(.75);
-        transform: translateY(-18px) scale(.75);
-    }
+  .v-input--is-focused .v-label--active {
+    -webkit-transform: translateY(-18px) scale(0.75);
+    transform: translateY(-18px) scale(0.75);
+  }
 }
 
 .profile-focused-row {
-    display: flex;
+  display: flex;
 
-    .remove-icon {
-        cursor: pointer;
-        font-size: 31px;
-    }
+  .remove-icon {
+    cursor: pointer;
+    font-size: 31px;
+  }
 }
 
 .editing-profile-row {
-    display: none;
+  display: none;
 }
 
 .profile-information-group-header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    h2 {
-        font-size: 24px;
-    }
+  h2 {
+    font-size: 24px;
+  }
 }
 
 .profile-row-actions {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .edited-profile-section {
-    z-index: 200;
-    background-color: $white;
-    border-radius: 10px;
+  z-index: 200;
+  background-color: $white;
+  border-radius: 10px;
 }
 
 .button-wrapper-link {
-    text-decoration: none;
+  text-decoration: none;
 }

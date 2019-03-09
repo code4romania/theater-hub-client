@@ -4,8 +4,8 @@ const config = getConfig();
 
 module.exports = {
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'theater-hub-client',
     meta: [
@@ -15,7 +15,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/theater_hub_logo-1.jpg' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700|Material+Icons'
+      }
     ]
   },
   plugins: [
@@ -30,22 +33,20 @@ module.exports = {
   css: [
     'node_modules/vuetify/dist/vuetify.min.css',
     'node_modules/blueimp-gallery/css/blueimp-gallery.min.css',
-    '~/assets/styles/styles.scss'
+    '@/assets/styles/styles.scss'
   ],
   /*
-  ** Customize the progress bar color
-  */
+   ** Customize the progress bar color
+   */
   loading: { color: '#3B8070' },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** Run ESLint on save
-    */
-    vendor: [
-      'vuetify'
-    ],
+     ** Run ESLint on save
+     */
+    vendor: ['vuetify'],
     extend (config, ctx) {
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({
@@ -57,10 +58,7 @@ module.exports = {
       }
     }
   },
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth'],
   env: {
     baseURL: config.application.baseURL,
     apiURL: config.API.baseURL
@@ -70,4 +68,4 @@ module.exports = {
     proxyHeaders: false,
     credentials: false
   }
-}
+};
