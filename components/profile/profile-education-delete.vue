@@ -12,7 +12,7 @@
                 </v-flex>
             </v-layout>
             <v-layout row>
-                Are you sure you wish to delete this education step?
+                {{ $t('pages.profile.delete-education-message') }}
             </v-layout>
         </v-flex>
     </v-layout>

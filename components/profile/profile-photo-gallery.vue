@@ -4,7 +4,7 @@
             <dropzone id="photo-gallery-dropzone" ref="photoGalleryDropzone"
                 :options="photoGalleryDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true"
                 width="200px" height="80px">
-                <div class="dz-message" data-dz-message><span>Click or drop files here</span></div>
+                <div class="dz-message" data-dz-message><span>{{ $t('fields.photo-dropzone.label') }}</span></div>
             </dropzone>
         </v-flex>
     </v-layout>
@@ -29,6 +29,7 @@
                         maxFilesize: 2,
                         addRemoveLinks: true,
                         autoProcessQueue: false,
+                        dictRemoveFile: this.$t('fields.photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
                             this.profilePhotoGallery.photoGallery.forEach(photo => {

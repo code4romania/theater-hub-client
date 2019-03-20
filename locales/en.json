@@ -1,0 +1,444 @@
+{
+    "application-data": {
+        "professional": "Professional",
+        "institution": "Institution",
+        "sponsor": "Sponsor",
+        "comedy": "comedy",
+        "drama": "drama",
+        "acting": "acting",
+        "stand-up": "stand-up",
+        "dancing": "dancing",
+        "directing": "directing",
+        "lighting": "lighting",
+        "playwright": "playwright",
+        "sufleor": "sufleor",
+        "managed": "Managed",
+        "registered": "Registered",
+        "confirmed": "Confirmed",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "deleted": "Deleted",
+        "user": "User",
+        "admin": "Admin",
+        "super-admin": "SuperAdmin",
+        "everyone": "Everyone",
+        "community": "Community",
+        "private": "Private",
+        "venue": "Venue",
+        "transport": "Transport",
+        "props": "Props",
+        "marketing": "Marketing",
+        "romanian": "Romanian",
+        "english": "English"
+    },
+    "fields": {
+        "first-name": {
+            "label": "First name",
+            "validation-errors": {
+                "required": "First name is required",
+                "length": "First name should have at most 50 characters"
+            }
+        },
+        "last-name": {
+            "label": "Last name",
+            "validation-errors": {
+                "required": "Last name is required",
+                "length": "Last name should have at most 50 characters"
+            }
+        },
+        "email": {
+            "label": "E-mail",
+            "validation-errors": {
+                "required": "E-mail is required",
+                "length": "E-mail should have at most 100 characters",
+                "invalid": "E-mail must be valid"
+            }
+        },
+        "password": {
+            "label": "Password",
+            "validation-errors": {
+                "required": "Password is required",
+                "invalid": "Password must be between 7 and 50 characters long and include upper and lowercase characters"
+            }
+        },
+        "confirm-password": {
+            "label": "Confirm password",
+            "validation-errors": {
+                "required": "Confirm password is required",
+                "invalid": "Confirm password must match the password"
+            }
+        },
+        "new-password": {
+            "label": "New password",
+            "validation-errors": {
+                "required": "Password is required",
+                "invalid": "Password must be between 7 and 50 characters long and include upper and lowercase characters"
+            }
+        },
+        "phone-number": {
+            "label": "Phone number",
+            "validation-errors": {
+                "required": "Phone number is required",
+                "invalid": "Phone number must be valid"
+            }
+        },
+        "website": {
+            "label": "Website",
+            "validation-errors": {
+                "invalid": "Website must be valid"
+            }
+        },
+        "date-of-birth": {
+            "label": "Date of birth",
+            "validation-errors": {
+                "invalid": "You must be at least 18 years old"
+            }
+        },
+        "instagram": {
+            "label": "Instagram",
+            "validation-errors": {
+                "invalid": "Invalid Instagram link"
+            }
+        },
+        "youtube": {
+            "label": "Youtube",
+            "validation-errors": {
+                "invalid": "Invalid Youtube link"
+            }
+        },
+        "facebook": {
+            "label": "Facebook",
+            "validation-errors": {
+                "invalid": "Invalid Facebook link"
+            }
+        },
+        "linkedin": {
+            "label": "LinkedIn",
+            "validation-errors": {
+                "invalid": "Invalid LinkedIn link"
+            }
+        },
+        "description": {
+            "label": "Description",
+            "validation-errors": {
+                "length": "Description's maximum length is of 500 characters"
+            }
+        },
+        "video": {
+            "label": "Video link",
+            "validation-errors": {
+                "invalid": "Video link is not a valid Youtube or Vimeo link"
+            }
+
+        },
+        "award": {
+            "title": {
+                "label": "Award title",
+                "validation-errors": {
+                    "required": "Title is required"
+                }
+            },
+            "issuer": {
+                "label": "Issuer",
+                "validation-errors": {
+                    "required": "Issuer is required"
+                }
+            },
+            "description": {
+                "label": "Description",
+                "validation-errors": {
+                    "length": "Description's maximum length is of 500 characters"
+                }
+            },
+            "date": {
+                "label": "Date"
+            }
+        },
+        "education": {
+            "title": {
+                "label": "Title",
+                "validation-errors": {
+                    "required": "Title is required"
+                }
+            },
+            "institution": {
+                "label": "Institution name",
+                "validation-errors": {
+                    "required": "Institution name is required"
+                }
+            },
+            "description": {
+                "label": "Description",
+                "validation-errors": {
+                    "length": "Description's maximum length is of 500 characters"
+                }
+            },
+            "start-date": {
+                "label": "Start Date"
+            },
+            "end-date": {
+                "label": "End date"
+            }
+        },
+        "experience": {
+            "position": {
+                "label": "Position",
+                "validation-errors": {
+                    "required": "Position is required"
+                }
+            },
+            "employer": {
+                "label": "Employer name",
+                "validation-errors": {
+                    "required": "Employer name is required"
+                }
+            },
+            "description": {
+                "label": "Description",
+                "validation-errors": {
+                    "length": "Description's maximum length is of 500 characters"
+                }
+            },
+            "start-date": {
+                "label": "Start Date"
+            },
+            "end-date": {
+                "label": "End date"
+            }
+        },
+        "filter-by-skills": {
+            "label": "Select skills"
+        },
+        "search": {
+            "label": "Search..."
+        },
+        "name-sort": {
+            "label": "Name"
+        },
+        "select-skills": {
+            "label": "Your professional skills",
+            "hint": "Select at least one skill",
+            "no-results": "No results"
+        },
+        "profile-photo-dropzone": {
+            "label": "Click or drop profile image here",
+            "photo-remove-button": "REMOVE"
+        },
+        "photo-dropzone": {
+            "label": "Click or drop images here",
+            "photo-remove-button": "REMOVE"
+        },
+        "optional-user-message": {
+            "label": "Optional message for user",
+            "validation-errors": {
+                "length": "Message must not exceed 500 characters"
+            }
+        }
+    },
+    "shared": {
+        "header": {
+            "login-link": "Login",
+            "sign-up-link": "Sign Up",
+            "create-profile-link": "Create Profile",
+            "projects-link": "Projects",
+            "community-link": "Community",
+            "profile-link": "Profile",
+            "settings-link": "Settings",
+            "administration-users-link": "Users",
+            "administration-projects-link": "Projects", 
+            "logout-link": "Logout",
+            "greeting": "Hi"
+        },
+        "footer": {
+
+        },
+        "content": {
+            "agreement-text-beginning": "I agree to the ",
+            "agreement-terms-of-use": "Terms of Use",
+            "agreement-text-separator": " and ",
+            "agreement-text-privacy-policy": "Privacy Policy",
+            "video-message": "Please provide links from Youtube or Vimeo.",
+            "add-award-button": "Add award",
+            "add-experience-button": "Add experience step",
+            "add-education-button": "Add education step",
+            "profile-visibility": "Profile visibility:",
+            "email-visibility": "E-mail visibility:",
+            "birth-date-visibility": "Birth date visibility:",
+            "phone-number-visibility": "Phone number visibility:",
+            "back-button": "BACK",
+            "next-button": "NEXT",
+            "finish-button": "FINISH",
+            "skill": "skill",
+            "skills": "skills",
+            "years": "years",
+            "locale-setting": "Language:"
+        }
+    },
+    "pages": {
+        "hompeage": {
+            
+        },
+        "login": {
+            "title": "Login", 
+            "login-button-text": "Login",
+            "forgot-password": "Forgot Password?",
+            "separator-text": "OR",
+            "facebook-login-button-text": "Login with Facebook",
+            "google-login-button-text": "Login with Google"
+        },
+        "sign-up": {
+            "title": "Sign Up",
+            "submit-button": "SUBMIT",
+            "separator-text": "OR",
+            "facebook-sign-up-button-text": "Continue with Facebook",
+            "google-sign-up-button-text": "Sign up with Google",
+            "submit-success-message": "An e-mail containing a link for confirming the registration has been sent."
+        },
+        "managed-user-signup": {
+            "title": "Complete Sign Up",
+            "submit-button": "SUBMIT"
+        },
+        "about": {
+            
+        },
+        "contact": {
+            
+        },
+        "privacy-policy": {
+            "title": "Privacy Policy",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
+        },
+        "terms-of-use": {
+            "title": "Terms of use",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
+        },
+        "forgot-password": {
+            "title": "Forgot password",
+            "description": "Please submit the e-mail for which you wish to reset the password.",
+            "submit-button": "SUBMIT",
+            "submit-success-message": "An e-mail containing a link for resetting the password has been sent to your user's e-mail."
+        },
+        "reset-password": {
+            "title": "Reset password",
+            "submit-button": "SUBMIT",
+            "submit-success-message": "Your password has been successfully changed."
+        },
+        "projects": {
+            "title": "Projects"
+        },
+        "community": {
+            "skills-filter-title": "Skills:",
+            "search-title": "Search:",
+            "sort-title": "Sort:",
+            "sort-by-name": "Name",
+            "show-more-button": "Show More",
+            "no-members-message": "There are no members to display"
+        },
+        "settings": {
+            "title": "Settings",
+            "settings": "Settings",
+            "change-password-button": "CHANGE PASSWORD",
+            "delete-account-button": "DELETE ACCOUNT",
+            "edit-privacy-title": "Edit Settings",
+            "change-password-title": "Change Password",
+            "delete-account-title": "Delete Account",
+            "delete-account-description": "Are you sure you wish to delete your account? All your information will be permanently lost. If you just want to hide your information, you can make your user profile private. In case you wish to proceed, please enter your password:"
+        },
+        "create-profile": {
+            "account-created-title": "Account created",
+            "account-created-message": "Your account has been created. Please take the time to complete your profile before starting to use the app.",
+            "account-created-button": "CREATE PROFILE",
+            "steps": {
+                "general": {
+                    "title": "General"
+                },
+                "skills": {
+                    "title": "Skills"
+                },
+                "portfolio": {
+                    "title": "Portfolio",
+                    "photo-gallery-title": "Photo gallery",
+                    "video-gallery-title": "Video gallery"
+                },
+                "awards": {
+                    "title": "Awards"
+                },
+                "experience": {
+                    "title": "Experience"
+                },
+                "education": {
+                    "title": "Education"
+                },
+                "settings": {
+                    "title": "Settings"
+                }
+            },
+            "profile-created-title": "Profile created",
+            "profile-created-message": "Your profile has been created. You can now enjoy all the functionalities Theater Hub has to offer.",
+            "profile-created-button": "DONE"
+
+        },
+        "profile": {
+            "edit-general-information-title": "Edit General Information",
+            "preview-profile-button": "PREVIEW PROFILE",
+            "download-resume-button": "DOWNLOAD RESUME",
+            "description-title": "Description",
+            "skills-title": "Skills",
+            "edit-skills-title": "Edit Skills",
+            "skills-list-description": "Your professional skills",
+            "skills-list-requirement": "Select at least one skill",
+            "photo-gallery-title": "Photo gallery",
+            "no-photos-description": "You have no photos",
+            "edit-photo-gallery-title": "Edit Photo Gallery",
+            "video-gallery-title": "Video gallery",
+            "video-link-field-label": "Video link",
+            "no-videos-description": "You have no videos",
+            "add-video-button": "Add video",
+            "delete-video-message": "Are you sure you wish to delete this video?",
+            "achievements-title": "Achievements",
+            "awards-title": "Awards",
+            "delete-award-message": "Are you sure you wish to delete this award?",
+            "no-awards-message": "You haven't added any awards information",
+            "experience-title": "Experience",
+            "delete-experience-message": "Are you sure you wish to delete this experience step?",
+            "no-experience-message": "You haven't added any experience information",
+            "education-title": "Education",
+            "delete-education-message": "Are you sure you wish to delete this education step?",
+            "no-education-message": "You haven't added any education information",
+            "invalid-profile-title": "Profile",
+            "invalid-profile-content": "The profile you are trying to view is either private or does not exist."            
+        },
+        "administration": {
+            "users": {
+                "title": "Users dashboard",
+                "invite-user-button": "INVITE USER",
+                "invite-user-title": "Invite User",
+                "user-role-label": "Role:",
+                "full-name-header": "Full name",
+                "email-address-header": "E-mail address",
+                "role-header": "Role",
+                "account-status-header": "Account status",
+                "profile-visibility-header": "Profile visibility",
+                "actions-header": "Actions",
+                "no-search-results": "No results",
+                "no-matching-users": "No users matching your criteria",
+                "enable-user-button": "ENABLE",
+                "disable-user-button": "DISABLE",
+                "delete-user-button": "DELETE",
+                "enable-user-message": "Are you sure you wish to enable {0}'s account? Please provide a reason to the user:",
+                "disable-user-message": "Are you sure you wish to disable {0}'s account? Please provide a reason to the user:",
+                "delete-user-message": "Are you sure you wish to delete {0}'s account? Please provide a reason to the user:"
+            },
+            "projects": {
+                "title": "Projects dashboard"
+            }
+        },
+        "errors": {
+            "not-found-title": "Page not found",
+            "not-found-description": "The page you are looking for does not exist!",
+            "error-title": "An unexpected error has occured",
+            "error-description": "Please try again."
+        }
+    }
+
+}

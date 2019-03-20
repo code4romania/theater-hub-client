@@ -3,22 +3,22 @@
     <v-container id="create-profile-container" class="main-container pa-1">
         <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && !isCreatedProfile" class="create-account-success">
             <v-flex text-xs-center>
-                <h1 mb-3>Account created</h1>
+                <h1 mb-3>{{ $t('pages.create-profile.account-created-title') }}</h1>
             </v-flex>
             <v-flex xs12 mt-5>
                 <p>
-                    Your account has been created. Please take the time to complete your profile before starting to use the app.
+                    {{ $t('pages.create-profile.account-created-message') }}
                 </p> 
             </v-flex>
             <v-flex xs12 mt-5 text-xs-center>
-                <v-btn color="primary" dark large @click="isCreatingProfile = true">CREATE PROFILE</v-btn>
+                <v-btn color="primary" dark large @click="isCreatingProfile = true">{{ $t('pages.create-profile.account-created-button') }}</v-btn>
             </v-flex>
         </v-layout>
         <v-layout row wrap v-if="isCreatingProfile && !isCreatedProfile" class="create-profile-main-layout">
             <v-flex xs12 align-end flexbox pt-5>
                 <v-stepper v-model="wizardStep" vertical>
 
-                    <v-stepper-step :complete="wizardStep > 1" step="1">General</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 1" step="1">{{ $t('pages.create-profile.steps.general.title') }}</v-stepper-step>
 
                     <v-stepper-content step="1" class="pl-5">
                         <v-layout row wrap>
@@ -26,47 +26,53 @@
                                                         :displayNameFields="false"
                                                         @updateProfileGeneralInformation="updateProfileGeneralInformation"/>
                             <v-flex xs12 my-5>
-                                <v-btn color="primary" @click="wizardStep = 2" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 2" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step :complete="wizardStep > 2" step="2">Skills</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 2" step="2">{{ $t('pages.create-profile.steps.skills.title') }}</v-stepper-step>
 
                     <v-stepper-content step="2" class="pl-5">
                         <v-layout row wrap class="pl-2 pb-5">
-                            <ProfileSkills :profileSkills="profileSkills" :skills="skills"
-                                                @updateProfileSkills="updateProfileSkills"/>
+                            <ProfileSkills :profileSkills="profileSkills" :skills="localizedSkills"
+                                                            @updateProfileSkills="updateProfileSkills"/>
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 1">Back</v-btn>
-                                <v-btn color="primary" @click="wizardStep = 3" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn flat @click="wizardStep = 1">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 3" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step :complete="wizardStep > 3" step="3">Portfolio</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 3" step="3">{{ $t('pages.create-profile.steps.portfolio.title') }}</v-stepper-step>
                     
                     <v-stepper-content step="3" class="pl-5">
                         <v-layout row wrap>
                             <v-flex xs12>
-                                <span class="field-title">Photo gallery</span>
+                                <span class="field-title">{{ $t('pages.create-profile.steps.portfolio.photo-gallery-title') }}</span>
                                 <ProfilePhotoGallery :profilePhotoGallery="profilePhotoGallery"
                                                     @updateProfilePhotoGallery="updateProfilePhotoGallery"/>
                             </v-flex>
                             <v-flex xs12>
-                                <span class="field-title">Video gallery</span>
+                                <span class="field-title">{{ $t('pages.create-profile.steps.portfolio.video-gallery-title') }}</span>
                                 <ProfileVideoGallery :profileVideoGallery="profileVideoGallery"
                                                     @updateProfileVideoGallery="updateProfileVideoGallery"/>
                             </v-flex>
 
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 2">Back</v-btn>
-                                <v-btn color="primary" @click="wizardStep = 4" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn flat @click="wizardStep = 2">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 4" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step :complete="wizardStep > 4" step="4">Awards</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 4" step="4">{{ $t('pages.create-profile.steps.awards.title') }}</v-stepper-step>
 
                     <v-stepper-content step="4" class="pl-5">
                         <v-layout row wrap>
@@ -75,13 +81,15 @@
                                                 @updateProfileAwards="updateProfileAwards"/>
 
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 3">Back</v-btn>
-                                <v-btn color="primary" @click="wizardStep = 5" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn flat @click="wizardStep = 3">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 5" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step :complete="wizardStep > 5" step="5">Experience</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 5" step="5">{{ $t('pages.create-profile.steps.experience.title') }}</v-stepper-step>
 
                     <v-stepper-content step="5" class="pl-5">
                         <v-layout row wrap>
@@ -90,13 +98,15 @@
                                                 @updateProfileExperience="updateProfileExperience"/>
 
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 4">Back</v-btn>
-                                <v-btn color="primary" @click="wizardStep = 6" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn flat @click="wizardStep = 4">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 6" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step :complete="wizardStep > 6" step="6">Education</v-stepper-step>
+                    <v-stepper-step :complete="wizardStep > 6" step="6">{{ $t('pages.create-profile.steps.education.title') }}</v-stepper-step>
 
                     <v-stepper-content step="6" class="pl-5">
                         <v-layout row wrap>
@@ -105,23 +115,30 @@
                                                 @updateProfileEducation="updateProfileEducation"/>
 
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 5">Back</v-btn>
-                                <v-btn color="primary" @click="wizardStep = 7" :disabled="!isWizardStepValid()">Next</v-btn>
+                                <v-btn flat @click="wizardStep = 5">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="wizardStep = 7" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.next-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-layout>
                     </v-stepper-content>
 
-                    <v-stepper-step step="7">Settings</v-stepper-step>
+                    <v-stepper-step step="7">{{ $t('pages.create-profile.steps.settings.title') }}</v-stepper-step>
 
                     <v-stepper-content step="7" class="pl-5">
                         <v-layout row wrap>
 
                             <ProfilePrivacy :profilePrivacy="profilePrivacy"
                                                 @updateProfilePrivacy="updateProfilePrivacy"/>
+                                            
+                            <ProfileLocaleSetting :localeSetting="localeSetting"
+                                                            @updateLocaleSetting="updateLocaleSetting" />
 
                             <v-flex xs12 my-5>
-                                <v-btn flat @click="wizardStep = 6">Back</v-btn>
-                                <v-btn color="primary" @click="createProfile" :disabled="!isWizardStepValid()">Finish</v-btn>
+                                <v-btn flat @click="wizardStep = 6">{{ $t('shared.content.back-button') }}</v-btn>
+                                <v-btn color="primary" @click="createProfile" :disabled="!isWizardStepValid()">
+                                    {{ $t('shared.content.finish-button') }}
+                                </v-btn>
                             </v-flex>
                             <v-flex v-if="users.createProfileErrors">
                                 <ServerSideErrors :errors="users.createProfileErrors"/>
@@ -133,16 +150,16 @@
         </v-layout>
         <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && isCreatedProfile" class="create-account-success">
             <v-flex text-xs-center>
-                <h1 mb-3>Profile created</h1>
+                <h1 mb-3>{{ $t('pages.create-profile.profile-created-title') }}</h1>
             </v-flex>
             <v-flex xs12 mt-5>
                 <p>
-                    Your profile has been created. You can now enjoy all the functionalities Theater Hub has to offer.
+                    {{ $t('pages.create-profile.profile-created-message') }}
                 </p> 
             </v-flex>
             <v-flex xs12 mt-5 text-xs-center>
                 <nuxt-link to="/projects" class="done-button-link">
-                    <v-btn color="primary" dark large>DONE</v-btn>
+                    <v-btn color="primary" dark large>{{ $t('pages.create-profile.profile-created-button') }}</v-btn>
                 </nuxt-link>
             </v-flex>
         </v-layout>
@@ -160,6 +177,7 @@ import ProfileAwards from '~/components/profile/profile-awards.vue';
 import ProfileExperience from '~/components/profile/profile-experience.vue';
 import ProfileEducation from '~/components/profile/profile-education.vue';
 import ProfilePrivacy from '~/components/profile/profile-privacy.vue';
+import ProfileLocaleSetting from '~/components/profile/profile-locale-setting.vue';
 import ServerSideErrors from '~/components/errors/server-side-errors.vue';
 import { SocialMediaManager, Helpers, Validators } from '~/utils';
 import { SocialMediaCategoryType } from '~/store/entities';
@@ -175,6 +193,7 @@ export default {
     ProfileExperience,
     ProfileEducation,
     ProfilePrivacy,
+    ProfileLocaleSetting,
     ServerSideErrors
   },
   layout: 'user',
@@ -216,8 +235,14 @@ export default {
         emailVisibility: 0,
         birthDateVisibility: 0,
         phoneNumberVisibility: 0
-    }
+    },
+    localeSetting: ''
   }),
+  asyncData ({ store, query }) {
+      return {
+          localeSetting: store.state.locale
+      };
+  },
   async fetch ({ error, store, query }) {
     var isAuthenticated             = store.getters['authentication/isAuthenticated'];
     var isRegistered                = store.getters['users/isRegistered'];
@@ -419,8 +444,8 @@ export default {
             ProfileVisibility: this.profilePrivacy.profileVisibility,
             EmailVisibility: this.profilePrivacy.emailVisibility,
             BirthDateVisibility: this.profilePrivacy.birthDateVisibility,
-            PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility
-
+            PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility,
+            Locale: this.localeSetting
         })
         .then(() => {
             if (!this.users.createProfileErrors) {
@@ -453,13 +478,25 @@ export default {
     },
     updateProfilePrivacy: function (model) {
         this.profilePrivacy = Helpers.cloneObject(model);
+    },
+    updateLocaleSetting: function (model) {
+        this.localeSetting = model;
     }
   },
   computed: {
     ...mapState([ 'applicationData', 'users' ]),
     ...mapGetters({
-      skills: 'applicationData/skills'
-    })
+        skills: 'applicationData/skills',
+        locale: 'locale'
+    }),
+    localizedSkills: function () {
+        return this.skills.map(s => {
+            return {
+                ...s,
+                Name: this.$t(`application-data.${s.Name}`)
+            };
+        }).sort((s1, s2) => s1.Name > s2.Name ? -1 : 1);
+    }
   }
 }
 </script>

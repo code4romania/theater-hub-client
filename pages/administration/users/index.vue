@@ -3,19 +3,21 @@
     <v-container fluid users-dashboard-container class="mt-5 pa-5">
         <v-layout column wrap>
             <v-flex>
-                <h1 class="mb-3">Users dashboard</h1>
+                <h1 class="mb-3">{{ $t('pages.administration.users.title') }}</h1>
             </v-flex>
 
             <v-layout mt-3>
 
                 <v-flex xs12 sm12 md8 v-if="!isInviteUser">
-                    <v-btn id="invite-user-button" class="primary" large @click="onInviteUserClick">INVITE USER</v-btn>
+                    <v-btn id="invite-user-button" class="primary" large @click="onInviteUserClick">
+                        {{ $t('pages.administration.users.invite-user-button') }}
+                    </v-btn>
                 </v-flex>
 
                 <v-flex xs12 v-if="isInviteUser" class="invite-user-card-container">
                     <v-layout row wrap elevation-5 pa-5>
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Invite User</h2>
+                            <h2>{{ $t('pages.administration.users.invite-user-title') }}</h2>
                             <div>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onConfirmInviteUserClick" :disabled="isConfirmInviteUserDisabled()"><v-icon>done</v-icon></v-btn>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelInviteUserClick"><v-icon>clear</v-icon></v-btn>
@@ -24,19 +26,24 @@
                         <v-flex xs12 pt-3>
                             <v-form ref="inviteUserForm" v-model="isInviteUserFormValid">
                                 <v-flex xs12>
-                                    <v-text-field v-model="newUserEmail" :rules="emailRules" label="Email*" validate-on-blur required></v-text-field>
+                                    <v-text-field v-model="newUserEmail" :rules="emailRules"
+                                            :label="`${$t('fields.email.label')}*`" validate-on-blur required></v-text-field>
                                 </v-flex>
                                 <v-layout row wrap class="section-visibility-row mt-4" v-if="isSuperAdmin">
                                     <v-flex xs1>
-                                        <span class="field-title">User role:</span>
+                                        <span class="field-title">{{ $t('pages.administration.users.user-role-label') }}</span>
                                     </v-flex>
                                     <v-flex xs11>
                                         <v-radio-group v-model="newUserRole" row class="ml-3 mt-0 pt-0">
-                                            <v-radio :key="0" :value="0" :label="`User`"></v-radio>
-                                            <v-radio :key="1" :value="1" :label="`Admin`"></v-radio>
+                                            <v-radio :key="0" :value="0" :label="$t('application-data.user')"></v-radio>
+                                            <v-radio :key="1" :value="1" :label="$t('application-data.admin')"></v-radio>
                                         </v-radio-group>
                                     </v-flex>
                                 </v-layout>
+                                <v-flex xs3>
+                                    <ProfileLocaleSetting :localeSetting="newUserLocale"
+                                                                    @updateLocaleSetting="updateLocaleSetting" />
+                                </v-flex>
                                 <v-flex xs12 v-if="administration.inviteUserErrors">
                                     <ServerSideErrors :errors="administration.inviteUserErrors"/>
                                 </v-flex>
@@ -47,7 +54,8 @@
 
                 <v-flex xs12 sm12 md4 v-if="!isInviteUser">
                     <v-text-field id="users-search-box"
-                        v-model="searchTerm" append-icon="search" label="Search..." single-line hide-details @keyup="onSearchKeyup"></v-text-field>
+                        v-model="searchTerm" append-icon="search" :label="$t('fields.search.label')"
+                        single-line hide-details @keyup="onSearchKeyup"></v-text-field>
                 </v-flex>
 
             </v-layout>
@@ -62,8 +70,8 @@
                     :loading="isLoading"
                     rows-per-page-text=""
                     :rows-per-page-items="[]"
-                    no-data-text="No results"
-                    no-results-text="No users matching your criteria"
+                    :no-data-text="$t('pages.administration.users.no-search-results')"
+                    :no-results-text="$t('pages.administration.users.no-matching-users')"
                     class="elevation-1">
                         <template slot="items" slot-scope="dashboard">
                             <tr class="users-dashboard-row" @click="onDashboardUserClick(dashboard.item)" v-if="!isEditedUser(dashboard.item)">
@@ -82,13 +90,19 @@
                                     <v-layout>
                                         <v-flex xs12 md6 lg4>
                                             <v-btn id="enable-user-button" small class="dashboard-action-button primary"
-                                                        @click="onEnableUserClick($event, dashboard.item)" v-if="showEnableUserButton(dashboard.item)">ENABLE</v-btn>
+                                                        @click="onEnableUserClick($event, dashboard.item)" v-if="showEnableUserButton(dashboard.item)">
+                                                {{ $t('pages.administration.users.enable-user-button') }}            
+                                            </v-btn>
                                             <v-btn id="disable-user-button" small class="dashboard-action-button primary"
-                                                        @click="onDisableUserClick($event, dashboard.item)" v-if="showDisabledUserButton(dashboard.item)">DISABLE</v-btn>
+                                                        @click="onDisableUserClick($event, dashboard.item)" v-if="showDisabledUserButton(dashboard.item)">
+                                                {{ $t('pages.administration.users.disable-user-button') }}
+                                            </v-btn>
                                         </v-flex>
-                                        <v-flex xs12 md6 lg4>
+                                        <v-flex xs12 md6 lg4 pl-3>
                                             <v-btn id="delete-user-button" small class="dashboard-action-button"
-                                                        @click="onDeleteUserClick($event, dashboard.item)">DELETE</v-btn>
+                                                        @click="onDeleteUserClick($event, dashboard.item)">
+                                                {{ $t('pages.administration.users.delete-user-button') }}
+                                            </v-btn>
                                         </v-flex>
                                     </v-layout>
                                 </td>
@@ -96,14 +110,14 @@
                             <tr v-if="dashboard.item.isEnabling" class="edited-dashboard-user">
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
-                                        Are you sure you wish to enable {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                         {{ $t('pages.administration.users.enable-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
                                     </div>
                                     <div class="user-action-content">
                                         <v-textarea
                                             id="text-area-field"
                                             v-model="actionMessage"
                                             auto-grow box
-                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                            :label="$t('fields.optional-user-message.label')" rows="1" counter=500 :rules="messageRules" validate-on-blur>
                                         </v-textarea>
                                     </div>
                                 </td>
@@ -126,14 +140,14 @@
                             <tr v-if="dashboard.item.isDisabling" class="edited-dashboard-user">
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
-                                        Are you sure you wish to disable {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                        {{ $t('pages.administration.users.disable-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
                                     </div>
                                     <div class="user-action-content">
                                         <v-textarea
                                             id="text-area-field"
                                             v-model="actionMessage"
                                             auto-grow box
-                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                            :label="$t('fields.optional-user-message.label')" rows="1" counter=500 :rules="messageRules" validate-on-blur>
                                         </v-textarea>
                                     </div>
                                 </td>
@@ -156,14 +170,14 @@
                             <tr v-if="dashboard.item.isDeleting" class="edited-dashboard-user">
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
-                                        Are you sure you wish to delete {{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}'s account? Please provide a reason to the user:
+                                        {{ $t('pages.administration.users.delete-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
                                     </div>
                                     <div class="user-action-content">
                                         <v-textarea
                                             id="text-area-field"
                                             v-model="actionMessage"
                                             auto-grow box
-                                            label="Optional message for user" rows="1" counter=500 :rules="messageRules" validate-on-blur>
+                                            :label="$t('fields.optional-user-message.label')" rows="1" counter=500 :rules="messageRules" validate-on-blur>
                                         </v-textarea>
                                     </div>
                                 </td>
@@ -197,47 +211,52 @@
     import { mapGetters, mapState } from 'vuex';
     import { UserAccountStatusType, UserRoleType, VisibilityType } from '~/store/entities';
     import { HtmlHelpers, Validators } from '~/utils';
+    import ProfileLocaleSetting from '~/components/profile/profile-locale-setting.vue';
     import ServerSideErrors from '~/components/errors/server-side-errors.vue';
 
     export default {
         components: {
+            ProfileLocaleSetting,
             ServerSideErrors
         },
         layout: 'administration',
         middleware: ['authenticated', 'admin'],
-        data: () => ({
-            isLoading: false,
-            isInviteUser: false,
-            isInviteUserFormValid: false,
-            dashboardUsers: [],
-            dashboardUsersTotal: 0,
-            dashboardUsersTablePagination: {
-                rowsPerPage: 10
-            },
-            headers: [
-                { text: '', value: '', sortable: false },
-                { text: 'Full name', value: 'Name' },
-                { text: 'Email address', value: 'Email' },
-                { text: 'Role', value: 'Role' },
-                { text: 'Account status', value: 'AccountStatus' },
-                { text: 'Profile visibility', value: 'ProfileVisibility' },
-                { text: 'Actions', value: 'Actions', sortable: false }
-            ],
-            searchTerm: '',
-            newUserEmail: '',
-            newUserRole: 0,
-            editedUser: null,
-            actionMessage: '',
-            emailRules: [
-                v => !!v || 'E-mail is required',
-                v => v.length <= 100 || 'E-mail should have at most 100 characters',
-                v => Validators.isValidEmailAddress(v) || 'E-mail must be valid'
-            ],
-            messageRules: [
-                v => !v || v.length <= 500 || 'Message must not exceed 500 characters'
-            ],
-            roles: ['User', 'Admin']
-        }),
+        data: function () {
+            return {
+                isLoading: false,
+                isInviteUser: false,
+                isInviteUserFormValid: false,
+                dashboardUsers: [],
+                dashboardUsersTotal: 0,
+                dashboardUsersTablePagination: {
+                    rowsPerPage: 10
+                },
+                headers: [
+                    { text: '', value: '', sortable: false },
+                    { text: this.$t('pages.administration.users.full-name-header'), value: 'Name' },
+                    { text: this.$t('pages.administration.users.email-address-header'), value: 'Email' },
+                    { text: this.$t('pages.administration.users.role-header'), value: 'Role' },
+                    { text: this.$t('pages.administration.users.account-status-header'), value: 'AccountStatus' },
+                    { text: this.$t('pages.administration.users.profile-visibility-header'), value: 'ProfileVisibility' },
+                    { text: this.$t('pages.administration.users.actions-header'), value: 'Actions', sortable: false }
+                ],
+                searchTerm: '',
+                newUserEmail: '',
+                newUserRole: 0,
+                newUserLocale: this.$store.state.locale,
+                editedUser: null,
+                actionMessage: '',
+                emailRules: [
+                    v => !!v || this.$t('fields.email.validation-errors.required'),
+                    v => v.length <= 100 || this.$t('fields.email.validation-errors.length'),
+                    v => Validators.isValidEmailAddress(v) || this.$t('fields.email.validation-errors.invalid')
+                ],
+                messageRules: [
+                    v => !v || v.length <= 500 || this.$t('fields.optional-user-message.validation-errors.length')
+                ],
+                roles: ['User', 'Admin']
+            };
+        },
         watch: {
             dashboardUsersTablePagination: {
                 handler () {
@@ -279,7 +298,8 @@
             async onConfirmInviteUserClick () {
                 var request  = {
                     Email: this.newUserEmail,
-                    Role: this.newUserRole
+                    Role: this.newUserRole,
+                    Locale: this.newUserLocale
                 };
 
                 await this.$store.dispatch('administration/inviteUser', request);
@@ -294,6 +314,9 @@
             onCancelInviteUserClick: function () {
                 this.isInviteUser = false;
                 this.$store.dispatch('administration/endAdministrationInviteUserSession');
+            },
+            updateLocaleSetting: function (model) {
+                this.newUserLocale = model;
             },
             async updateUsersDashboardTable () {
                 const { sortBy, descending, page } = this.dashboardUsersTablePagination;
@@ -415,13 +438,13 @@
                 this.editedUser = null;
             },
             getRoleElementText: function (value) {
-                return (_.invert(UserRoleType))[value];
+                return this.$t(`application-data.${(_.invert(UserRoleType))[value].toLowerCase()}`);
             },
             getAccountStatusElementText: function (value) {
-                return (_.invert(UserAccountStatusType))[value];
+                return this.$t(`application-data.${(_.invert(UserAccountStatusType))[value].toLowerCase()}`);
             },
             getPrivacyElementText: function (value) {
-                return (_.invert(VisibilityType))[value];
+                return this.$t(`application-data.${(_.invert(VisibilityType))[value].toLowerCase()}`);
             },
             showEnableUserButton: function (user) {
                 return user.AccountStatus === UserAccountStatusType.Disabled;

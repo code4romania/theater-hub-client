@@ -4,35 +4,38 @@
             <v-flex xs6 mb-3>
                 <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
                     :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
-                    <div class="dz-message" data-dz-message><span>Click or drop profile image here</span></div>
+                    <div class="dz-message" data-dz-message><span>{{ $t('fields.profile-photo-dropzone.label') }}</span></div>
                 </dropzone>
             </v-flex>
             <v-flex xs6 mb-3>
                 <v-flex xs12 v-if="displayNameFields">
                     <v-text-field v-model="profileGeneralInformationModel.firstName" @input="updateProfileGeneralInformationModel"
-                                                                :rules="firstNameRules" label="First name*" validate-on-blur required></v-text-field>
+                            :rules="firstNameRules" :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
                 </v-flex>
                 <v-flex xs12 v-if="displayNameFields">
                     <v-text-field v-model="profileGeneralInformationModel.lastName" @input="updateProfileGeneralInformationModel" 
-                                                                :rules="lastNameRules" label="Last name*" validate-on-blur required></v-text-field>
+                            :rules="lastNameRules" :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                     <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
                         lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                         <v-text-field slot="activator" v-model="profileGeneralInformationModel.birthDate"
-                                                                :rules="birthDateRules" label="Date of birth" prepend-icon="event" readonly>
+                                        :rules="birthDateRules" :label="`${$t('fields.date-of-birth.label')}*`" prepend-icon="event" readonly>
                         </v-text-field>
-                        <v-date-picker v-model="profileGeneralInformationModel.birthDate" @input="updateProfileGeneralInformationModel">
+                        <v-date-picker
+                            v-model="profileGeneralInformationModel.birthDate"
+                            @input="updateProfileGeneralInformationModel"
+                            :locale="locale">
                         </v-date-picker>
                     </v-menu>
                 </v-flex>
                 <v-flex xs12>
                     <v-text-field v-model="profileGeneralInformationModel.phoneNumber" @input="updateProfileGeneralInformationModel"
-                                                                :rules="phoneNumberRules" label="Phone Number*" validate-on-blur required></v-text-field>
+                            :rules="phoneNumberRules" :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                     <v-text-field v-model="profileGeneralInformationModel.website" @input="updateProfileGeneralInformationModel"
-                                                                :rules="websiteRules" validate-on-blur label="Website"></v-text-field>
+                            :rules="websiteRules" validate-on-blur :label="$t('fields.website.label')"></v-text-field>
                 </v-flex>
             </v-flex>
         </v-layout>
@@ -43,7 +46,7 @@
                 @input="updateProfileGeneralInformationModel"
                 auto-grow
                 box
-                label="Description"
+                :label="$t('fields.description.label')"
                 rows="1"
                 counter=500
                 :rules="descriptionRules" validate-on-blur>
@@ -52,19 +55,19 @@
         <v-layout row wrap>
             <v-flex xs6 class="mb-3 pr-2">
                 <v-text-field v-model="profileGeneralInformationModel.instagramLink" @input="updateProfileGeneralInformationModel"
-                                                                        :rules="instagramLinkRules" label="Instagram"></v-text-field>
+                            :rules="instagramLinkRules" :label="$t('fields.instagram.label')"></v-text-field>
             </v-flex>
             <v-flex xs6 class="mb-3 pl-2">
                 <v-text-field v-model="profileGeneralInformationModel.youtubeLink" @input="updateProfileGeneralInformationModel"
-                                                                                :rules="youtubeLinkRules" label="Youtube"></v-text-field>
+                            :rules="youtubeLinkRules" :label="$t('fields.youtube.label')"></v-text-field>
             </v-flex>
             <v-flex xs6 class="mb-3 pr-2">
                 <v-text-field v-model="profileGeneralInformationModel.facebookLink" @input="updateProfileGeneralInformationModel"
-                                                                                :rules="facebookLinkRules" label="Facebook"></v-text-field>
+                            :rules="facebookLinkRules" :label="$t('fields.facebook.label')"></v-text-field>
             </v-flex>
             <v-flex xs6 class="mb-3 pl-2">
                 <v-text-field v-model="profileGeneralInformationModel.linkedinLink" @input="updateProfileGeneralInformationModel"
-                                                                            :rules="linkedinLinkRules" label="Linkedin"></v-text-field>
+                            :rules="linkedinLinkRules" :label="$t('fields.linkedin.label')"></v-text-field>
             </v-flex>
         </v-layout>
     </v-layout>
@@ -72,6 +75,7 @@
 
 
 <script>
+    import { mapGetters } from 'vuex';
     import Dropzone from 'nuxt-dropzone';
     import 'nuxt-dropzone/dropzone.css';
     import { SocialMediaManager, Helpers, Validators } from '~/utils';
@@ -87,43 +91,44 @@
                     profileGeneralInformationModel: Helpers.cloneObject(this.profileGeneralInformation),
                     isBirthDateMenuOpen: false,
                     phoneNumberRules: [
-                        v => !!v || 'Phone number is required',
-                        v => Validators.isValidPhoneNumber(v) || 'Phone number must be valid'
+                        v => !!v || this.$t('fields.phone-number.validation-errors.required'),
+                        v => Validators.isValidPhoneNumber(v) || this.$t('fields.phone-number.validation-errors.invalid')
                     ],
                     firstNameRules: [
-                        v => !!v || 'First name is required',
-                        v => v.length <= 50 || 'First name should have at most 50 characters'
+                        v => !!v || this.$t('fields.first-name.validation-errors.required'),
+                        v => v.length <= 50 || this.$t('fields.first-name.validation-errors.length')
                     ],
                     lastNameRules: [
-                        v => !!v || 'Last name is required',
-                        v => v.length <= 50 || 'Last name should have at most 50 characters'
+                        v => !!v || this.$t('fields.last-name.validation-errors.required'),
+                        v => v.length <= 50 || this.$t('fields.last-name.validation-errors.length')
                     ],
                     birthDateRules: [
-                        v => Validators.isValidBirthDate(v) || 'You must be at least 18 years old'
+                        v => Validators.isValidBirthDate(v) || this.$t('fields.date-of-birth.validation-errors.invalid')
                     ],
                     websiteRules: [
-                        v => !v || Validators.isValidURL(v) || 'Website must be valid'
+                        v => !v || Validators.isValidURL(v) || this.$t('fields.website.validation-errors.invalid')
                     ],
                     descriptionRules: [
-                        v => !v || v.length <= 500 || "Description's maximum length is of 500 characters"
+                        v => !v || v.length <= 500 || this.$t('fields.description.validation-errors.length')
                     ],
                     instagramLinkRules: [
-                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || 'Invalid Instagram link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || this.$t('fields.instagram.validation-errors.invalid')
                     ],
                     youtubeLinkRules: [
-                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || 'Invalid Youtube link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || this.$t('fields.youtube.validation-errors.invalid')
                     ],
                     facebookLinkRules: [
-                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || 'Invalid Facebook link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || this.$t('fields.facebook.validation-errors.invalid')
                     ],
                     linkedinLinkRules: [
-                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || 'Invalid Linkedin link'
+                        v => !v || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || this.$t('fields.linkedin.validation-errors.invalid')
                     ],
                     profileImageDropzoneOptions: {
                         url: '/',
                         maxFilesize: 2,
                         addRemoveLinks: true,
                         autoProcessQueue: false,
+                        dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializeProfileImage: (dropzone) => {
                             if (this.profileGeneralInformation.profileImage.Image) {
@@ -178,6 +183,11 @@
                     this.isBirthDateMenuOpen = false;
                     this.$emit('updateProfileGeneralInformation', this.profileGeneralInformationModel);
                 }
+            },
+            computed: {
+                ...mapGetters({
+                    locale: 'locale'
+                })
             }
     }
 </script>
