@@ -1,30 +1,29 @@
-import { BaseService }  from '../api/services';
-import { HtmlHelpers }  from '../utils';
+import VuexPersistence        from 'vuex-persist';
+import { HtmlHelpers }        from '../utils';
 
 export const state = () => ({
   isLoading: false,
   displayMainOverlay: false,
-  welcomeMessage: ''
+  locale: ''
+});
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
 });
 
 export const mutations = {
-  SET_WELCOME_MESSAGE: (state, message) => {
-    state.welcomeMessage = message;
-  },
   SET_LOADING: (state, isLoading) => {
     state.isLoading = isLoading;
   },
   SET_MAIN_OVERLAY_VISIBILITY: (state, value) => {
     state.displayMainOverlay = value;
+  },
+  SET_LOCALE: (state, value) => {
+    state.locale = value;
   }
 };
 
 export const actions = {
-  async getWelcomeMessage ({ commit }) {
-    var message = await BaseService.getWelcomeMessage();
-
-    commit('SET_WELCOME_MESSAGE', message);
-  },
   updateIsLoading ({ commit }, payload) {
     commit('SET_LOADING', payload);
   },
@@ -39,5 +38,26 @@ export const actions = {
         dispatch('syncMainOverlaySize');
       }, 0);
     }
+  },
+  setLocale ({ commit, dispatch }, value) {
+    commit('SET_LOCALE', value);
+
+    this.$router.push({ path: `${this.$router.currentRoute.path}?lang=${value}` });
+  },
+  setLocaleWithoutRedirect ({ commit, dispatch }, value) {
+    commit('SET_LOCALE', value);
   }
 };
+
+export const getters = {
+  locale (state) {
+      return state.locale;
+  },
+  localeName (state) {
+    return state.applicationData.locales.filter(l => l.ID === state.locale)[0].Name;
+  }
+};
+
+export const plugins = [
+  vuexLocal.plugin
+];

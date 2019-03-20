@@ -3,36 +3,37 @@
     <v-container fluid login-container elevation-4 class="mt-5 pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">Login</h1>
+            <h1 class="mb-3">{{ $t('pages.login.title') }}</h1>
             <v-form ref="loginForm" v-model="valid">
                 <v-flex xs12>
-                    <v-text-field v-model="email" :rules="emailRules" label="Email*" required validate-on-blur color="primary"></v-text-field>
+                    <v-text-field v-model="email" :rules="emailRules" :label="`${$t('fields.email.label')}*`"
+                                                    required validate-on-blur color="primary"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                     <v-text-field
                       v-model="password"
-                      label="Password*"
+                      :label="`${$t('fields.password.label')}*`"
                       color="primary"
                       :rules="passwordRules"
                       type="password"
                       required validate-on-blur></v-text-field>
                 </v-flex>
                 <v-flex xs12 mt-3>
-                    <v-btn @click="submit" class="ml-0" color="login-button primary">LOGIN</v-btn>
-                    <nuxt-link to="/forgot-password" id="forgot-password-btn" class="link-button">Forgot password?</nuxt-link>
+                    <v-btn @click="submit" class="ml-0" color="login-button primary">{{ $t('pages.login.login-button-text') }}</v-btn>
+                    <nuxt-link to="/forgot-password" id="forgot-password-btn" class="link-button">{{ $t('pages.login.forgot-password') }}</nuxt-link>
                 </v-flex>
                 <v-flex v-if="authentication.loginErrors">
                   <ServerSideErrors :errors="authentication.loginErrors"/>
                 </v-flex>
                 <v-flex xs12 mt-1 class="social-media-login-divider">
-                    OR
+                    {{ $t('pages.login.separator-text') }}
                 </v-flex>
                 <v-layout row wrap mt-1>
                   <v-flex xs6 pr-2>
                       <a href="https://localhost:443/api/authentication/facebook" class="facebook-login-link social-media-login-link">
                         <v-btn class="facebook-login-button social-media-login-button">
                           <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
-                          Login with Facebook
+                          {{ $t('pages.login.facebook-login-button-text') }}
                         </v-btn>
                       </a>
                   </v-flex>
@@ -40,7 +41,7 @@
                       <a href="https://localhost:443/api/authentication/google" class="google-login-link social-media-login-link">
                         <v-btn class="google-login-button social-media-login-button">
                           <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />
-                          Login with Google
+                          {{ $t('pages.login.google-login-button-text') }}
                         </v-btn>
                       </a>
                   </v-flex>
@@ -64,20 +65,22 @@
       },
       layout: 'visitor',
       middleware: 'visitor',
-      data: () => ({
-        valid: false,
-        email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => v.length <= 100 || 'E-mail should have at most 100 characters',
-          v => Validators.isValidEmailAddress(v) || 'E-mail must be valid'
-        ],
-        password: '',
-        passwordRules: [
-          v => !!v || 'Password is required',
-          v => Validators.isValidPassword(v) || 'Password must be between 7 and 50 characters long and include upper and lowercase characters'
-        ]
-      }),
+      data: function () {
+        return {
+          valid: false,
+          email: '',
+          emailRules: [
+            v => !!v || this.$t('fields.email.validation-errors.required'),
+            v => v.length <= 100 || this.$t('fields.email.validation-errors.length'),
+            v => Validators.isValidEmailAddress(v) || this.$t('fields.email.validation-errors.invalid')
+          ],
+          password: '',
+          passwordRules: [
+            v => !!v || this.$t('fields.password.validation-errors.required'),
+            v => Validators.isValidPassword(v) || this.$t('fields.password.validation-errors.invalid')
+          ]
+        };
+      },
      async fetch ({ store, query, app }) {
        if (query && query.token) {
           store.dispatch('authentication/setToken', query.token);

@@ -32,13 +32,13 @@
                 </v-btn>
             </v-flex>
             <v-flex xs12>
-                Please provide links from Youtube or Vimeo.
+                {{ $t('shared.content.video-message') }}
             </v-flex>
             <v-flex xs12 mt-3 class="video-link-row profile-focused-row">
                 <v-text-field
                     v-model="videosFactory.link"
                     :rules="videoLinkRules"
-                    label="Video link"
+                    :label="$t('fields.video.label')"
                     v-on:change="onVideoLinkChange()"
                     validate-on-blur required>
                 </v-text-field>
@@ -48,7 +48,7 @@
             </v-flex>
             <v-flex xs12 mt-5 v-if="!videosFactory.inEditMode">
                 <v-btn v-on:click="onAddVideoClick" :disabled="isAddVideoButtonDisabled()" block class="add-video-button">
-                    Add video link
+                    {{ $t('shared.content.add-video-button') }}
                 </v-btn>
             </v-flex>
         </v-flex>
@@ -66,7 +66,7 @@
                 return {
                     profileVideoGalleryModel: Helpers.cloneObject(this.profileVideoGallery),
                     videoLinkRules: [
-                        v => !v || (!!v && SocialMediaManager.isVideoValid(v)) || 'Video link is not a valid Youtube or Vimeo link'
+                        v => !v || (!!v && SocialMediaManager.isVideoValid(v)) || this.$t('fields.video.validation-errors.invalid')
                     ],
                     videosFactory: {
                         link: '',

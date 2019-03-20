@@ -3,41 +3,48 @@
     <v-container fluid signup-container elevation-4 class="mt-5 pa-5">
         <v-layout column>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">Sign Up</h1>
+            <h1 class="mb-3">{{ $t('pages.sign-up.title') }}</h1>
 
             <v-layout>
 
               <v-flex xs12 v-if="!isSuccessfulSubmit">
                 <v-form ref="signupForm" v-model="valid">
                     <v-flex xs12>
-                        <v-text-field v-model="firstName" :rules="firstNameRules" label="First name*" validate-on-blur required></v-text-field>
+                        <v-text-field v-model="firstName" :rules="firstNameRules"
+                                        :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        <v-text-field v-model="lastName"  :rules="lastNameRules" label="Last name*" validate-on-blur required></v-text-field>
+                        <v-text-field v-model="lastName"  :rules="lastNameRules"
+                                        :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        <v-text-field v-model="email"     :rules="emailRules" label="Email*" validate-on-blur required></v-text-field>
+                        <v-text-field v-model="email"     :rules="emailRules"
+                                        :label="`${$t('fields.email.label')}*`" validate-on-blur required></v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        <v-text-field v-model="password"  :rules="passwordRules" label="Password*" validate-on-blur required type="password"></v-text-field>
+                        <v-text-field v-model="password"  :rules="passwordRules"
+                                        :label="`${$t('fields.password.label')}*`" validate-on-blur required type="password"></v-text-field>
                     </v-flex>
                     <v-flex xs12>
                         <v-text-field v-model="confirmPassword" :rules="validateConfirmPassword()"
-                                                    label="Confirm password*" validate-on-blur required type="password"></v-text-field>
+                                        :label="`${$t('fields.confirm-password.label')}*`" validate-on-blur required type="password"></v-text-field>
                     </v-flex>
-                    <v-flex xs12>
-                        <v-checkbox
-                            id="agree-to-terms"
-                            name="agree-to-terms"
-                            v-model="agreeToTerms"
-                            :rules="agreeToTermsRules">
-                            <div slot="label">
-                                I agree to the <nuxt-link to="terms-of-use" target="_blank">Terms of Use</nuxt-link> and <nuxt-link to="privacy-policy" target="_blank">Privacy Policy</nuxt-link>
-                            </div>
-                        </v-checkbox>
-                    </v-flex>
+                    <v-layout mt-4>
+                        <v-flex xs1>
+                          <v-checkbox
+                              id="agree-to-terms"
+                              name="agree-to-terms"
+                              v-model="agreeToTerms"
+                              :rules="agreeToTermsRules">
+                          </v-checkbox>
+                        </v-flex>
+                        <v-flex xs11>
+                          <label class="agree-to-terms-label" for="agree-to-terms">{{ $t('shared.content.agreement-text-beginning') }}</label>
+                          <nuxt-link to="terms-of-use" target="_blank">{{ $t('shared.content.agreement-terms-of-use') }}</nuxt-link> {{ $t('shared.content.agreement-text-separator') }} <nuxt-link to="privacy-policy" target="_blank">{{ $t('shared.content.agreement-text-privacy-policy') }}</nuxt-link>
+                        </v-flex>
+                    </v-layout>
                     <v-flex xs12 mt-3>
-                        <v-btn @click="submit" class="signup-button ml-0" color="primary">SUBMIT</v-btn>
+                        <v-btn @click="submit" class="signup-button ml-0" color="primary">{{ $t('pages.sign-up.submit-button') }}</v-btn>
                     </v-flex>
                     <v-flex v-if="users.signupErrors">
                       <ServerSideErrors :errors="users.signupErrors"/>
@@ -46,20 +53,20 @@
               </v-flex>
 
               <v-flex xs12 align-end flexbox v-if="isSuccessfulSubmit" pt-2>
-                  An email containing a link for confirming the registration has been sent. 
+                  {{ $t('pages.sign-up.submit-success-message') }}
               </v-flex>
 
             </v-layout>
           </v-flex>
           <v-flex xs12 mt-1 class="social-media-signup-divider" v-if="!isSuccessfulSubmit">
-              OR
+              {{ $t('pages.sign-up.separator-text') }}
           </v-flex>
           <v-layout row wrap mt-1 v-if="!isSuccessfulSubmit">
             <v-flex xs6 pr-2>
                 <a href="https://localhost:443/api/authentication/facebook" class="facebook-signup-link social-media-signup-link">
                   <v-btn class="facebook-signup-button social-media-signup-button">
                     <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
-                    Continue with Facebook
+                    {{ $t('pages.sign-up.facebook-sign-up-button-text') }}
                   </v-btn>
                 </a>
             </v-flex>
@@ -67,7 +74,7 @@
                 <a href="https://localhost:443/api/authentication/google" class="google-signup-link social-media-signup-link">
                   <v-btn class="google-signup-button social-media-signup-button">
                     <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />
-                    Sign up with Google
+                    {{ $t('pages.sign-up.google-sign-up-button-text') }}
                   </v-btn>
                 </a>
             </v-flex>
@@ -90,36 +97,38 @@
       },
       layout: 'visitor',
       middleware: 'visitor',
-      data: () => ({
-        valid: false,
-        firstName: '',
-        firstNameRules: [
-          v => !!v || 'First name is required',
-          v => v.length <= 50 || 'First name should have at most 50 characters'
-        ],
-        lastName: '',
-        lastNameRules: [
-          v => !!v || 'Last name is required',
-          v => v.length <= 50 || 'Last name should have at most 50 characters'
-        ],
-        email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => v.length <= 100 || 'E-mail should have at most 100 characters',
-          v => Validators.isValidEmailAddress(v) || 'E-mail must be valid'
-        ],
-        password: '',
-        passwordRules: [
-          v => !!v || 'Password is required',
-          v => Validators.isValidPassword(v) || 'Password must be between 7 and 50 characters long and include upper and lowercase characters'
-        ],
-        confirmPassword: '',
-        agreeToTerms: false,
-        agreeToTermsRules: [
-          v => v || ''
-        ],
-        isSuccessfulSubmit: false
-      }),
+      data: function () {
+        return {
+          valid: false,
+          firstName: '',
+          firstNameRules: [
+            v => !!v || this.$t('fields.first-name.validation-errors.required'),
+            v => v.length <= 50 || this.$t('fields.first-name.validation-errors.length')
+          ],
+          lastName: '',
+          lastNameRules: [
+            v => !!v || this.$t('fields.last-name.validation-errors.required'),
+            v => v.length <= 50 || this.$t('fields.last-name.validation-errors.length')
+          ],
+          email: '',
+          emailRules: [
+            v => !!v || this.$t('fields.email.validation-errors.required'),
+            v => v.length <= 100 || this.$t('fields.email.validation-errors.length'),
+            v => Validators.isValidEmailAddress(v) || this.$t('fields.email.validation-errors.invalid')
+          ],
+          password: '',
+          passwordRules: [
+            v => !!v || this.$t('fields.password.validation-errors.required'),
+            v => Validators.isValidPassword(v) || this.$t('fields.password.validation-errors.invalid')
+          ],
+          confirmPassword: '',
+          agreeToTerms: false,
+          agreeToTermsRules: [
+            v => v || ''
+          ],
+          isSuccessfulSubmit: false
+        };
+      },
       async fetch ({ store, query, app }) {
        if (query && query.token) {
           store.dispatch('authentication/setToken', query.token);
@@ -142,11 +151,11 @@
         },
         validateConfirmPassword () {
           if (!this.confirmPassword) {
-            return ['Confirm password is required'];
+            return [this.$t('fields.confirm-password.validation-errors.required')];
           }
 
           if (this.confirmPassword !== this.password) {
-            return ['Confirm password must match the password'];
+            return [this.$t('fields.confirm-password.validation-errors.invalid')];
           }
 
           return [true];
@@ -181,7 +190,7 @@
 <style lang="scss" scoped>
 
 	.signup-container {
-        max-width: 700px;
+    max-width: 700px;
   }
 
   .signup-button {
@@ -222,6 +231,10 @@
     background-color: #FFF !important;
     color: #000;
     font-family: Helvetica, Arial, sans-serif;
+  }
+
+  .agree-to-terms-label {
+    cursor: pointer;
   }
 
 </style>

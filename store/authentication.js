@@ -22,6 +22,7 @@ export const actions = {
   async login ({ commit, dispatch }, request) {
     await AuthenticationService.authenticate(request).then(response => {
       dispatch('setToken', response.Token);
+      dispatch('setLocale', response.Locale, { root: true });
       dispatch('applicationData/getApplicationData', null, { root: true });
       dispatch('setLoginErrors', '');
     }).catch(error => {

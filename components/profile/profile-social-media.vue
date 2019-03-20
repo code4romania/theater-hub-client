@@ -2,19 +2,19 @@
     <v-layout row wrap>
         <v-flex xs6 class="mb-3 pr-2">
             <v-text-field v-model="profileSocialMediaModel.instagramLink" @input="updateProfileSocialMediaModel"
-                                                                    :rules="instagramLinkRules" label="Instagram"></v-text-field>
+                            :rules="instagramLinkRules" :label="$t('fields.instagram.label')"></v-text-field>
         </v-flex>
         <v-flex xs6 class="mb-3 pl-2">
             <v-text-field v-model="profileSocialMediaModel.youtubeLink" @input="updateProfileSocialMediaModel"
-                                                                            :rules="youtubeLinkRules" label="Youtube"></v-text-field>
+                            :rules="youtubeLinkRules" :label="$t('fields.youtube.label')"></v-text-field>
         </v-flex>
         <v-flex xs6 class="mb-3 pr-2">
             <v-text-field v-model="profileSocialMediaModel.facebookLink" @input="updateProfileSocialMediaModel"
-                                                                            :rules="facebookLinkRules" label="Facebook"></v-text-field>
+                            :rules="facebookLinkRules" :label="$t('fields.facebook.label')"></v-text-field>
         </v-flex>
         <v-flex xs6 class="mb-3 pl-2">
             <v-text-field v-model="profileSocialMediaModel.linkedinLink" @input="updateProfileSocialMediaModel"
-                                                                        :rules="linkedinLinkRules" label="Linkedin"></v-text-field>
+                            :rules="linkedinLinkRules" :label="$t('fields.linkedin.label')"></v-text-field>
         </v-flex>
     </v-layout>
 </template>
@@ -30,16 +30,16 @@
                 return {
                     profileSocialMediaModel: Helpers.cloneObject(this.profileSocialMedia),
                     instagramLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || 'Invalid Instagram link'
+                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Instagram) || this.$t('fields.instagram.validation-errors.invalid')
                     ],
                     youtubeLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || 'Invalid Youtube link'
+                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Youtube) || this.$t('fields.youtube.validation-errors.invalid')
                     ],
                     facebookLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || 'Invalid Facebook link'
+                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Facebook) || this.$t('fields.facebook.validation-errors.invalid')
                     ],
                     linkedinLinkRules: [
-                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || 'Invalid Linkedin link'
+                        v => v === '' || SocialMediaManager.isValidURL(v, SocialMediaCategoryType.Linkedin) || this.$t('fields.linkedin.validation-errors.invalid')
                     ]
                 };
             },
