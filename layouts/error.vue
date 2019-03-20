@@ -3,11 +3,11 @@
     <v-container v-if="error.statusCode === 404" fluid page-not-found-container class="mt-5 pa-5 page-not-found-container">
         <v-layout row wrap>
             <v-flex>
-                <h1 class="mb-3">Page not found</h1>
+                <h1 class="mb-3">{{ $t('pages.errors.not-found-title') }}</h1>
             </v-flex>
             <v-flex xs12>
                 <p>
-                    The page you are looking for does not exist!
+                    {{ $t('pages.errors.not-found-description') }}
                 </p> 
             </v-flex>
         </v-layout>
@@ -16,11 +16,11 @@
     <v-container v-if="error.statusCode === 500" fluid error-page-container class="mt-5 pa-5 error-page-container">
         <v-layout row wrap>
             <v-flex>
-                <h1 class="mb-3">An unexpected error has occured</h1>
+                <h1 class="mb-3">{{ $t('pages.errors.error-title') }}</h1>
             </v-flex>
             <v-flex xs12>
                 <p>
-                    Please try again.
+                    {{ $t('pages.errors.error-description') }}
                 </p> 
             </v-flex>
         </v-layout>

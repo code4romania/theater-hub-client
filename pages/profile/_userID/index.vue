@@ -5,11 +5,11 @@
 
             <v-layout row wrap v-if="!profile">
                 <v-flex>
-                    <h1 class="mb-3">Profile</h1>
+                    <h1 class="mb-3">{{ $t('pages.profile.invalid-profile-title') }}</h1>
                 </v-flex>
                 <v-flex xs12>
                     <p>
-                        The profile you are trying to view is either private or does not exist. 
+                        {{ $t('pages.profile.invalid-profile-content') }}
                     </p> 
                 </v-flex>
             </v-layout>
@@ -26,24 +26,24 @@
                             <v-flex xs12 class="profile-information-row">
                                 <span class="full-name-field">{{ fullName }}</span>
                                 <span v-if="hasBirthDate">,</span>
-                                <span class="age-field" v-if="hasBirthDate">{{ age }} years</span>
+                                <span class="age-field" v-if="hasBirthDate">{{ age }} {{ $t('shared.content.years') }}</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row" v-if="hasEmailAddress">
-                                <span class="field-label">Email: </span>
+                                <span class="field-label">{{ $t('fields.email.label') }}: </span>
                                 <span class="email-field">{{ profile.profileGeneralInformation.email }}</span>
                                 <a class="email-icon" :href="`mailto:${profile.profileGeneralInformation.email}`">
                                     <v-icon>email</v-icon>
                                 </a>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row" v-if="hasPhoneNumber">
-                                <span class="field-label">Phone number: </span>
+                                <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
                                 <span class="phone-number-field">{{ profile.profileGeneralInformation.phoneNumber }}</span>
                                 <a class="phone-icon" :href="`tel:${profile.profileGeneralInformation.phoneNumber}`">
                                     <v-icon>phone</v-icon>
                                 </a>
                             </v-flex>
                             <v-flex xs12 v-if="profile.profileGeneralInformation.website" class="profile-information-row">
-                                <span class="field-label">Website: </span>
+                                <span class="field-label">{{ $t('fields.website.label') }}: </span>
                                 <a :href="profile.profileGeneralInformation.website" class="website-field" target="_blank">{{ profile.profileGeneralInformation.website }}</a>
                             </v-flex>
                             <v-flex class="profile-information-row">
@@ -67,7 +67,7 @@
                 <v-flex xs12 v-if="hasDescription">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Description</h2>
+                            <h2>{{ $t('pages.profile.description-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4>
                             <p>
@@ -84,7 +84,7 @@
                 <v-flex xs12>
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Skills</h2>
+                            <h2>{{ $t('pages.profile.skills-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4 class="skills-row">
                             <v-chip :key="i" v-for="(skill, i) in skillNameList" class="skill">{{ skill }}</v-chip>
@@ -99,7 +99,7 @@
                 <v-flex xs12 v-if="hasPhotoGallery">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Photo gallery</h2>
+                            <h2>{{ $t('pages.profile.photo-gallery-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4 class="photo-gallery-row">
                             <no-ssr>
@@ -127,7 +127,7 @@
                 <v-flex xs12>
                     <v-layout row wrap class="profile-information-group" v-if="hasVideoGallery">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Video gallery</h2>
+                            <h2>{{ $t('pages.profile.video-gallery-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4 class="video-gallery-row">
                             <v-layout row wrap>
@@ -147,7 +147,7 @@
                 <v-flex xs12 mb-5 pb-5>
                     <v-layout row wrap class="profile-information-group" v-if="hasAchievements">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Achievements</h2>
+                            <h2>{{ $t('pages.profile.achievements-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-5 class="timeline-row">
                             <v-layout row wrap class="profile-information-group">
@@ -157,7 +157,7 @@
                                         <v-timeline-item medium hide-dot right class="timeline-header-item" v-if="hasAwards">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Awards</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -187,7 +187,7 @@
                                         <v-timeline-item medium hide-dot right class="timeline-header-item" v-if="hasExperience">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Experience</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.experience-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -219,7 +219,7 @@
                                         <v-timeline-item  medium hide-dot right class="timeline-header-item" v-if="hasEducation">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Education</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.education-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -390,7 +390,7 @@
                 return this.profile.profileGeneralInformation.profileImage.Image;
             },
             skillNameList: function () {
-                return this.profile.profileSkills.selectedSkills.map(s => s.Name).sort();
+                return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
             },
             age: function () {
                 var currentDateMoment = moment(new Date());

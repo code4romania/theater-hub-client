@@ -12,7 +12,7 @@
                 </v-flex>
             </v-layout>
             <v-layout row>
-                Are you sure you wish to delete this video?
+                {{ $t('pages.profile.delete-video-message') }}
             </v-layout>
         </v-flex>
     </v-layout>

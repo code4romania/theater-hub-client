@@ -3,7 +3,7 @@
     <v-container fluid privacy-policy-container class="mt-5 pa-5">
         <v-layout row wrap>
             <v-flex>
-                <h1 class="mb-3">Projects dashboard</h1>
+                <h1 class="mb-3">{{ $t('pages.administration.projects.title') }}</h1>
             </v-flex>
             <v-flex xs12>
                 <p>

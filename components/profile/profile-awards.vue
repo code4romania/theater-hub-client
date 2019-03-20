@@ -44,17 +44,24 @@
                 </v-layout>
                 <v-layout row mt-2>
                     <v-flex xs12 sm5 md5 lg5 class="pr-2">
-                        <v-text-field v-model="awardsFactory.title" :rules="awardTitleRules" label="Award title*" required></v-text-field>
+                        <v-text-field v-model="awardsFactory.title" :rules="awardTitleRules"
+                            :label="`${$t('fields.award.title.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm4 md4 lg4 class="px-2">
-                        <v-text-field v-model="awardsFactory.issuer" :rules="awardIssuerRules" label="Issuer*" required></v-text-field>
+                        <v-text-field v-model="awardsFactory.issuer" :rules="awardIssuerRules"
+                            :label="`${$t('fields.award.issuer.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm3 md3 lg3 class="date-menu-container px-2">
                         <v-menu :close-on-content-click="false" v-model="awardsFactory.isAwardDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="awardsFactory.date" label="Date" prepend-icon="event" readonly>
+                            <v-text-field slot="activator" type="month" v-model="awardsFactory.date"
+                                :label="$t('fields.award.date.label')" prepend-icon="event" readonly>
                             </v-text-field>
-                            <v-date-picker v-model="awardsFactory.date" type="month" @input="awardsFactory.isAwardDateMenuOpen = false">
+                            <v-date-picker
+                                v-model="awardsFactory.date"
+                                type="month"
+                                :locale="locale"
+                                @input="awardsFactory.isAwardDateMenuOpen = false">
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
@@ -65,7 +72,7 @@
                         v-model="awardsFactory.description"
                         auto-grow
                         box
-                        label="Description"
+                        :label="$t('fields.award.description.label')"
                         rows="1"
                         counter=500
                         :rules="descriptionRules" validate-on-blur>
@@ -73,7 +80,7 @@
                 </v-layout>
                 <v-flex xs12 mt-5 v-if="!awardsFactory.inEditMode">
                     <v-btn v-on:click="onAddAwardClick" :disabled="isAwardButtonDisabled()" block class="add-award-button">
-                        Add award
+                        {{ $t('shared.content.add-award-button') }}
                     </v-btn>
                 </v-flex>
             </v-form>
@@ -83,6 +90,7 @@
 
 
 <script>
+    import { mapGetters } from 'vuex';
     import moment from 'moment';
     import { Helpers } from '~/utils';
 
@@ -92,13 +100,13 @@
             return {
                 profileAwardsModel: Helpers.cloneObject(this.profileAwards),
                 awardTitleRules: [
-                    v => !!v || 'Title is required'
+                    v => !!v || this.$t('fields.award.title.validation-errors.required')
                 ],
                 awardIssuerRules: [
-                    v => !!v || 'Issuer is required'
+                    v => !!v || this.$t('fields.award.issuer.validation-errors.required')
                 ],
                 descriptionRules: [
-                    v => v === '' || v.length <= 500 || "Description's maximum length is of 500 characters"
+                    v => v === '' || v.length <= 500 || this.$t('fields.award.description.validation-errors.length')
                 ],
                 awardsFactory: {
                     title: '',
@@ -192,6 +200,11 @@
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY');
             }
+        },
+        computed: {
+            ...mapGetters({
+                locale: 'locale'
+            })
         }
     }
 </script>

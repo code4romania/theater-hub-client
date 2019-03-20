@@ -12,16 +12,20 @@
         </v-flex>
         <v-layout justify-end align-center pr-5>
           <v-flex xs1 mr-5 class="action-button">
-            <nuxt-link to="/administration/users" id="users-administration-btn" class="menu-link">Users</nuxt-link>
+            <nuxt-link to="/administration/users" id="users-administration-btn" class="menu-link">
+              {{ $t('shared.header.administration-users-link') }}
+            </nuxt-link>
           </v-flex>
           <v-flex xs1 mr-5 class="action-button">
-            <nuxt-link to="/administration/projects" id="projects-administration-btn" class="menu-link">Projects</nuxt-link>
+            <nuxt-link to="/administration/projects" id="projects-administration-btn" class="menu-link">
+              {{ $t('shared.header.administration-projects-link') }}
+            </nuxt-link>
           </v-flex>
           <v-flex xs2 class="action-button">
             <v-menu offset-y>
               <v-flex xs12 slot="activator">
                 <div class="header-name-container">
-                  <span>Hi, {{ myFullName }}</span>
+                  <span>{{ $t('shared.header.greeting') }}, {{ myFullName }}</span>
                 </div>
                 <v-avatar size="30px">
                   <img :src="require('~/assets/images/default-avatar.svg')"   v-if="!myProfileImage || !myProfileImage.Image" />
@@ -31,17 +35,23 @@
               <v-list>
                 <v-list-tile>
                   <v-list-tile-title>
-                    <nuxt-link to="/administration/profile" class="menu-link">Profile</nuxt-link>
+                    <nuxt-link to="/administration/profile" class="menu-link">
+                      {{ $t('shared.header.profile-link') }}
+                    </nuxt-link>
                   </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-title>
-                    <nuxt-link to="/settings" class="menu-link">Settings</nuxt-link>
+                    <nuxt-link to="/settings" class="menu-link">
+                      {{ $t('shared.header.settings-link') }}
+                    </nuxt-link>
                   </v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile>
                   <v-list-tile-title>
-                    <a id="logout-btn" v-on:click="onLogoutClick" class="menu-link">Logout</a>
+                    <a id="logout-btn" v-on:click="onLogoutClick" class="menu-link">
+                      {{ $t('shared.header.logout-link') }}
+                    </a>
                   </v-list-tile-title>
                 </v-list-tile>
               </v-list>

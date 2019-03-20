@@ -39,6 +39,10 @@ body {
     color: black;
 }
 
+.v-messages__message {
+    line-height: 1.5 !important;
+}
+
 .error--text {
     color: $red !important;
 }
@@ -208,4 +212,9 @@ button {
 
 .button-wrapper-link {
     text-decoration: none;
+}
+
+.v-input--selection-controls[name=agree-to-terms] {
+    margin-top: 0px;
+    padding-top: 0px;
 }

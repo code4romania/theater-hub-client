@@ -8,9 +8,9 @@
                 chips
                 multiple
                 persistent-hint
-                label="Your professional skills"
-                hint="Select at least one skill"
-                no-data-text="No results"
+                :label="$t('fields.select-skills.label')"
+                :hint="$t('fields.select-skills.hint')"
+                :no-data-text="$t('fields.select-skills.no-results')"
                 color="deep-purple lighten-2"
                 background-color="transparent"
                 :menu-props="{maxHeight: 160}">

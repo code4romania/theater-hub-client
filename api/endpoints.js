@@ -1,8 +1,8 @@
 
 export class Endpoints {
-    static GetWelcomeMessage            = '';
-
     static GetSkills                    = '/applicationdata/skills';
+
+    static GetLocales                   = '/applicationdata/locales';
 
     static Login                        = '/authentication';
 
@@ -17,8 +17,6 @@ export class Endpoints {
     static ForgotPassword               = '/users/password/forgot';
 
     static ResetPassword                = '/users/password/reset';
-
-    static SetPassword                  = '/users/password/set';
 
     static ChangePassword               = '/users/password/change';
 

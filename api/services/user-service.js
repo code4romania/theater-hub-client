@@ -22,10 +22,6 @@ export class UserService extends BaseService {
         return this.$axios.$post(Endpoints.ResetPassword, request);
     }
 
-    static async setPassword (request) {
-        return this.$axios.post(Endpoints.SetPassword, request);
-    }
-
     static async changePassword (request) {
         return this.$axios.$post(Endpoints.ChangePassword, request);
     }

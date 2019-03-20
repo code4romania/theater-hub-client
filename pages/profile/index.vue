@@ -12,18 +12,18 @@
                             <v-flex xs12 class="profile-information-row">
                                 <span class="full-name-field">{{ fullName }}</span>
                                 <span>,</span>
-                                <span class="age-field">{{ age }} years</span>
+                                <span class="age-field">{{ age }} {{ $t('shared.content.years') }}</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
-                                <span class="field-label">Email: </span>
+                                <span class="field-label">{{ $t('fields.email.label') }}: </span>
                                 <span class="email-field">{{ profile.profileGeneralInformation.email }}</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
-                                <span class="field-label">Phone number: </span>
+                                <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
                                 <span class="phone-number-field">{{ profile.profileGeneralInformation.phoneNumber }}</span>
                             </v-flex>
                             <v-flex xs12 v-if="profile.profileGeneralInformation.website" class="profile-information-row">
-                                <span class="field-label">Website: </span>
+                                <span class="field-label">{{ $t('fields.website.label') }}: </span>
                                 <a :href="profile.profileGeneralInformation.website" class="website-field" target="_blank">{{ profile.profileGeneralInformation.website }}</a>
                             </v-flex>
                             <v-flex class="profile-information-row">
@@ -42,9 +42,13 @@
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
                                 <nuxt-link :to="`/profile/${profile.ID}`" class="preview-profile-link" target="_blank">
-                                    <v-btn id="preview-profile-button" class="primary ml-0" medium>PREVIEW PROFILE</v-btn>
+                                    <v-btn id="preview-profile-button" class="primary ml-0" medium>
+                                        {{ $t('pages.profile.preview-profile-button') }}
+                                    </v-btn>
                                 </nuxt-link>
-                                <v-btn id="download-resume-button" class="primary ml-0" medium @click="onDownloadResumeClick">DOWNLOAD RESUME</v-btn>
+                                <v-btn id="download-resume-button" class="primary ml-0" medium @click="onDownloadResumeClick">
+                                    {{ $t('pages.profile.download-resume-button') }}
+                                </v-btn>
                             </v-flex>
                         </v-flex>
                         <v-btn outline small fab class="mt-2" v-on:click="onEditGeneralInformationClick"><v-icon>edit</v-icon></v-btn>
@@ -54,7 +58,7 @@
                 <v-flex xs12 v-if="!isEditingGeneralInformation && hasDescription">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Description</h2>
+                            <h2>{{ $t('pages.profile.description-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4>
                             <p>
@@ -67,7 +71,7 @@
                 <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-profile-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Edit General Information</h2>
+                            <h2>{{ $t('pages.profile.edit-general-information-title') }}</h2>
                             <div>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditGeneralInformationClick" :disabled="isSaveEditGeneralInformationButtonDisabled()">
                                     <v-icon>done</v-icon>
@@ -92,7 +96,7 @@
                 <v-flex xs12 v-if="!isEditingSkills">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Skills</h2>
+                            <h2>{{ $t('pages.profile.skills-title') }}</h2>
                             <v-btn outline small fab class="mt-0" v-on:click="onEditSkillsClick"><v-icon>edit</v-icon></v-btn>
                         </v-flex>
                         <v-flex xs12 pt-4 class="skills-row">
@@ -104,7 +108,7 @@
                 <v-flex xs12 v-if="isEditingSkills" class="edited-profile-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Edit Skills</h2>
+                            <h2>{{ $t('pages.profile.edit-skills-title') }}</h2>
                             <div>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditSkillsClick" :disabled="isSaveEditSkillsButtonDisabled">
                                     <v-icon>done</v-icon>
@@ -125,7 +129,7 @@
                 <v-flex xs12 v-if="!isEditingPhotoGallery">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Photo gallery</h2>
+                            <h2>{{ $t('pages.profile.photo-gallery-title') }}</h2>
                             <v-btn outline small fab class="mt-0" v-on:click="onEditPhotoGalleryClick"><v-icon>edit</v-icon></v-btn>
                         </v-flex>
                         <v-flex xs12 pt-4 class="photo-gallery-row">
@@ -145,7 +149,7 @@
                             </v-container>
                         </v-flex>
                         <v-flex xs12 pb-4 v-if="!hasPhotoGallery" class="photo-gallery-row">
-                            You have no photos
+                            {{ $t('pages.profile.no-photos-description') }}
                         </v-flex> 
                     </v-layout>
                 </v-flex>
@@ -153,7 +157,7 @@
                 <v-flex xs12 v-if="isEditingPhotoGallery" class="edited-profile-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Edit Photo Gallery</h2>
+                            <h2>{{ $t('pages.profile.edit-photo-gallery-title') }}</h2>
                             <div>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditPhotoGalleryClick"><v-icon>done</v-icon></v-btn>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelEditPhotoGalleryClick"><v-icon>clear</v-icon></v-btn>
@@ -172,7 +176,7 @@
                 <v-flex xs12>
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Video gallery</h2>
+                            <h2>{{ $t('pages.profile.video-gallery-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4 v-if="hasVideoGallery" class="video-gallery-row">
                             <v-layout row wrap
@@ -200,10 +204,10 @@
                             </v-layout>
                         </v-flex>
                         <v-flex xs12 mt-4 pb-4 v-if="!hasVideoGallery" class="video-gallery-row">
-                            You have no videos
+                            {{ $t('pages.profile.no-videos-description') }}
                         </v-flex>
                         <v-flex xs12 mt-2 py-3 v-if="!isAddingVideo" class="video-gallery-row add-video-row elevation-2" v-on:click="onAddVideoClick()">
-                            <v-icon>add</v-icon> Add video
+                            <v-icon>add</v-icon> {{ $t('pages.profile.add-video-button') }}
                         </v-flex>
                         <v-card mt-4 class="elevation-2 timeline-message-card edited-profile-section" v-if="isAddingVideo">
                             <ProfileVideoAdd @addVideo="addVideo"/>
@@ -218,7 +222,7 @@
                 <v-flex xs12 mb-5 pb-5>
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Achievements</h2>
+                            <h2>{{ $t('pages.profile.achievements-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-5 class="timeline-row">
                             <v-layout row wrap class="profile-information-group">
@@ -228,7 +232,7 @@
                                         <v-timeline-item medium hide-dot right class="timeline-header-item">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Awards</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -273,7 +277,7 @@
                                         <v-timeline-item  v-if="!hasAwards && !isEditingAwards" medium hide-dot class="timeline-message">
                                             <v-card class="timeline-message-card elevation-2">
                                                 <v-card-title>
-                                                    You haven't added any awards information
+                                                    {{ $t('pages.profile.no-awards-message') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -282,7 +286,7 @@
                                             <v-card class="timeline-message-card elevation-2 text-xs-center" v-on:click.native="onAddAwardClick()">
                                                 <v-card-title>
                                                     <v-icon>add</v-icon>
-                                                   Add award
+                                                   {{ $t('shared.content.add-award-button') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -295,7 +299,7 @@
                                         <v-timeline-item medium hide-dot right class="timeline-header-item">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Experience</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.experience-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -343,7 +347,7 @@
                                         <v-timeline-item  v-if="!hasExperience && !isEditingExperience" medium hide-dot right class="timeline-message">
                                             <v-card class="timeline-message-card elevation-2">
                                                 <v-card-title>
-                                                    You haven't added any experience information
+                                                    {{ $t('pages.profile.no-experience-message') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -352,7 +356,7 @@
                                             <v-card class="timeline-message-card elevation-2 text-xs-center"  v-on:click.native="onAddExperienceStepClick()">
                                                 <v-card-title>
                                                     <v-icon>add</v-icon>
-                                                   Add experience step
+                                                   {{ $t('shared.content.add-experience-button') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -365,7 +369,7 @@
                                         <v-timeline-item  medium hide-dot right class="timeline-header-item">
                                             <v-card class="timeline-header-card elevation-2">
                                                 <v-card-title class="primary">
-                                                    <h2 class="timeline-header">Education</h2>
+                                                    <h2 class="timeline-header">{{ $t('pages.profile.education-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -413,7 +417,7 @@
                                         <v-timeline-item  v-if="!hasEducation && !isEditingEducation" medium hide-dot right class="timeline-message">
                                             <v-card class="timeline-message-card elevation-2">
                                                 <v-card-title>
-                                                    You haven't added any education information
+                                                    {{ $t('pages.profile.no-education-message') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -422,7 +426,7 @@
                                             <v-card class="timeline-message-card elevation-2 text-xs-center"  v-on:click.native="onAddEducationStepClick()">
                                                 <v-card-title>
                                                     <v-icon>add</v-icon>
-                                                   Add education step
+                                                   {{ $t('shared.content.add-education-button') }}
                                                 </v-card-title>
                                             </v-card>
                                         </v-timeline-item>
@@ -1205,7 +1209,7 @@ export default {
                 return this.profile.profileGeneralInformation.profileImage.Image;
             },
             skillNameList: function () {
-                return this.profile.profileSkills.selectedSkills.map(s => s.Name).sort();
+                return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
             },
             age: function () {
                 var currentDateMoment = moment(new Date());

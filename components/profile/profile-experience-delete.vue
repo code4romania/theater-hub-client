@@ -12,7 +12,7 @@
                 </v-flex>
             </v-layout>
             <v-layout row>
-                Are you sure you wish to delete this experience step?
+                {{ $t('pages.profile.delete-experience-message') }}
             </v-layout>
         </v-flex>
     </v-layout>

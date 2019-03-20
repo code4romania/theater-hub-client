@@ -15,26 +15,38 @@
                 </v-layout>
                 <v-layout row mt-2>
                     <v-flex xs12 sm6 md6 lg3 class="pr-2">
-                        <v-text-field v-model="educationFactory.title" :rules="educationTitleRules" label="Title*" required></v-text-field>
+                        <v-text-field v-model="educationFactory.title" :rules="educationTitleRules"
+                                :label="`${$t('fields.education.title.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6 lg3 class="px-2">
-                        <v-text-field v-model="educationFactory.institutionName" :rules="institutionNameRules" label="Institution name*" required></v-text-field>
+                        <v-text-field v-model="educationFactory.institutionName" :rules="institutionNameRules"
+                                    :label="`${$t('fields.education.institution.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6 lg3 class="px-2">
                         <v-menu :close-on-content-click="false" v-model="educationFactory.isStartDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="educationFactory.startDate" label="Start Date" prepend-icon="event" readonly>
+                            <v-text-field slot="activator" type="month" v-model="educationFactory.startDate"
+                                    :label="$t('fields.education.start-date.label')" prepend-icon="event" readonly>
                             </v-text-field>
-                            <v-date-picker v-model="educationFactory.startDate" type="month" @input="educationFactory.isStartDateMenuOpen = false">
+                            <v-date-picker
+                                v-model="educationFactory.startDate"
+                                type="month"
+                                :locale="locale"
+                                @input="educationFactory.isStartDateMenuOpen = false">
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
                     <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
                         <v-menu :close-on-content-click="false" v-model="educationFactory.isEndDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="educationFactory.endDate" label="End Date" prepend-icon="event" readonly>
+                            <v-text-field slot="activator" type="month" v-model="educationFactory.endDate"
+                                    :label="$t('fields.education.end-date.label')" prepend-icon="event" readonly>
                             </v-text-field>
-                            <v-date-picker v-model="educationFactory.endDate" type="month" @input="educationFactory.isEndDateMenuOpen = false">
+                            <v-date-picker
+                                v-model="educationFactory.endDate"
+                                type="month"
+                                :locale="locale"
+                                @input="educationFactory.isEndDateMenuOpen = false">
                             </v-date-picker>
                         </v-menu>
                     </v-flex>
@@ -45,7 +57,7 @@
                         v-model="educationFactory.description"
                         auto-grow
                         box
-                        label="Description"
+                        :label="$t('fields.education.description.label')"
                         rows="1"
                         counter=500
                         :rules="descriptionRules" validate-on-blur>
@@ -58,19 +70,20 @@
 
 
 <script>
+    import { mapGetters } from 'vuex';
 
     export default {
             props: ['educationStep', 'index'],
             data: function () {
                 return {
                     educationTitleRules: [
-                        v => !!v || 'Title is required'
+                        v => !!v || this.$t('fields.education.title.validation-errors.required')
                     ],
                     institutionNameRules: [
-                        v => !!v || 'Institution name is required'
+                        v => !!v || this.$t('fields.education.institution.validation-errors.required')
                     ],
                     descriptionRules: [
-                        v => v === '' || v.length <= 500 || "Description's maximum length is of 500 characters"
+                        v => v === '' || v.length <= 500 || this.$t('fields.education.description.validation-errors.length')
                     ],
                     educationFactory: {
                         ...this.educationStep
@@ -96,6 +109,11 @@
                 isEducationStepButtonDisabled: function () {
                     return !this.isEducationStepValid(this.educationFactory);
                 }
+            },
+            computed: {
+                ...mapGetters({
+                    locale: 'locale'
+                })
             }
     }
 </script>

@@ -13,14 +13,14 @@
                             <v-flex xs12 class="profile-information-row">
                                 <span class="full-name-field">{{ fullName }}</span>
                                 <span v-if="birthDate">,</span>
-                                <span class="age-field" v-if="birthDate">{{ age }} years</span>
+                                <span class="age-field" v-if="birthDate">{{ age }} {{ $t('shared.content.years') }}</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row">
-                                <span class="field-label">Email: </span>
+                                <span class="field-label">{{ $t('fields.email.label') }}: </span>
                                 <span class="email-field">{{ email }}</span>
                             </v-flex>
                             <v-flex xs12 class="profile-information-row" v-if="phoneNumber">
-                                <span class="field-label">Phone number: </span>
+                                <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
                                 <span class="phone-number-field">{{ phoneNumber }}</span>
                             </v-flex>
                         </v-flex>
@@ -31,7 +31,7 @@
                 <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-profile-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
-                            <h2>Edit General Information</h2>
+                            <h2>{{ $t('pages.profile.edit-general-information-title') }}</h2>
                             <div>
                                 <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditGeneralInformationClick" :disabled="isSaveEditGeneralInformationButtonDisabled()">
                                     <v-icon>done</v-icon>
@@ -45,28 +45,35 @@
                             <v-flex xs6 mb-3>
                                 <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
                                     :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
-                                    <div class="dz-message" data-dz-message><span>Click or drop profile image here</span></div>
+                                    <div class="dz-message" data-dz-message><span>{{ $t('fields.profile-photo-dropzone.label') }}</span></div>
                                 </dropzone>
                             </v-flex>
                             <v-flex xs6 mb-3>
                                 <v-flex xs12>
-                                    <v-text-field v-model="editedFirstName" :rules="firstNameRules" label="First name*" validate-on-blur required></v-text-field>
+                                    <v-text-field v-model="editedFirstName" :rules="firstNameRules"
+                                            :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-text-field v-model="editedLastName" :rules="lastNameRules" label="Last name*" validate-on-blur required></v-text-field>
+                                    <v-text-field v-model="editedLastName" :rules="lastNameRules"
+                                                :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
                                         lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                                         <v-text-field slot="activator" v-model="editedBirthDate"
-                                                                                :rules="birthDateRules" label="Date of birth" prepend-icon="event" readonly>
+                                                                                :rules="birthDateRules"
+                                                                                :label="$t('fields.date-of-birth.label')" prepend-icon="event" readonly>
                                         </v-text-field>
-                                        <v-date-picker v-model="editedBirthDate" @input="isBirthDateMenuOpen = false">
+                                        <v-date-picker
+                                            v-model="editedBirthDate"
+                                            @input="isBirthDateMenuOpen = false"
+                                            :locale="locale">
                                         </v-date-picker>
                                     </v-menu>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-text-field v-model="editedPhoneNumber" :rules="phoneNumberRules" label="Phone Number*" validate-on-blur required></v-text-field>
+                                    <v-text-field v-model="editedPhoneNumber" :rules="phoneNumberRules"
+                                            :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
                                 </v-flex>
                             </v-flex>
                         </v-layout>
@@ -85,7 +92,7 @@
     import _ from 'lodash';
     import 'nuxt-dropzone/dropzone.css';
     import { Validators } from '~/utils';
-    import { mapState } from 'vuex';
+    import { mapGetters, mapState } from 'vuex';
 
     export default {
         components: {
@@ -99,19 +106,19 @@
                 isEditingGeneralInformation: false,
                 isBirthDateMenuOpen: false,
                 phoneNumberRules: [
-                    v => !!v || 'Phone number is required',
-                    v => Validators.isValidPhoneNumber(v) || 'Phone number must be valid'
+                    v => !!v || this.$t('fields.phone-number.validation-errors.required'),
+                    v => Validators.isValidPhoneNumber(v) || this.$t('fields.phone-number.validation-errors.invalid')
                 ],
                 firstNameRules: [
-                    v => !!v || 'First name is required',
-                    v => v.length <= 50 || 'First name should have at most 50 characters'
+                    v => !!v || this.$t('fields.first-name.validation-errors.required'),
+                    v => v.length <= 50 || this.$t('fields.first-name.validation-errors.length')
                 ],
                 lastNameRules: [
-                    v => !!v || 'Last name is required',
-                    v => v.length <= 50 || 'Last name should have at most 50 characters'
+                    v => !!v || this.$t('fields.last-name.validation-errors.required'),
+                    v => v.length <= 50 || this.$t('fields.last-name.validation-errors.length')
                 ],
                 birthDateRules: [
-                    v => Validators.isValidBirthDate(v) || 'You must be at least 18 years old'
+                    v => Validators.isValidBirthDate(v) || this.$t('fields.date-of-birth.validation-errors.invalid')
                 ],
                 editedProfileImage: '',
                 editedFirstName: '',
@@ -123,6 +130,7 @@
                     maxFilesize: 2,
                     addRemoveLinks: true,
                     autoProcessQueue: false,
+                    dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
                     acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                     initializeProfileImage: (dropzone) => {
                         if (this.editedProfileImage) {
@@ -247,7 +255,10 @@
                 var currentDateMoment = moment(new Date());
                 var birthDateMoment   = moment(this.birthDate);
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
-            }
+            },
+            ...mapGetters({
+                locale: 'locale'
+            })
         },
         mounted () {
             window.onscroll = _.throttle(() => {

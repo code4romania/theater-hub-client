@@ -3,21 +3,22 @@
     <v-container fluid reset-password-container elevation-4 class="mt-5 pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">Reset password</h1>
+            <h1 class="mb-3">{{ $t('pages.reset-password.title') }}</h1>
 
             <v-layout>
 
                 <v-flex xs12 v-if="!isSuccessfulSubmit" pt-2>
                     <v-form ref="resetPasswordForm" v-model="valid">
                         <v-flex xs12>
-                            <v-text-field v-model="password"  :rules="passwordRules" label="Password*" validate-on-blur required type="password"></v-text-field>
+                            <v-text-field v-model="password"  :rules="passwordRules"
+                                :label="`${$t('fields.password.label')}*`" validate-on-blur required type="password"></v-text-field>
                         </v-flex>
                         <v-flex xs12>
                             <v-text-field v-model="confirmPassword" :rules="validateConfirmPassword()"
-                                                        label="Confirm password*" validate-on-blur required type="password"></v-text-field>
+                                :label="`${$t('fields.confirm-password.label')}*`" validate-on-blur required type="password"></v-text-field>
                         </v-flex>
                         <v-flex xs12 mt-3>
-                            <v-btn @click="submit" class="ml-0" color="primary">SUBMIT</v-btn>
+                            <v-btn @click="submit" class="ml-0" color="primary">{{ $t('pages.reset-password.submit-button') }}</v-btn>
                         </v-flex>
                         <v-flex v-if="users.resetPasswordErrors">
                             <ServerSideErrors :errors="users.resetPasswordErrors"/>
@@ -26,7 +27,7 @@
                 </v-flex>
 
                 <v-flex xs12 align-end flexbox v-if="isSuccessfulSubmit" pt-2>
-                      Your password has been successfully changed.
+                      {{ $t('pages.reset-password.submit-success-message') }}
                 </v-flex>
 
             </v-layout>
@@ -47,16 +48,18 @@
       },
       layout: 'visitor',
       middleware: 'visitor',
-      data: () => ({
-        valid: false,
-        password: '',
-        passwordRules: [
-          v => !!v || 'Password is required',
-          v => Validators.isValidPassword(v) || 'Password must be between 7 and 50 characters long and include upper and lowercase characters'
-        ],
-        confirmPassword: '',
-        isSuccessfulSubmit: false
-      }),
+      data: function () {
+        return {
+          valid: false,
+          password: '',
+          passwordRules: [
+            v => !!v || this.$t('fields.password.validation-errors.required'),
+            v => Validators.isValidPassword(v) || this.$t('fields.password.validation-errors.invalid')
+          ],
+          confirmPassword: '',
+          isSuccessfulSubmit: false
+        };
+      },
       computed: {
         ...mapState(['users'])
       },
@@ -66,11 +69,11 @@
         },
         validateConfirmPassword () {
           if (!this.confirmPassword) {
-            return ['Confirm password is required'];
+            return [this.$t('fields.confirm-password.validation-errors.required')];
           }
 
           if (this.confirmPassword !== this.password) {
-            return ['Confirm password must match the password'];
+            return [this.$t('fields.confirm-password.validation-errors.invalid')];
           }
 
           return [true];
