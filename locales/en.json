@@ -271,7 +271,8 @@
             "skill": "skill",
             "skills": "skills",
             "years": "years",
-            "locale-setting": "Language:"
+            "locale-setting": "Language:",
+            "close": "Close"
         }
     },
     "pages": {
@@ -342,7 +343,11 @@
             "edit-privacy-title": "Edit Settings",
             "change-password-title": "Change Password",
             "delete-account-title": "Delete Account",
-            "delete-account-description": "Are you sure you wish to delete your account? All your information will be permanently lost. If you just want to hide your information, you can make your user profile private. In case you wish to proceed, please enter your password:"
+            "delete-account-description": "Are you sure you wish to delete your account? All your information will be permanently lost. If you just want to hide your information, you can make your user profile private. In case you wish to proceed, please enter your password:",
+            "snackbar-messages": {
+                "update-settings": "Settings section updated",
+                "change-password": "Password changed"
+            }
         },
         "create-profile": {
             "account-created-title": "Account created",
@@ -406,7 +411,16 @@
             "delete-education-message": "Are you sure you wish to delete this education step?",
             "no-education-message": "You haven't added any education information",
             "invalid-profile-title": "Profile",
-            "invalid-profile-content": "The profile you are trying to view is either private or does not exist."            
+            "invalid-profile-content": "The profile you are trying to view is either private or does not exist.",
+            "snackbar-messages": {
+                "update-general-information": "General information section updated",
+                "update-skills": "Skills section updated",
+                "update-photo-gallery": "Photo gallery section updated",
+                "update-video-gallery": "Video gallery section updated",
+                "update-awards": "Awards section updated",
+                "update-experience": "Experience section updated",
+                "update-education": "Education section updated"
+            }
         },
         "administration": {
             "users": {
@@ -427,7 +441,13 @@
                 "delete-user-button": "DELETE",
                 "enable-user-message": "Are you sure you wish to enable {0}'s account? Please provide a reason to the user:",
                 "disable-user-message": "Are you sure you wish to disable {0}'s account? Please provide a reason to the user:",
-                "delete-user-message": "Are you sure you wish to delete {0}'s account? Please provide a reason to the user:"
+                "delete-user-message": "Are you sure you wish to delete {0}'s account? Please provide a reason to the user:",
+                "snackbar-messages": {
+                    "invite-user": "Invitation sent",
+                    "enable-user": "User enabled",
+                    "disable-user": "User disabled",
+                    "delete-user": "User deleted"
+                }
             },
             "projects": {
                 "title": "Projects dashboard"

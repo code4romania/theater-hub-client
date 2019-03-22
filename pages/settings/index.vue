@@ -156,6 +156,12 @@
 
         </v-layout>
     </v-container>
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="3000">
+            {{ snackbarText }}
+            <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+    </v-snackbar>
   </section>
 </template>
 
@@ -218,7 +224,9 @@
                 isChangingPassword: false,
                 isChangePasswordFormValid: false,
                 isDeletingAccount: false,
-                isDeleteAccountFormValid: false
+                isDeleteAccountFormValid: false,
+                snackbar: false,
+                snackbarText: ''
             };
         },
         computed: {
@@ -268,6 +276,13 @@
                     BirthDateVisibility: this.profilePrivacy.birthDateVisibility,
                     PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility,
                     Locale: this.localeSetting
+                }).then((response) => {
+                    if (!this.users.updateSettingsErrors) {
+                        setTimeout(() => {
+                            this.snackbarText = this.$t('pages.settings.snackbar-messages.update-settings');
+                            this.snackbar = true;
+                        }, 0);
+                    }
                 });
             },
             onCancelEditSettingsClick: function () {
@@ -292,6 +307,8 @@
                 }).then((response) => {
                     if (!this.users.changePasswordErrors) {
                         this.cancelAllUnsavedChanges();
+                        this.snackbarText = this.$t('pages.settings.snackbar-messages.change-password');
+                        this.snackbar = true;
                     }
                 });
             },

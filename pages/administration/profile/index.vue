@@ -82,6 +82,12 @@
 
             </v-layout>
         </v-container>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="3000">
+                {{ snackbarText }}
+                <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+        </v-snackbar>
     </section>
 </template>
 
@@ -173,7 +179,9 @@
 
                         this.options.initializeProfileImage(this);
                     }
-                }
+                },
+                snackbar: false,
+                snackbarText: ''
             };
         },
         async asyncData ({ store, query }) {
@@ -237,6 +245,8 @@
                         this.phoneNumber                    = this.editedPhoneNumber;
 
                         this.isEditingGeneralInformation    = false;
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
+                        this.snackbar = true;
                     }
                 });
             },
