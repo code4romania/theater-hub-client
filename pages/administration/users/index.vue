@@ -203,6 +203,12 @@
 
         </v-layout>
     </v-container>
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="3000">
+            {{ snackbarText }}
+            <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+    </v-snackbar>
   </section>
 </template>
 
@@ -254,7 +260,9 @@
                 messageRules: [
                     v => !v || v.length <= 500 || this.$t('fields.optional-user-message.validation-errors.length')
                 ],
-                roles: ['User', 'Admin']
+                roles: ['User', 'Admin'],
+                snackbar: false,
+                snackbarText: ''
             };
         },
         watch: {
@@ -305,6 +313,9 @@
                 await this.$store.dispatch('administration/inviteUser', request);
 
                 if (!this.administration.inviteUserErrors) {
+                    this.snackbarText = this.$t('pages.administration.users.snackbar-messages.invite-user');
+                    this.snackbar = true;
+
                     this.isInviteUser = false;
                     this.$store.dispatch('administration/endAdministrationInviteUserSession');
 
@@ -385,7 +396,12 @@
                     }
                 };
 
-                await this.$store.dispatch('administration/enableUser', request);
+                await this.$store.dispatch('administration/enableUser', request).then(() => {
+                    if (!this.administration.enableUserErrors) {
+                        this.snackbarText = this.$t('pages.administration.users.snackbar-messages.enable-user');
+                        this.snackbar = true;
+                    }
+                });
 
                 this.$store.dispatch('administration/endAdministrationEditSession');
                 this.editedUser = null;
@@ -405,7 +421,12 @@
                     }
                 };
 
-                await this.$store.dispatch('administration/disableUser', request);
+                await this.$store.dispatch('administration/disableUser', request).then(() => {
+                    if (!this.administration.disableUserErrors) {
+                        this.snackbarText = this.$t('pages.administration.users.snackbar-messages.disable-user');
+                        this.snackbar = true;
+                    }
+                });
 
                 this.$store.dispatch('administration/endAdministrationEditSession');
                 this.editedUser = null;
@@ -425,7 +446,12 @@
                     }
                 };
 
-                await this.$store.dispatch('administration/deleteUser', request);
+                await this.$store.dispatch('administration/deleteUser', request).then(() => {
+                    if (!this.administration.deleteUserErrors) {
+                        this.snackbarText = this.$t('pages.administration.users.snackbar-messages.delete-user');
+                        this.snackbar = true;
+                    }
+                });
 
                 this.$store.dispatch('administration/endAdministrationEditSession');
                 this.editedUser = null;

@@ -443,6 +443,12 @@
                 </v-flex>
             </v-layout>
         </v-container>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="3000">
+                {{ snackbarText }}
+                <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+        </v-snackbar>
     </section>
 </template>
 
@@ -518,7 +524,9 @@ export default {
             isDeletingExperienceStep: false,
             isEditingEducation: false,
             isAddingEducationStep: false,
-            isDeletingEducationStep: false
+            isDeletingEducationStep: false,
+            snackbar: false,
+            snackbarText: ''
         }),
         async asyncData ({ store, query }) {
             await store.dispatch('users/getMyProfile');
@@ -799,6 +807,8 @@ export default {
                         this.isEditingGeneralInformation = false;
                         this.endProfileSectionEditSession();
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
+                        this.snackbar = true;
                     }
                 });
             },
@@ -808,6 +818,8 @@ export default {
                         this.isEditingSkills    = false;
                         this.endProfileSectionEditSession();
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-skills');
+                        this.snackbar = true;
                     }
                 });
             },
@@ -817,6 +829,8 @@ export default {
                         this.isEditingPhotoGallery = false;
                         this.endProfileSectionEditSession();
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-photo-gallery');
+                        this.snackbar = true;
                     }
                 });
             },
@@ -886,6 +900,9 @@ export default {
                         });
 
                         this.saveEditedProfile();
+
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-video-gallery');
+                        this.snackbar = true;
                     });
                 }
 
@@ -905,6 +922,9 @@ export default {
                                             SocialMediaManager.extractEmbedURLFromUnknownProvider(video.link);
 
                         this.saveEditedProfile();
+
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-video-gallery');
+                        this.snackbar = true;
                     });
                 }
 
@@ -919,6 +939,9 @@ export default {
                         this.editedProfile.profileVideoGallery.videoGallery.splice(index, 1);
 
                         this.saveEditedProfile();
+
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-video-gallery');
+                        this.snackbar = true;
                     });
                 }
 
@@ -951,6 +974,8 @@ export default {
                                     .sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-awards');
+                        this.snackbar = true;
                     });
                 }
 
@@ -978,6 +1003,8 @@ export default {
                                     .sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-awards');
+                        this.snackbar = true;
                     });
                 }
 
@@ -992,6 +1019,8 @@ export default {
                         this.editedProfile.profileAwards.awards.splice(index, 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-awards');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1026,6 +1055,8 @@ export default {
                                     .sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-experience');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1055,6 +1086,8 @@ export default {
                                     .sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-experience');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1069,6 +1102,8 @@ export default {
                         this.editedProfile.profileExperience.experienceSteps.splice(index, 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-experience');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1103,6 +1138,8 @@ export default {
                                 .sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-education');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1132,6 +1169,8 @@ export default {
                                 .sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-education');
+                        this.snackbar = true;
                     });
                 }
 
@@ -1146,6 +1185,8 @@ export default {
                         this.editedProfile.profileEducation.educationSteps.splice(index, 1)
 
                         this.saveEditedProfile();
+                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-education');
+                        this.snackbar = true;
                     });
                 }
 
