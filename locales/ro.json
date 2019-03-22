@@ -270,7 +270,8 @@
             "skill": "aptitudine",
             "skills": "aptitudini",
             "years": "ani",
-            "locale-setting": "Limbă:"
+            "locale-setting": "Limbă:",
+            "close": "Închide"
         }
     },
     "pages": {
@@ -341,7 +342,11 @@
             "edit-settings-title": "Editare Setări",
             "change-password-title": "Schimbare parolă",
             "delete-account-title": "Ștergere cont",
-            "delete-account-description": "Sunteți sigur că doriți să ștergeți contul? Toate informațiile vor fi pierdute definitiv. În cazul în care doriți să vă ascundeți informațiile, puteți să vă faceți profilul privat. În cazul în care doriți să continuați, vă rugăm să introduceți parola:"
+            "delete-account-description": "Sunteți sigur că doriți să ștergeți contul? Toate informațiile vor fi pierdute definitiv. În cazul în care doriți să vă ascundeți informațiile, puteți să vă faceți profilul privat. În cazul în care doriți să continuați, vă rugăm să introduceți parola:",
+            "snackbar-messages": {
+                "update-settings": "Secțiunea de setări a fost actualizată ",
+                "change-password": "Parola a fost schimbată"
+            }
         },
         "create-profile": {
             "account-created-title": "Cont creat",
@@ -405,7 +410,16 @@
             "delete-education-message":  "Sunteți sigur că doriți să ștergeți această experiență educațională?",
             "no-education-message": "Nu ați adăugat informații despre educație",
             "invalid-profile-title": "Profil",
-            "invalid-profile-content": "Profilul pe care încercați să îl vizualizați este privat sau nu există."  
+            "invalid-profile-content": "Profilul pe care încercați să îl vizualizați este privat sau nu există.",
+            "snackbar-messages": {
+                "update-general-information": "Secțiunea de informații generale a fost actualizată",
+                "update-skills": "Secțiunea de aptitudini a fost actualizată",
+                "update-photo-gallery": "Secțiunea de galerie foto a fost actualizată",
+                "update-video-gallery":  "Secțiunea de galerie video a fost actualizată",
+                "update-awards": "Secțiunea de premii a fost actualizată",
+                "update-experience": "Secțiunea de informații profesionale a fost actualizată",
+                "update-education": "Secțiunea de educație a fost actualizată"
+            }
         },
         "administration": {
             "users": {
@@ -426,7 +440,13 @@
                 "delete-user-button": "ȘTERGE",
                 "enable-user-message": "Sunteți sigur că doriți să activați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
                 "disable-user-message": "Sunteți sigur că doriți să dezactivați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
-                "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:"
+                "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "snackbar-messages": {
+                    "invite-user": "Invitație trimisă",
+                    "enable-user": "Utilizator activat",
+                    "disable-user": "Utilizator dezactivat",
+                    "delete-user": "Utilizator șters"
+                }
             },
             "projects": {
                 "title": "Bord proiecte"
