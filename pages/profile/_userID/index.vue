@@ -487,14 +487,14 @@
     }
 
     .add-video-row {
-        border: 3px solid #7E57C2;
+        border: 3px solid #AE2760;
         text-align: center;
-        color: #7E57C2;
+        color: #AE2760;
         font-size: 24px;
         cursor: pointer;
 
         i {
-            color: #7E57C2;
+            color: #AE2760;
             font-size: 30px;
         }
 

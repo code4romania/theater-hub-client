@@ -7,7 +7,7 @@
             </v-flex>
             <v-flex xs12 mt-5>
                 <p>
-                    Theater Hub este o platformă online pentru scena de teatru din România. Acest spațiu virtual îi susţine pe actori să îşi creeze o prezență online şi să își promoveze spectacolele, încurajând şi alți tineri să își urmeze pasiunea pentru arta teatrală. Mai mult, platforma își propune să reducă distanța dintre public și actori și să îi ajute să colaboreze. Actorii și trupele de teatru independent pot cere ajutor dacă au nevoie de specialiști în promovare, de resurse, decoruri etc., pentru a încuraja oamenii de business și freelancerii să contribuie activ la susținerea inițiativelor culturale.
+                    Test Theater Hub este o platformă online pentru scena de teatru din România. Acest spațiu virtual îi susţine pe actori să îşi creeze o prezență online şi să își promoveze spectacolele, încurajând şi alți tineri să își urmeze pasiunea pentru arta teatrală. Mai mult, platforma își propune să reducă distanța dintre public și actori și să îi ajute să colaboreze. Actorii și trupele de teatru independent pot cere ajutor dacă au nevoie de specialiști în promovare, de resurse, decoruri etc., pentru a încuraja oamenii de business și freelancerii să contribuie activ la susținerea inițiativelor culturale.
                 </p> 
             </v-flex>
             <v-flex xs12>
