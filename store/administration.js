@@ -112,15 +112,3 @@ export const actions = {
         dispatch('setMainOverlayVisibility', false, { root: true });
     }
 };
-
-export const getters = {
-    skills (state) {
-        var skills = state.skills;
-
-        if (skills.length === 0 && localStorage.getItem('skills')) {
-            skills = JSON.parse(localStorage.getItem('skills'));
-        }
-
-        return skills;
-    }
-};

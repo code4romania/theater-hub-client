@@ -3,20 +3,21 @@
     <v-container fluid forgot-password-container elevation-4 class="mt-5 pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">Password reset</h1>
+            <h1 class="mb-3">{{ $t('pages.forgot-password.title') }}</h1>
 
             <v-layout>
 
                 <v-flex xs12 v-if="!isSuccessfulSubmit" pt-2>
                     <v-flex xs12>
-                        Please submit the e-mail for which you wish to reset the password.
+                        {{ $t('pages.forgot-password.description') }}
                     </v-flex>
                     <v-form ref="forgotPasswordForm" v-model="valid">
                         <v-flex xs12 mt-2>
-                            <v-text-field v-model="email" :rules="emailRules" label="Email*" required validate-on-blur color="primary"></v-text-field>
+                            <v-text-field v-model="email" :rules="emailRules"
+                                  :label="`${$t('fields.email.label')}*`" required validate-on-blur color="primary"></v-text-field>
                         </v-flex>
                         <v-flex xs12 mt-3>
-                            <v-btn @click="submit" class="ml-0" color="primary">SUBMIT</v-btn>
+                            <v-btn @click="submit" class="ml-0" color="primary">{{ $t('pages.forgot-password.submit-button') }}</v-btn>
                         </v-flex>
                         <v-flex v-if="users.forgotPasswordErrors">
                           <ServerSideErrors :errors="users.forgotPasswordErrors"/>
@@ -25,7 +26,7 @@
                 </v-flex>
 
                 <v-flex xs12 align-end flexbox v-if="isSuccessfulSubmit" pt-2>
-                    An email containing a link for resetting the password has been sent to your user's email. 
+                    {{ $t('pages.forgot-password.submit-success-message') }}
                 </v-flex>
 
             </v-layout>
@@ -46,16 +47,18 @@
       },
       layout: 'visitor',
       middleware: 'visitor',
-      data: () => ({
-        valid: false,
-        email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => v.length <= 100 || 'E-mail should have at most 100 characters',
-          v => Validators.isValidEmailAddress(v) || 'E-mail must be valid'
-        ],
-        isSuccessfulSubmit: false
-      }),
+      data: function () {
+        return {
+          valid: false,
+          email: '',
+          emailRules: [
+            v => !!v || this.$t('fields.email.validation-errors.required'),
+            v => v.length <= 100 || this.$t('fields.email.validation-errors.length'),
+            v => Validators.isValidEmailAddress(v) || this.$t('fields.email.validation-errors.invalid')
+          ],
+          isSuccessfulSubmit: false
+        };
+      },
       computed: {
         ...mapState(['users'])
       },

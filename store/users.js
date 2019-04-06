@@ -1,3 +1,4 @@
+import VuexPersistence             from 'vuex-persist'
 import { UserService }             from '../api/services';
 import { UserAccountStatusType,
                     UserRoleType } from '../store/entities';
@@ -14,7 +15,6 @@ export const state = () => ({
     managedUserSignupErrors: [],
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
-    setPasswordErrors: [],
     createProfileErrors: [],
     updateMyGeneralInformationErrors: [],
     updateMySkillsErrors: [],
@@ -26,6 +26,14 @@ export const state = () => ({
     updateSettingsErrors: [],
     changePasswordErrors: [],
     deleteMeErrors: []
+});
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+  reducer: (state) => ({
+      me: state.me,
+      myProfile: state.myProfile
+  })
 });
 
 export const mutations = {
@@ -40,9 +48,6 @@ export const mutations = {
     },
     SET_RESET_PASSWORD_ERRORS: (state, errors) => {
         state.resetPasswordErrors = errors;
-    },
-    SET_ADD_PASSWORD_ERRORS: (state, errors) => {
-        state.setPasswordErrors = errors;
     },
     SET_CHANGE_PASSWORD_ERRORS: (state, errors) => {
         state.changePasswordErrors = errors;
@@ -150,13 +155,6 @@ export const actions = {
             dispatch('setResetPasswordErrors', error.response.data.errors);
         });
     },
-    async setPassword ({ commit, dispatch }, request) {
-        await UserService.setPassword(request).then(response => {
-            dispatch('updateSetPasswordErrors', '');
-        }).catch(error => {
-            dispatch('updateSetPasswordErrors', error.response.data.errors);
-        });
-    },
     async changePassword ({ commit, dispatch }, request) {
         await UserService.changePassword(request).then(response => {
             dispatch('authentication/setToken', response.Token, { root: true });
@@ -169,6 +167,7 @@ export const actions = {
     async createProfile ({ commit, dispatch }, request) {
         await UserService.createProfile(request).then(response => {
             dispatch('authentication/setToken', response.Token, { root: true });
+            dispatch('setLocale', response.Locale, { root: true });
             dispatch('setMe', response.Me);
             dispatch('setCreateProfileErrors', '');
         }).catch(error => {
@@ -231,6 +230,7 @@ export const actions = {
     async updateSettings ({ commit, dispatch }, request) {
         await UserService.updateSettings(request).then(response => {
             dispatch('setUpdateSettingsErrors', '');
+            dispatch('setLocale', request.Locale, { root: true });
         }).catch(error => {
             dispatch('setUpdateSettingsErrors', error.response.data.errors);
         });
@@ -277,9 +277,6 @@ export const actions = {
     },
     setResetPasswordErrors: ({ commit }, errors) => {
         commit('SET_RESET_PASSWORD_ERRORS', errors);
-    },
-    updateSetPasswordErrors: ({ commit }, errors) => {
-        commit('SET_ADD_PASSWORD_ERRORS', errors);
     },
     setChangePasswordErrors: ({ commit }, errors) => {
         commit('SET_CHANGE_PASSWORD_ERRORS', errors);
@@ -416,3 +413,7 @@ export const getters = {
     }
 
 };
+
+export const plugins = [
+  vuexLocal.plugin
+];

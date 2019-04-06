@@ -1,45 +1,54 @@
-import { ApplicationDataService } from '../api/services';
+import { ApplicationDataService }   from '../api/services';
 
 export const state = () => ({
-    skills: []
+    skills: [],
+    locales: []
 });
 
 export const mutations = {
     SET_SKILLS: (state, value) => {
         state.skills = value;
     },
+    SET_LOCALES: (state, value) => {
+        state.locales = value;
+    },
     CLEAR_APPLICATION_DATA: (state) => {
         state.skills = [];
+        state.locales = [];
     }
 };
 
 export const actions = {
     async getApplicationData ({ commit, dispatch }) {
         dispatch('getSkills');
+        dispatch('getLocales');
     },
     async getSkills ({ commit, dispatch }, request) {
         return ApplicationDataService.getSkills().then(response => {
             dispatch('setSkills', response);
         });
     },
+    async getLocales ({ commit, dispatch }, request) {
+        return ApplicationDataService.getLocales().then(response => {
+            dispatch('setLocales', response);
+        });
+    },
     setSkills: ({ commit }, value) => {
         commit('SET_SKILLS', value);
-        localStorage.setItem('skills', JSON.stringify(value));
+    },
+    setLocales: ({ commit }, value) => {
+        commit('SET_LOCALES', value);
     },
     clearApplicationData: ({ commit }) => {
         commit('CLEAR_APPLICATION_DATA');
-        localStorage.removeItem('skills');
     }
 };
 
 export const getters = {
     skills (state) {
-        var skills = state.skills;
-
-        if (skills.length === 0 && localStorage.getItem('skills')) {
-            skills = JSON.parse(localStorage.getItem('skills'));
-        }
-
-        return skills;
+        return state.skills;
+    },
+    locales (state) {
+        return state.locales;
     }
 };

@@ -9,7 +9,8 @@ export default ({ $axios, redirect, store }) => {
         config.headers.common['Authorization'] = `Bearer ${token}`;
       }
 
-      config.headers.common['Accept']       = 'application/json';
-      config.headers.common['Content-Type'] = 'application/json';
+      config.headers.common['Accept']           = 'application/json';
+      config.headers.common['Content-Type']     = 'application/json';
+      config.headers.common['Accept-Language']  = store.getters.locale;
     });
   }

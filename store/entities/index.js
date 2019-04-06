@@ -51,6 +51,11 @@ export var UserRoleType = {
   'SuperAdmin': 2
 }
 
+export var LocaleType = {
+  'RO': 'ro',
+  'EN': 'en'
+}
+
 export class Wish {
   constructor (title, description) {
     this.title = title

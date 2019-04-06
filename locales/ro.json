@@ -1,0 +1,463 @@
+{
+    "application-data": {
+        "professional": "Profesionist",
+        "institution": "Instituție",
+        "sponsor": "Sponsor",
+        "comedy": "comedie",
+        "drama": "dramă",
+        "acting": "actorie",
+        "stand-up": "stand-up",
+        "dancing": "dans",
+        "directing": "regie",
+        "lighting": "lumină",
+        "playwright": "dramaturgie",
+        "sufleor": "sufleor",
+        "managed": "Administrat",
+        "registered": "Înregistrat",
+        "confirmed": "Confirmat",
+        "enabled": "Activat",
+        "disabled": "Dezactivat",
+        "deleted": "Șters",
+        "user": "Utilizator",
+        "admin": "Administrator",
+        "super-admin": "SuperAdministrator",
+        "everyone": "Toată lumea",
+        "community": "Comunitate",
+        "private": "Privat",
+        "venue": "Locație",
+        "transport": "Transport",
+        "props": "Recuzită",
+        "marketing": "Marketing",
+        "romanian": "Română",
+        "english": "Engleză"
+    },
+    "fields": {
+        "first-name": {
+            "label": "Prenume",
+            "validation-errors": {
+                "required": "Prenumele este obligatoriu",
+                "length": "Prenumele trebuie să aibă cel mult 50 de caractere"
+            }
+        },
+        "last-name": {
+            "label": "Nume",
+            "validation-errors": {
+                "required": "Numele este obligatoriu",
+                "length": "Numele trebuie să aibă cel mult 50 de caractere"
+            }
+        },
+        "email": {
+            "label": "E-mail",
+            "validation-errors": {
+                "required": "E-mail-ul este obligatoriu",
+                "length": "E-mail-ul trebuie să aibă cel mult 100 de caractere",
+                "invalid": "E-mail-ul trebuie să fie valid"
+            }
+        },
+        "password": {
+            "label": "Parola",
+            "validation-errors": {
+                "required": "Parola este obligatorie",
+                "invalid": "Parola trebuie să aibă între 7 și 50 de caractere și să conțină și majuscule"
+            }
+        },
+        "confirm-password": {
+            "label": "Confirmare parola",
+            "validation-errors": {
+                "required": "Confirmarea parolei este obligatorie",
+                "invalid": "Confirmarea parolei trebuie să se potrivească cu parola"
+            }
+        },
+        "new-password": {
+            "label": "Parolă nouă",
+            "validation-errors": {
+                "required": "Parola este obligatorie",
+                "invalid": "Parola trebuie să aibă între 7 și 50 de caractere și să conțină și majuscule"
+            }
+        },
+        "phone-number": {
+            "label": "Număr de telefon",
+            "validation-errors": {
+                "required": "Numărul de telefon este obligatoriu",
+                "invalid": "Numărul de telefon trebuie să fie valid"
+            }
+        },
+        "website": {
+            "label": "Sit web",
+            "validation-errors": {
+                "invalid": "Sit-ul web trebuie să fie valid"
+            }
+        },
+        "date-of-birth": {
+            "label": "Data nașterii",
+            "validation-errors": {
+                "invalid": "Trebuie să aveți cel puțin 18 ani"
+            }
+        },
+        "instagram": {
+            "label": "Instagram",
+            "validation-errors": {
+                "invalid": "Link-ul de Instagram este incorect"
+            }
+        },
+        "youtube": {
+            "label": "Youtube",
+            "validation-errors": {
+                "invalid": "Link-ul de Youtube este incorect"
+            }
+        },
+        "facebook": {
+            "label": "Facebook",
+            "validation-errors": {
+                "invalid": "Link-ul de Facebook este incorect"
+            }
+        },
+        "linkedin": {
+            "label": "LinkedIn",
+            "validation-errors": {
+                "invalid": "Link-ul de LinkedIn este incorect"
+            }
+        },
+        "description": {
+            "label": "Descriere",
+            "validation-errors": {
+                "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+            }
+        },
+        "video": {
+            "label": "Link video",
+            "validation-errors": {
+                "invalid": "Link-ul video nu este un link valid de Youtube sau Vimeo"
+            }
+        },
+        "award": {
+            "title": {
+                "label": "Titlu premiu",
+                "validation-errors": {
+                    "required": "Titlul este obligatoriu"
+                }
+            },
+            "issuer": {
+                "label": "Emitent",
+                "validation-errors": {
+                    "required": "Emitentul este obligatoriu"
+                }
+            },
+            "description": {
+                "label": "Descriere",
+                "validation-errors": {
+                    "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+                }
+            },
+            "date": {
+                "label": "Data"
+            }
+        },
+        "education": {
+            "title": {
+                "label": "Titlu",
+                "validation-errors": {
+                    "required": "Titlul este obligatoriu"
+                }
+            },
+            "institution": {
+                "label": "Numele instituției",
+                "validation-errors": {
+                    "required": "Numele instituției este obligatoriu"
+                }
+            },
+            "description": {
+                "label": "Descriere",
+                "validation-errors": {
+                    "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+                }
+            },
+            "start-date": {
+                "label": "Data de început"
+            },
+            "end-date": {
+                "label": "Data de sfârșit"
+            }
+        },
+        "experience": {
+            "position": {
+                "label": "Poziție",
+                "validation-errors": {
+                    "required": "Poziția este obligatorie"
+                }
+            },
+            "employer": {
+                "label": "Angajator",
+                "validation-errors": {
+                    "required": "Angajatorul este obligatoriu"
+                }
+            },
+            "description": {
+                "label": "Descriere",
+                "validation-errors": {
+                    "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+                }
+            },
+            "start-date": {
+                "label": "Data de început"
+            },
+            "end-date": {
+                "label": "Data de sfârșit"
+            }
+        },
+        "filter-by-skills": {
+            "label": "Alegeți aptitudinile"
+        },
+        "search": {
+            "label": "Căutați..."
+        },
+        "name-sort": {
+            "label": "Nume"
+        },
+        "select-skills": {
+            "label": "Aptitudinile profesionale ale dumneavoastră",
+            "hint": "Alegeți cel puțin o aptitudine",
+            "no-results": "Nu există rezultate"
+        },
+        "profile-photo-dropzone": {
+            "label": "Apăsați sau plasați imaginea de profil aici",
+            "photo-remove-button": "ȘTERGE"
+        },
+        "photo-dropzone": {
+            "label": "Apăsați sau plasați imagini aici",
+            "photo-remove-button": "ȘTERGE"
+        },
+        "optional-user-message": {
+            "label": "Mesaj opțional pentru utilizator",
+            "validation-errors": {
+                "length": "Mesajul trebuie să aibă cel mult 500 de caractere"
+            }
+        }
+    },
+    "shared": {
+        "header": {
+            "login-link": "Autentificare",
+            "sign-up-link": "Înregistrare",
+            "create-profile-link": "Construiți Profilul",
+            "projects-link": "Proiecte",
+            "community-link": "Comunitate",
+            "profile-link": "Profil",
+            "settings-link": "Setări",
+            "administration-users-link": "Utilizatori",
+            "administration-projects-link": "Proiecte", 
+            "logout-link": "Deconectare",
+            "greeting": "Salut"
+        },
+        "footer": {
+
+        },
+        "content": {
+            "agreement-text-beginning": "Sunt de acord cu ",
+            "agreement-terms-of-use": "Termenii de utilizare",
+            "agreement-text-separator": " și ",
+            "agreement-text-privacy-policy": "Politica de confidențialitate",
+            "video-message": "Vă rugăm să furnizați link-uri de Youtube sau Vimeo.",
+            "add-award-button": "Adăugați premiu",
+            "add-experience-button": "Adăugați experiență profesională",
+            "add-education-button": "Adăugați experiență educațională",
+            "profile-visibility": "Vizibilitatea profilului:",
+            "email-visibility": "Vizibilitatea e-mail-ului:",
+            "birth-date-visibility": "Vizibilitatea zilei de naștere:",
+            "phone-number-visibility": "Vizibilitatea numărului de telefon:",
+            "back-button": "ÎNAPOI",
+            "next-button": "ÎNAINTE",
+            "finish-button": "GATA",
+            "skill": "aptitudine",
+            "skills": "aptitudini",
+            "years": "ani",
+            "locale-setting": "Limbă:",
+            "close": "Închide"
+        }
+    },
+    "pages": {
+        "hompeage": {
+            
+        },
+        "login": {
+            "title": "Autentificare", 
+            "login-button-text": "Autentificare",
+            "forgot-password": "Ați uitat parola?",
+            "separator-text": "SAU",
+            "facebook-login-button-text": "Autentificare cu Facebook",
+            "google-login-button-text": "Autentificare cu Google"
+        },
+        "sign-up": {
+            "title": "Înregistrare",
+            "submit-button": "EXECUTĂ",
+            "separator-text": "SAU",
+            "facebook-sign-up-button-text": "Continuă cu Facebook",
+            "google-sign-up-button-text": "Înregistrare cu Google",
+            "submit-success-message": "Un e-mail care conține link-ul de confirmare a înregistrării v-a fost trimis."            
+        },
+        "managed-user-signup": {
+            "title": "Finalizează Înregistrarea",
+            "submit-button": "EXECUTĂ"
+        },
+        "about": {
+            
+        },
+        "contact": {
+            
+        },
+        "privacy-policy": {
+            "title": "Politica de confidențialitate",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
+        },
+        "terms-of-use": {
+            "title": "Termenii de utilizare",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
+        },
+        "forgot-password": {
+            "title": "Parolă pierdută",
+            "description": "Vă rugăm să introduceți e-mail-ul pentru care doriți să schimbați parola.",
+            "submit-button": "EXECUTĂ",
+            "submit-success-message": "Un e-mail care conține link-ul pentru schimbarea parolei v-a fost trimis."            
+        },
+        "reset-password": {
+            "title": "Schimbă parola",
+            "submit-button": "EXECUTĂ",
+            "submit-success-message": "Parola a fost schimbată cu succes."
+        },
+        "projects": {
+            "title": "Proiecte"
+        },
+        "community": {
+            "skills-filter-title": "Aptitudini:",
+            "search-title": "Căutați:",
+            "sort-title": "Ordonați:",
+            "sort-by-name": "Nume",
+            "show-more-button": "Afișați mai mulți",
+            "no-members-message": "Nu există membri care să fie afisați"
+        },
+        "settings": {
+            "title": "Setări",
+            "settings": "Setări",
+            "change-password-button": "SCHIMBĂ PAROLA",
+            "delete-account-button": "ȘTERGE CONT",
+            "edit-settings-title": "Editare Setări",
+            "change-password-title": "Schimbare parolă",
+            "delete-account-title": "Ștergere cont",
+            "delete-account-description": "Sunteți sigur că doriți să ștergeți contul? Toate informațiile vor fi pierdute definitiv. În cazul în care doriți să vă ascundeți informațiile, puteți să vă faceți profilul privat. În cazul în care doriți să continuați, vă rugăm să introduceți parola:",
+            "snackbar-messages": {
+                "update-settings": "Secțiunea de setări a fost actualizată ",
+                "change-password": "Parola a fost schimbată"
+            }
+        },
+        "create-profile": {
+            "account-created-title": "Cont creat",
+            "account-created-message": "Contul dumneavoastră a fost creat. Vă rugăm să vă completați profilul înainte de a începe să utilizați aplicația.",
+            "account-created-button": "CREEAZĂ PROFIL",
+            "steps": {
+                "general": {
+                    "title": "General"
+                },
+                "skills": {
+                    "title": "Aptitudini"
+                },
+                "portfolio": {
+                    "title": "Portofoliu",
+                    "photo-gallery-title": "Galerie foto",
+                    "video-gallery-title": "Galerie video"
+                },
+                "awards": {
+                    "title": "Premii"
+                },
+                "experience": {
+                    "title": "Experiență"
+                },
+                "education": {
+                    "title": "Educație"
+                },
+                "settings": {
+                    "title": "Setări"
+                }
+            },
+            "profile-created-title": "Profil creat",
+            "profile-created-message": "Profilul dumneavoastră a fost creat. Vă puteți bucura de toate funcționalitățile pe care le are de oferit Theater Hub.",
+            "profile-created-button": "GATA"
+
+        },
+        "profile": {
+            "edit-general-information-title": "Editare informații generale",
+            "preview-profile-button": "PREVIZUALIZARE PROFIL",
+            "download-resume-button": "DESCARCĂ CV",
+            "description-title": "Descriere",
+            "skills-title": "Aptitudini",
+            "edit-skills-title": "Editare Aptitudini",
+            "skills-list-description": "Aptitudini profesionale",
+            "skills-list-requirement": "Alegeți cel puțin o aptitudine",
+            "photo-gallery-title": "Galerie foto",
+            "no-photos-description": "Nu aveți nici o poză",
+            "edit-photo-gallery-title": "Editare Galerie Foto",
+            "video-gallery-title": "Galerie video",
+            "video-link-field-label": "Link video",
+            "no-videos-description": "Nu aveți nici un video",
+            "add-video-button": "Adaugați video",
+            "delete-video-message": "Sunteți sigur că doriți să ștergeți acest video?",
+            "achievements-title": "Realizări",
+            "awards-title": "Premii",
+            "delete-award-message": "Sunteți sigur că doriți să ștergeți acest premiu?",
+            "no-awards-message": "Nu ați adăugat informații despre premii",
+            "experience-title": "Experiența profesională",
+            "delete-experience-message": "Sunteți sigur că doriți să ștergeți această experiență profesională?",
+            "no-experience-message": "Nu ați adăugat informații profesionale",
+            "education-title": "Educație",
+            "delete-education-message":  "Sunteți sigur că doriți să ștergeți această experiență educațională?",
+            "no-education-message": "Nu ați adăugat informații despre educație",
+            "invalid-profile-title": "Profil",
+            "invalid-profile-content": "Profilul pe care încercați să îl vizualizați este privat sau nu există.",
+            "snackbar-messages": {
+                "update-general-information": "Secțiunea de informații generale a fost actualizată",
+                "update-skills": "Secțiunea de aptitudini a fost actualizată",
+                "update-photo-gallery": "Secțiunea de galerie foto a fost actualizată",
+                "update-video-gallery":  "Secțiunea de galerie video a fost actualizată",
+                "update-awards": "Secțiunea de premii a fost actualizată",
+                "update-experience": "Secțiunea de informații profesionale a fost actualizată",
+                "update-education": "Secțiunea de educație a fost actualizată"
+            }
+        },
+        "administration": {
+            "users": {
+                "title": "Bord utilizatori",
+                "invite-user-button": "INVITĂ UTILIZATOR",
+                "invite-user-title": "Invită utilizator",
+                "user-role-label": "Rol:",
+                "full-name-header": "Nume complet",
+                "email-address-header": "Adresa de e-mail",
+                "role-header": "Rol",
+                "account-status-header": "Starea contului",
+                "profile-visibility-header": "Vizibilitatea profilului",
+                "actions-header": "Acțiuni",
+                "no-search-results": "Nu există rezultate",
+                "no-matching-users": "Nici un utilizator nu satisface condițiile",
+                "enable-user-button": "ACTIVEAZĂ",
+                "disable-user-button": "DEZACTIVEAZĂ",
+                "delete-user-button": "ȘTERGE",
+                "enable-user-message": "Sunteți sigur că doriți să activați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "disable-user-message": "Sunteți sigur că doriți să dezactivați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "snackbar-messages": {
+                    "invite-user": "Invitație trimisă",
+                    "enable-user": "Utilizator activat",
+                    "disable-user": "Utilizator dezactivat",
+                    "delete-user": "Utilizator șters"
+                }
+            },
+            "projects": {
+                "title": "Bord proiecte"
+            }
+        },
+        "errors": {
+            "not-found-title": "Pagina nu a fost gasită",
+            "not-found-description": "Pagina pe care o căutați nu există!",
+            "error-title": "A avut loc o eroare neașteptată.",
+            "error-description": "Vă rugăm să încercați din nou."
+        }
+    }
+
+}

@@ -3,13 +3,13 @@
         <v-container id="community-container" class="main-container pa-1">
             <v-layout row wrap class="community-header-bar">
                 <v-flex xs4 class="skills-filter-container px-3">
-                    <span class="community-header-bar-label">Skills:</span>
+                    <span class="community-header-bar-label">{{ $t('pages.community.skills-filter-title') }}</span>
                     <v-flex xs12>
                         <v-autocomplete 
                             item-text="Name" item-value="ID"
                             @input="updateFilterSkills"
-                            v-model="filterSkills" :items="skills"
-                            chips label="Select skills" multiple>
+                            v-model="filterSkills" :items="localizedSkills"
+                            chips :label="$t('fields.filter-by-skills.label')" multiple>
                             <template slot="selection" slot-scope="data">
                                 <v-chip :selected="data.selected" close class="chip--select-multi" @input="removeSkill(data.item)">
                                     {{ data.item.Name }}
@@ -19,18 +19,18 @@
                     </v-flex>
                 </v-flex>
                 <v-flex xs4 class="px-3">
-                    <span class="community-header-bar-label">Search by name:</span>
+                    <span class="community-header-bar-label">{{ $t('pages.community.search-title') }}</span>
                     <v-text-field type="search" append-icon="search"
-                        hide-details single-line placeholder="Search..." id="members-search-box"
+                        hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
                         v-model="searchTerm"
                         @keyup="onSearchKeyup"></v-text-field>
                 </v-flex>
                 <v-flex xs4 class="px-3">
                     <v-flex xs12>
-                        <span class="community-header-bar-label">Sort:</span>
+                        <span class="community-header-bar-label">{{ $t('pages.community.sort-title') }}</span>
                     </v-flex>
                     <v-flex xs12 v-on:click="onSortByNameClick" class="sort-members-criteria pt-2 mt-1">
-                        Name
+                        {{ $t('pages.community.sort-by-name') }}
                         <i class="material-icons" v-if="isSortByNameAscending">arrow_upward</i>
                         <i class="material-icons" v-if="!isSortByNameAscending">arrow_downward</i>
                     </v-flex>
@@ -60,10 +60,10 @@
                     </v-layout>
                 </v-flex>
                 <v-flex xs12 v-if="!hasLoadedAll()" justify-center class="mt-5 show-more-members-row">
-                    <v-btn v-on:click="onShowMoreClick" color="primary" id = "show-more-members-btn">Show More</v-btn>
+                    <v-btn v-on:click="onShowMoreClick" color="primary" id = "show-more-members-btn">{{ $t('pages.community.show-more-button') }}</v-btn>
                 </v-flex>
                 <v-flex class="no-results-message text-xs-center mt-5" v-if="displayNoResultsMessage && !isLoading">
-                    There are no members to display
+                    {{ $t('pages.community.no-members-message') }}
                 </v-flex>
             </v-layout>
         </v-container>
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
 
     export default {
         components: {
@@ -89,7 +90,6 @@
         data: () => ({
             communityMembers: [],
             communitySize: 0,
-            skills: [],
             filterSkills: [],
             searchTerm: '',
             sortItems: ['Name ascending', 'Name descending'],
@@ -111,12 +111,10 @@
 
             var communityMembers = store.state.users.communityMembers;
             var communitySize = store.state.users.communitySize;
-            var skills = [...store.getters['applicationData/skills']];
 
             return {
                 communityMembers,
-                communitySize,
-                skills: skills.sort((s1, s2) => s1.Name > s2.Name ? -1 : 1)
+                communitySize
             };
         },
         methods: {
@@ -188,14 +186,17 @@
             }
 		},
         computed: {
+            ...mapGetters({
+                skills: 'applicationData/skills'
+            }),
             displayedCommunityMembers: function () {
                 return this.communityMembers.map(m => {
-                    var memberSkills = this.skills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);
+                    var memberSkills = this.localizedSkills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);
                     var skills = memberSkills.slice(0, 2).map(s => s.Name);
 
                     var skillSurplus = memberSkills.length - 2;
                     if (skillSurplus > 0) {
-                        var moreSkillsText = skillSurplus === 1 ? '+1 skill' : `+${skillSurplus} skills`;
+                        var moreSkillsText = skillSurplus === 1 ? `+1 ${this.$t('shared.content.skill')}` : `+${skillSurplus} ${this.$t('shared.content.skills')}`;
                         skills.push(moreSkillsText);
                     }
 
@@ -210,6 +211,14 @@
             },
             skillNameList: function () {
                 return this.filterSkills.map(s => s.Name).sort();
+            },
+            localizedSkills: function () {
+                return this.skills.map(s => {
+                    return {
+                        ...s,
+                        Name: this.$t(`application-data.${s.Name}`)
+                    };
+                }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
             },
             displayNoResultsMessage: function () {
                 return this.communityMembers.length === 0;
