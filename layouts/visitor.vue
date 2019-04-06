@@ -23,7 +23,8 @@
               <img :src="require('~/assets/images/theater_hub_logo-11.png')" />
             </a>
         </v-flex>
-        <v-layout justify-end align-center pr-5>
+        
+        <!-- <v-layout justify-end align-center pr-5>
           <v-flex xs1 mr-5 class="action-button">
             <nuxt-link to="/login" id="login-btn" class="menu-link">
               {{ $t('shared.header.login-link') }}
@@ -51,7 +52,7 @@
               </v-list>
             </v-menu>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
 
         <v-flex md5 lg5>
           <v-layout row wrap justify-space-between>
@@ -159,6 +160,7 @@
                 <v-card-title primary-title>
                   <h2><u>Back to the basics - contemporary dance show</u></h2>
                 </v-card-title>
+
 
                 <v-card-text>
                   <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
@@ -288,62 +290,60 @@
         </section>
 
         <section id="social_networks">
-          <v-layout row justify-end align-center fill-height>
-            <v-flex d-flex xs6>
+          <v-layout row wrap justify-end align-center fill-height>
+            <v-spacer></v-spacer>
+            <v-flex d-flex xs12 sm6 md4>
               <v-layout>
-                <v-spacer></v-spacer>
-                <v-flex xs8>
+                <v-flex xs12>
                   <v-text-field label="Search" append-icon="search" class="white" solo-inverted hide-details></v-text-field>
                 </v-flex>
               </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs4 fill-height>
-              <v-layout text-xs-center align-center >
-                <v-flex d-flex xs1 class="text-xs-center" >
+            <v-flex d-flex sm6 md4 fill-height>
+              <v-layout text-xs-center align-center row wrap justify-center>
+                <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
                       <!-- <img :src="require('~/assets/images/facebook_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/facebook_grey.png')"></v-img>   
                     </a>
                 </v-flex>
 
-                <v-flex d-flex xs1 class="text-xs-center">
+                <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
                       <!-- <img :src="require('~/assets/images/youtube_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/youtube_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
-                <v-flex d-flex xs1 class="text-xs-center">
+                <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
                       <!-- <img :src="require('~/assets/images/instagram_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/instagram_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
-                <v-flex d-flex xs1 class="text-xs-center">
+                <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
                       <!-- <img :src="require('~/assets/images/linkedin_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/linkedin_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
-                <v-flex d-flex xs1 class="text-xs-center">
+                <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
                       <!-- <img :src="require('~/assets/images/twitter_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/twitter_grey.png')"></v-img>
                     </a>
                 </v-flex>
                 
-                <v-flex d-flex xs6 class="text-xs-center donate-button">
+                <v-flex d-flex xs12 sm7 md7 class="text-xs-center donate-button">
                   <v-btn flat small>
                     <span class="text-capitalize"><u>DONATE</u></span>
                   </v-btn>
                 </v-flex>
               </v-layout>
-            </v-flex>
-
-        
+            </v-flex>        
           </v-layout>
         </section>
       </v-content>
