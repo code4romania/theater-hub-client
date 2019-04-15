@@ -52,15 +52,25 @@
                     
                     <v-stepper-content step="3" class="pl-5">
                         <v-layout row wrap>
-                            <v-flex xs12>
+                            <v-flex xs12 class="pt-5">
                                 <span class="field-title">{{ $t('pages.create-profile.steps.portfolio.photo-gallery-title') }}</span>
                                 <ProfilePhotoGallery :profilePhotoGallery="profilePhotoGallery"
                                                     @updateProfilePhotoGallery="updateProfilePhotoGallery"/>
                             </v-flex>
-                            <v-flex xs12>
-                                <span class="field-title">{{ $t('pages.create-profile.steps.portfolio.video-gallery-title') }}</span>
-                                <ProfileVideoGallery :profileVideoGallery="profileVideoGallery"
-                                                    @updateProfileVideoGallery="updateProfileVideoGallery"/>
+                            <v-flex xs12 class="pt-5">
+                                <v-layout row wrap class="profile-information-group">
+                                    <v-flex xs12>
+                                        <span class="field-title">{{ $t('pages.profile.video-gallery-title') }}</span>
+                                    </v-flex>
+                                    <v-flex xs12>
+                                        <ProfileVideoGallery
+                                            :videoGallery="profileVideoGallery.videoGallery"
+                                            :saveChanges="false"
+                                            @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
+                                            @endProfileSectionEditSession="endProfileSectionEditSession"
+                                            @updateVideoGallery="updateProfileVideoGallery" />
+                                    </v-flex>
+                                </v-layout>
                             </v-flex>
 
                             <v-flex xs12 my-5>
@@ -77,8 +87,13 @@
                     <v-stepper-content step="4" class="pl-5">
                         <v-layout row wrap>
 
-                            <ProfileAwards :profileAwards="profileAwards"
-                                                @updateProfileAwards="updateProfileAwards"/>
+                            <ProfileAwards
+                                :awards="profileAwards.awards"
+                                :isTimeline="false"
+                                :saveChanges="false"
+                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
+                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @updateAwards="updateProfileAwards" />
 
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 3">{{ $t('shared.content.back-button') }}</v-btn>
@@ -94,8 +109,13 @@
                     <v-stepper-content step="5" class="pl-5">
                         <v-layout row wrap>
 
-                            <ProfileExperience :profileExperience="profileExperience"
-                                                @updateProfileExperience="updateProfileExperience"/>
+                            <ProfileExperience
+                                :experienceSteps="profileExperience.experienceSteps"
+                                :isTimeline="false"
+                                :saveChanges="false"
+                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
+                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @updateExperience="updateProfileExperience" />
 
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 4">{{ $t('shared.content.back-button') }}</v-btn>
@@ -111,8 +131,13 @@
                     <v-stepper-content step="6" class="pl-5">
                         <v-layout row wrap>
 
-                            <ProfileEducation :profileEducation="profileEducation"
-                                                @updateProfileEducation="updateProfileEducation"/>
+                            <ProfileEducation
+                                :educationSteps="profileEducation.educationSteps"
+                                :isTimeline="false"
+                                :saveChanges="false"
+                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
+                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @updateEducation="updateProfileEducation" />
 
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 5">{{ $t('shared.content.back-button') }}</v-btn>
@@ -179,8 +204,8 @@ import ProfileEducation from '~/components/profile/profile-education.vue';
 import ProfilePrivacy from '~/components/profile/profile-privacy.vue';
 import ProfileLocaleSetting from '~/components/profile/profile-locale-setting.vue';
 import ServerSideErrors from '~/components/errors/server-side-errors.vue';
-import { SocialMediaManager, Helpers, Validators } from '~/utils';
-import { SocialMediaCategoryType } from '~/store/entities';
+import { SocialMediaManager, Helpers, HtmlHelpers, Validators } from '~/utils';
+import { ProfileSectionType, SocialMediaCategoryType } from '~/store/entities';
 import { mapGetters, mapState } from 'vuex';
 
 export default {
@@ -236,7 +261,11 @@ export default {
         birthDateVisibility: 0,
         phoneNumberVisibility: 0
     },
-    localeSetting: ''
+    localeSetting: '',
+    isEditingVideoGallery: false,
+    isEditingAwards: false,
+    isEditingExperience: false,
+    isEditingEducation: false
   }),
   asyncData ({ store, query }) {
       return {
@@ -282,7 +311,7 @@ export default {
     isWizardStepValid: function () {
       switch (this.wizardStep) {
         case 1:
-            return this.profileGeneralInformation.phoneNumber &&
+            return this.profileGeneralInformation.phoneNumber && Validators.isValidBirthDate(this.profileGeneralInformation.birthDate) &&
                         Validators.isValidPhoneNumber(this.profileGeneralInformation.phoneNumber) &&
                         (!this.profileGeneralInformation.website || Validators.isValidURL(this.profileGeneralInformation.website)) &&
                         (!this.profileGeneralInformation.description || this.profileGeneralInformation.description.length <= 500) &&
@@ -412,7 +441,7 @@ export default {
             LinkedinLink: this.profileGeneralInformation.linkedinLink ? this.profileGeneralInformation.linkedinLink : null,
             Skills: this.profileSkills.selectedSkills.map(s => s.ID),
             PhotoGallery: this.profilePhotoGallery.photoGallery,
-            VideoGallery: this.profileVideoGallery.videoGallery.filter(v => v.isValid).map(v => {
+            VideoGallery: this.profileVideoGallery.videoGallery.map(v => {
                 return { Video: v.link };
             }),
             Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length).map(a => {
@@ -464,23 +493,59 @@ export default {
     updateProfilePhotoGallery: function (model) {
         this.profilePhotoGallery = Helpers.cloneObject(model);
     },
-    updateProfileVideoGallery: function (model) {
-        this.profileVideoGallery = Helpers.cloneObject(model);
+    updateProfileVideoGallery: function (editedVideoGallery) {
+        this.profileVideoGallery.videoGallery = [...editedVideoGallery];
     },
-    updateProfileAwards: function (model) {
-        this.profileAwards = Helpers.cloneObject(model);
+    updateProfileAwards: function (editedAwards) {
+        this.profileAwards.awards = [...editedAwards];
     },
-    updateProfileExperience: function (model) {
-        this.profileExperience = Helpers.cloneObject(model);
+    updateProfileExperience: function (editedExperience) {
+        this.profileExperience.experienceSteps = [...editedExperience];
     },
-    updateProfileEducation: function (model) {
-        this.profileEducation = Helpers.cloneObject(model);
+    updateProfileEducation: function (editedEducation) {
+        this.profileEducation.educationSteps = [...editedEducation];
     },
     updateProfilePrivacy: function (model) {
         this.profilePrivacy = Helpers.cloneObject(model);
     },
     updateLocaleSetting: function (model) {
         this.localeSetting = model;
+    },
+    initiateProfileSectionEditSession (navigateToElement, profileSection) {
+        this.$store.dispatch('users/initiateProfileSectionEditSession');
+
+        if (profileSection === ProfileSectionType.VideoGallery) {
+            this.isEditingVideoGallery = true;
+        } else if (profileSection === ProfileSectionType.Awards) {
+            this.isEditingAwards = true;
+        } else if (profileSection === ProfileSectionType.Experience) {
+            this.isEditingExperience = true;
+        } else if (profileSection === ProfileSectionType.Education) {
+            this.isEditingEducation = true;
+        }
+
+        if (navigateToElement) {
+            setTimeout(() => {
+                var element = document.getElementsByClassName('edited-profile-section')[0];
+
+                if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
+                    HtmlHelpers.scrollToElement(element);
+                }
+            }, 0);
+        }
+    },
+    endProfileSectionEditSession (profileSection) {
+        if (profileSection === ProfileSectionType.VideoGallery) {
+            this.isEditingVideoGallery = false;
+        } else if (profileSection === ProfileSectionType.Awards) {
+            this.isEditingAwards = false;
+        } else if (profileSection === ProfileSectionType.Experience) {
+            this.isEditingExperience = false;
+        } else if (profileSection === ProfileSectionType.Education) {
+            this.isEditingEducation = false;
+        }
+
+        this.$store.dispatch('users/endProfileSectionEditSession');
     }
   },
   computed: {
@@ -497,6 +562,9 @@ export default {
             };
         }).sort((s1, s2) => s1.Name > s2.Name ? -1 : 1);
     }
+  },
+  mounted () {
+      this.endProfileSectionEditSession();
   }
 }
 </script>

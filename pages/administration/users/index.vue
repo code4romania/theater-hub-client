@@ -273,6 +273,8 @@
             }
         },
         mounted () {
+            this.$store.dispatch('administration/endAdministrationInviteUserSession');
+
             this.updateUsersDashboardTable();
 
             window.onscroll = _.throttle(() => {

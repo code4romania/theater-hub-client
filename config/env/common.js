@@ -1,8 +1,8 @@
 export const commonConfig = {
     application: {
-        baseURL: 'http://127.0.0.1:3000'
+        baseURL: 'http://localhost:3000'
     },
     API: {
-        baseURL: 'https://127.0.0.1:443/api'
+        baseURL: 'https://localhost:443/api'
     }
 };

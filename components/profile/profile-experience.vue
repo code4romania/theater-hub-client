@@ -1,22 +1,38 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs12>
-            <v-layout row mb-5 :key="i" v-for="(step, i) in profileExperienceModel.experienceSteps">
+    <v-layout class="profile-experience-layout profile-entity-layout">
+        <v-flex xs12 v-if="isTimeline">
 
-                <v-flex xs12 ma-1 v-bind:class="{'editing-profile-row': step.inEditMode}">
-                    <v-card class="elevation-1">
+            <v-timeline-item medium hide-dot right class="timeline-header-item">
+                <v-card class="timeline-header-card elevation-2">
+                    <v-card-title class="secondary-color">
+                        <h2 class="timeline-header">{{ $t('pages.profile.experience-title') }}</h2>
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+
+            <v-timeline-item
+                :key="`experience-${experienceIndex}`"
+                v-for="(step, experienceIndex) in experienceSteps"
+                v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
+                @mouseover.native="step.isHovered = true" @mouseout.native="step.isHovered = false"
+                class="timeline-achievement-item" color="primary" small fill-dot right>
+                    <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
                             <v-layout row wrap>
-                                <v-flex xs10 pt-3>
-                                    <span class="experience-position">{{ step.position }}</span>, <span class="experience-employer ml-1">{{ step.employerName }}</span>
-                                </v-flex>
-                                <v-flex xs2 class="profile-row-actions">
-                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditExperienceStepClick(step, i)">
-                                        <v-icon>edit</v-icon>
-                                    </v-btn>
-                                    <v-btn outline small fab class="remove-icon" v-on:click="onRemoveExperienceStepClick(i)">
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
+                                <v-flex xs12>
+                                    <v-layout class="profile-row-actions-container">
+                                        <v-flex xs12 sm10 md10 lg10 class="timeline-item-action-row">
+                                            <span class="experience-position">{{ step.position }}</span>, <span class="experience-employer ml-1">{{ step.employerName }}</span>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="experienceIndex === 0 || step.isHovered">
+                                            <v-btn outline small fab class="edit-icon" v-on:click="onEditExperienceStepClick(step, experienceIndex)">
+                                                <v-icon>edit</v-icon>
+                                            </v-btn>
+                                            <v-btn outline small fab class="remove-icon" v-on:click="onDeleteExperienceStepClick(step, experienceIndex)">
+                                                <v-icon>delete</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
                                 </v-flex>
                                 <v-flex xs12>
                                     <span class="timeline-date">{{ `${getTimelineDate(step.startDate)} - ${getTimelineDate(step.endDate)}` }}</span>
@@ -30,207 +46,295 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                </v-flex>
-            </v-layout>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                        <ProfileExperienceEdit :experienceStep="step"
+                                        :index="experienceIndex" @editExperienceStep="editExperienceStep" />
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                        <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
+                    </v-card>
+            </v-timeline-item>
+            <v-timeline-item  v-if="!hasExperience() && !isEditingExperience" medium hide-dot right class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-experience-message') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message add-achievement-timeline-item"
+                v-if="!isAddingExperienceStep">
+                <v-card class="timeline-message-card text-xs-center"  v-on:click.native="onAddExperienceStepClick()">
+                    <v-card-title>
+                        <v-icon>add</v-icon>
+                       {{ $t('shared.content.add-experience-button') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingExperienceStep">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
+                </v-card>
+            </v-timeline-item>
+            
         </v-flex>
 
+        <v-flex xs12 v-if="!isTimeline">
 
-        <v-flex xs12 elevation-3 pa-5 ma-1>
-            <v-form ref="experienceForm">
-                <v-layout row>
-                    <v-flex xs12 sm12 md12 lg12  class="profile-row-actions" v-if="experienceFactory.inEditMode">
-                        <v-btn outline small fab class="edit-experience-step-button" v-on:click="onDoneEditExperienceStepClick" :disabled="isExperienceStepButtonDisabled()">
-                            <v-icon>done</v-icon>
-                        </v-btn>
-                        <v-btn outline small fab class="edit-experience-step-button" v-on:click="onCancelEditExperienceStepClick">
-                            <v-icon>clear</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout row mt-2>
-                    <v-flex xs12 sm6 md6 lg3 class="pr-2">
-                        <v-text-field v-model="experienceFactory.position" :rules="experiencePositionRules"
-                                :label="`${$t('fields.experience.position.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="px-2">
-                        <v-text-field v-model="experienceFactory.employerName" :rules="employerNameRules"
-                                :label="`${$t('fields.experience.employer.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="experienceFactory.isStartDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="experienceFactory.startDate"
-                                    :label="$t('fields.experience.start-date.label')" prepend-icon="event" readonly>
-                            </v-text-field>
-                            <v-date-picker
-                                v-model="experienceFactory.startDate"
-                                type="month"
-                                :locale="locale"
-                                @input="experienceFactory.isStartDateMenuOpen = false">
-                            </v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="experienceFactory.isEndDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="experienceFactory.endDate"
-                                    :label="$t('fields.experience.end-date.label')" prepend-icon="event" readonly>
-                            </v-text-field>
-                            <v-date-picker
-                                v-model="experienceFactory.endDate"
-                                type="month"
-                                :locale="locale"
-                                @input="experienceFactory.isEndDateMenuOpen = false">
-                            </v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                </v-layout>
-                <v-layout row>
-                    <v-textarea
-                        class="experience-step-description-field text-area-field"
-                        v-model="experienceFactory.description"
-                        auto-grow
-                        box
-                        :label="$t('fields.experience.description.label')"
-                        rows="1"
-                        counter=500
-                        :rules="descriptionRules" validate-on-blur>
-                    </v-textarea>
-                </v-layout>
-                <v-flex xs12 v-if="!experienceFactory.inEditMode">
-                    <v-btn v-on:click="onAddExperienceStepClick" :disabled="isExperienceStepButtonDisabled()" block class="add-experience-step-button">
-                        {{ $t('shared.content.add-experience-button') }}
-                    </v-btn>
-                </v-flex>
-            </v-form>
+            <div :key="`experience-${experienceIndex}`"
+                v-for="(step, experienceIndex) in experienceSteps"
+                v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
+                @mouseover="step.isHovered = true" @mouseout="step.isHovered = false"
+                class="achievement-item" color="primary">
+                    <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
+                        <v-card-title>
+                            <v-layout row wrap>
+                                <v-flex xs12>
+                                    <v-layout row class="item-action-row profile-row-actions-container">
+                                        <v-flex xs12 sm10 md10 lg10 class="timeline-item-action-row">
+                                            <span class="experience-position">{{ step.position }}</span>, <span class="experience-employer ml-1">{{ step.employerName }}</span>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="experienceIndex === 0 || step.isHovered">
+                                            <v-btn outline small fab class="edit-icon" v-on:click="onEditExperienceStepClick(step, experienceIndex)">
+                                                <v-icon>edit</v-icon>
+                                            </v-btn>
+                                            <v-btn outline small fab class="remove-icon" v-on:click="onDeleteExperienceStepClick(step, experienceIndex)">
+                                                <v-icon>delete</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <span class="timeline-date">{{ `${getTimelineDate(step.startDate)} - ${getTimelineDate(step.endDate)}` }}</span>
+                                </v-flex>
+                            </v-layout>
+                            
+                        </v-card-title>
+                        <v-card-text v-if="step.description">
+                            <p class="experience-description">
+                                {{ step.description }}
+                            </p>
+                        </v-card-text>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                        <ProfileExperienceEdit :experienceStep="step"
+                                        :index="experienceIndex" @editExperienceStep="editExperienceStep" />
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                        <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
+                    </v-card>
+            </div>
+            <div v-if="!hasExperience && !isEditingExperience" class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-experience-message') }}
+                    </v-card-title>
+                </v-card>
+            </div>
+            <v-btn outline class="add-achievement-btn add-experience-btn add-entity-btn"
+                                    v-if="!isAddingExperienceStep" v-on:click.native="onAddExperienceStepClick()">
+                <v-icon>add</v-icon> {{ $t('shared.content.add-experience-button') }}
+            </v-btn>
+            <div class="timeline-message" v-if="isAddingExperienceStep">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
+                </v-card>
+            </div>
+
         </v-flex>
+
     </v-layout>
 </template>
 
 
 <script>
-    import { mapGetters } from 'vuex';
     import moment from 'moment';
     import { Helpers } from '~/utils';
+    import { ProfileSectionType } from '~/store/entities';
+    import ProfileExperienceAdd from '~/components/profile/profile-experience-add.vue';
+    import ProfileExperienceEdit from '~/components/profile/profile-experience-edit.vue';
+    import ProfileExperienceDelete from '~/components/profile/profile-experience-delete.vue';
 
     export default {
-            props: ['profileExperience'],
-            data: function () {
-                return {
-                    profileExperienceModel: Helpers.cloneObject(this.profileExperience),
-                    experiencePositionRules: [
-                        v => !!v || this.$t('fields.experience.position.validation-errors.required')
-                    ],
-                    employerNameRules: [
-                        v => !!v || this.$t('fields.experience.employer.validation-errors.required')
-                    ],
-                    descriptionRules: [
-                        v => v === '' || v.length <= 500 || this.$t('fields.experience.description.validation-errors.length')
-                    ],
-                    experienceFactory: {
-                        position: '',
-                        employerName: '',
-                        description: '',
-                        startDate: new Date().toISOString().substr(0, 7),
-                        endDate: new Date().toISOString().substr(0, 7),
-                        isValid: false,
-                        isStartDateMenuOpen: false,
-                        isEndDateMenuOpen: false
-                    }
-                };
+        components: {
+            ProfileExperienceAdd,
+            ProfileExperienceEdit,
+            ProfileExperienceDelete
+        },
+        props: ['experienceSteps', 'isTimeline', 'saveChanges'],
+		data: function () {
+            return {
+                editedExperienceSteps: [...this.experienceSteps],
+                isEditingExperience: false,
+                isAddingExperienceStep: false,
+                isDeletingExperienceStep: false
+            };
+        },
+        methods: {
+            onAddExperienceStepClick: function () {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedExperienceSteps();
+                this.isAddingExperienceStep = true;
             },
-            methods: {
-                updateProfileExperienceModel: function () {
-                    this.$emit('updateProfileExperience', this.profileExperienceModel);
-                },
-                onEditExperienceStepClick: function (experienceStep, index) {
-                    this.experienceFactory = {
-                        ...experienceStep,
-                        index,
-                        inEditMode: true
+            onEditExperienceStepClick: function (experienceStep, index) {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedExperienceSteps();
+                this.isEditingExperience = true;
+                experienceStep.inEditMode = true;
+            },
+            onDeleteExperienceStepClick: function (experienceStep, index) {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedExperienceSteps();
+                this.isDeletingExperienceStep = true;
+                experienceStep.inDeleteMode = true;
+            },
+            addExperienceStep: function (experienceStep) {
+                let newExperienceStep = {};
+
+                if (experienceStep) {
+                    newExperienceStep = {
+                        position: experienceStep.position,
+                        employerName: experienceStep.employerName,
+                        description: experienceStep.description,
+                        startDate: experienceStep.startDate.substr(0, 7),
+                        endDate: experienceStep.endDate.substr(0, 7),
+                        isHovered: false,
+                        inEditMode: false,
+                        inDeleteMode: false
                     };
-
-                    experienceStep.inEditMode = true;
-                    this.updateProfileExperienceModel();
-                },
-                onCancelEditExperienceStepClick: function () {
-                    this.profileExperienceModel.experienceSteps[this.experienceFactory.index].inEditMode = false;
-
-                    this.updateProfileExperienceModel();
-
-                    this.resetExperienceFactory();
-                },
-                onDoneEditExperienceStepClick: function () {
-                    var isCurrentExperienceStepValid = this.isExperienceStepValid(this.experienceFactory);
-
-                    if (!isCurrentExperienceStepValid) {
-                        return;
-                    }
-
-                    this.profileExperienceModel.experienceSteps[this.experienceFactory.index] = {
-                        ...this.experienceFactory,
-                        isValid: true,
-                        inEditMode: false
-                    };
-
-                    this.updateProfileExperienceModel();
-
-                    this.resetExperienceFactory();
-                },
-                onRemoveExperienceStepClick: function (index) {
-                    this.profileExperienceModel.experienceSteps.splice(index, 1);
-
-                    this.updateProfileExperienceModel();
-                },
-                isExperienceStepValid: function (experienceStep) {
-                    return experienceStep.position !== '' && experienceStep.employerName !== '';
-                },
-                isExperienceStepButtonDisabled: function () {
-                    return !this.isExperienceStepValid(this.experienceFactory);
-                },
-                onAddExperienceStepClick: function () {
-                    var isCurrentExperienceStepValid = this.isExperienceStepValid(this.experienceFactory);
-
-                    if (!isCurrentExperienceStepValid) {
-                        return;
-                    }
-
-                    this.profileExperienceModel.experienceSteps.push({...this.experienceFactory});
-
-                    this.resetExperienceFactory();
-
-                    this.updateProfileExperienceModel();
-                },
-                resetExperienceFactory: function () {
-                    this.$refs.experienceForm.resetValidation();
-
-                    this.experienceFactory = {
-                        position: '',
-                        employerName: '',
-                        description: '',
-                        startDate: new Date().toISOString().substr(0, 7),
-                        endDate: new Date().toISOString().substr(0, 7),
-                        isValid: false,
-                        isStartDateMenuOpen: false,
-                        isEndDateMenuOpen: false
-                    };
-                },
-                getTimelineDate (date) {
-                    return moment(date).format('MM/YYYY');
                 }
+
+                if (experienceStep && this.saveChanges) {
+                    var request = {
+                        Position: experienceStep.position,
+                        Employer: experienceStep.employerName,
+                        Description: experienceStep.description,
+                        StartDate: experienceStep.startDate.substr(0, 7),
+                        EndDate: experienceStep.endDate.substr(0, 7)
+                    };
+
+                    this.$store.dispatch('experience/create', request).then((response) => {
+                        newExperienceStep.id = this.$store.state.experience.newExperienceStep.ID;
+
+                        this.editedExperienceSteps.push(newExperienceStep);
+
+                        this.editedExperienceSteps = this.editedExperienceSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateExperience();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-experience'));
+                    });
+                } else if (experienceStep) {
+                    this.editedExperienceSteps.push(newExperienceStep);
+
+                    this.editedExperienceSteps = this.editedExperienceSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                    this.updateExperience();
+                }
+
+                this.isAddingExperienceStep = false;
+                this.endProfileSectionEditSession();
             },
-            computed: {
-                ...mapGetters({
-                    locale: 'locale'
-                })
+            editExperienceStep: function (experienceStep, index) {
+                let newExperienceStep = {};
+
+                if (experienceStep) {
+                    newExperienceStep = {
+                        position: experienceStep.position,
+                        employerName: experienceStep.employerName,
+                        description: experienceStep.description,
+                        startDate: experienceStep.startDate.substr(0, 7),
+                        endDate: experienceStep.endDate.substr(0, 7)
+                    };
+                }
+
+                if (experienceStep && this.saveChanges) {
+                    var request = {
+                        ID: experienceStep.id,
+                        Position: experienceStep.position,
+                        Employer: experienceStep.employer,
+                        Description: experienceStep.description,
+                        StartDate: experienceStep.startDate.substr(0, 7),
+                        EndDate: experienceStep.endDate.substr(0, 7)
+                    };
+
+                    this.$store.dispatch('experience/update', request).then(() => {
+                        this.editedExperienceSteps[index] = newExperienceStep;
+
+                        this.editedExperienceSteps = this.editedExperienceSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateExperience();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-experience'));
+                    });
+                } else if (experienceStep) {
+                        this.editedExperienceSteps[index] = newExperienceStep;
+
+                        this.editedExperienceSteps = this.editedExperienceSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateExperience();
+                }
+
+                this.experienceSteps.forEach(e => {
+                    e.inEditMode = false;
+                });
+                this.isEditingExperience = false;
+                this.endProfileSectionEditSession();
+            },
+            deleteExperienceStep: function (index) {
+                if (index !== null && this.saveChanges) {
+                    var id = this.editedExperienceSteps[index].id;
+
+                    this.$store.dispatch('experience/delete', id).then(() => {
+                        this.editedExperienceSteps.splice(index, 1);
+
+                        this.updateExperience();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-experience'));
+                    });
+                } else if (index !== null) {
+                    this.editedExperienceSteps.splice(index, 1);
+
+                    this.updateExperience();
+                }
+
+                this.experienceSteps.forEach(e => {
+                    e.inDeleteMode = false;
+                });
+                this.isDeletingExperienceStep = false;
+                this.endProfileSectionEditSession();
+            },
+            cancelAllUnsavedChanges: function () {
+                this.isAddingExperienceStep = false;
+                this.isEditingExperience = false;
+                this.isDeletingExperienceStep = false;
+                this.endProfileSectionEditSession();
+            },
+            cloneEditedExperienceSteps: function () {
+                this.editedExperienceSteps = Helpers.cloneObject(this.experienceSteps);
+            },
+            initiateProfileSectionEditSession: function (navigateToElement) {
+                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Experience);
+            },
+            endProfileSectionEditSession: function () {
+                this.$emit('endProfileSectionEditSession', ProfileSectionType.Experience);
+            },
+            updateExperience: function () {
+                this.$emit('updateExperience', this.editedExperienceSteps);
+            },
+            showSnackbar: function (snackbarText) {
+                this.$emit('showSnackbar', snackbarText);
+            },
+            hasExperience: function () {
+                return this.experienceSteps.length !== 0;
+            },
+            getTimelineDate (date) {
+                return moment(date).format('MM/YYYY');
             }
+        }
     }
+
 </script>
 
 <style lang="scss" scoped>
-
-    .v-menu__activator > .v-text-field {
-        overflow-x: hidden;
-    }
 
 </style>

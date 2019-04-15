@@ -258,6 +258,7 @@
             "agreement-text-separator": " and ",
             "agreement-text-privacy-policy": "Privacy Policy",
             "video-message": "Please provide links from Youtube or Vimeo.",
+            "add-video-button": "Add video",
             "add-award-button": "Add award",
             "add-experience-button": "Add experience step",
             "add-education-button": "Add education step",
@@ -362,8 +363,7 @@
                 },
                 "portfolio": {
                     "title": "Portfolio",
-                    "photo-gallery-title": "Photo gallery",
-                    "video-gallery-title": "Video gallery"
+                    "photo-gallery-title": "Photo gallery"
                 },
                 "awards": {
                     "title": "Awards"
@@ -385,8 +385,8 @@
         },
         "profile": {
             "edit-general-information-title": "Edit General Information",
-            "preview-profile-button": "PREVIEW PROFILE",
-            "download-resume-button": "DOWNLOAD RESUME",
+            "preview-profile-button": "Preview profile",
+            "download-resume-button": "Download resume",
             "description-title": "Description",
             "skills-title": "Skills",
             "edit-skills-title": "Edit Skills",
@@ -398,7 +398,6 @@
             "video-gallery-title": "Video gallery",
             "video-link-field-label": "Video link",
             "no-videos-description": "You have no videos",
-            "add-video-button": "Add video",
             "delete-video-message": "Are you sure you wish to delete this video?",
             "achievements-title": "Achievements",
             "awards-title": "Awards",
