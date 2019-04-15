@@ -13,16 +13,16 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-                <v-layout row mt-2>
-                    <v-flex xs12 sm5 md5 lg5 class="pr-2">
+                <v-layout row wrap mt-2>
+                    <v-flex xs12 sm6 md5 lg5 class="pr-2">
                         <v-text-field v-model="awardsFactory.title" :rules="awardTitleRules"
                             :label="`${$t('fields.award.title.label')}*`" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm4 md4 lg4 class="px-2">
+                    <v-flex xs12 sm6 md4 lg4 class="px-2">
                         <v-text-field v-model="awardsFactory.issuer" :rules="awardIssuerRules"
                             :label="`${$t('fields.award.issuer.label')}*`" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm3 md3 lg3 class="date-menu-container px-2">
+                    <v-flex xs12 sm12 md3 lg3 class="date-menu-container px-2">
                         <v-menu :close-on-content-click="false" v-model="awardsFactory.isAwardDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                             <v-text-field slot="activator" type="month" v-model="awardsFactory.date"

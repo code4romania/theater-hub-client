@@ -13,12 +13,12 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-                <v-layout row mt-2>
-                    <v-flex xs12 sm6 md6 lg3 class="pr-2">
+                <v-layout row wrap mt-2>
+                    <v-flex xs12 sm12 md6 lg3 class="pr-2">
                         <v-text-field v-model="educationFactory.title" :rules="educationTitleRules"
                             :label="`${$t('fields.education.title.label')}*`" required></v-text-field>
                     </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="px-2">
+                    <v-flex xs12 sm12 md6 lg3 class="px-2">
                         <v-text-field v-model="educationFactory.institutionName" :rules="institutionNameRules"
                                 :label="`${$t('fields.education.institution.label')}*`" required></v-text-field>
                     </v-flex>

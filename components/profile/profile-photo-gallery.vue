@@ -26,7 +26,10 @@
                     profilePhotoGalleryModel: Helpers.cloneObject(this.profilePhotoGallery),
                     photoGalleryDropzoneOptions: {
                         url: '/',
-                        maxFilesize: 2,
+                        maxFilesize: 5,
+                        maxFiles: 10,
+                        thumbnailHeight: 200,
+                        createImageThumbnails: true,
                         addRemoveLinks: true,
                         autoProcessQueue: false,
                         dictRemoveFile: this.$t('fields.photo-dropzone.photo-remove-button'),
@@ -71,6 +74,23 @@
                             });
 
                             this.options.initializePhotoGallery(this);
+                        },
+                        resize: function (file, width, height) {
+                            var trgWidth = this.options.thumbnailHeight * file.width / file.height;
+                            var trgX = 0;
+
+                            if (trgWidth  > this.options.thumbnailHeight * 3) {
+                                trgX = (trgWidth - this.options.thumbnailHeight * 3) / 2;
+                                trgWidth = this.options.thumbnailHeight * 3;
+                            }
+
+                            return {
+                                srcWidth: file.width,
+                                srcHeight: file.height,
+                                trgX,
+                                trgWidth,
+                                trgHeight: this.options.thumbnailHeight
+                            };
                         }
                     }
                 };
@@ -89,6 +109,10 @@
 
         .dz-progress {
             display: none;
+        }
+
+        .dz-image image  {
+            object-fit: cover;
         }
 
     }

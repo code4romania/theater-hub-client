@@ -11,14 +11,14 @@
                 :label="$t('fields.select-skills.label')"
                 :hint="$t('fields.select-skills.hint')"
                 :no-data-text="$t('fields.select-skills.no-results')"
-                color="deep-purple lighten-2"
+                color="#AE2760"
                 background-color="transparent"
                 :menu-props="{maxHeight: 160}">
             </v-autocomplete>
         </v-flex>
-        <v-flex xs12 mt-3>
-            <v-chip close :key="i" v-for="(skill, i) in selectedSkillNames"
-                                                        @input="removeSkill(skill)">{{ skill }}</v-chip>
+        <v-flex xs12 mt-3 class="skills-row">
+            <v-chip close :key="i" v-for="(skill, i) in selectedSkillNames" @input="removeSkill(skill)"
+                                                                    class="skill secondary-color mr-2">{{ skill }}</v-chip>
         </v-flex>
     </v-layout>
 </template>

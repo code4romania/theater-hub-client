@@ -1,22 +1,38 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs12>
-            <v-layout row mb-5 :key="i" v-for="(step, i) in profileEducationModel.educationSteps">
+    <v-layout class="profile-education-layout profile-entity-layout">
+        <v-flex xs12 v-if="isTimeline">
 
-                <v-flex xs12 ma-1 v-bind:class="{'editing-profile-row': step.inEditMode}">
-                    <v-card class="elevation-1">
+            <v-timeline-item  medium hide-dot right class="timeline-header-item">
+                <v-card class="timeline-header-card elevation-2">
+                    <v-card-title class="secondary-color">
+                        <h2 class="timeline-header">{{ $t('pages.profile.education-title') }}</h2>
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+
+            <v-timeline-item
+                :key="`education-${educationIndex}`"
+                v-for="(step, educationIndex) in educationSteps"
+                v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
+                @mouseover.native="step.isHovered = true" @mouseout.native="step.isHovered = false"
+                class="timeline-achievement-item"  color="primary" small fill-dot right>
+                    <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
                             <v-layout row wrap>
-                                <v-flex xs10 pt-3>
-                                    <span class="education-title">{{ step.title }}</span>, <span class="education-institution ml-1">{{ step.institutionName }}</span>
-                                </v-flex>
-                                <v-flex xs2 class="profile-row-actions">
-                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditEducationStepClick(step, i)">
-                                        <v-icon>edit</v-icon>
-                                    </v-btn>
-                                    <v-btn outline small fab class="remove-icon" v-on:click="onRemoveEducationStepClick(i)">
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
+                                <v-flex xs12>
+                                   <v-layout row wrap class="profile-row-actions-container">
+                                        <v-flex xs12 sm10 md10 lg10 class="timeline-item-action-row">
+                                            <span class="education-title">{{ step.title }}</span>, <span class="education-institution ml-1">{{ step.institutionName }}</span>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="educationIndex === 0 || step.isHovered">
+                                            <v-btn outline small fab class="edit-icon" v-on:click="onEditEducationStepClick(step, educationIndex)">
+                                                <v-icon>edit</v-icon>
+                                            </v-btn>
+                                            <v-btn outline small fab class="remove-icon" v-on:click="onDeleteEducationStepClick(step, educationIndex)">
+                                                <v-icon>delete</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
                                 </v-flex>
                                 <v-flex xs12>
                                     <span class="timeline-date">{{ `${getTimelineDate(step.startDate)} - ${getTimelineDate(step.endDate)}` }}</span>
@@ -29,212 +45,291 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                </v-flex>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                        <ProfileEducationEdit :educationStep="step"
+                                    :index="educationIndex" @editEducationStep="editEducationStep"/>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                        <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
+                    </v-card>
+            </v-timeline-item>
+            <v-timeline-item  v-if="!hasEducation() && !isEditingEducation" medium hide-dot right class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-education-message') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message add-achievement-timeline-item add-education-timeline-item"
+                                                                            v-if="!isAddingEducationStep">
+                <v-card class="timeline-message-card text-xs-center"  v-on:click.native="onAddEducationStepClick()">
+                    <v-card-title>
+                        <v-icon>add</v-icon>
+                       {{ $t('shared.content.add-education-button') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingEducationStep">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileEducationAdd @addEducationStep="addEducationStep"/>
+                </v-card>
+            </v-timeline-item>
 
-            </v-layout>
         </v-flex>
 
-        <v-flex xs12 elevation-3 pa-5 ma-1>
-            <v-form ref="educationForm">
-                <v-layout row>
-                    <v-flex xs12 sm12 md12 lg12  class="profile-row-actions" v-if="educationFactory.inEditMode">
-                        <v-btn outline small fab class="edit-education-step-button" v-on:click="onDoneEditEducationStepClick" :disabled="isEducationStepButtonDisabled()">
-                            <v-icon>done</v-icon>
-                        </v-btn>
-                        <v-btn outline small fab class="edit-education-step-button" v-on:click="onCancelEditEducationStepClick">
-                            <v-icon>clear</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout row mt-2>
-                    <v-flex xs12 sm6 md6 lg3 class="pr-2">
-                        <v-text-field v-model="educationFactory.title" :rules="educationTitleRules"
-                                :label="`${$t('fields.education.title.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="px-2">
-                        <v-text-field v-model="educationFactory.institutionName" :rules="institutionNameRules"
-                                :label="`${$t('fields.education.institution.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="px-2">
-                        <v-menu :close-on-content-click="false" v-model="educationFactory.isStartDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="educationFactory.startDate"
-                                :label="$t('fields.education.start-date.label')" prepend-icon="event" readonly>
-                            </v-text-field>
-                            <v-date-picker
-                                v-model="educationFactory.startDate"
-                                type="month"
-                                :locale="locale"
-                                @input="educationFactory.isStartDateMenuOpen = false">
-                            </v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                    <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="educationFactory.isEndDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="educationFactory.endDate"
-                                :label="$t('fields.education.end-date.label')" prepend-icon="event" readonly>
-                            </v-text-field>
-                            <v-date-picker
-                                v-model="educationFactory.endDate"
-                                type="month"
-                                :locale="locale"
-                                @input="educationFactory.isEndDateMenuOpen = false">
-                            </v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                </v-layout>
-                <v-layout row>
-                    <v-textarea
-                        class="education-step-description-field text-area-field"
-                        v-model="educationFactory.description"
-                        auto-grow
-                        box
-                        :label="$t('fields.education.description.label')"
-                        rows="1"
-                        counter=500
-                        :rules="descriptionRules" validate-on-blur>
-                    </v-textarea>
-                </v-layout>
-                <v-flex xs12 v-if="!educationFactory.inEditMode">
-                    <v-btn v-on:click="onAddEducationStepClick" :disabled="isEducationStepButtonDisabled()" block class="add-education-step-button">
-                        {{ $t('shared.content.add-education-button') }}
-                    </v-btn>
-                </v-flex>
-            </v-form>
+        <v-flex xs12 v-if="!isTimeline">
+
+            <div :key="`education-${educationIndex}`"
+                v-for="(step, educationIndex) in educationSteps"
+                v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
+                @mouseover="step.isHovered = true" @mouseout="step.isHovered = false"
+                class="achievement-item"  color="primary">
+                    <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
+                        <v-card-title>
+                            <v-layout row wrap>
+                                <v-flex xs12>
+                                   <v-layout row class="item-action-row profile-row-actions-container">
+                                        <v-flex xs12 sm10 md10 lg10 class="timeline-item-action-row">
+                                            <span class="education-title">{{ step.title }}</span>, <span class="education-institution ml-1">{{ step.institutionName }}</span>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="educationIndex === 0 || step.isHovered">
+                                            <v-btn outline small fab class="edit-icon" v-on:click="onEditEducationStepClick(step, educationIndex)">
+                                                <v-icon>edit</v-icon>
+                                            </v-btn>
+                                            <v-btn outline small fab class="remove-icon" v-on:click="onDeleteEducationStepClick(step, educationIndex)">
+                                                <v-icon>delete</v-icon>
+                                            </v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <span class="timeline-date">{{ `${getTimelineDate(step.startDate)} - ${getTimelineDate(step.endDate)}` }}</span>
+                                </v-flex>
+                            </v-layout>
+                        </v-card-title>
+                        <v-card-text v-if="step.description">
+                            <p class="education-description">
+                                {{ step.description }}
+                            </p>
+                        </v-card-text>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                        <ProfileEducationEdit :educationStep="step"
+                                    :index="educationIndex" @editEducationStep="editEducationStep"/>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                        <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
+                    </v-card>
+            </div>
+            <div v-if="!hasEducation && !isEditingEducation" class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-education-message') }}
+                    </v-card-title>
+                </v-card>
+            </div>
+            <v-btn outline class="add-achievement-btn add-education-btn add-entity-btn"
+                                    v-if="!isAddingEducationStep" v-on:click.native="onAddEducationStepClick()">
+                <v-icon>add</v-icon> {{ $t('shared.content.add-education-button') }}
+            </v-btn>
+            <div class="timeline-message" v-if="isAddingEducationStep">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileEducationAdd @addEducationStep="addEducationStep"/>
+                </v-card>
+            </div>
         </v-flex>
 
     </v-layout>
 </template>
 
-
 <script>
-    import { mapGetters } from 'vuex';
     import moment from 'moment';
     import { Helpers } from '~/utils';
+    import { ProfileSectionType } from '~/store/entities';
+    import ProfileEducationAdd from '~/components/profile/profile-education-add.vue';
+    import ProfileEducationEdit from '~/components/profile/profile-education-edit.vue';
+    import ProfileEducationDelete from '~/components/profile/profile-education-delete.vue';
 
     export default {
-            props: ['profileEducation'],
-            data: function () {
-                return {
-                    profileEducationModel: Helpers.cloneObject(this.profileEducation),
-                    educationTitleRules: [
-                        v => !!v || this.$t('fields.education.title.validation-errors.required')
-                    ],
-                    institutionNameRules: [
-                        v => !!v || this.$t('fields.education.institution.validation-errors.required')
-                    ],
-                    descriptionRules: [
-                        v => v === '' || v.length <= 500 || this.$t('fields.education.description.validation-errors.length')
-                    ],
-                    educationFactory: {
-                        title: '',
-                        institutionName: '',
-                        description: '',
-                        startDate: new Date().toISOString().substr(0, 7),
-                        endDate: new Date().toISOString().substr(0, 7),
-                        isValid: false,
-                        isStartDateMenuOpen: false,
-                        isEndDateMenuOpen: false,
-                        index: null,
-                        inEditMode: false
-                    }
-                };
+        components: {
+            ProfileEducationAdd,
+            ProfileEducationEdit,
+            ProfileEducationDelete
+        },
+        props: ['educationSteps', 'isTimeline', 'saveChanges'],
+		data: function () {
+            return {
+                editedEducationSteps: [...this.educationSteps],
+                isEditingEducation: false,
+                isAddingEducationStep: false,
+                isDeletingEducationStep: false
+            };
+        },
+        methods: {
+            onAddEducationStepClick: function () {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedEducationSteps();
+                this.isAddingEducationStep = true;
             },
-            methods: {
-                updateProfileEducationModel: function () {
-                    this.$emit('updateProfileEducation', this.profileEducationModel);
-                },
-                onEditEducationStepClick: function (educationStep, index) {
-                    this.educationFactory = {
-                        ...educationStep,
-                        index,
-                        inEditMode: true
+            onEditEducationStepClick: function (educationStep, index) {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedEducationSteps();
+                this.isEditingEducation = true;
+                educationStep.inEditMode = true;
+            },
+            onDeleteEducationStepClick: function (educationStep, index) {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedEducationSteps();
+                this.isDeletingEducationStep = true;
+                educationStep.inDeleteMode = true;
+            },
+            addEducationStep: function (educationStep) {
+                let newEducationStep = {};
+
+                if (educationStep) {
+                    newEducationStep = {
+                        title: educationStep.title,
+                        institutionName: educationStep.institutionName,
+                        description: educationStep.description,
+                        startDate: educationStep.startDate.substr(0, 7),
+                        endDate: educationStep.endDate.substr(0, 7),
+                        isHovered: false,
+                        inEditMode: false,
+                        inDeleteMode: false
                     };
-
-                    educationStep.inEditMode = true;
-                    this.updateProfileEducationModel();
-                },
-                onCancelEditEducationStepClick: function () {
-                    this.profileEducationModel.educationSteps[this.educationFactory.index].inEditMode = false;
-
-                    this.updateProfileEducationModel();
-
-                    this.resetEducationFactory();
-                },
-                onDoneEditEducationStepClick: function () {
-                    var isCurrentEducationStepValid = this.isEducationStepValid(this.educationFactory);
-
-                    if (!isCurrentEducationStepValid) {
-                        return;
-                    }
-
-                    this.profileEducationModel.educationSteps[this.educationFactory.index] = {
-                        ...this.educationFactory,
-                        isValid: true,
-                        inEditMode: false
-                    };
-
-                    this.updateProfileEducationModel();
-
-                    this.resetEducationFactory();
-                },
-                onRemoveEducationStepClick: function (index) {
-                    this.profileEducationModel.educationSteps.splice(index, 1);
-
-                    this.updateProfileEducationModel();
-                },
-                isEducationStepValid: function (educationStep) {
-                    return educationStep.title !== '' && educationStep.institutionName !== '';
-                },
-                isEducationStepButtonDisabled: function () {
-                    return !this.isEducationStepValid(this.educationFactory);
-                },
-                onAddEducationStepClick: function () {
-                    var isCurrentEducationStepValid = this.isEducationStepValid(this.educationFactory);
-
-                    if (!isCurrentEducationStepValid) {
-                        return;
-                    }
-
-                    this.profileEducationModel.educationSteps.push({ ...this.educationFactory });
-
-                    this.resetEducationFactory();
-
-                    this.updateProfileEducationModel();
-                },
-                resetEducationFactory: function () {
-                    this.$refs.educationForm.resetValidation();
-
-                    this.educationFactory = {
-                        title: '',
-                        institutionName: '',
-                        description: '',
-                        startDate: new Date().toISOString().substr(0, 7),
-                        endDate: new Date().toISOString().substr(0, 7),
-                        isValid: false,
-                        isStartDateMenuOpen: false,
-                        isEndDateMenuOpen: false,
-                        index: null,
-                        inEditMode: false
-                    };
-                },
-                getTimelineDate (date) {
-                    return moment(date).format('MM/YYYY');
                 }
+
+                if (educationStep && this.saveChanges) {
+                    var request = {
+                        Title: educationStep.title,
+                        Institution: educationStep.institutionName,
+                        Description: educationStep.description,
+                        StartDate: educationStep.startDate.substr(0, 7),
+                        EndDate: educationStep.endDate.substr(0, 7)
+                    };
+
+                    this.$store.dispatch('education/create', request).then((response) => {
+                        newEducationStep.id = this.$store.state.education.newEducationStep.ID;
+                        this.editedEducationSteps.push(newEducationStep);
+
+                        this.editedEducationSteps = this.editedEducationSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateEducation();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-education'));
+                    });
+                } else if (educationStep) {
+                    this.editedEducationSteps.push(newEducationStep);
+
+                    this.editedEducationSteps = this.editedEducationSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                    this.updateEducation();
+                }
+
+                this.isAddingEducationStep = false;
+                this.endProfileSectionEditSession();
             },
-            computed: {
-                ...mapGetters({
-                    locale: 'locale'
-                })
+            editEducationStep: function (educationStep, index) {
+                let newEducationStep = {};
+
+                if (educationStep) {
+                    newEducationStep = {
+                        title: educationStep.title,
+                        institutionName: educationStep.institutionName,
+                        description: educationStep.description,
+                        startDate: educationStep.startDate.substr(0, 7),
+                        endDate: educationStep.endDate.substr(0, 7)
+                    };
+                }
+
+                if (educationStep && this.saveChanges) {
+                    var request = {
+                        ID: educationStep.id,
+                        Title: educationStep.title,
+                        Institution: educationStep.institutionName,
+                        Description: educationStep.description,
+                        StartDate: educationStep.startDate.substr(0, 7),
+                        EndDate: educationStep.endDate.substr(0, 7)
+                    };
+
+                    this.$store.dispatch('education/update', request).then(() => {
+                        this.editedEducationSteps[index] = newEducationStep;
+
+                        this.editedEducationSteps = this.editedEducationSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateEducation();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-education'));
+                    });
+                } else if (educationStep) {
+                        this.editedEducationSteps[index] = newEducationStep;
+
+                        this.editedEducationSteps = this.editedEducationSteps.sort((e1, e2) => new Date(e1.startDate).getTime() > new Date(e2.startDate).getTime() ? -1 : 1);
+
+                        this.updateEducation();
+                }
+
+                this.educationSteps.forEach(e => {
+                    e.inEditMode = false;
+                });
+                this.isEditingEducation = false;
+                this.endProfileSectionEditSession();
+            },
+            deleteEducationStep: function (index) {
+                if (index !== null && this.saveChanges) {
+                    var id = this.editedEducationSteps[index].id;
+
+                    this.$store.dispatch('education/delete', id).then(() => {
+                        this.editedEducationSteps.splice(index, 1);
+
+                        this.updateEducation();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-education'));
+                    });
+                } else if (index !== null) {
+                    this.editedEducationSteps.splice(index, 1);
+
+                    this.updateEducation();
+                }
+
+                this.educationSteps.forEach(e => {
+                    e.inDeleteMode = false;
+                });
+                this.isDeletingEducationStep = false;
+                this.endProfileSectionEditSession();
+            },
+            cancelAllUnsavedChanges: function () {
+                this.isAddingEducationStep = false;
+                this.isEditingEducation = false;
+                this.isDeletingEducationStep = false;
+                this.endProfileSectionEditSession();
+            },
+            cloneEditedEducationSteps: function () {
+                this.editedEducationSteps = Helpers.cloneObject(this.educationSteps);
+            },
+            initiateProfileSectionEditSession: function (navigateToElement) {
+                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Education);
+            },
+            endProfileSectionEditSession: function () {
+                this.$emit('endProfileSectionEditSession', ProfileSectionType.Education);
+            },
+            updateEducation: function () {
+                this.$emit('updateEducation', this.editedEducationSteps);
+            },
+            showSnackbar: function (snackbarText) {
+                this.$emit('showSnackbar', snackbarText);
+            },
+            hasEducation: function () {
+                return this.educationSteps.length !== 0;
+            },
+            getTimelineDate (date) {
+                return moment(date).format('MM/YYYY');
             }
+        }
     }
+
 </script>
 
 <style lang="scss" scoped>
-
-    .v-menu__activator > .v-text-field {
-        overflow-x: hidden;
-    }
 
 </style>
