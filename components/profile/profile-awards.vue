@@ -1,21 +1,34 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs12>
-            <v-layout row mb-5 :key="i" v-for="(award, i) in profileAwardsModel.awards">
-                 <v-flex xs12 ma-1 v-bind:class="{'editing-profile-row': award.inEditMode}">
-                    <v-card class="elevation-1">
+    <v-layout class="profile-awards-layout profile-entity-layout">
+
+        <v-flex xs12 v-if="isTimeline">
+            <v-timeline-item medium hide-dot right class="timeline-header-item">
+                <v-card class="timeline-header-card elevation-2">
+                    <v-card-title class="secondary-color">
+                        <h2 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h2>
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+
+            <v-timeline-item
+                :key="`award-${awardIndex}`"
+                v-for="(award, awardIndex) in awards"
+                v-bind:class="{'timeline-message': award.inEditMode || award.inDeleteMode}"
+                @mouseover.native="award.isHovered = true"  @mouseout.native="award.isHovered = false"
+                class="timeline-achievement-item" color="primary" small fill-dot right>
+                    <v-card class="elevation-2" v-if="!award.inEditMode && !award.inDeleteMode">
                         <v-card-title>
-                            <v-layout row wrap>
-                                <v-flex xs10 pt-3>
+                            <v-layout row class="timeline-item-action-row profile-row-actions-container">
+                                <v-flex xs10 sm10 md10 lg10>
                                     <span class="award-title">{{ award.title }}</span>, <span class="award-issuer ml-1">{{ award.issuer }}</span>
                                     -
                                     <span class="timeline-date">{{ getTimelineDate(award.date) }}</span>
                                 </v-flex>
-                                <v-flex xs2 class="profile-row-actions">
-                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditAwardClick(award, i)">
+                                <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="awardIndex === 0 || award.isHovered">
+                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditAwardClick(award, awardIndex)">
                                         <v-icon>edit</v-icon>
                                     </v-btn>
-                                    <v-btn outline small fab class="remove-icon" v-on:click="onRemoveAwardClick(i)">
+                                    <v-btn outline small fab class="remove-icon" v-on:click="onDeleteAwardClick(award, awardIndex)">
                                         <v-icon>delete</v-icon>
                                     </v-btn>
                                 </v-flex>
@@ -27,192 +40,282 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                 </v-flex>
-            </v-layout>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inEditMode">
+                        <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inDeleteMode">
+                        <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
+                    </v-card>
+            </v-timeline-item>
+            <v-timeline-item  v-if="!hasAwards() && !isEditingAwards" medium hide-dot class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-awards-message') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message add-achievement-timeline-item"
+                v-if="!isAddingAward">
+                <v-card class="timeline-message-card text-xs-center" v-on:click.native="onAddAwardClick()">
+                    <v-card-title>
+                        <v-icon>add</v-icon>
+                       {{ $t('shared.content.add-award-button') }}
+                    </v-card-title>
+                </v-card>
+            </v-timeline-item>
+            <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingAward">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileAwardAdd @addAward="addAward"/>
+                </v-card>
+            </v-timeline-item>
         </v-flex>
-        <v-flex xs12 elevation-3 pa-5 ma-1>
-            <v-form ref="awardsForm">
-                <v-layout row>
-                    <v-flex xs12 sm12 md12 lg12  class="profile-row-actions" v-if="awardsFactory.inEditMode">
-                        <v-btn outline small fab class="edit-award-step-button" v-on:click="onDoneEditAwardsStepClick" :disabled="isAwardButtonDisabled()">
-                            <v-icon>done</v-icon>
-                        </v-btn>
-                        <v-btn outline small fab class="edit-award-step-button" v-on:click="onCancelEditAwardsStepClick">
-                            <v-icon>clear</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout row mt-2>
-                    <v-flex xs12 sm5 md5 lg5 class="pr-2">
-                        <v-text-field v-model="awardsFactory.title" :rules="awardTitleRules"
-                            :label="`${$t('fields.award.title.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm4 md4 lg4 class="px-2">
-                        <v-text-field v-model="awardsFactory.issuer" :rules="awardIssuerRules"
-                            :label="`${$t('fields.award.issuer.label')}*`" required></v-text-field>
-                    </v-flex>
-                    <v-flex xs12 sm3 md3 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="awardsFactory.isAwardDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                            <v-text-field slot="activator" type="month" v-model="awardsFactory.date"
-                                :label="$t('fields.award.date.label')" prepend-icon="event" readonly>
-                            </v-text-field>
-                            <v-date-picker
-                                v-model="awardsFactory.date"
-                                type="month"
-                                :locale="locale"
-                                @input="awardsFactory.isAwardDateMenuOpen = false">
-                            </v-date-picker>
-                        </v-menu>
-                    </v-flex>
-                </v-layout>
-                <v-layout row>
-                    <v-textarea
-                        class="award-description-field text-area-field"
-                        v-model="awardsFactory.description"
-                        auto-grow
-                        box
-                        :label="$t('fields.award.description.label')"
-                        rows="1"
-                        counter=500
-                        :rules="descriptionRules" validate-on-blur>
-                    </v-textarea>
-                </v-layout>
-                <v-flex xs12 mt-5 v-if="!awardsFactory.inEditMode">
-                    <v-btn v-on:click="onAddAwardClick" :disabled="isAwardButtonDisabled()" block class="add-award-button">
-                        {{ $t('shared.content.add-award-button') }}
-                    </v-btn>
-                </v-flex>
-            </v-form>
+
+        <v-flex xs12 v-if="!isTimeline">
+
+            <div :key="`award-${awardIndex}`"
+                v-for="(award, awardIndex) in awards"
+                v-bind:class="{'timeline-message': award.inEditMode || award.inDeleteMode}"
+                @mouseover="award.isHovered = true"  @mouseout="award.isHovered = false"
+                class="achievement-item" color="primary">
+                    <v-card class="elevation-2" v-if="!award.inEditMode && !award.inDeleteMode">
+                        <v-card-title>
+                            <v-layout row class="item-action-row profile-row-actions-container">
+                                <v-flex xs10 sm10 md10 lg10>
+                                    <span class="award-title">{{ award.title }}</span>, <span class="award-issuer ml-1">{{ award.issuer }}</span>
+                                    -
+                                    <span class="timeline-date">{{ getTimelineDate(award.date) }}</span>
+                                </v-flex>
+                                <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="awardIndex === 0 || award.isHovered">
+                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditAwardClick(award, awardIndex)">
+                                        <v-icon>edit</v-icon>
+                                    </v-btn>
+                                    <v-btn outline small fab class="remove-icon" v-on:click="onDeleteAwardClick(award, awardIndex)">
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </v-card-title>
+                        <v-card-text v-if="award.description">
+                            <p class="award-description">
+                                {{ award.description }}
+                            </p>
+                        </v-card-text>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inEditMode">
+                        <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
+                    </v-card>
+                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inDeleteMode">
+                        <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
+                    </v-card>
+            </div>
+            <div v-if="!hasAwards && !isEditingAwards" class="timeline-message">
+                <v-card class="timeline-message-card elevation-2">
+                    <v-card-title>
+                        {{ $t('pages.profile.no-awards-message') }}
+                    </v-card-title>
+                </v-card>
+            </div>
+
+            <v-btn outline class="add-achievement-btn add-award-btn add-entity-btn"
+                                                    v-if="!isAddingAward" v-on:click.native="onAddAwardClick()">
+                <v-icon>add</v-icon> {{ $t('shared.content.add-award-button') }}
+            </v-btn>
+
+            <div class="timeline-message" v-if="isAddingAward">
+                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                    <ProfileAwardAdd @addAward="addAward"/>
+                </v-card>
+            </div>
         </v-flex>
+
     </v-layout>
 </template>
 
-
 <script>
-    import { mapGetters } from 'vuex';
     import moment from 'moment';
     import { Helpers } from '~/utils';
+    import { ProfileSectionType } from '~/store/entities';
+    import ProfileAwardAdd from '~/components/profile/profile-award-add.vue';
+    import ProfileAwardEdit from '~/components/profile/profile-award-edit.vue';
+    import ProfileAwardDelete from '~/components/profile/profile-award-delete.vue';
 
     export default {
-        props: ['profileAwards'],
-        data: function () {
+        components: {
+            ProfileAwardAdd,
+            ProfileAwardEdit,
+            ProfileAwardDelete
+        },
+        props: ['awards', 'isTimeline', 'saveChanges'],
+		data: function () {
             return {
-                profileAwardsModel: Helpers.cloneObject(this.profileAwards),
-                awardTitleRules: [
-                    v => !!v || this.$t('fields.award.title.validation-errors.required')
-                ],
-                awardIssuerRules: [
-                    v => !!v || this.$t('fields.award.issuer.validation-errors.required')
-                ],
-                descriptionRules: [
-                    v => v === '' || v.length <= 500 || this.$t('fields.award.description.validation-errors.length')
-                ],
-                awardsFactory: {
-                    title: '',
-                    issuer: '',
-                    description: '',
-                    date: new Date().toISOString().substr(0, 7),
-                    isValid: false,
-                    isAwardDateMenuOpen: false,
-                    index: null,
-                    inEditMode: false
-                }
+                editedAwards: [...this.awards],
+                isEditingAwards: false,
+                isAddingAward: false,
+                isDeletingAward: false
             };
         },
         methods: {
-            updateProfileAwardsModel: function () {
-                this.$emit('updateProfileAwards', this.profileAwardsModel);
+            onAddAwardClick: function () {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedAwards();
+                this.isAddingAward = true;
             },
             onEditAwardClick: function (award, index) {
-                this.awardsFactory = {
-                    ...award,
-                    index,
-                    inEditMode: true
-                };
-
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedAwards();
+                this.isEditingAwards = true;
                 award.inEditMode = true;
-                this.updateProfileAwardsModel();
             },
-            onCancelEditAwardsStepClick: function () {
-                this.profileAwardsModel.awards[this.awardsFactory.index].inEditMode = false;
-
-                this.updateProfileAwardsModel();
-
-                this.resetAwardsFactory();
+            onDeleteAwardClick: function (award, index) {
+                this.cancelAllUnsavedChanges();
+                this.initiateProfileSectionEditSession(false);
+                this.cloneEditedAwards();
+                this.isDeletingAward = true;
+                award.inDeleteMode = true;
             },
-            onDoneEditAwardsStepClick: function () {
-                var isCurrentAwardValid = this.isAwardValid(this.awardsFactory);
+            addAward: function (award) {
+                let newAward = {};
 
-                if (!isCurrentAwardValid) {
-                    return;
+                if (award) {
+                    newAward = {
+                        title: award.title,
+                        issuer: award.issuer,
+                        description: award.description,
+                        date: award.date,
+                        isHovered: false,
+                        inEditMode: false,
+                        inDeleteMode: false
+                    };
                 }
 
-                this.profileAwardsModel.awards[this.awardsFactory.index] = {
-                    ...this.awardsFactory,
-                    isValid: true,
-                    isAwardDateMenuOpen: false,
-                    inEditMode: false
-                };
+                if (award && this.saveChanges) {
+                    var request = {
+                        Title: award.title,
+                        Issuer: award.issuer,
+                        Description: award.description,
+                        Date: award.date
+                    };
 
-                this.updateProfileAwardsModel();
-    
-                this.resetAwardsFactory();
-            },
-            onRemoveAwardClick: function (index) {
-                this.profileAwardsModel.awards.splice(index, 1);
+                    this.$store.dispatch('awards/create', request).then((response) => {
+                        newAward.id = this.$store.state.awards.newAward.ID;
 
-                this.updateProfileAwardsModel();
-            },
-            isAwardValid: function (award) {
-                return award.title !== '' && award.issuer !== '';
-            },
-            isAwardButtonDisabled: function () {
-                return !this.isAwardValid(this.awardsFactory);
-            },
-            onAddAwardClick: function () {
-                var isCurrentAwardValid = this.isAwardValid(this.awardsFactory);
+                        this.editedAwards.push(newAward);
 
-                if (!isCurrentAwardValid) {
-                    return;
+                        this.editedAwards = this.editedAwards.sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
+
+                        this.updateAwards();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-awards'));
+                    });
+                } else if (award) {
+                    this.editedAwards.push(newAward);
+
+                    this.editedAwards = this.editedAwards.sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
+
+                    this.updateAwards();
                 }
 
-                this.profileAwardsModel.awards.push({...this.awardsFactory});
-
-                this.resetAwardsFactory();
-
-                this.updateProfileAwardsModel();
+                this.isAddingAward = false;
+                this.endProfileSectionEditSession();
             },
-            resetAwardsFactory: function () {
-                this.$refs.awardsForm.resetValidation();
+            editAward: function (award, index) {
+                let newAward = {};
 
-                this.awardsFactory = {
-                    title: '',
-                    issuer: '',
-                    description: '',
-                    date: new Date().toISOString().substr(0, 7),
-                    isValid: false,
-                    isAwardDateMenuOpen: false,
-                    index: null,
-                    inEditMode: false
-                };
+                if (award) {
+                    newAward = {
+                        title: award.title,
+                        issuer: award.issuer,
+                        description: award.description,
+                        date: award.date
+                    };
+                }
+
+                if (award && this.saveChanges) {
+                    var request = {
+                        ID: award.id,
+                        Title: award.title,
+                        Issuer: award.issuer,
+                        Description: award.description,
+                        Date: award.date
+                    };
+
+                    this.$store.dispatch('awards/update', request).then(() => {
+                        this.editedAwards[index] = newAward;
+
+                        this.editedAwards = this.editedAwards.sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
+
+                        this.updateAwards();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-awards'));
+                    });
+                } else if (award) {
+                    this.editedAwards[index] = newAward;
+
+                    this.editedAwards = this.editedAwards.sort((a1, a2) => new Date(a1.date).getTime() > new Date(a2.date).getTime() ? -1 : 1);
+
+                    this.updateAwards();
+                }
+
+                this.awards.forEach(a => {
+                    a.inEditMode = false;
+                });
+                this.isEditingAwards = false;
+                this.endProfileSectionEditSession();
+            },
+            deleteAward: function (index) {
+                if (index !== null && this.saveChanges) {
+                    var id = this.editedAwards[index].id;
+
+                    this.$store.dispatch('awards/delete', id).then(() => {
+                        this.editedAwards.splice(index, 1);
+
+                        this.updateAwards();
+                        this.showSnackbar(this.$t('pages.profile.snackbar-messages.update-awards'));
+                    });
+                } else if (index !== null) {
+                    this.editedAwards.splice(index, 1);
+
+                    this.updateAwards();
+                }
+
+                this.awards.forEach(a => {
+                    a.inDeleteMode = false;
+                });
+                this.isDeletingAward = false;
+                this.endProfileSectionEditSession();
+            },
+            cancelAllUnsavedChanges: function () {
+                this.isAddingAward   = false;
+                this.isEditingAwards = false;
+                this.isDeletingAward = false;
+                this.endProfileSectionEditSession();
+            },
+            cloneEditedAwards: function () {
+                this.editedAwards = Helpers.cloneObject(this.awards);
+            },
+            initiateProfileSectionEditSession: function (navigateToElement) {
+                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Awards);
+            },
+            endProfileSectionEditSession: function () {
+                this.$emit('endProfileSectionEditSession', ProfileSectionType.Awards);
+            },
+            updateAwards: function () {
+                this.$emit('updateAwards', this.editedAwards);
+            },
+            showSnackbar: function (snackbarText) {
+                this.$emit('showSnackbar', snackbarText);
+            },
+            hasAwards: function () {
+                return this.awards.length !== 0;
             },
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY');
             }
-        },
-        computed: {
-            ...mapGetters({
-                locale: 'locale'
-            })
         }
     }
+
 </script>
 
 <style lang="scss" scoped>
-
-    .v-menu__activator > .v-text-field {
-        overflow-x: hidden;
-    }
 
 </style>

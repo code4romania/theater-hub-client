@@ -24,7 +24,7 @@
                     </v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                    <iframe v-if="videosFactory.isValid" :src="videosFactory.embedLink" width="420" height="315" allowfullscreen></iframe>
+                    <iframe class="video-iframe" v-if="videosFactory.isValid" :src="videosFactory.embedLink" width="420" height="315" allowfullscreen></iframe>
                 </v-flex>
             </v-form>
         </v-flex>
@@ -52,7 +52,7 @@
             },
             methods: {
                 onCancelEditVideoClick: function () {
-                    this.$emit('editVideo', null);
+                    this.$emit('editVideo', null, this.index);
                 },
                 onDoneEditVideoClick: function () {
                     var isCurrentVideoValid = SocialMediaManager.isVideoValid(this.videosFactory.link);
@@ -64,6 +64,9 @@
                     this.$emit('editVideo', this.videosFactory, this.index);
                 },
                 onVideoLinkChange: function () {
+                    setTimeout(() => {
+                        this.$store.dispatch('syncMainOverlaySize');
+                    }, 0);
                     if (SocialMediaManager.isValidURL(this.videosFactory.link, SocialMediaCategoryType.Youtube)) {
                         this.videosFactory.isValid   = true;
                         this.videosFactory.embedLink = SocialMediaManager.extractYoutubeEmbedURL(this.videosFactory.link);
