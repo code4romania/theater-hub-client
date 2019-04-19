@@ -174,6 +174,15 @@ export const actions = {
             dispatch('setCreateProfileErrors', error.response.data.errors);
         });
     },
+    async generateResume ({ commit, dispatch, getters }, request) {
+        await UserService.generateResume().then(response => {
+            var blob = new Blob([response], { type: 'application/pdf' });
+            var anchorTag = document.createElement('a');
+            anchorTag.href = window.URL.createObjectURL(blob);
+            anchorTag.download = `CV_${getters.me.FirstName}_${getters.me.LastName}.pdf`;
+            anchorTag.click();
+        });
+    },
     async updateMyGeneralInformation ({ commit, dispatch }, request) {
         await UserService.updateMyGeneralInformation(request).then(response => {
             dispatch('setUpdateMyGeneralInformationErrors', '');

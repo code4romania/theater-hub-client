@@ -22,6 +22,8 @@ export class Endpoints {
 
     static CreateProfile                = '/users/profile/create';
 
+    static GenerateResume               = '/users/resume';
+
     static UpdateMyGeneralInformation   = '/users/me/general';
 
     static UpdateMySkills               = '/users/me/skills';

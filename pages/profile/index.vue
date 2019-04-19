@@ -52,8 +52,11 @@
                                                         {{ $t('pages.profile.preview-profile-button') }}
                                                     </v-btn>
                                                 </nuxt-link>
-                                                <v-btn id="download-resume-button" class="primary ml-0" small @click="onDownloadResumeClick">
+                                                <v-btn v-if="!isDownloadingResume" id="download-resume-button" class="primary ml-0" small @click="handleDownloadResumeClick">
                                                     {{ $t('pages.profile.download-resume-button') }}
+                                                </v-btn>
+                                                <v-btn v-if="isDownloadingResume" id="downloading-resume-button" class="primary ml-0" small>
+                                                    {{ $t('pages.profile.downloading-resume-button') }}
                                                 </v-btn>
                                             </v-flex>
                                         </v-flex>
@@ -308,6 +311,7 @@ export default {
             isEditingAwards: false,
             isEditingExperience: false,
             isEditingEducation: false,
+            isDownloadingResume: false,
             snackbar: false,
             snackbarText: ''
         }),
@@ -602,8 +606,16 @@ export default {
             updateProfilePhotoGallery: function (model) {
                 this.editedProfile.profilePhotoGallery = Helpers.cloneObject(model);
             },
-            onDownloadResumeClick: function () {
+            handleDownloadResumeClick: function () {
+                if (this.isDownloadingResume) {
+                    return;
+                }
 
+                this.isDownloadingResume = true;
+
+                this.$store.dispatch('users/generateResume').then(response => {
+                    this.isDownloadingResume = false;
+                });
             },
             areAllSocialMediaLinksValid: function () {
                 if (this.editedProfile.profileGeneralInformation.instagramLink &&
