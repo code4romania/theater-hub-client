@@ -30,6 +30,15 @@ export class UserService extends BaseService {
         return this.$axios.$post(Endpoints.CreateProfile, request);
     }
 
+    static async generateResume () {
+        const config = {
+            headers: { 'Accept': 'application/pdf' },
+            responseType: 'arraybuffer'
+        };
+
+        return this.$axios.$get(Endpoints.GenerateResume, config);
+    }
+
     static async updateMyGeneralInformation (request) {
         return this.$axios.$post(Endpoints.UpdateMyGeneralInformation, request);
     }
