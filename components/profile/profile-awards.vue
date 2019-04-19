@@ -5,7 +5,7 @@
             <v-timeline-item medium hide-dot right class="timeline-header-item">
                 <v-card class="timeline-header-card elevation-2">
                     <v-card-title class="secondary-color">
-                        <h2 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h2>
+                        <h3 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h3>
                     </v-card-title>
                 </v-card>
             </v-timeline-item>
