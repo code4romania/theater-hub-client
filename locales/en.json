@@ -206,14 +206,14 @@
                 "label": "End date"
             }
         },
-        "filter-by-skills": {
-            "label": "Select skills"
+        "search-by-skills": {
+            "label": "Search by skills"
         },
         "search": {
-            "label": "Search..."
-        },
-        "name-sort": {
-            "label": "Name"
+            "label": "Search by name",
+            "admin": {
+                "label": "Search..."
+            }
         },
         "select-skills": {
             "label": "Your professional skills",
@@ -269,8 +269,6 @@
             "back-button": "BACK",
             "next-button": "NEXT",
             "finish-button": "FINISH",
-            "skill": "skill",
-            "skills": "skills",
             "years": "years",
             "locale-setting": "Language:",
             "close": "Close"
@@ -329,10 +327,7 @@
             "title": "Projects"
         },
         "community": {
-            "skills-filter-title": "Skills:",
-            "search-title": "Search:",
-            "sort-title": "Sort:",
-            "sort-by-name": "Name",
+            "no-search-results": "No results",
             "show-more-button": "Show More",
             "no-members-message": "There are no members to display"
         },
