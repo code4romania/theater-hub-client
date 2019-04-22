@@ -54,7 +54,7 @@
 
                 <v-flex xs12 sm12 md4 v-if="!isInviteUser">
                     <v-text-field id="users-search-box"
-                        v-model="searchTerm" append-icon="search" :label="$t('fields.search.label')"
+                        v-model="searchTerm" append-icon="search" :label="$t('fields.search.admin.label')"
                         single-line hide-details @keyup="onSearchKeyup"></v-text-field>
                 </v-flex>
 
@@ -273,6 +273,8 @@
             }
         },
         mounted () {
+            this.$store.dispatch('administration/endAdministrationInviteUserSession');
+
             this.updateUsersDashboardTable();
 
             window.onscroll = _.throttle(() => {

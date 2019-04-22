@@ -206,14 +206,14 @@
                 "label": "End date"
             }
         },
-        "filter-by-skills": {
-            "label": "Select skills"
+        "search-by-skills": {
+            "label": "Search by skills"
         },
         "search": {
-            "label": "Search..."
-        },
-        "name-sort": {
-            "label": "Name"
+            "label": "Search by name",
+            "admin": {
+                "label": "Search..."
+            }
         },
         "select-skills": {
             "label": "Your professional skills",
@@ -269,6 +269,7 @@
             "agreement-text-separator": " and ",
             "agreement-text-privacy-policy": "Privacy Policy",
             "video-message": "Please provide links from Youtube or Vimeo.",
+            "add-video-button": "Add video",
             "add-award-button": "Add award",
             "add-experience-button": "Add experience step",
             "add-education-button": "Add education step",
@@ -279,8 +280,6 @@
             "back-button": "BACK",
             "next-button": "NEXT",
             "finish-button": "FINISH",
-            "skill": "skill",
-            "skills": "skills",
             "years": "years",
             "locale-setting": "Language:",
             "close": "Close"
@@ -350,10 +349,7 @@
             "title": "Projects"
         },
         "community": {
-            "skills-filter-title": "Skills:",
-            "search-title": "Search:",
-            "sort-title": "Sort:",
-            "sort-by-name": "Name",
+            "no-search-results": "No results",
             "show-more-button": "Show More",
             "no-members-message": "There are no members to display"
         },
@@ -384,8 +380,7 @@
                 },
                 "portfolio": {
                     "title": "Portfolio",
-                    "photo-gallery-title": "Photo gallery",
-                    "video-gallery-title": "Video gallery"
+                    "photo-gallery-title": "Photo gallery"
                 },
                 "awards": {
                     "title": "Awards"
@@ -407,8 +402,9 @@
         },
         "profile": {
             "edit-general-information-title": "Edit General Information",
-            "preview-profile-button": "PREVIEW PROFILE",
-            "download-resume-button": "DOWNLOAD RESUME",
+            "preview-profile-button": "Preview profile",
+            "download-resume-button": "Download resume",
+            "downloading-resume-button": "Downloading resume...",
             "description-title": "Description",
             "skills-title": "Skills",
             "edit-skills-title": "Edit Skills",
@@ -420,7 +416,6 @@
             "video-gallery-title": "Video gallery",
             "video-link-field-label": "Video link",
             "no-videos-description": "You have no videos",
-            "add-video-button": "Add video",
             "delete-video-message": "Are you sure you wish to delete this video?",
             "achievements-title": "Achievements",
             "awards-title": "Awards",

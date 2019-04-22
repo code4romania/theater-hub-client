@@ -22,6 +22,8 @@ export class Endpoints {
 
     static CreateProfile                = '/users/profile/create';
 
+    static GenerateResume               = '/users/resume';
+
     static UpdateMyGeneralInformation   = '/users/me/general';
 
     static UpdateMySkills               = '/users/me/skills';
@@ -44,7 +46,9 @@ export class Endpoints {
 
     static GetMe                        = '/users/me';
 
-    static GetCommunityMembers          = '/users/community';
+    static GetCommunityLayers           = '/users/community/layers';
+
+    static GetCommunityMembers          = '/users/community/members';
 
     static GetCommunityMemberProfile    = '/users/profile';
 

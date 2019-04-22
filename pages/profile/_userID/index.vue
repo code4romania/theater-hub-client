@@ -16,50 +16,56 @@
 
             <v-layout row wrap v-if="profile">
 
-                <v-flex xs12 class="mb-5">
-                    <v-layout row class="profile-information-group">
-                        <v-avatar size="200px">
-                            <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                            <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
-                        </v-avatar>
-                        <v-flex xs12 class="ml-5 pl-5">
-                            <v-flex xs12 class="profile-information-row">
-                                <span class="full-name-field">{{ fullName }}</span>
-                                <span v-if="hasBirthDate">,</span>
-                                <span class="age-field" v-if="hasBirthDate">{{ age }} {{ $t('shared.content.years') }}</span>
-                            </v-flex>
-                            <v-flex xs12 class="profile-information-row" v-if="hasEmailAddress">
-                                <span class="field-label">{{ $t('fields.email.label') }}: </span>
-                                <span class="email-field">{{ profile.profileGeneralInformation.email }}</span>
-                                <a class="email-icon" :href="`mailto:${profile.profileGeneralInformation.email}`">
-                                    <v-icon>email</v-icon>
-                                </a>
-                            </v-flex>
-                            <v-flex xs12 class="profile-information-row" v-if="hasPhoneNumber">
-                                <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
-                                <span class="phone-number-field">{{ profile.profileGeneralInformation.phoneNumber }}</span>
-                                <a class="phone-icon" :href="`tel:${profile.profileGeneralInformation.phoneNumber}`">
-                                    <v-icon>phone</v-icon>
-                                </a>
-                            </v-flex>
-                            <v-flex xs12 v-if="profile.profileGeneralInformation.website" class="profile-information-row">
-                                <span class="field-label">{{ $t('fields.website.label') }}: </span>
-                                <a :href="profile.profileGeneralInformation.website" class="website-field" target="_blank">{{ profile.profileGeneralInformation.website }}</a>
-                            </v-flex>
-                            <v-flex class="profile-information-row">
-                                <a v-if="profile.profileGeneralInformation.facebookLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.facebookLink" target="_blank">
-                                    <img :src="require('~/assets/images/social-1_logo-facebook.svg')" />
-                                </a>
-                                <a v-if="profile.profileGeneralInformation.instagramLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.instagramLink" target="_blank">
-                                    <img :src="require('~/assets/images/social-1_logo-instagram.svg')" />
-                                </a>
-                                <a v-if="profile.profileGeneralInformation.linkedinLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.linkedinLink" target="_blank">
-                                    <img :src="require('~/assets/images/social-1_logo-linkedin.svg')" />
-                                </a>
-                                <a v-if="profile.profileGeneralInformation.youtubeLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.youtubeLink" target="_blank">
-                                    <img :src="require('~/assets/images/social-1_logo-youtube.svg')" />
-                                </a>
-                            </v-flex>
+                <v-flex  xs10 class="mb-5">
+                    <v-layout row wrap align-center>
+                        <v-flex xs12 sm12 md6 lg5>
+                            <v-avatar>
+                                <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
+                                <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
+                            </v-avatar>
+                        </v-flex>
+                        <v-flex xs12 sm12 md6 lg7 class="general-information">
+                            <v-layout>
+                                <v-flex xs12 pl-4>
+                                    <v-flex xs12 class="profile-information-row">
+                                        <span class="full-name-field">{{ fullName }}</span>
+                                        <span class="name-separator">,</span>
+                                        <span class="age-field">{{ age }} {{ $t('shared.content.years') }}</span>
+                                    </v-flex>
+                                    <v-flex xs12 mt-2 class="profile-information-row">
+                                        <span class="field-label">{{ $t('fields.email.label') }}: </span>
+                                        <span class="email-field">{{ profile.profileGeneralInformation.email }}</span>
+                                        <a class="email-icon" :href="`mailto:${profile.profileGeneralInformation.email}`">
+                                            <v-icon>email</v-icon>
+                                        </a>
+                                    </v-flex>
+                                    <v-flex xs12 class="profile-information-row">
+                                        <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
+                                        <span class="phone-number-field">{{ profile.profileGeneralInformation.phoneNumber }}</span>
+                                        <a class="phone-icon" :href="`tel:${profile.profileGeneralInformation.phoneNumber}`">
+                                            <v-icon>phone</v-icon>
+                                        </a>
+                                    </v-flex>
+                                    <v-flex xs12 v-if="profile.profileGeneralInformation.website" class="profile-information-row">
+                                        <span class="field-label">{{ $t('fields.website.label') }}: </span>
+                                        <a :href="profile.profileGeneralInformation.website" class="website-field" target="_blank">{{ profile.profileGeneralInformation.website }}</a>
+                                    </v-flex>
+                                    <v-flex mt-3 class="profile-information-row">
+                                        <a v-if="profile.profileGeneralInformation.facebookLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.facebookLink" target="_blank">
+                                            <img class="social-media-icon" :src="require('~/assets/images/facebook.png')" />
+                                        </a>
+                                        <a v-if="profile.profileGeneralInformation.instagramLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.instagramLink" target="_blank">
+                                            <img class="social-media-icon" :src="require('~/assets/images/instagram.png')" />
+                                        </a>
+                                        <a v-if="profile.profileGeneralInformation.linkedinLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.linkedinLink" target="_blank">
+                                            <img class="social-media-icon" :src="require('~/assets/images/linkedin.png')" />
+                                        </a>
+                                        <a v-if="profile.profileGeneralInformation.youtubeLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.youtubeLink" target="_blank">
+                                            <img class="social-media-icon" :src="require('~/assets/images/youtube.png')" />
+                                        </a>
+                                    </v-flex>
+                                </v-flex>
+                            </v-layout>
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -77,8 +83,8 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 py-4>
-                    <v-divider></v-divider>
+                <v-flex xs12 my-5>
+                    <v-divider class="profile-section-separator"></v-divider>
                 </v-flex>
 
                 <v-flex xs12>
@@ -87,16 +93,16 @@
                             <h2>{{ $t('pages.profile.skills-title') }}</h2>
                         </v-flex>
                         <v-flex xs12 pt-4 class="skills-row">
-                            <v-chip :key="i" v-for="(skill, i) in skillNameList" class="skill">{{ skill }}</v-chip>
+                            <v-chip :key="i" v-for="(skill, i) in skillNameList" class="skill secondary-color mr-2">{{ skill }}</v-chip>
                         </v-flex>
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 py-4 v-if="hasPhotoGallery">
-                    <v-divider></v-divider>
+                <v-flex xs12 my-5 v-if="hasPhotoGallery">
+                    <v-divider class="profile-section-separator"></v-divider>
                 </v-flex>
 
-                <v-flex xs12 v-if="hasPhotoGallery">
+                <v-flex xs12 v-if="hasPhotoGallery" class="photo-gallery-section">
                     <v-layout row wrap class="profile-information-group">
                         <v-flex xs12 class="profile-information-group-header">
                             <h2>{{ $t('pages.profile.photo-gallery-title') }}</h2>
@@ -105,23 +111,13 @@
                             <no-ssr>
                                 <gallery :images="portfolioImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
                             </no-ssr>
-                            <v-container grid-list-sm fluid>
-                                <v-layout row wrap>
-                                    <v-flex xs3 v-for="(image, imageIndex) in portfolioImages" :key="`photo-${imageIndex}`" @click="portfolioImagesIndex = imageIndex">
-                                        <v-img :src="image" :lazy-src="image" aspect-ratio="1">
-                                            <v-layout slot="placeholder" fill-height align-center justify-center ma-0>
-                                                <v-progress-circular indeterminate></v-progress-circular>
-                                            </v-layout>
-                                        </v-img>
-                                    </v-flex>
-                                </v-layout>
-                            </v-container>
+                            <Carousel @handleCarouselItemClick="handleCarouselItemClick" :selectedIndex="portfolioImagesIndex" :items="portfolioImages"></Carousel>
                         </v-flex>
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 py-4 v-if="hasVideoGallery">
-                    <v-divider></v-divider>
+                <v-flex xs12 my-5 v-if="hasVideoGallery">
+                    <v-divider class="profile-section-separator"></v-divider>
                 </v-flex>
 
                 <v-flex xs12>
@@ -133,15 +129,15 @@
                             <v-layout row wrap>
                                 <v-flex xs12 sm12 md12 lg6 pa-1
                                     :key="`video-${videoIndex}`" v-for="(video, videoIndex) in profile.profileVideoGallery.videoGallery">
-                                    <iframe :src="video.embedLink" width="420" height="315" allowfullscreen></iframe>
+                                    <iframe class="video-iframe" :src="video.embedLink" width="420" height="315" allowfullscreen></iframe>
                                 </v-flex>
                             </v-layout>
                         </v-flex>
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 py-4 v-if="hasAchievements">
-                    <v-divider></v-divider>
+                <v-flex xs12 my-5 v-if="hasAchievements">
+                    <v-divider class="profile-section-separator"></v-divider>
                 </v-flex>
 
                 <v-flex xs12 mb-5 pb-5>
@@ -156,7 +152,7 @@
 
                                         <v-timeline-item medium hide-dot right class="timeline-header-item" v-if="hasAwards">
                                             <v-card class="timeline-header-card elevation-2">
-                                                <v-card-title class="primary">
+                                                <v-card-title class="secondary-color">
                                                     <h2 class="timeline-header">{{ $t('pages.profile.awards-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
@@ -186,7 +182,7 @@
 
                                         <v-timeline-item medium hide-dot right class="timeline-header-item" v-if="hasExperience">
                                             <v-card class="timeline-header-card elevation-2">
-                                                <v-card-title class="primary">
+                                                <v-card-title class="secondary-color">
                                                     <h2 class="timeline-header">{{ $t('pages.profile.experience-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
@@ -218,7 +214,7 @@
 
                                         <v-timeline-item  medium hide-dot right class="timeline-header-item" v-if="hasEducation">
                                             <v-card class="timeline-header-card elevation-2">
-                                                <v-card-title class="primary">
+                                                <v-card-title class="secondary-color">
                                                     <h2 class="timeline-header">{{ $t('pages.profile.education-title') }}</h2>
                                                 </v-card-title>
                                             </v-card>
@@ -264,9 +260,13 @@
 
     import moment from 'moment';
     import { mapGetters, mapState } from 'vuex';
+    import Carousel from '~/components/shared/carousel.vue';
     import { SocialMediaManager } from '~/utils';
 
     export default {
+        components: {
+            Carousel
+        },
         layout: ({ store }) => {
             if (!store.getters['authentication/isAuthenticated']) {
                 return 'visitor';
@@ -372,6 +372,9 @@
         methods: {
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY');
+            },
+            handleCarouselItemClick: function (itemIndex) {
+                this.portfolioImagesIndex = itemIndex;
             }
         },
         computed: {
@@ -440,10 +443,12 @@
 
     .v-avatar {
         box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
+        width: 300px !important;
+        height: 300px !important;
     }
 
-    .download-resume {
-        margin-right: 20%;
+    .v-avatar img {
+        border: 12px solid #979797;
     }
 
     .profile-section {
@@ -452,11 +457,6 @@
     
     .profile-information-row {
         padding: 5px 0px;
-    }
-
-    .full-name-field {
-        font-size: 24px;
-        font-weight: 500;
     }
 
     .age-field {
@@ -471,7 +471,7 @@
         margin-right: 10px;
     }
 
-    .skills-row .skill:first-child {
+    .skills-row .skill {
         margin-left: 0px;
     }
 
@@ -486,49 +486,34 @@
         }
     }
 
-    .add-video-row {
-        border: 3px solid #AE2760;
-        text-align: center;
-        color: #AE2760;
-        font-size: 24px;
-        cursor: pointer;
-
-        i {
-            color: #AE2760;
-            font-size: 30px;
-        }
-
-    }
-
     .timeline-row {
-
-        .timeline-header {
-            font-size: 32px;
-        }
-
-        .timeline-header-item {
-
-            .timeline-header-card .v-card__title {
-                justify-content: space-between;
-            }
-
-            .timeline-header-card::after, .timeline-header-card::before {
-                display: none;
-            }
-        }
-
-        .timeline-header {
-            color: #FFF;
-        }
-
-        .award-title, .experience-title, .education-title {
-            font-weight: 500;
-        }
 
         .timeline-item-action-row {
             justify-content: space-between;
             min-height: 40px;
         }
+
+    }
+
+    .v-timeline-item:last-of-type {
+        padding-bottom: 0px;
+    }
+
+    @media screen and (max-width: 800px) {
+
+        .general-information {
+            margin-top: 40px;
+        }
+
+
+    }
+
+    @media screen and (max-width: 400px) {
+
+        .v-avatar {
+            width: 200px !important;
+            height: 200px !important;
+        }    
 
     }
 

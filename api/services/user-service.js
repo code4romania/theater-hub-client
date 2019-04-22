@@ -30,6 +30,15 @@ export class UserService extends BaseService {
         return this.$axios.$post(Endpoints.CreateProfile, request);
     }
 
+    static async generateResume () {
+        const config = {
+            headers: { 'Accept': 'application/pdf' },
+            responseType: 'arraybuffer'
+        };
+
+        return this.$axios.$get(Endpoints.GenerateResume, config);
+    }
+
     static async updateMyGeneralInformation (request) {
         return this.$axios.$post(Endpoints.UpdateMyGeneralInformation, request);
     }
@@ -74,8 +83,12 @@ export class UserService extends BaseService {
         return this.$axios.$get(Endpoints.GetMe);
     }
 
+    static async getCommunityLayers (query) {
+        return this.$axios.$get(`${Endpoints.GetCommunityLayers}?searchTerm=${query.searchTerm}`);
+    }
+
     static async getCommunityMembers (query) {
-        return this.$axios.$get(`${Endpoints.GetCommunityMembers}?searchTerm=${query.searchTerm}&skills=${query.skills}&sortOrientation=${query.sortOrientation}&page=${query.page}&pageSize=${query.pageSize}`);
+        return this.$axios.$get(`${Endpoints.GetCommunityMembers}?searchTerm=${query.searchTerm}&skills=${query.skills}&page=${query.page}&pageSize=${query.pageSize}`);
     }
 
     static async getCommunityMemberProfile (id) {

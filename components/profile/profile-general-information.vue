@@ -1,42 +1,46 @@
 <template>
     <v-layout row wrap>
-        <v-layout row>
-            <v-flex xs6 mb-3>
+        <v-layout row wrap>
+            <v-flex xs12 sm12 md6 lg6 mb-3>
                 <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
                     :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
                     <div class="dz-message" data-dz-message><span>{{ $t('fields.profile-photo-dropzone.label') }}</span></div>
                 </dropzone>
             </v-flex>
-            <v-flex xs6 mb-3>
-                <v-flex xs12 v-if="displayNameFields">
-                    <v-text-field v-model="profileGeneralInformationModel.firstName" @input="updateProfileGeneralInformationModel"
-                            :rules="firstNameRules" :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
-                </v-flex>
-                <v-flex xs12 v-if="displayNameFields">
-                    <v-text-field v-model="profileGeneralInformationModel.lastName" @input="updateProfileGeneralInformationModel" 
-                            :rules="lastNameRules" :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                    <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
-                        lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                        <v-text-field slot="activator" v-model="profileGeneralInformationModel.birthDate"
-                                        :rules="birthDateRules" :label="`${$t('fields.date-of-birth.label')}*`" prepend-icon="event" readonly>
-                        </v-text-field>
-                        <v-date-picker
-                            v-model="profileGeneralInformationModel.birthDate"
-                            @input="updateProfileGeneralInformationModel"
-                            :locale="locale">
-                        </v-date-picker>
-                    </v-menu>
-                </v-flex>
-                <v-flex xs12>
-                    <v-text-field v-model="profileGeneralInformationModel.phoneNumber" @input="updateProfileGeneralInformationModel"
-                            :rules="phoneNumberRules" :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                    <v-text-field v-model="profileGeneralInformationModel.website" @input="updateProfileGeneralInformationModel"
-                            :rules="websiteRules" validate-on-blur :label="$t('fields.website.label')"></v-text-field>
-                </v-flex>
+            <v-flex xs12 sm12 md6 lg6 mb-3>
+                <v-layout align-center row wrap>
+                    <v-flex xs12>
+                        <v-flex xs12 v-if="displayNameFields">
+                            <v-text-field v-model="profileGeneralInformationModel.firstName" @input="updateProfileGeneralInformationModel"
+                                    :rules="firstNameRules" :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 v-if="displayNameFields">
+                            <v-text-field v-model="profileGeneralInformationModel.lastName" @input="updateProfileGeneralInformationModel" 
+                                    :rules="lastNameRules" :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
+                                lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
+                                <v-text-field slot="activator" v-model="profileGeneralInformationModel.birthDate"
+                                                :rules="birthDateRules" :label="`${$t('fields.date-of-birth.label')}*`" prepend-icon="event" readonly>
+                                </v-text-field>
+                                <v-date-picker
+                                    v-model="profileGeneralInformationModel.birthDate"
+                                    @input="updateProfileGeneralInformationModel"
+                                    :locale="locale">
+                                </v-date-picker>
+                            </v-menu>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="profileGeneralInformationModel.phoneNumber" @input="updateProfileGeneralInformationModel"
+                                    :rules="phoneNumberRules" :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-text-field v-model="profileGeneralInformationModel.website" @input="updateProfileGeneralInformationModel"
+                                    :rules="websiteRules" validate-on-blur :label="$t('fields.website.label')"></v-text-field>
+                        </v-flex>
+                    </v-flex>
+                </v-layout>
             </v-flex>
         </v-layout>
         <v-flex xs12>
@@ -53,19 +57,19 @@
             </v-textarea>
         </v-flex>
         <v-layout row wrap>
-            <v-flex xs6 class="mb-3 pr-2">
+            <v-flex xs12 sm6 md6 lg6 class="left-field-container">
                 <v-text-field v-model="profileGeneralInformationModel.instagramLink" @input="updateProfileGeneralInformationModel"
                             :rules="instagramLinkRules" :label="$t('fields.instagram.label')"></v-text-field>
             </v-flex>
-            <v-flex xs6 class="mb-3 pl-2">
+            <v-flex xs12 sm6 md6 lg6 class="right-field-container">
                 <v-text-field v-model="profileGeneralInformationModel.youtubeLink" @input="updateProfileGeneralInformationModel"
                             :rules="youtubeLinkRules" :label="$t('fields.youtube.label')"></v-text-field>
             </v-flex>
-            <v-flex xs6 class="mb-3 pr-2">
+            <v-flex xs12 sm6 md6 lg6 class="left-field-container">
                 <v-text-field v-model="profileGeneralInformationModel.facebookLink" @input="updateProfileGeneralInformationModel"
                             :rules="facebookLinkRules" :label="$t('fields.facebook.label')"></v-text-field>
             </v-flex>
-            <v-flex xs6 class="mb-3 pl-2">
+            <v-flex xs12 sm6 md6 lg6 class="right-field-container">
                 <v-text-field v-model="profileGeneralInformationModel.linkedinLink" @input="updateProfileGeneralInformationModel"
                             :rules="linkedinLinkRules" :label="$t('fields.linkedin.label')"></v-text-field>
             </v-flex>
@@ -125,7 +129,7 @@
                     ],
                     profileImageDropzoneOptions: {
                         url: '/',
-                        maxFilesize: 2,
+                        maxFilesize: 5,
                         addRemoveLinks: true,
                         autoProcessQueue: false,
                         dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
@@ -152,8 +156,8 @@
                             this.updateProfileGeneralInformationModel();
                         },
                         maxFiles: 1,
-                        thumbnailWidth: 160,
-                        thumbnailHeight: 160,
+                        thumbnailWidth: 200,
+                        thumbnailHeight: 200,
                         init: function () {
                             this.on('thumbnail', (file, dataUrl) => {
                                 this.options.thumbnailEventHandler(dataUrl);
@@ -174,6 +178,30 @@
                             });
 
                             this.options.initializeProfileImage(this);
+                        },
+                        resize: function (file, width, height) {
+                            var trgWidth = this.options.thumbnailWidth;
+                            var trgHeight = this.options.thumbnailHeight;
+                            var trgX = 0;
+
+                            if (file.width > file.height) {
+                                trgHeight = this.options.thumbnailWidth * file.height / file.width;
+                            } else {
+                                trgWidth = this.options.thumbnailHeight * file.width / file.height;
+                            }
+
+                            if (trgWidth  > this.options.thumbnailHeight * 3) {
+                                trgX = (trgWidth - this.options.thumbnailHeight * 3) / 2;
+                                trgWidth = this.options.thumbnailHeight * 3;
+                            }
+
+                            return {
+                                srcWidth: file.width,
+                                srcHeight: file.height,
+                                trgX,
+                                trgWidth,
+                                trgHeight
+                            };
                         }
                     }
                 };
@@ -195,9 +223,9 @@
 <style lang="scss">
 
     #profile-image-dropzone {
-        width: 250px;
-        height: 250px;
-        min-height: 250px;
+        width: 300px;
+        height: 300px;
+        min-height: 300px;
         border-radius: 100%;
 
         .dz-message {
@@ -207,6 +235,33 @@
         .dz-progress {
             display: none;
         }
+
+    }
+
+    .left-field-container {
+        padding-right: 10px;
+    }
+
+    .right-field-container {
+        padding-left: 10px;
+    }
+
+    @media screen and (max-width: 400px) {
+
+        #profile-image-dropzone {
+            width: 150px;
+            height: 150px;
+            min-height: 150px;
+        }
+
+        .left-field-container {
+            padding-right: 0px;
+        }
+
+        .right-field-container {
+            padding-left: 0px;
+        }
+    
 
     }
 

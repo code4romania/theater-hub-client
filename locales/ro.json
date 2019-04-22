@@ -205,14 +205,14 @@
                 "label": "Data de sfârșit"
             }
         },
-        "filter-by-skills": {
-            "label": "Alegeți aptitudinile"
+        "search-by-skills": {
+            "label": "Caută după aptitudini"
         },
         "search": {
-            "label": "Căutați..."
-        },
-        "name-sort": {
-            "label": "Nume"
+            "label": "Caută după nume",
+            "admin": {
+                "label": "Căutați..."
+            }
         },
         "select-skills": {
             "label": "Aptitudinile profesionale ale dumneavoastră",
@@ -268,6 +268,7 @@
             "agreement-text-separator": " și ",
             "agreement-text-privacy-policy": "Politica de confidențialitate",
             "video-message": "Vă rugăm să furnizați link-uri de Youtube sau Vimeo.",
+            "add-video-button": "Adaugați video",
             "add-award-button": "Adăugați premiu",
             "add-experience-button": "Adăugați experiență profesională",
             "add-education-button": "Adăugați experiență educațională",
@@ -278,8 +279,6 @@
             "back-button": "ÎNAPOI",
             "next-button": "ÎNAINTE",
             "finish-button": "GATA",
-            "skill": "aptitudine",
-            "skills": "aptitudini",
             "years": "ani",
             "locale-setting": "Limbă:",
             "close": "Închide"
@@ -349,10 +348,7 @@
             "title": "Proiecte"
         },
         "community": {
-            "skills-filter-title": "Aptitudini:",
-            "search-title": "Căutați:",
-            "sort-title": "Ordonați:",
-            "sort-by-name": "Nume",
+            "no-search-results": "Nu există rezultate",
             "show-more-button": "Afișați mai mulți",
             "no-members-message": "Nu există membri care să fie afisați"
         },
@@ -383,8 +379,7 @@
                 },
                 "portfolio": {
                     "title": "Portofoliu",
-                    "photo-gallery-title": "Galerie foto",
-                    "video-gallery-title": "Galerie video"
+                    "photo-gallery-title": "Galerie foto"
                 },
                 "awards": {
                     "title": "Premii"
@@ -406,8 +401,9 @@
         },
         "profile": {
             "edit-general-information-title": "Editare informații generale",
-            "preview-profile-button": "PREVIZUALIZARE PROFIL",
-            "download-resume-button": "DESCARCĂ CV",
+            "preview-profile-button": "Previzualizare",
+            "download-resume-button": "Descarcă CV",
+            "downloading-resume-button": "Se descarcă CV-ul...",
             "description-title": "Descriere",
             "skills-title": "Aptitudini",
             "edit-skills-title": "Editare Aptitudini",
@@ -419,7 +415,6 @@
             "video-gallery-title": "Galerie video",
             "video-link-field-label": "Link video",
             "no-videos-description": "Nu aveți nici un video",
-            "add-video-button": "Adaugați video",
             "delete-video-message": "Sunteți sigur că doriți să ștergeți acest video?",
             "achievements-title": "Realizări",
             "awards-title": "Premii",

@@ -25,7 +25,7 @@
                         </v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        <iframe v-if="videosFactory.isValid" :src="videosFactory.embedLink" width="420" height="315" allowfullscreen></iframe>
+                        <iframe class="video-iframe" v-if="videosFactory.isValid" :src="videosFactory.embedLink" width="420" height="315" allowfullscreen></iframe>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -67,6 +67,9 @@
                     this.$emit('addVideo', this.videosFactory);
                 },
                 onVideoLinkChange: function () {
+                    setTimeout(() => {
+                        this.$store.dispatch('syncMainOverlaySize');
+                    }, 0);
                     if (SocialMediaManager.isValidURL(this.videosFactory.link, SocialMediaCategoryType.Youtube)) {
                         this.videosFactory.isValid   = true;
                         this.videosFactory.embedLink = SocialMediaManager.extractYoutubeEmbedURL(this.videosFactory.link);
