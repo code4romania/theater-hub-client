@@ -237,8 +237,11 @@
     },
     "shared": {
         "header": {
+            "donate-link": "Donate",
+            "about-link": "About",
+            "all-projects-link": "All projects",
+            "join-community-link": "Join the community",
             "login-link": "Login",
-            "sign-up-link": "Sign Up",
             "create-profile-link": "Create Profile",
             "projects-link": "Projects",
             "community-link": "Community",
@@ -250,7 +253,15 @@
             "greeting": "Hi"
         },
         "footer": {
-
+            "useful-link": "Useful links",
+            "about-code-link": "About Code for Romania",
+            "partners-link": "Partners",
+            "sponsors-link": "Sponsors",
+            "terms-use-link": "Terms of Use",
+            "cookie-policy-link": "Cookie policy",
+            "contact-us-link": "Contact us",
+            "subscribe-newsletter-link": "Subscribe to our newsletter",
+            "code-description-link": "An independent, non-partisan, non-political, non-governmental organization."
         },
         "content": {
             "agreement-text-beginning": "I agree to the ",
@@ -276,8 +287,19 @@
         }
     },
     "pages": {
-        "hompeage": {
-            
+        "homepage": {
+            "find-out-link": "Find out more",
+            "register-now-link": "Register now",
+            "start-project-link": "Start your project today",
+            "how-works-link": "How it works",
+            "latest-projects-link": "Latest projects added",
+            "project-initiator-link": "Project initiator",
+            "project-roles-link": "Number of requested roles",
+            "view-project-link": "View project",
+            "view-all-projects-link": "View all projects",
+            "meet-community-link": "Meet the community",
+            "view-public-profiles-link": "View all public profiles",
+            "search-link": "Search"
         },
         "login": {
             "title": "Login", 

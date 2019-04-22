@@ -12,7 +12,7 @@
 
             <v-flex md6 lg6 class="donate-button">
               <v-btn flat small>
-                <span class="text-capitalize"><u>DONATE</u></span>
+                <span class="text-capitalize"><u>{{ $t('shared.header.donate-link') }}</u></span>
               </v-btn>
             </v-flex>
           </v-layout>
@@ -24,53 +24,42 @@
             </a>
         </v-flex>
         
-        <!-- <v-layout justify-end align-center pr-5>
-          <v-flex xs1 mr-5 class="action-button">
-            <nuxt-link to="/login" id="login-btn" class="menu-link">
-              {{ $t('shared.header.login-link') }}
-            </nuxt-link>
-          </v-flex>
-          <v-flex xs1 class="action-button">
-            <nuxt-link to="/signup" id="sign-up-btn" class="menu-link">
-              {{ $t('shared.header.sign-up-link') }}
-            </nuxt-link>
-          </v-flex>
-          <v-flex xs2 class="action-button" ml-5>
-            <v-menu offset-y>
-              <v-flex xs12 slot="activator">
-                <div class="header-language-container">
-                  <span>{{ currentLocale }}</span>
-                </div>
-              </v-flex>
-              <v-list>
-                <v-list-tile :key="i" v-for="(l, i) in locales"
-                                      v-on:click="onLanguageClick(l)" v-bind:class="{'selected-language': locale === l.ID}">
-                  <v-list-tile-title>
-                    <span>{{ $t(`application-data.${l.Name.toLowerCase()}`) }}</span>
-                  </v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-          </v-flex>
-        </v-layout> -->
-
         <v-flex md5 lg5>
           <v-layout row wrap justify-space-between>
-            <v-flex md3 lg3 class="action-button">
-              <nuxt-link to="/about" id="about-btn" class="menu-link"><u>About</u></nuxt-link>
+            <v-flex md2 lg2 class="action-button">
+              <nuxt-link to="/about" id="about-btn" class="menu-link"><u>{{ $t('shared.header.about-link') }}</u></nuxt-link>
             </v-flex>
+
             <v-flex md3 lg3 class="action-button">
-              <nuxt-link to="/projects" id="projects-btn" class="menu-link"><u>All projects</u></nuxt-link>
+              <nuxt-link to="/projects" id="projects-btn" class="menu-link"><u>{{ $t('shared.header.all-projects-link') }}</u></nuxt-link>
             </v-flex>
+
             <v-flex md4 lg4 class="action-button">
-              <nuxt-link to="/login" id="login-btn" class="menu-link">Join the Community</nuxt-link>
+              <nuxt-link to="/signup" id="sign-up-btn" class="menu-link"><u>{{ $t('shared.header.join-community-link') }}</u></nuxt-link>
             </v-flex>
+
             <v-flex md1 lg1 class="action-button">
-              <nuxt-link to="/signup" id="sign-up-btn" class="menu-link"><u>Login</u></nuxt-link>
+              <nuxt-link to="/login" id="login-btn" class="menu-link"><u>{{ $t('shared.header.login-link') }}</u></nuxt-link>
             </v-flex>
+            
             <v-spacer></v-spacer>
+
             <v-flex md1 lg1 class="action-button">
-              <nuxt-link to="/signup" id="sign-up-btn" class="menu-link"><u>EN</u></nuxt-link>
+              <v-menu offset-y>
+                <v-flex xs12 slot="activator">
+                  <div class="header-language-container">
+                    <span>{{ currentLocale }}</span>
+                  </div>
+                </v-flex>
+                <v-list>
+                  <v-list-tile :key="i" v-for="(l, i) in locales"
+                                        v-on:click="onLanguageClick(l)" v-bind:class="{'selected-language': locale === l.ID}">
+                    <v-list-tile-title>
+                      <span>{{ $t(`application-data.${l.Name.toLowerCase()}`) }}</span>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -87,19 +76,19 @@
               <v-card dark color="black">
                 <v-layout row wrap align-center>
                   <v-flex xs12 md6 px-5>
-                    <h1>Join the community.</h1>
-                    <h1>Start your project today</h1>
+                    <h1>{{ $t('shared.header.join-community-link') }}</h1>
+                    <h1>{{ $t('pages.homepage.start-project-link') }}</h1>
                     <v-layout mt-3>
                       <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
                     </v-layout>
 
                     <v-layout row>
                       <v-btn flat color="black" class="yellow--text">
-                        <span class="text-capitalize"><u>Find out more</u></span>
+                        <span class="text-capitalize"><u>{{ $t('pages.homepage.find-out-link') }}</u></span>
                       </v-btn>
 
                       <v-btn depressed color="white" class="blue--text">
-                        <span class="text-capitalize"><u>Register now</u></span>
+                        <span class="text-capitalize"><u>{{ $t('pages.homepage.register-now-link') }}</u></span>
                       </v-btn>
                     </v-layout>
                   </v-flex>
@@ -116,7 +105,7 @@
         <section id="how_it_works">
           <v-layout>
             <v-flex xs12 my-5>
-              <h1 class="text-xs-center menu-link">How it works</h1>
+              <h1 class="text-xs-center menu-link">{{ $t('pages.homepage.how-works-link') }}</h1>
             </v-flex>
           </v-layout>
 
@@ -148,7 +137,7 @@
         <section id="latest_projects">
           <v-layout>
             <v-flex xs12 my-5>
-              <h1 class="text-xs-center menu-link">Latest projects added</h1>
+              <h1 class="text-xs-center menu-link">{{ $t('pages.homepage.register-now-link') }}</h1>
             </v-flex>
           </v-layout>
 
@@ -161,17 +150,16 @@
                   <h2><u>Back to the basics - contemporary dance show</u></h2>
                 </v-card-title>
 
-
                 <v-card-text>
                   <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                  <div class="font-weight-bold">Project initiator: John Smith</div>
+                  <div class="font-weight-bold">{{ $t('pages.homepage.project-initiator-link') }}: John Smith</div>
                   <br/>
-                  <div class="font-weight-bold">Number of requested roles: 7</div>
+                  <div class="font-weight-bold">{{ $t('pages.homepage.project-roles-link') }}: 7</div>
                 </v-card-text>
 
                 <div class="text-xs-center">
                   <v-btn color="primary">
-                    <span class="text-capitalize">View project</span>
+                    <span class="text-capitalize">{{ $t('pages.homepage.view-project-link') }}</span>
                   </v-btn>
                 </div>
               </v-card>
@@ -187,14 +175,14 @@
 
                 <v-card-text>
                   <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                  <div class="font-weight-bold">Project initiator: Mary Poppins</div>
+                  <div class="font-weight-bold">{{ $t('pages.homepage.project-initiator-link') }}: John Smith</div>
                   <br/>
-                  <div class="font-weight-bold">Number of requested roles: 7</div>
+                  <div class="font-weight-bold">{{ $t('pages.homepage.project-roles-link') }}: 7</div>
                 </v-card-text>
 
                 <div class="text-xs-center">
                   <v-btn color="primary">
-                    <span class="text-capitalize">View project</span>
+                    <span class="text-capitalize">{{ $t('pages.homepage.view-project-link') }}</span>
                   </v-btn>
                 </div>
               </v-card>
@@ -202,8 +190,8 @@
           </v-layout>
 
           <v-layout>
-            <v-flex xs12 mt-3 mb-3 mr-5><!-- extra margin to the right which should be removed for smaller screens--> 
-              <h2 class="text-xs-center text-lg-right font-weight-thin add-link">View all projects</h2>
+            <v-flex xs12 mt-3 mb-3>
+              <h2 class="text-xs-center text-lg-right font-weight-thin add-link pl-5 pr-5">{{ $t('pages.homepage.view-all-projects-link') }}</h2>
             </v-flex>
           </v-layout>
         </section>
@@ -211,12 +199,12 @@
         <section id="meet_the_community">
           <v-layout>
             <v-flex xs12 my-5>
-              <h1 class="text-xs-center menu-link">Meet the community</h1>
+              <h1 class="text-xs-center menu-link">{{ $t('pages.homepage.meet-community-link') }}</h1>
             </v-flex>
           </v-layout>
 
           <v-layout row wrap justify-center>
-            <v-flex xs6 sm4 md4 lg2>
+            <v-flex xs12 sm4 md4 lg2>
               <v-card flat class="text-xs-center">
                 <v-responsive class="pt-4">
                     <v-avatar size="200" class="grey lighten-2">
@@ -229,7 +217,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex xs6 sm4 md4 lg2>
+            <v-flex xs12 sm4 md4 lg2>
               <v-card flat class="text-xs-center">
                 <v-responsive class="pt-4">
                     <v-avatar size="200" class="grey lighten-2">
@@ -242,7 +230,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex xs6 sm4 md4 lg2>
+            <v-flex xs12 sm4 md4 lg2>
               <v-card flat class="text-xs-center">
                 <v-responsive class="pt-4">
                     <v-avatar size="200" class="grey lighten-2">
@@ -255,7 +243,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex xs6 sm4 md4 lg2>
+            <v-flex xs12 sm4 md4 lg2>
               <v-card flat class="text-xs-center">
                 <v-responsive class="pt-4">
                     <v-avatar size="200" class="grey lighten-2">
@@ -268,7 +256,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex xs6 sm4 md4 lg2>
+            <v-flex xs12 sm4 md4 lg2>
               <v-card flat class="text-xs-center">
                 <v-responsive class="pt-4">
                     <v-avatar size="200" class="grey lighten-2">
@@ -283,8 +271,8 @@
           </v-layout>
 
           <v-layout>
-            <v-flex xs12 mt-3 mb-3 mr-5><!-- extra margin to the right which should be removed for smaller screens--> 
-              <h2 class="text-xs-center text-lg-right font-weight-thin add-link">View all public profiles</h2>
+            <v-flex xs12 mt-3 mb-3>
+              <h2 class="text-xs-center text-lg-right font-weight-thin add-link pl-5 pr-5">{{ $t('pages.homepage.view-public-profiles-link') }}</h2>
             </v-flex>
           </v-layout>
         </section>
@@ -301,45 +289,40 @@
             </v-flex>
 
             <v-flex d-flex sm6 md4 fill-height>
-              <v-layout text-xs-center align-center row wrap justify-center>
+              <v-layout align-center row wrap justify-center>
                 <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
-                      <!-- <img :src="require('~/assets/images/facebook_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/facebook_grey.png')"></v-img>   
                     </a>
                 </v-flex>
 
                 <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
-                      <!-- <img :src="require('~/assets/images/youtube_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/youtube_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
                 <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
-                      <!-- <img :src="require('~/assets/images/instagram_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/instagram_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
                 <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
-                      <!-- <img :src="require('~/assets/images/linkedin_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/linkedin_grey.png')"></v-img>
                     </a>
                 </v-flex>
 
                 <v-flex d-flex xs2 sm1 md1 class="text-xs-center" pt-2>
                     <a class="logo-wrapper" href="/">
-                      <!-- <img :src="require('~/assets/images/twitter_grey.png')" /> -->
                       <v-img :src="require('~/assets/images/twitter_grey.png')"></v-img>
                     </a>
                 </v-flex>
                 
                 <v-flex d-flex xs12 sm7 md7 class="text-xs-center donate-button">
                   <v-btn flat small>
-                    <span class="text-capitalize"><u>DONATE</u></span>
+                    <span class="text-capitalize"><u>{{ $t('shared.header.donate-link') }}</u></span>
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -351,48 +334,60 @@
 
     <footer class="black white--text">
       <v-content>
-        <v-layout row wrap justify-space-around pt-3 pb-2>
+        <v-layout row wrap justify-space-around>
 
-          <v-flex xs12 md2 lg2 class="text-xs-center">
-              <h3>Useful links</h3>
+          <v-flex xs12 md2 lg2 class="text-xs-center" mt-2 mb-2>
+              <h3>{{ $t('shared.footer.useful-link') }}</h3>
               <br/>
               <ul>
-                <li><a href="#">About Code for Romania</a></li>
-                <li><a href="#">Partners</a></li>
-                <li><a href="#">Sponsors</a></li>
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Cookie Policy</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">{{ $t('shared.footer.about-code-link') }}</a></li>
+                <li><a href="#">{{ $t('shared.footer.partners-link') }}</a></li>
+                <li><a href="#">{{ $t('shared.footer.sponsors-link') }}</a></li>
+                <li><a href="#">{{ $t('shared.footer.terms-use-link') }}</a></li>
+                <li><a href="#">{{ $t('shared.footer.cookie-policy-link') }}</a></li>
+                <li><a href="#">{{ $t('shared.footer.contact-us-link') }}</a></li>
               </ul>
           </v-flex>
 
-          <v-flex xs12 md2 lg2 offset-lg2 class="text-xs-center" mt-2>
+          <v-flex xs12 md2 lg2 offset-lg2 class="text-xs-center" mt-2 mb-2>
             <a class="logo-wrapper" href="/">
               <img :src="require('~/assets/images/theater_hub_logo-2.png')" />
             </a>
           </v-flex>
 
-          <v-flex xs12 md4 lg4>
-            <h3 class="text-xs-center text-md-right text-lg-right">Subscribe to our newsletter</h3>
-
-            <v-layout>
-              <v-spacer></v-spacer>
-              <v-flex xs8> 
-                <v-text-field label="Email" class="white" solo-inverted hide-details></v-text-field>
+           <v-flex xs12 md4 lg4 mt-2> 
+            <h3 class="text-xs-center text-md-right text-lg-right">{{ $t('shared.footer.subscribe-newsletter-link') }}</h3> 
+            <v-layout row wrap>
+              <v-flex xs12 sm12 md12>
+                <v-layout>
+                  <v-spacer></v-spacer>
+                  <v-flex xs12 sm12 md8> 
+                    <v-text-field label="Email" class="white" solo-inverted hide-details></v-text-field>
+                  </v-flex>
+                </v-layout>
               </v-flex>
-            </v-layout>
 
-            <v-layout>
-              <v-spacer></v-spacer>
-              <v-flex xs4>
-                <a class="logo-wrapper" href="/">
-                  <img :src="require('~/assets/images/LOGO-WHITE2.png')" />
-                </a>
+              <v-flex xs12 sm12 md12>
+                <v-layout>
+                  <v-spacer></v-spacer>
+                  <v-flex xs12 sm12 md6>
+                    <v-layout>
+                      <v-flex text-xs-center text-md-right>
+                        <a class="logo-wrapper" href="/">
+                          <img :src="require('~/assets/images/LOGO-WHITE2.png')" />
+                        </a>
+                      </v-flex>
+                    </v-layout>
+                    <!-- <a class="logo-wrapper" href="/">
+                      <img :src="require('~/assets/images/LOGO-WHITE2.png')" />
+                    </a> -->
+                  </v-flex>
+                </v-layout>
               </v-flex>
             </v-layout>
 
             <p class="text-xs-center text-lg-right">/* @ 2019 Code for Romania.</p>
-            <p class="text-xs-center text-lg-right">An independent, non-partisan, non-political, non-governmental organization.</p>
+            <p class="text-xs-center text-lg-right">{{ $t('shared.footer.code-description-link') }}</p>
           </v-flex>
         </v-layout>
       </v-content>

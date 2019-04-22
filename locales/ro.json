@@ -236,8 +236,11 @@
     },
     "shared": {
         "header": {
+            "donate-link": "Donează",
+            "about-link": "Despre",
+            "all-projects-link": "Toate proiectele",
+            "join-community-link": "Alătură-te comunității",
             "login-link": "Autentificare",
-            "sign-up-link": "Înregistrare",
             "create-profile-link": "Construiți Profilul",
             "projects-link": "Proiecte",
             "community-link": "Comunitate",
@@ -249,7 +252,15 @@
             "greeting": "Salut"
         },
         "footer": {
-
+            "useful-link": "Link-uri utile",
+            "about-code-link": "Despre Code for Romania",
+            "partners-link": "Parteneri",
+            "sponsors-link": "Sponsori",
+            "terms-use-link": "Termeni și condiții",
+            "cookie-policy-link": "Cookie policy",
+            "contact-us-link": "Contactează-ne",
+            "subscribe-newsletter-link": "Abonează-te la newsletter",
+            "code-description-link": "Organizație neguvernamentală independentă, neafiliată politic și apolitică."
         },
         "content": {
             "agreement-text-beginning": "Sunt de acord cu ",
@@ -275,8 +286,19 @@
         }
     },
     "pages": {
-        "hompeage": {
-            
+        "homepage": {
+            "find-out-link": "Află mai multe",
+            "register-now-link": "Înscrie-te acum",
+            "start-project-link": "Înregistrează un proiect",
+            "how-works-link": "Cum funcționează",
+            "latest-projects-link": "Cele mai recente proiecte adăugate",
+            "project-initiator-link": "Inițiator proiect",
+            "project-roles-link": "Roluri disponibile",
+            "view-project-link": "Vizualizează proiect",
+            "view-all-projects-link": "Vizualizează proiectele",
+            "meet-community-link": "Întâlnește comunitatea",
+            "view-public-profiles-link": "Vizualizează profilurile publice",
+            "search-link": "Caută"
         },
         "login": {
             "title": "Autentificare", 
