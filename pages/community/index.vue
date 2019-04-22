@@ -1,81 +1,82 @@
 <template>
     <section class="community-section">
         <v-container id="community-container" class="main-container pa-1">
-            <v-layout row wrap class="community-header-bar">
-                <v-flex xs4 class="skills-filter-container px-3">
-                    <span class="community-header-bar-label">{{ $t('pages.community.skills-filter-title') }}</span>
+            <v-layout row wrap class="community-header-bar" pt-4>
+                <v-flex xs12 sm5 md5 lg5 pr-3 mt-3>
+                    <v-text-field type="search" append-icon="search" solo
+                        hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
+                        v-model="searchTerm"
+                        @keyup="onSearchKeyup"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm5 md5 lg5 pr-3 mt-3 class="skills-filter-container">
                     <v-flex xs12>
                         <v-autocomplete 
                             item-text="Name" item-value="ID"
+                            :no-data-text="$t('pages.community.no-search-results')"
                             @input="updateFilterSkills"
                             v-model="filterSkills" :items="localizedSkills"
-                            chips :label="$t('fields.filter-by-skills.label')" multiple>
+                            chips :label="$t('fields.search-by-skills.label')" multiple solo append-icon="search">
                             <template slot="selection" slot-scope="data">
-                                <v-chip :selected="data.selected" close class="chip--select-multi" @input="removeSkill(data.item)">
+                                <v-chip :selected="data.selected" close class="skill secondary-color mr-2"
+                                                                                @input="removeSkill(data.item)">
                                     {{ data.item.Name }}
                                 </v-chip>
                             </template>
                         </v-autocomplete>
                     </v-flex>
                 </v-flex>
-                <v-flex xs4 class="px-3">
-                    <span class="community-header-bar-label">{{ $t('pages.community.search-title') }}</span>
-                    <v-text-field type="search" append-icon="search"
-                        hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
-                        v-model="searchTerm"
-                        @keyup="onSearchKeyup"></v-text-field>
-                </v-flex>
-                <v-flex xs4 class="px-3">
-                    <v-flex xs12>
-                        <span class="community-header-bar-label">{{ $t('pages.community.sort-title') }}</span>
-                    </v-flex>
-                    <v-flex xs12 v-on:click="onSortByNameClick" class="sort-members-criteria pt-2 mt-1">
-                        {{ $t('pages.community.sort-by-name') }}
-                        <i class="material-icons" v-if="isSortByNameAscending">arrow_upward</i>
-                        <i class="material-icons" v-if="!isSortByNameAscending">arrow_downward</i>
-                    </v-flex>
-                </v-flex>
             </v-layout>
-            <v-layout row wrap class="mt-5">
-                <v-flex xs4 community-member :key="i" v-for="(member, i) in displayedCommunityMembers" class="mt-4">
-                    <v-layout row wrap justify-center class="text-xs-center">
-                        <v-flex xs12 class="member-avatar-container member-information-container mt-1">
-                            <nuxt-link :to="`/profile/${member.ID}`">
-                                <v-avatar size="120px">
-                                    <img :src="require('~/assets/images/default-avatar.svg')" v-if="!member.ProfileImage" />
-                                    <img :src="`data:image/png;base64,${member.ProfileImage}`" v-if="member.ProfileImage" />
-                                </v-avatar>
-                            </nuxt-link>
-                        </v-flex>
-                        <v-flex xs12 class="member-name-container member-information-container mt-1">
-                            <nuxt-link :to="`/profile/${member.ID}`">
-                                <span>{{ member.FullName }}</span>
-                            </nuxt-link>
-                        </v-flex>
-                        <v-flex xs12 class="member-skills-container member-information-container mt-1">
-                            <nuxt-link :to="`/profile/${member.ID}`">
-                                <v-chip :key="j" v-for="(skill, j) in member.Skills" class="member-skill">{{ skill }}</v-chip>
-                            </nuxt-link>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-                <v-flex xs12 v-if="!hasLoadedAll()" justify-center class="mt-5 show-more-members-row">
-                    <v-btn v-on:click="onShowMoreClick" color="primary" id = "show-more-members-btn">{{ $t('pages.community.show-more-button') }}</v-btn>
-                </v-flex>
-                <v-flex class="no-results-message text-xs-center mt-5" v-if="displayNoResultsMessage && !isLoading">
-                    {{ $t('pages.community.no-members-message') }}
-                </v-flex>
+
+            <v-layout column wrap class="community-layers-wrapper" v-if="inCommunityLayersView">
+                <v-layout column wrap mt-5 class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
+                    <v-flex xs12 class="skill-section-title">
+                        <img width="40px" :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+                        <span class="skill-name">{{ layer.SkillName }}</span>
+                    </v-flex>
+                    <v-flex xs12 class="skill-section-members">
+                        <v-layout row wrap>
+
+                            <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in layer.Members" class="mt-4">
+                                <CommunityMember :member="member" />
+                            </v-flex>
+
+                            <v-flex xs6 sm4 md3 lg3 community-member class="mt-4" v-if="layer.HasMore">
+                                <div class="view-all-container secondary-color" v-on:click="handleViewAllClick(layer)">
+                                    <span class="view-all-text">View all</span>
+                                </div>
+                            </v-flex>
+
+                        </v-layout>  
+                    </v-flex>
+                </v-layout>
             </v-layout>
+
+            <v-layout row wrap class="community-members-wrapper" v-if="!inCommunityLayersView">
+
+                <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in communityMembers" class="mt-4">
+                    <CommunityMember :member="member" />
+                </v-flex>
+
+            </v-layout>
+
+            <v-flex xs12 v-if="!hasLoadedAll" justify-center class="mt-5 show-more-members-row">
+                <v-btn v-on:click="onShowMoreClick" color="primary" id = "show-more-members-btn">{{ $t('pages.community.show-more-button') }}</v-btn>
+            </v-flex>
+            <v-flex class="no-results-message text-xs-center mt-5" v-if="displayNoResultsMessage && !isLoading">
+                {{ $t('pages.community.no-members-message') }}
+            </v-flex>
+
         </v-container>
     </section>
 </template>
 
 <script>
+    import CommunityMember from '~/components/community/community-member.vue';
     import { mapGetters } from 'vuex';
 
     export default {
         components: {
-
+            CommunityMember
         },
         layout: ({ store }) => {
             if (!store.getters['authentication/isAuthenticated']) {
@@ -88,64 +89,80 @@
         },
         middleware: ['visitor-or-enabled-user'],
         data: () => ({
+            localizedSkills: [],
             communityMembers: [],
             communitySize: 0,
             filterSkills: [],
             searchTerm: '',
-            sortItems: ['Name ascending', 'Name descending'],
             page: 0,
             pageSize: 9,
-            isSortByNameAscending: true,
-			isLoading: false
+            isLoading: false
         }),
         async asyncData ({ store, query, params }) {
             var requestQuery = {
                 searchTerm: '',
-                skills: '',
-                sortOrientation: 'ASC',
                 page: 0,
-                pageSize: 9
+                pageSize: 3
             };
 
-            await store.dispatch('users/getCommunityMembers', requestQuery);
+            let communityLayers = [];
 
-            var communityMembers = store.state.users.communityMembers;
-            var communitySize = store.state.users.communitySize;
+            await store.dispatch('users/getCommunityLayers', requestQuery).then(response => {
+                communityLayers = response.Layers;
+            });
 
             return {
-                communityMembers,
-                communitySize
+                communityLayers
             };
         },
         methods: {
-            updateFilterSkills: function () {
-                this.page = 0;
-                this.communityMembers = [];
-                this.communitySize = 0;
+            initializeCommunityMembers: function (members) {
+                return members.map(m => {
+                    var memberSkills = this.localizedSkills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);
+                    var skills = memberSkills.slice(0, 2).map(s => s.Name);
 
-                this.loadMore();
+                    var skillSurplus = memberSkills.length - 2;
+
+                    return {
+                        ID: m.ID,
+                        FullName: `${m.FirstName} ${m.LastName}`,
+                        ProfileImage: m.ProfileImage,
+                        Skills: skills,
+                        Surplus: skillSurplus > 0 ? `+${skillSurplus}` : ''
+                    };
+                });
             },
-            onSearchKeyup: function (event) {
-                this.page = 0;
-                this.communityMembers = [];
-                this.communitySize = 0;
+            initializeCommunityLayers: function () {
+                this.communityLayers.forEach(l => {
+                    l.SkillName = this.localizedSkills.find(s => s.ID === l.SkillID).Name;
 
-                this.loadMore();
+                    l.Members = this.initializeCommunityMembers(l.Members);
+                });
+
+                this.communityLayers = this.communityLayers.sort((l1, l2) => l1.SkillName > l2.SkillName ? 1 : -1);
             },
-            onSortByNameClick: function () {
-                this.isSortByNameAscending = !this.isSortByNameAscending;
+            async loadCommunityLayers () {
+                if (this.isLoading) {
+                    return;
+                }
 
-                this.page = 0;
-                this.communityMembers = [];
-                this.communitySize = 0;
-                this.loadMore();
+				this.isLoading = true;
+
+                var requestQuery = {
+                    searchTerm: this.searchTerm,
+                    page: 0,
+                    pageSize: 3
+                };
+
+                await this.$store.dispatch('users/getCommunityLayers', requestQuery).then(response => {
+                    this.communityLayers = response.Layers;
+
+                    this.initializeCommunityLayers();
+                });
+
+				this.isLoading = false;
             },
-			onShowMoreClick: function () {
-                this.page++;
-
-				this.loadMore();
-			},
-			async loadMore () {
+			async loadCommunityMembers () {
                 if (this.isLoading) {
                     return;
                 }
@@ -160,69 +177,83 @@
                     pageSize: this.pageSize
                 };
 
-                await this.$store.dispatch('users/getCommunityMembers', requestQuery);
+                await this.$store.dispatch('users/getCommunityMembers', requestQuery).then(response => {
+                    this.communityMembers  = this.communityMembers.concat(this.initializeCommunityMembers(response.Members));
 
-                if (this.page === 0) {
-                    this.communityMembers = [];
-                }
-
-                this.communityMembers.push(...this.$store.state.users.communityMembers);
-                this.communitySize    = this.$store.state.users.communitySize;
+                    this.communitySize = response.CommunitySize;
+                });
 
 				this.isLoading = false;
-			},
-			hasLoadedAll: function () {
-				return this.communityMembers.length === this.communitySize;
             },
-            removeSkill (skill) {
-                this.filterSkills.splice(this.filterSkills.indexOf(skill), 1);
-                this.filterSkills = [...this.filterSkills];
+            onShowMoreClick: function () {
+                this.page++;
 
-                this.page = 0;
+				this.loadCommunityMembers();
+			},
+            updateFilterSkills: function () {
                 this.communityMembers = [];
                 this.communitySize = 0;
+                this.page = 0;
 
-                this.loadMore();
+                this.loadCommunityMembers();
+            },
+            async onSearchKeyup (event) {
+                if (this.inCommunityLayersView) {
+                    this.loadCommunityLayers();
+                    return;
+                }
+
+                this.communityMembers = [];
+                this.communitySize = 0;
+                this.page = 0;
+
+                this.loadCommunityMembers();
+            },
+            removeSkill (skill) {
+                this.filterSkills.splice(this.filterSkills.indexOf(skill.ID), 1);
+                this.filterSkills = [...this.filterSkills];
+
+                this.communityMembers = [];
+                this.communitySize = 0;
+                this.page = 0;
+
+                if (this.inCommunityLayersView) {
+                    this.loadCommunityLayers();
+                } else {
+                    this.loadCommunityMembers();
+                }
+            },
+            async handleViewAllClick (layer) {
+                this.filterSkills = [layer.SkillID];
+
+                this.loadCommunityMembers();
             }
 		},
         computed: {
             ...mapGetters({
                 skills: 'applicationData/skills'
             }),
-            displayedCommunityMembers: function () {
-                return this.communityMembers.map(m => {
-                    var memberSkills = this.localizedSkills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);
-                    var skills = memberSkills.slice(0, 2).map(s => s.Name);
-
-                    var skillSurplus = memberSkills.length - 2;
-                    if (skillSurplus > 0) {
-                        var moreSkillsText = skillSurplus === 1 ? `+1 ${this.$t('shared.content.skill')}` : `+${skillSurplus} ${this.$t('shared.content.skills')}`;
-                        skills.push(moreSkillsText);
-                    }
-
-                    return {
-                        ID: m.ID,
-                        FullName: `${m.FirstName} ${m.LastName}`,
-                        ProfileImage: m.ProfileImage,
-                        Skills: skills
-
-                    };
-                });
+            inCommunityLayersView: function () {
+                return this.filterSkills.length === 0;
             },
-            skillNameList: function () {
-                return this.filterSkills.map(s => s.Name).sort();
+            displayNoResultsMessage: function () {
+                return (this.communityMembers.length === 0 && !this.inCommunityLayersView) ||
+                                                        (this.communityLayers.length === 0 && this.inCommunityLayersView);
             },
-            localizedSkills: function () {
-                return this.skills.map(s => {
+            hasLoadedAll: function () {
+				return this.communityMembers.length === this.communitySize;
+            }
+        },
+        mounted: function () {
+            this.localizedSkills = this.skills.map(s => {
                     return {
                         ...s,
                         Name: this.$t(`application-data.${s.Name}`)
                     };
                 }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
-            },
-            displayNoResultsMessage: function () {
-                return this.communityMembers.length === 0;
-            }
+
+
+            this.initializeCommunityLayers();
         }
     }
 
@@ -230,43 +261,61 @@
 
 <style lang="scss">
     
-    .show-more-members-row {
-        display: flex;
-    }
-
-    .member-information-container > * {
-		text-decoration: none;
-        color: initial;
-    }
-    
-    .member-skill .v-chip__content {
-        cursor: pointer;
-    }
-
-    .skills-filter-container {
+    .community-header-bar {
         justify-content: center;
+
+        label, input, input::placeholder, input::-webkit-input-placeholder,  {
+            font-weight: 500;
+            font-family: Titillium Web;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            color: #000 !important;
+        }
+
+        i {
+            color: #000 !important;
+        }
+
+    }
+
+
+    .skill-section-title {
+        display: flex;
         align-items: center;
 
-        .v-menu {
-            position: initial;
+        .skill-name {
+            margin-left: 10px;
+            text-transform: capitalize;
+            font-family: Titillium Web;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
         }
     }
 
-    #members-search-box {
-        margin-top: 10px;
-        padding-bottom: 26px;
-    }
-
-    .sort-members-criteria {
+    .view-all-container {
+        width: 160px;
+        max-width: 160px;
+        height: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
         cursor: pointer;
-    }
+        font-size: 22px;
 
-    .community-header-bar-label {
-        font-weight: 500;
+        span {
+            text-decoration: underline;
+        }
     }
 
     .no-results-message {
         font-size: 28px;
+    }
+
+    .show-more-members-row {
+        display: flex;
     }
 
 </style>

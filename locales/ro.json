@@ -205,14 +205,14 @@
                 "label": "Data de sfârșit"
             }
         },
-        "filter-by-skills": {
-            "label": "Alegeți aptitudinile"
+        "search-by-skills": {
+            "label": "Caută după aptitudini"
         },
         "search": {
-            "label": "Căutați..."
-        },
-        "name-sort": {
-            "label": "Nume"
+            "label": "Caută după nume",
+            "admin": {
+                "label": "Căutați..."
+            }
         },
         "select-skills": {
             "label": "Aptitudinile profesionale ale dumneavoastră",
@@ -268,8 +268,6 @@
             "back-button": "ÎNAPOI",
             "next-button": "ÎNAINTE",
             "finish-button": "GATA",
-            "skill": "aptitudine",
-            "skills": "aptitudini",
             "years": "ani",
             "locale-setting": "Limbă:",
             "close": "Închide"
@@ -328,10 +326,7 @@
             "title": "Proiecte"
         },
         "community": {
-            "skills-filter-title": "Aptitudini:",
-            "search-title": "Căutați:",
-            "sort-title": "Ordonați:",
-            "sort-by-name": "Nume",
+            "no-search-results": "Nu există rezultate",
             "show-more-button": "Afișați mai mulți",
             "no-members-message": "Nu există membri care să fie afisați"
         },

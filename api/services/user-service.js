@@ -83,8 +83,12 @@ export class UserService extends BaseService {
         return this.$axios.$get(Endpoints.GetMe);
     }
 
+    static async getCommunityLayers (query) {
+        return this.$axios.$get(`${Endpoints.GetCommunityLayers}?searchTerm=${query.searchTerm}`);
+    }
+
     static async getCommunityMembers (query) {
-        return this.$axios.$get(`${Endpoints.GetCommunityMembers}?searchTerm=${query.searchTerm}&skills=${query.skills}&sortOrientation=${query.sortOrientation}&page=${query.page}&pageSize=${query.pageSize}`);
+        return this.$axios.$get(`${Endpoints.GetCommunityMembers}?searchTerm=${query.searchTerm}&skills=${query.skills}&page=${query.page}&pageSize=${query.pageSize}`);
     }
 
     static async getCommunityMemberProfile (id) {
