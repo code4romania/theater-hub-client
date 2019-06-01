@@ -27,7 +27,11 @@ export class UserService extends BaseService {
     }
 
     static async createProfile (request) {
-        return this.$axios.$post(Endpoints.CreateProfile, request);
+        const config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        };
+
+        return this.$axios.$post(Endpoints.CreateProfile, request, config);
     }
 
     static async generateResume () {
@@ -40,7 +44,11 @@ export class UserService extends BaseService {
     }
 
     static async updateMyGeneralInformation (request) {
-        return this.$axios.$post(Endpoints.UpdateMyGeneralInformation, request);
+        const config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        };
+
+        return this.$axios.$post(Endpoints.UpdateMyGeneralInformation, request, config);
     }
 
     static async updateMySkills (request) {
@@ -48,7 +56,16 @@ export class UserService extends BaseService {
     }
 
     static async updateMyPhotoGallery (request) {
-        return this.$axios.$post(Endpoints.UpdateMyPhotoGallery, request);
+        const config = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        };
+
+        var updateMyPhotoGalleryFormData = new FormData();
+        request.filter(p => !!p.File).forEach(p => updateMyPhotoGalleryFormData.append('AddedPhotos', p.File));
+        var photoGallery = request.filter(p => !p.File);
+        updateMyPhotoGalleryFormData.append('PhotoGallery', JSON.stringify(photoGallery));
+
+        return this.$axios.$post(Endpoints.UpdateMyPhotoGallery, updateMyPhotoGalleryFormData, config);
     }
 
     static async updateMyVideoGallery (request) {

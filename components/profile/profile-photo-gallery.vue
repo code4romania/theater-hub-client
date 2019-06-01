@@ -13,6 +13,7 @@
 
 <script>
     import Dropzone from 'nuxt-dropzone';
+    import { mapGetters } from 'vuex';
     import 'nuxt-dropzone/dropzone.css';
     import { Helpers } from '~/utils';
 
@@ -24,6 +25,7 @@
             data: function () {
                 return {
                     profilePhotoGalleryModel: Helpers.cloneObject(this.profilePhotoGallery),
+                    totalFileSize: 0,
                     photoGalleryDropzoneOptions: {
                         url: '/',
                         maxFilesize: 5,
@@ -36,33 +38,38 @@
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
                             this.profilePhotoGallery.photoGallery.forEach(photo => {
-                                var fileSize = atob(photo.Image).length;
-                                var file     = { url: `data:image/png;base64,${photo.Image}`, size: fileSize, upload: { uuid: photo.ID } };
+                                var file     = { url: photo.Location, size: photo.Size * 1000 * 1000, upload: { uuid: photo.ID } };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
                                 dropzone.emit('complete', file);
                                 dropzone.files.push(file);
+
+                                this.totalFileSize += photo.Size;
                             });
                         },
-                        thumbnailEventHandler: (dataUrl, id) => {
+                        addFileEventHandler: (file) => {
                             var ids = this.profilePhotoGallery.photoGallery.map(p => p.ID);
 
-                            if (ids.indexOf(id) !== -1) {
+                            if (ids.indexOf(file.upload.uuid) !== -1) {
                                 return;
                             }
 
                             this.profilePhotoGallery.photoGallery.push({
-                                'Image': dataUrl.replace('data:image/png;base64,', ''),
-                                'ID': id
+                                'ID': file.upload.uuid,
+                                'File': file
                             });
                         },
                         removedfileEventHandler: (file) => {
                             this.profilePhotoGallery.photoGallery = this.profilePhotoGallery.photoGallery.filter(p => p.ID !== file.upload.uuid);
                         },
                         init: function () {
+                            this.on('addedfile', (file) => {
+                                this.options.addFileEventHandler(file);
+                            });
+
                             this.on('thumbnail', (file, dataUrl) => {
-                                this.options.thumbnailEventHandler(dataUrl, file.upload.uuid);
+                                file.thumbnail = dataUrl;
                             });
 
                             this.on('removedfile', (file) => {
@@ -99,6 +106,12 @@
                 updateProfilePhotoGalleryModel: function () {
                     this.$emit('updateProfilePhotoGallery', this.profilePhotoGalleryModel);
                 }
+            },
+            computed: {
+                ...mapGetters({
+                    maxFileSize: 'applicationData/maxFileSize',
+                    maxPhotoGalleryFileCount: 'applicationData/maxPhotoGalleryFileCount'
+                })
             }
     }
 </script>
@@ -111,7 +124,8 @@
             display: none;
         }
 
-        .dz-image image  {
+        .dz-image img  {
+            height: 200px;
             object-fit: cover;
         }
 

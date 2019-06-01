@@ -9,4 +9,8 @@ export class ApplicationDataService extends BaseService {
     static async getLocales () {
         return this.$axios.$get(Endpoints.GetLocales);
     }
+
+    static async getGeneralApplicationInformation () {
+        return this.$axios.$get(Endpoints.GetGeneralApplicationInformation);
+    }
 }

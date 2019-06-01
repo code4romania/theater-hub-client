@@ -14,9 +14,7 @@ export const state = () => ({
     forgotPasswordErrors: [],
     resetPasswordErrors: [],
     createProfileErrors: [],
-    updateMyGeneralInformationErrors: [],
     updateMySkillsErrors: [],
-    updateMyPhotoGalleryErrors: [],
     updateMyVideoGalleryErrors: [],
     updateMyAwardsErrors: [],
     updateMyExperienceErrors: [],
@@ -56,14 +54,8 @@ export const mutations = {
     SET_CREATE_PROFILE_ERRORS: (state, errors) => {
         state.createProfileErrors = errors;
     },
-    SET_UPDATE_MY_GENERAL_INFORMATION_ERRORS: (state, errors) => {
-        state.updateMyGeneralInformationErrors = errors;
-    },
     SET_UPDATE_MY_SKILLS_ERRORS: (state, errors) => {
         state.updateMySkillsErrors = errors;
-    },
-    SET_UPDATE_MY_PHOTO_GALLERY_ERRORS: (state, errors) => {
-        state.updateMyPhotoGalleryErrors = errors;
     },
     SET_UPDATE_MY_VIDEO_GALLERY_ERRORS: (state, errors) => {
         state.updateMyVideoGalleryErrors = errors;
@@ -176,12 +168,7 @@ export const actions = {
         });
     },
     async updateMyGeneralInformation ({ commit, dispatch }, request) {
-        await UserService.updateMyGeneralInformation(request).then(response => {
-            dispatch('setUpdateMyGeneralInformationErrors', '');
-            dispatch('setMe', response);
-        }).catch(error => {
-            dispatch('setUpdateMyGeneralInformationErrors', error.response.data.errors);
-        });
+        return UserService.updateMyGeneralInformation(request);
     },
     async updateMySkills ({ commit, dispatch }, request) {
         await UserService.updateMySkills(request).then(response => {
@@ -191,11 +178,7 @@ export const actions = {
         });
     },
     async updateMyPhotoGallery ({ commit, dispatch }, request) {
-        await UserService.updateMyPhotoGallery(request).then(response => {
-            dispatch('setUpdateMyPhotoGalleryErrors', '');
-        }).catch(error => {
-            dispatch('setUpdateMyPhotoGalleryErrors', error.response.data.errors);
-        });
+        return UserService.updateMyPhotoGallery(request);
     },
     async updateMyVideoGallery ({ commit, dispatch }, request) {
         await UserService.updateMyVideoGallery(request).then(response => {
@@ -285,14 +268,8 @@ export const actions = {
     setCreateProfileErrors: ({ commit }, errors) => {
         commit('SET_CREATE_PROFILE_ERRORS', errors);
     },
-    setUpdateMyGeneralInformationErrors: ({ commit }, errors) => {
-        commit('SET_UPDATE_MY_GENERAL_INFORMATION_ERRORS', errors);
-    },
     setUpdateMySkillsErrors: ({ commit }, errors) => {
         commit('SET_UPDATE_MY_SKILLS_ERRORS', errors);
-    },
-    setUpdateMyPhotoGalleryErrors: ({ commit }, errors) => {
-        commit('SET_UPDATE_MY_PHOTO_GALLERY_ERRORS', errors);
     },
     setUpdateMyVideoGalleryErrors: ({ commit }, errors) => {
         commit('SET_UPDATE_MY_VIDEO_GALLERY_ERRORS', errors);
