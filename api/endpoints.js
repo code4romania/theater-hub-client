@@ -1,82 +1,84 @@
 
 export class Endpoints {
-    static GetSkills                    = '/applicationdata/skills';
+    static GetSkills                            = '/applicationdata/skills';
 
-    static GetLocales                   = '/applicationdata/locales';
+    static GetLocales                           = '/applicationdata/locales';
 
-    static Login                        = '/authentication';
+    static GetGeneralApplicationInformation     = '/applicationdata/general';
 
-    static CheckUserPassword            = '/authentication/password/validity';
+    static Login                                = '/authentication';
 
-    static Register                     = '/users/register';
+    static CheckUserPassword                    = '/authentication/password/validity';
 
-    static ManagedUserSignup            = '/users/register/managed';
+    static Register                             = '/users/register';
 
-    static FinishRegistration           = '/users/register/finish';
+    static ManagedUserSignup                    = '/users/register/managed';
 
-    static ForgotPassword               = '/users/password/forgot';
+    static FinishRegistration                   = '/users/register/finish';
 
-    static ResetPassword                = '/users/password/reset';
+    static ForgotPassword                       = '/users/password/forgot';
 
-    static ChangePassword               = '/users/password/change';
+    static ResetPassword                        = '/users/password/reset';
 
-    static CreateProfile                = '/users/profile/create';
+    static ChangePassword                       = '/users/password/change';
 
-    static GenerateResume               = '/users/resume';
+    static CreateProfile                        = '/users/profile/create';
 
-    static UpdateMyGeneralInformation   = '/users/me/general';
+    static GenerateResume                       = '/users/resume';
 
-    static UpdateMySkills               = '/users/me/skills';
+    static UpdateMyGeneralInformation           = '/users/me/general';
 
-    static UpdateMyPhotoGallery         = '/users/me/photogallery';
+    static UpdateMySkills                       = '/users/me/skills';
 
-    static UpdateMyVideoGallery         = '/users/me/videogallery';
+    static UpdateMyPhotoGallery                 = '/users/me/photogallery';
 
-    static UpdateMyAwards               = '/users/me/awards';
+    static UpdateMyVideoGallery                 = '/users/me/videogallery';
 
-    static UpdateMyExperience           = '/users/me/experience';
+    static UpdateMyAwards                       = '/users/me/awards';
 
-    static UpdateMyEducation            = '/users/me/education';
+    static UpdateMyExperience                   = '/users/me/experience';
 
-    static GetSettings                  = '/users/settings';
+    static UpdateMyEducation                    = '/users/me/education';
 
-    static UpdateSettings               = '/users/settings';
+    static GetSettings                          = '/users/settings';
 
-    static GetMyProfile                 = '/users/me/profile';
+    static UpdateSettings                       = '/users/settings';
 
-    static GetMe                        = '/users/me';
+    static GetMyProfile                         = '/users/me/profile';
 
-    static GetCommunityLayers           = '/users/community/layers';
+    static GetMe                                = '/users/me';
 
-    static GetCommunityMembers          = '/users/community/members';
+    static GetCommunityLayers                   = '/users/community/layers';
 
-    static GetCommunityMemberProfile    = '/users/profile';
+    static GetCommunityMembers                  = '/users/community/members';
 
-    static DeleteMe                     = '/users/me';
+    static GetCommunityMemberProfile            = '/users/profile';
 
-    static CreateVideo                  = '/videos';
+    static DeleteMe                             = '/users/me';
 
-    static UpdateVideo                  = '/videos';
+    static CreateVideo                          = '/videos';
 
-    static DeleteVideoByID              = '/videos';
+    static UpdateVideo                          = '/videos';
 
-    static CreateAward                  = '/awards';
+    static DeleteVideoByID                      = '/videos';
 
-    static UpdateAward                  = '/awards';
+    static CreateAward                          = '/awards';
 
-    static DeleteAwardByID              = '/awards';
+    static UpdateAward                          = '/awards';
 
-    static CreateEducationStep          = '/education';
+    static DeleteAwardByID                      = '/awards';
 
-    static UpdateEducationStep          = '/education';
+    static CreateEducationStep                  = '/education';
 
-    static DeleteEducationStepByID      = '/education';
+    static UpdateEducationStep                  = '/education';
 
-    static CreateExperienceStep         = '/experience';
+    static DeleteEducationStepByID              = '/education';
 
-    static UpdateExperienceStep         = '/experience';
+    static CreateExperienceStep                 = '/experience';
 
-    static DeleteExperienceStepByID     = '/experience';
+    static UpdateExperienceStep                 = '/experience';
+
+    static DeleteExperienceStepByID             = '/experience';
 
     static Administration = {
         GetUsers: '/administration/users',

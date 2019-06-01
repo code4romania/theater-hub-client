@@ -135,9 +135,9 @@
                         dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializeProfileImage: (dropzone) => {
-                            if (this.profileGeneralInformation.profileImage.Image) {
-                                var fileSize = atob(this.profileGeneralInformation.profileImage.Image).length;
-                                var file     = { url: `data:image/png;base64,${this.profileGeneralInformation.profileImage.Image}`, size: fileSize };
+                            if (this.profileGeneralInformation.profileImage && this.profileGeneralInformation.profileImage.Location) {
+                                var profileImage = this.profileGeneralInformation.profileImage || {};
+                                var file     = { url: profileImage.Location, size: profileImage.Size * 1000 * 1000 };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -145,32 +145,32 @@
                                 dropzone.files.push(file);
                             }
                         },
-                        thumbnailEventHandler: (dataUrl) => {
-                            this.profileGeneralInformationModel.profileImage.Image = dataUrl.replace('data:image/png;base64,', '');
+                        addFileEventHandler: (file) => {
+                            this.profileGeneralInformationModel.profileImage = {
+                                File: file
+                            };
 
                             this.updateProfileGeneralInformationModel();
                         },
                         removedfileEventHandler: (file) => {
-                            this.profileGeneralInformationModel.profileImage.Image = '';
+                            this.profileGeneralInformationModel.profileImage.Location = '';
 
                             this.updateProfileGeneralInformationModel();
                         },
-                        maxFiles: 1,
+                        maxFiles: 5,
                         thumbnailWidth: 200,
                         thumbnailHeight: 200,
                         init: function () {
-                            this.on('thumbnail', (file, dataUrl) => {
-                                this.options.thumbnailEventHandler(dataUrl);
-                            });
-
                             this.on('removedfile', (file) => {
                                 this.options.removedfileEventHandler(file);
                             });
 
-                            this.on('addedfile', () => {
+                            this.on('addedfile', (file) => {
                                 if (this.files.length === 2) {
                                     this.removeFile(this.files[0]);
                                 }
+
+                                this.options.addFileEventHandler(file);
                             });
 
                             this.on('sending', () => {
@@ -234,6 +234,12 @@
 
         .dz-progress {
             display: none;
+        }
+
+        .dz-image img  {
+            max-height: 200px;
+            max-width: 200px;
+            object-fit: cover;
         }
 
     }

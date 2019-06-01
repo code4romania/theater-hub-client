@@ -247,7 +247,8 @@
                 firstName: response.FirstName,
                 lastName: response.LastName,
                 phoneNumber: response.PhoneNumber,
-                email: response.Email
+                email: response.Email,
+                username: response.Username
             };
         },
         methods: {

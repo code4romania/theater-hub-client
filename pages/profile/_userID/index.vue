@@ -299,6 +299,7 @@
                     firstName: response.FirstName,
                     lastName: response.LastName,
                     email: response.Email,
+                    username: response.Username,
                     instagramLink: response.InstagramLink,
                     youtubeLink: response.YoutubeLink,
                     facebookLink: response.FacebookLink,
@@ -401,8 +402,7 @@
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             portfolioImages: function () {
-                return this.profile.profilePhotoGallery.photoGallery
-                        .map(p => `data:image/png;base64,${p.Image}`);
+                return this.profile.profilePhotoGallery.photoGallery.map(p => p.Location);
             },
             hasBirthDate: function () {
                 return !!this.profile.profileGeneralInformation.birthDate;

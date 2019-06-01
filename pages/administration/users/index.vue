@@ -358,7 +358,7 @@
                 this.updateUsersDashboardTable();
             },
             onDashboardUserClick: function (user) {
-                window.open(`/profile/${user.ID}`, '_blank')
+                window.open(`/profile/${user.username}`, '_blank')
             },
             onEnableUserClick: function (event, user) {
                 event.preventDefault();

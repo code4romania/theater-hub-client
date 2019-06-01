@@ -427,55 +427,75 @@ export default {
         return true;
     },
     async createProfile () {
-        await this.$store.dispatch('users/createProfile', {
-            ProfileImage: {
-                Image: this.profileGeneralInformation.profileImage.Image
-            },
-            BirthDate: this.profileGeneralInformation.birthDate,
-            PhoneNumber: this.profileGeneralInformation.phoneNumber,
-            Description: this.profileGeneralInformation.description,
-            Website: this.profileGeneralInformation.website ? this.profileGeneralInformation.website : null,
-            InstagramLink: this.profileGeneralInformation.instagramLink ? this.profileGeneralInformation.instagramLink : null,
-            YoutubeLink: this.profileGeneralInformation.youtubeLink ? this.profileGeneralInformation.youtubeLink : null,
-            FacebookLink: this.profileGeneralInformation.facebookLink ? this.profileGeneralInformation.facebookLink : null,
-            LinkedinLink: this.profileGeneralInformation.linkedinLink ? this.profileGeneralInformation.linkedinLink : null,
-            Skills: this.profileSkills.selectedSkills.map(s => s.ID),
-            PhotoGallery: this.profilePhotoGallery.photoGallery,
-            VideoGallery: this.profileVideoGallery.videoGallery.map(v => {
-                return { Video: v.link };
-            }),
-            Awards: this.profileAwards.awards.slice(0, this.profileAwards.awards.length).map(a => {
-                return {
-                    Title: a.title,
-                    Issuer: a.issuer,
-                    Description: a.description,
-                    Date: a.date
-                };
-            }),
-            Experience: this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length).map(e => {
-                return {
-                    Position: e.position,
-                    Employer: e.employerName,
-                    Description: e.description,
-                    StartDate: e.startDate,
-                    EndDate: e.endDate
-                };
-            }),
-            Education: this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length).map(e => {
-                return {
-                    Title: e.title,
-                    Institution: e.institutionName,
-                    Description: e.description,
-                    StartDate: e.startDate,
-                    EndDate: e.endDate
-                };
-            }),
-            ProfileVisibility: this.profilePrivacy.profileVisibility,
-            EmailVisibility: this.profilePrivacy.emailVisibility,
-            BirthDateVisibility: this.profilePrivacy.birthDateVisibility,
-            PhoneNumberVisibility: this.profilePrivacy.phoneNumberVisibility,
-            Locale: this.localeSetting
-        })
+        var createProfileFormData = new FormData();
+
+        var profileImage    = this.profileGeneralInformation.profileImage.File;
+        var birthDate       = this.profileGeneralInformation.birthDate;
+        var phoneNumber     = this.profileGeneralInformation.phoneNumber;
+        var description     = this.profileGeneralInformation.description;
+        var website         = this.profileGeneralInformation.website ? this.profileGeneralInformation.website : '';
+        var instagramLink   = this.profileGeneralInformation.instagramLink ? this.profileGeneralInformation.instagramLink : '';
+        var youtubeLink     = this.profileGeneralInformation.youtubeLink ? this.profileGeneralInformation.youtubeLink : '';
+        var facebookLink    = this.profileGeneralInformation.facebookLink ? this.profileGeneralInformation.facebookLink : '';
+        var linkedinLink    = this.profileGeneralInformation.linkedinLink ? this.profileGeneralInformation.linkedinLink : '';
+        var skills          = this.profileSkills.selectedSkills.map(s => s.ID);
+        var photoGallery    = this.profilePhotoGallery.photoGallery.map(p => p.File);
+        var videoGallery    = JSON.stringify(this.profileVideoGallery.videoGallery.map(v => { return { Video: v.link }; }));
+        var awards          = JSON.stringify(this.profileAwards.awards.slice(0, this.profileAwards.awards.length).map(a => {
+                                return {
+                                    Title: a.title,
+                                    Issuer: a.issuer,
+                                    Description: a.description,
+                                    Date: a.date
+                                };
+                            }));
+        var experience      = JSON.stringify(this.profileExperience.experienceSteps.slice(0, this.profileExperience.experienceSteps.length).map(e => {
+                                return {
+                                    Position: e.position,
+                                    Employer: e.employerName,
+                                    Description: e.description,
+                                    StartDate: e.startDate,
+                                    EndDate: e.endDate
+                                };
+                            }));
+        var education       = JSON.stringify(this.profileEducation.educationSteps.slice(0, this.profileEducation.educationSteps.length).map(e => {
+                                return {
+                                    Title: e.title,
+                                    Institution: e.institutionName,
+                                    Description: e.description,
+                                    StartDate: e.startDate,
+                                    EndDate: e.endDate
+                                };
+                            }));
+
+        var profileVisibility       = this.profilePrivacy.profileVisibility;
+        var emailVisibility         = this.profilePrivacy.emailVisibility;
+        var birthDateVisibility     = this.profilePrivacy.birthDateVisibility;
+        var phoneNumberVisibility   = this.profilePrivacy.phoneNumberVisibility;
+        var locale                  = this.localeSetting;
+
+        createProfileFormData.append('ProfileImage', profileImage);
+        createProfileFormData.append('BirthDate', birthDate);
+        createProfileFormData.append('PhoneNumber', phoneNumber);
+        createProfileFormData.append('Description', description);
+        createProfileFormData.append('Website', website);
+        createProfileFormData.append('InstagramLink', instagramLink);
+        createProfileFormData.append('YoutubeLink', youtubeLink);
+        createProfileFormData.append('FacebookLink', facebookLink);
+        createProfileFormData.append('LinkedinLink', linkedinLink);
+        createProfileFormData.append('Skills', skills);
+        photoGallery.forEach(p => createProfileFormData.append('AddedPhotos', p));
+        createProfileFormData.append('VideoGallery', videoGallery);
+        createProfileFormData.append('Awards', awards);
+        createProfileFormData.append('Experience', experience);
+        createProfileFormData.append('Education', education);
+        createProfileFormData.append('ProfileVisibility', profileVisibility);
+        createProfileFormData.append('EmailVisibility', emailVisibility);
+        createProfileFormData.append('BirthDateVisibility', birthDateVisibility);
+        createProfileFormData.append('PhoneNumberVisibility', phoneNumberVisibility);
+        createProfileFormData.append('Locale', locale);
+
+        await this.$store.dispatch('users/createProfile', createProfileFormData)
         .then(() => {
             if (!this.users.createProfileErrors) {
                 this.$store.dispatch('users/enableMe');
