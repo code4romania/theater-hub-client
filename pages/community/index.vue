@@ -126,6 +126,7 @@
                     return {
                         ID: m.ID,
                         FullName: `${m.FirstName} ${m.LastName}`,
+                        Username: m.Username,
                         ProfileImage: m.ProfileImage,
                         Skills: skills,
                         Surplus: skillSurplus > 0 ? `+${skillSurplus}` : ''
@@ -264,7 +265,7 @@
     .community-header-bar {
         justify-content: center;
 
-        label, input, input::placeholder, input::-webkit-input-placeholder,  {
+        label, input, input::placeholder, input::-webkit-input-placeholder {
             font-weight: 500;
             font-family: Titillium Web;
             font-style: normal;

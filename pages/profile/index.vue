@@ -9,7 +9,7 @@
                                 <v-flex xs12 sm12 md6 lg5>
                                     <v-avatar>
                                         <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                                        <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
+                                        <img :src="profileImage" v-if="profileImage" />
                                     </v-avatar>
                                 </v-flex>
                                 <v-flex xs12 sm12 md6 lg7 class="general-information">
@@ -47,7 +47,7 @@
                                                 </a>
                                             </v-flex>
                                             <v-flex xs12 class="profile-information-row">
-                                                <nuxt-link :to="`/profile/${profile.ID}`" class="preview-profile-link" target="_blank">
+                                                <nuxt-link :to="`/profile/${profile.profileGeneralInformation.username}`" class="preview-profile-link" target="_blank">
                                                     <v-btn id="preview-profile-button" class="primary ml-0" small>
                                                         {{ $t('pages.profile.preview-profile-button') }}
                                                     </v-btn>
@@ -334,6 +334,7 @@ export default {
                 firstName: response.FirstName,
                 lastName: response.LastName,
                 email: response.Email,
+                username: response.Username,
                 instagramLink: response.InstagramLink,
                 youtubeLink: response.YoutubeLink,
                 facebookLink: response.FacebookLink,
@@ -522,29 +523,28 @@ export default {
                 this.cloneEditedProfile();
             },
             onSaveEditGeneralInformationClick: function () {
-                var newGeneralInformationRequest = {
-                    FirstName: this.editedProfile.profileGeneralInformation.firstName,
-                    LastName: this.editedProfile.profileGeneralInformation.lastName,
-                    ProfileImage: {
-                        Image: this.editedProfile.profileGeneralInformation.profileImage.Image
-                    },
-                    BirthDate: this.editedProfile.profileGeneralInformation.birthDate,
-                    PhoneNumber: this.editedProfile.profileGeneralInformation.phoneNumber,
-                    Description: this.editedProfile.profileGeneralInformation.description,
-                    Website: this.editedProfile.profileGeneralInformation.website ? this.editedProfile.profileGeneralInformation.website : null,
-                    InstagramLink: this.editedProfile.profileGeneralInformation.instagramLink ? this.editedProfile.profileGeneralInformation.instagramLink : null,
-                    YoutubeLink: this.editedProfile.profileGeneralInformation.youtubeLink ? this.editedProfile.profileGeneralInformation.youtubeLink : null,
-                    FacebookLink: this.editedProfile.profileGeneralInformation.facebookLink ? this.editedProfile.profileGeneralInformation.facebookLink : null,
-                    LinkedinLink: this.editedProfile.profileGeneralInformation.linkedinLink ? this.editedProfile.profileGeneralInformation.linkedinLink : null
-                };
+                var generalInformationFormData = new FormData();
+                generalInformationFormData.append('FirstName', this.editedProfile.profileGeneralInformation.firstName);
+                generalInformationFormData.append('LastName', this.editedProfile.profileGeneralInformation.lastName);
+                generalInformationFormData.append('ProfileImage', this.editedProfile.profileGeneralInformation.profileImage.File);
+                generalInformationFormData.append('BirthDate', this.editedProfile.profileGeneralInformation.birthDate);
+                generalInformationFormData.append('PhoneNumber', this.editedProfile.profileGeneralInformation.phoneNumber);
+                generalInformationFormData.append('Description', this.editedProfile.profileGeneralInformation.description);
+                generalInformationFormData.append('Website', this.editedProfile.profileGeneralInformation.website ? this.editedProfile.profileGeneralInformation.website : '');
+                generalInformationFormData.append('InstagramLink', this.editedProfile.profileGeneralInformation.instagramLink ? this.editedProfile.profileGeneralInformation.instagramLink : '');
+                generalInformationFormData.append('YoutubeLink', this.editedProfile.profileGeneralInformation.youtubeLink ? this.editedProfile.profileGeneralInformation.youtubeLink : '');
+                generalInformationFormData.append('FacebookLink', this.editedProfile.profileGeneralInformation.facebookLink ? this.editedProfile.profileGeneralInformation.facebookLink : '');
+                generalInformationFormData.append('LinkedinLink', this.editedProfile.profileGeneralInformation.linkedinLink ? this.editedProfile.profileGeneralInformation.linkedinLink : '');
 
-                this.$store.dispatch('users/updateMyGeneralInformation', newGeneralInformationRequest).then(() => {
-                    if (!this.users.updateMyGeneralInformationErrors) {
-                        this.endProfileSectionEditSession(ProfileSectionType.GeneralInformation);
-                        this.saveEditedProfile();
-                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
-                        this.snackbar = true;
+                this.$store.dispatch('users/updateMyGeneralInformation', generalInformationFormData).then((response) => {
+                    this.endProfileSectionEditSession(ProfileSectionType.GeneralInformation);
+
+                    if (response) {
+                        this.editedProfile.profileGeneralInformation.profileImage = response.ProfileImage;
                     }
+                    this.saveEditedProfile();
+                    this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
+                    this.snackbar = true;
                 });
             },
             onSaveEditSkillsClick: function () {
@@ -558,13 +558,19 @@ export default {
                 });
             },
             onSaveEditPhotoGalleryClick: function () {
-                this.$store.dispatch('users/updateMyPhotoGallery', this.editedProfile.profilePhotoGallery.photoGallery).then(() => {
-                    if (!this.users.updateMyPhotoGalleryErrors) {
+                this.$store.dispatch('users/updateMyPhotoGallery', this.editedProfile.profilePhotoGallery.photoGallery).then((response) => {
                         this.endProfileSectionEditSession(ProfileSectionType.PhotoGallery);
+
+                        if (response && response.AddedPhotos.length !== 0) {
+                            this.editedProfile.profilePhotoGallery.photoGallery = this.editedProfile.profilePhotoGallery.photoGallery.filter(p => !p.File);
+                            this.editedProfile.profilePhotoGallery.photoGallery = this.editedProfile.profilePhotoGallery.photoGallery.concat(response.AddedPhotos);
+                        }
+
                         this.saveEditedProfile();
                         this.snackbarText = this.$t('pages.profile.snackbar-messages.update-photo-gallery');
                         this.snackbar = true;
-                    }
+                }).catch(() => {
+                    this.endProfileSectionEditSession(ProfileSectionType.PhotoGallery);
                 });
             },
             onCancelEditGeneralInformationClick: function () {
@@ -687,7 +693,7 @@ export default {
                     return null;
                 }
 
-                return this.profile.profileGeneralInformation.profileImage.Image;
+                return this.profile.profileGeneralInformation.profileImage.Location;
             },
             skillNameList: function () {
                 return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
@@ -698,8 +704,7 @@ export default {
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             portfolioImages: function () {
-                return this.profile.profilePhotoGallery.photoGallery
-                        .map(p => `data:image/png;base64,${p.Image}`);
+                return this.profile.profilePhotoGallery.photoGallery.map(p => p.Location);
             },
             isEditingProfileSection: function () {
                 return this.isEditingGeneralInformation || this.isEditingSkills ||
