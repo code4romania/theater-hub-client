@@ -29,8 +29,8 @@
                     <span>{{ $t('shared.header.greeting') }}, {{ myFullName }}</span>
                   </div>
                   <v-avatar size="30px">
-                    <img :src="require('~/assets/images/default-avatar.svg')"   v-if="!myProfileImage || !myProfileImage.Image" />
-                    <img :src="`data:image/png;base64,${myProfileImage.Image}`" v-if="myProfileImage && myProfileImage.Image" />
+                    <img :src="require('~/assets/images/default-avatar.svg')"   v-if="!myProfileImage" />
+                    <img :src="myProfileImage.ThumbnailLocation" v-if="myProfileImage" />
                   </v-avatar>
                 </v-flex>
                 <v-list>

@@ -62,7 +62,7 @@
               {{ $t('pages.sign-up.separator-text') }}
           </v-flex>
           <v-layout row wrap mt-1 v-if="!isSuccessfulSubmit">
-            <v-flex xs6 pr-2>
+            <v-flex xs12 md6 class="facebook-link-container">
                 <a href="https://localhost:443/api/authentication/facebook" class="facebook-signup-link social-media-signup-link">
                   <v-btn class="facebook-signup-button social-media-signup-button">
                     <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
@@ -70,7 +70,7 @@
                   </v-btn>
                 </a>
             </v-flex>
-            <v-flex xs6 pl-2>
+            <v-flex xs12 md6 class="google-link-container">
                 <a href="https://localhost:443/api/authentication/google" class="google-signup-link social-media-signup-link">
                   <v-btn class="google-signup-button social-media-signup-button">
                     <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />
@@ -234,6 +234,7 @@
   }
 
   .agree-to-terms-label {
+    margin-left: 5px;
     cursor: pointer;
   }
 

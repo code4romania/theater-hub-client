@@ -232,6 +232,55 @@
             "validation-errors": {
                 "length": "Mesajul trebuie să aibă cel mult 500 de caractere"
             }
+        },
+        "project-photo-dropzone": {
+            "label": "Apăsați sau plasați posterul proiectului aici",
+            "photo-remove-button": "ȘTERGE"
+        },
+        "project-name": {
+            "label": "Nume proiect",
+            "validation-errors": {
+                "required": "Numele proiectului este obligatoriu",
+                "length": "Numele proiectului trebuie să aibă cel mult 100 de caractere"
+            }
+        },
+        "city": {
+            "label": "Oraș",
+            "validation-errors": {
+                "required": "Orașul este obligatoriu",
+                "length": "Orașul trebuie să aibă cel mult 100 de caractere"
+            }
+        },
+        "budget": {
+            "label": "Buget",
+            "validation-errors": {
+                "invalid": "Bugetul trebuie sa fie valid"
+            }
+        },
+        "currency": {
+            "label": "Monedă"
+        },
+        "project-date": {
+            "label": "Data lansării"
+        },
+        "need": {
+            "description": {
+                "label": "Descriere",
+                "validation-errors": {
+                    "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+                }
+            },
+            "isUrgent": {
+                "label": "Este urgent"
+            }
+        },
+        "update": {
+            "description": {
+                "label": "Descriere",
+                "validation-errors": {
+                    "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
+                }
+            }
         }
     },
     "shared": {
@@ -261,6 +310,8 @@
             "add-award-button": "Adăugați premiu",
             "add-experience-button": "Adăugați experiență profesională",
             "add-education-button": "Adăugați experiență educațională",
+            "add-need-button": "Adăugați nevoie",
+            "add-update-button": "Adăugați actualizare",
             "profile-visibility": "Vizibilitatea profilului:",
             "email-visibility": "Vizibilitatea e-mail-ului:",
             "birth-date-visibility": "Vizibilitatea zilei de naștere:",
@@ -270,7 +321,9 @@
             "finish-button": "GATA",
             "years": "ani",
             "locale-setting": "Limbă:",
-            "close": "Închide"
+            "close": "Închide",
+            "project-initiator": "Inițiator proiect:",
+            "requested-roles": "Numărul de roluri cerute:"
         }
     },
     "pages": {
@@ -324,6 +377,36 @@
         },
         "projects": {
             "title": "Proiecte"
+        },
+        "project": {
+            "needs-title": "Necesități",
+            "updates-title": "Noutăți",
+            "urgent": "URGENT",
+            "initiator": "Inițiator proiect:",
+            "contact-phone-number": "Număr de telefon:",
+            "contact-email": "Email:",
+            "start-date": "Data începerii:",
+            "city": "Oraș:",
+            "budget": "Buget:",
+            "other-projects-by-title": "Alte Proiecte de către ",
+            "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
+            "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
+            "no-needs-message": "Nu ați adăugat nevoi",
+            "no-updates-message": "Nu ați adăugat actualizări",
+            "snackbar-messages": {
+                "update-needs": "Secțiunea de nevoi a fost actualizată",
+                "update-updates": "Secțiunea de noutăți a fost actualizată"
+            }
+        },
+        "create-project": {
+            "steps": {
+                "general": {
+                    "title": "General"
+                },
+                "needs": {
+                    "title": "Nevoi"
+                }
+            }
         },
         "community": {
             "no-search-results": "Nu există rezultate",

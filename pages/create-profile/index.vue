@@ -37,7 +37,7 @@
 
                     <v-stepper-content step="2" class="pl-5">
                         <v-layout row wrap class="pl-2 pb-5">
-                            <ProfileSkills :profileSkills="profileSkills" :skills="localizedSkills"
+                            <ProfileSkills :profileSkills="profileSkills" :skills="skills"
                                                             @updateProfileSkills="updateProfileSkills"/>
                             <v-flex xs12 my-5>
                                 <v-btn flat @click="wizardStep = 1">{{ $t('shared.content.back-button') }}</v-btn>
@@ -66,8 +66,8 @@
                                         <ProfileVideoGallery
                                             :videoGallery="profileVideoGallery.videoGallery"
                                             :saveChanges="false"
-                                            @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                            @endProfileSectionEditSession="endProfileSectionEditSession"
+                                            @initiateEditSectionSession="initiateEditSectionSession"
+                                            @endEditSectionSession="endEditSectionSession"
                                             @updateVideoGallery="updateProfileVideoGallery" />
                                     </v-flex>
                                 </v-layout>
@@ -91,8 +91,8 @@
                                 :awards="profileAwards.awards"
                                 :isTimeline="false"
                                 :saveChanges="false"
-                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @initiateEditSectionSession="initiateEditSectionSession"
+                                @endEditSectionSession="endEditSectionSession"
                                 @updateAwards="updateProfileAwards" />
 
                             <v-flex xs12 my-5>
@@ -113,8 +113,8 @@
                                 :experienceSteps="profileExperience.experienceSteps"
                                 :isTimeline="false"
                                 :saveChanges="false"
-                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @initiateEditSectionSession="initiateEditSectionSession"
+                                @endEditSectionSession="endEditSectionSession"
                                 @updateExperience="updateProfileExperience" />
 
                             <v-flex xs12 my-5>
@@ -135,8 +135,8 @@
                                 :educationSteps="profileEducation.educationSteps"
                                 :isTimeline="false"
                                 :saveChanges="false"
-                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @initiateEditSectionSession="initiateEditSectionSession"
+                                @endEditSectionSession="endEditSectionSession"
                                 @updateEducation="updateProfileEducation" />
 
                             <v-flex xs12 my-5>
@@ -531,8 +531,8 @@ export default {
     updateLocaleSetting: function (model) {
         this.localeSetting = model;
     },
-    initiateProfileSectionEditSession (navigateToElement, profileSection) {
-        this.$store.dispatch('users/initiateProfileSectionEditSession');
+    initiateEditSectionSession (navigateToElement, profileSection) {
+        this.$store.dispatch('users/initiateEditSectionSession');
 
         if (profileSection === ProfileSectionType.VideoGallery) {
             this.isEditingVideoGallery = true;
@@ -546,7 +546,7 @@ export default {
 
         if (navigateToElement) {
             setTimeout(() => {
-                var element = document.getElementsByClassName('edited-profile-section')[0];
+                var element = document.getElementsByClassName('edited-section')[0];
 
                 if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
                     HtmlHelpers.scrollToElement(element);
@@ -554,7 +554,7 @@ export default {
             }, 0);
         }
     },
-    endProfileSectionEditSession (profileSection) {
+    endEditSectionSession (profileSection) {
         if (profileSection === ProfileSectionType.VideoGallery) {
             this.isEditingVideoGallery = false;
         } else if (profileSection === ProfileSectionType.Awards) {
@@ -565,7 +565,7 @@ export default {
             this.isEditingEducation = false;
         }
 
-        this.$store.dispatch('users/endProfileSectionEditSession');
+        this.$store.dispatch('users/endEditSectionSession');
     }
   },
   computed: {
@@ -573,18 +573,10 @@ export default {
     ...mapGetters({
         skills: 'applicationData/skills',
         locale: 'locale'
-    }),
-    localizedSkills: function () {
-        return this.skills.map(s => {
-            return {
-                ...s,
-                Name: this.$t(`application-data.${s.Name}`)
-            };
-        }).sort((s1, s2) => s1.Name > s2.Name ? -1 : 1);
-    }
+    })
   },
   mounted () {
-      this.endProfileSectionEditSession();
+      this.endEditSectionSession();
   }
 }
 </script>

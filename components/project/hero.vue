@@ -2,13 +2,13 @@
   <v-container fluid pa-0>
     <v-layout row wrap class="projectHero">
       <v-flex sm6 order-sm2>
-        <img class="projectHero__image" :src="require('~/assets/images/default-project-hero.jpg')">
+        <img class="projectHero__image" :src="image">
       </v-flex>
       <v-flex sm6 order-sm1 px-5 class="projectHero__content">
-        <h1 class="pb-4">Back to the Future - Contemporary Dance Show</h1>
+        <h1 class="pb-4">{{ title }}</h1>
         <v-avatar size="200px">
-          <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage">
-          <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage">
+          <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
+          <img :src="initiatorImage" v-if="initiatorImage">
         </v-avatar>
       </v-flex>
     </v-layout>
@@ -16,7 +16,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['title', 'image', 'initiatorImage']
+};
 </script>
 
 <style lang="scss" scoped>

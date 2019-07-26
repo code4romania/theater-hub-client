@@ -4,7 +4,7 @@
             <nuxt-link :to="`/profile/${member.Username}`">
                 <v-avatar size="160px">
                     <img :src="require('~/assets/images/default-avatar.svg')" v-if="!member.ProfileImage" />
-                    <img :src="member.ProfileImage.Location" v-if="member.ProfileImage" />
+                    <img :src="member.ProfileImage" v-if="member.ProfileImage" />
                 </v-avatar>
             </nuxt-link>
         </v-flex>
@@ -14,21 +14,28 @@
             </nuxt-link>
         </v-flex>
         <v-flex xs12 class="member-skills-container member-information-container mt-1">
-            <nuxt-link :to="`/profile/${member.Username}`">
-                <v-chip :key="j" v-for="(skill, j) in member.Skills"
-                            class="member-skill skill secondary-color mr-2">{{ skill }}</v-chip>
-                <v-chip v-if="member.Surplus" class="skill-surplus skill secondary-color mr-2">
-                    {{ member.Surplus }}
+            <v-chip
+                :key="j"
+                v-on:click="() => handleSkillClick(skill)"
+                v-for="(skill, j) in member.Skills"
+                class="member-skill skill secondary-color mr-2">
+                    {{ skill.Name }}
                 </v-chip>
-            </nuxt-link>
+            <v-chip v-if="member.Surplus" class="skill-surplus skill secondary-color mr-2">
+                {{ member.Surplus }}
+            </v-chip>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
+
     export default {
         props: ['member'],
         methods: {
+            handleSkillClick: function (skill) {
+                this.$emit('handleSkillClick', skill);
+            }
         }
     }
 </script>

@@ -4,6 +4,8 @@ export class Endpoints {
 
     static GetLocales                           = '/applicationdata/locales';
 
+    static GetCurrencies                        = '/applicationdata/currencies';
+
     static GetGeneralApplicationInformation     = '/applicationdata/general';
 
     static Login                                = '/authentication';
@@ -79,6 +81,8 @@ export class Endpoints {
     static UpdateExperienceStep                 = '/experience';
 
     static DeleteExperienceStepByID             = '/experience';
+
+    static GetProjects                          = 'projects';
 
     static Administration = {
         GetUsers: '/administration/users',

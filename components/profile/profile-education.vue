@@ -14,7 +14,7 @@
                 :key="`education-${educationIndex}`"
                 v-for="(step, educationIndex) in educationSteps"
                 v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
-                @mouseover.native="step.isHovered = true" @mouseout.native="step.isHovered = false"
+                @mouseenter.native="step.isHovered = true" @mouseleave.native="step.isHovered = false"
                 class="timeline-achievement-item"  color="primary" small fill-dot right>
                     <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
@@ -45,11 +45,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
                         <ProfileEducationEdit :educationStep="step"
                                     :index="educationIndex" @editEducationStep="editEducationStep"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
                         <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
                     </v-card>
             </v-timeline-item>
@@ -70,7 +70,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingEducationStep">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileEducationAdd @addEducationStep="addEducationStep"/>
                 </v-card>
             </v-timeline-item>
@@ -82,7 +82,7 @@
             <div :key="`education-${educationIndex}`"
                 v-for="(step, educationIndex) in educationSteps"
                 v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
-                @mouseover="step.isHovered = true" @mouseout="step.isHovered = false"
+                @mouseenter="step.isHovered = true" @mouseleave="step.isHovered = false"
                 class="achievement-item"  color="primary">
                     <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
@@ -113,11 +113,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
                         <ProfileEducationEdit :educationStep="step"
                                     :index="educationIndex" @editEducationStep="editEducationStep"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
                         <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
                     </v-card>
             </div>
@@ -133,7 +133,7 @@
                 <v-icon>add</v-icon> {{ $t('shared.content.add-education-button') }}
             </v-btn>
             <div class="timeline-message" v-if="isAddingEducationStep">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileEducationAdd @addEducationStep="addEducationStep"/>
                 </v-card>
             </div>
@@ -168,20 +168,20 @@
         methods: {
             onAddEducationStepClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedEducationSteps();
                 this.isAddingEducationStep = true;
             },
             onEditEducationStepClick: function (educationStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedEducationSteps();
                 this.isEditingEducation = true;
                 educationStep.inEditMode = true;
             },
             onDeleteEducationStepClick: function (educationStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedEducationSteps();
                 this.isDeletingEducationStep = true;
                 educationStep.inDeleteMode = true;
@@ -229,7 +229,7 @@
                 }
 
                 this.isAddingEducationStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             editEducationStep: function (educationStep, index) {
                 let newEducationStep = {};
@@ -274,7 +274,7 @@
                     e.inEditMode = false;
                 });
                 this.isEditingEducation = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             deleteEducationStep: function (index) {
                 if (index !== null && this.saveChanges) {
@@ -296,22 +296,22 @@
                     e.inDeleteMode = false;
                 });
                 this.isDeletingEducationStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cancelAllUnsavedChanges: function () {
                 this.isAddingEducationStep = false;
                 this.isEditingEducation = false;
                 this.isDeletingEducationStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cloneEditedEducationSteps: function () {
                 this.editedEducationSteps = Helpers.cloneObject(this.educationSteps);
             },
-            initiateProfileSectionEditSession: function (navigateToElement) {
-                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Education);
+            initiateEditSectionSession: function (navigateToElement) {
+                this.$emit('initiateEditSectionSession', navigateToElement, ProfileSectionType.Education);
             },
-            endProfileSectionEditSession: function () {
-                this.$emit('endProfileSectionEditSession', ProfileSectionType.Education);
+            endEditSectionSession: function () {
+                this.$emit('endEditSectionSession', ProfileSectionType.Education);
             },
             updateEducation: function () {
                 this.$emit('updateEducation', this.editedEducationSteps);
@@ -329,7 +329,3 @@
     }
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -29,7 +29,7 @@
                     {{ $t('pages.login.separator-text') }}
                 </v-flex>
                 <v-layout row wrap mt-1>
-                  <v-flex xs6 pr-2>
+                  <v-flex xs12 md6 class="facebook-link-container">
                       <a href="https://localhost:443/api/authentication/facebook" class="facebook-login-link social-media-login-link">
                         <v-btn class="facebook-login-button social-media-login-button">
                           <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
@@ -37,7 +37,7 @@
                         </v-btn>
                       </a>
                   </v-flex>
-                  <v-flex xs6 pl-2>
+                  <v-flex xs12 md6 class="google-link-container">
                       <a href="https://localhost:443/api/authentication/google" class="google-login-link social-media-login-link">
                         <v-btn class="google-login-button social-media-login-button">
                           <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />

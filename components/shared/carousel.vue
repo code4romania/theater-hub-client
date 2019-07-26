@@ -63,15 +63,18 @@
                     this.carouselRightItemIndex--;
                 },
                 onCarouselLeftArrowClick: function () {
-                    if (this.disableNavigation || this.carouselLeftItemIndex <= 0) {
+                    if (this.disableNavigation) {
                         return;
+                    }
+
+                    if (this.carouselLeftItemIndex !== 0) {
+                        this.carouselLeftItemIndex--;
                     }
 
                     this.disableNavigation = true;
 
                     var carousel = document.getElementById('carousel-items');
                     var carouselItems = document.getElementsByClassName('carousel-item');
-                    this.carouselLeftItemIndex--;
                     var carouselLeft = carousel.getBoundingClientRect().left;
                     var carouselRight = carousel.getBoundingClientRect().left + carousel.offsetWidth;
                     var carouselItemLeft = carouselItems[this.carouselLeftItemIndex].getBoundingClientRect().left;
@@ -103,13 +106,16 @@
                 onCarouselRightArrowClick: function () {
                     var carouselItems = document.getElementsByClassName('carousel-item');
 
-                    if (this.disableNavigation || this.carouselRightItemIndex >= carouselItems.length - 1) {
+                    if (this.disableNavigation) {
                         return;
+                    }
+
+                    if (this.carouselRightItemIndex < carouselItems.length - 1) {
+                        this.carouselRightItemIndex++;
                     }
 
                     this.disableNavigation = true;
 
-                    this.carouselRightItemIndex++;
                     var carousel = document.getElementById('carousel-items');
                     var carouselLeft = carousel.getBoundingClientRect().left;
                     var carouselRight = carouselLeft + carousel.offsetWidth;
@@ -158,9 +164,10 @@
                 }
             },
             mounted () {
-                this.setupCarousel();
-
-                this.calculateCarouselArrowsVisibility();
+                setTimeout(() => {
+                    this.setupCarousel();
+                    this.calculateCarouselArrowsVisibility();
+                }, 500);
 
                 window.onresize = (event) => {
                     this.setupCarousel();
