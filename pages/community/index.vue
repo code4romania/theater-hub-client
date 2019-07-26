@@ -11,10 +11,12 @@
                 <v-flex xs12 sm5 md5 lg5 pr-3 mt-3 class="skills-filter-container">
                     <v-flex xs12>
                         <v-autocomplete 
-                            item-text="Name" item-value="ID"
+                            item-text="Name"
+                            item-value="ID"
                             :no-data-text="$t('pages.community.no-search-results')"
                             @input="updateFilterSkills"
-                            v-model="filterSkills" :items="localizedSkills"
+                            v-model="filterSkills"
+                            :items="localizedSkills"
                             chips :label="$t('fields.search-by-skills.label')" multiple solo append-icon="search">
                             <template slot="selection" slot-scope="data">
                                 <v-chip :selected="data.selected" close class="skill secondary-color mr-2"
@@ -37,7 +39,7 @@
                         <v-layout row wrap>
 
                             <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in layer.Members" class="mt-4">
-                                <CommunityMember :member="member" />
+                                <CommunityMember @handleSkillClick="handleSkillClick" :member="member" />
                             </v-flex>
 
                             <v-flex xs6 sm4 md3 lg3 community-member class="mt-4" v-if="layer.HasMore">
@@ -54,9 +56,8 @@
             <v-layout row wrap class="community-members-wrapper" v-if="!inCommunityLayersView">
 
                 <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in communityMembers" class="mt-4">
-                    <CommunityMember :member="member" />
+                    <CommunityMember @handleSkillClick="handleSkillClick" :member="member" />
                 </v-flex>
-
             </v-layout>
 
             <v-flex xs12 v-if="!hasLoadedAll" justify-center class="mt-5 show-more-members-row">
@@ -119,7 +120,7 @@
             initializeCommunityMembers: function (members) {
                 return members.map(m => {
                     var memberSkills = this.localizedSkills.filter(s => m.SkillIDs.indexOf(s.ID) !== -1);
-                    var skills = memberSkills.slice(0, 2).map(s => s.Name);
+                    var skills = memberSkills.slice(0, 2);
 
                     var skillSurplus = memberSkills.length - 2;
 
@@ -159,9 +160,8 @@
                     this.communityLayers = response.Layers;
 
                     this.initializeCommunityLayers();
+                    this.isLoading = false;
                 });
-
-				this.isLoading = false;
             },
 			async loadCommunityMembers () {
                 if (this.isLoading) {
@@ -182,15 +182,23 @@
                     this.communityMembers  = this.communityMembers.concat(this.initializeCommunityMembers(response.Members));
 
                     this.communitySize = response.CommunitySize;
+                    this.isLoading = false;
                 });
-
-				this.isLoading = false;
             },
             onShowMoreClick: function () {
                 this.page++;
 
 				this.loadCommunityMembers();
-			},
+            },
+            handleSkillClick: function (skill) {
+                if (this.filterSkills.indexOf(skill.ID) !== -1) {
+                    return;
+                }
+
+                this.filterSkills.push(skill.ID);
+
+                this.updateFilterSkills();
+            },
             updateFilterSkills: function () {
                 this.communityMembers = [];
                 this.communitySize = 0;

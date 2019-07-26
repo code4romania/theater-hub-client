@@ -1,116 +1,75 @@
 <template>
   <div class="nuxt-wrapper">
-    <Hero/>
+    <Hero :title="project.name" :image="project.image" :initiatorImage="project.initiatorImage"/>
     <v-container>
       <v-layout row wrap justify-space-between mt-5>
         <v-flex md8>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+          <p>{{ project.description }}</p>
           <v-layout justify-end row>
-            <vue-goodshare-facebook page_url="https://github.com" title_social="Facebook" has_icon/>
-            <vue-goodshare-twitter page_url="https://github.com" title_social="Twitter" has_icon/>
+            <vue-goodshare-facebook :page_url="pageURL" title_social="Facebook" has_icon/>
+            <vue-goodshare-twitter :page_url="pageURL" title_social="Twitter" has_icon/>
           </v-layout>
-          <h2 class="mt-5">Help Needed</h2>
+          <h2 class="mt-5 mb-4">{{ $t('pages.project.needs-title') }}</h2>
           <v-timeline dense clipped>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >We are in search of a Sound Designer that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment .</v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex xs9>
-                  <v-chip class="white--text ml-0" color="purple" label small>IMPORTANT</v-chip>We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.
-                </v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >We are in search of a Sound Designer that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment .</v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.</v-flex>
-              </v-layout>
-            </v-timeline-item>
+            <v-timeline-item
+                :key="`project-need-${projectNeedIndex}`"
+                v-for="(projectNeed, projectNeedIndex) in project.needs"
+                class="mb-3" large fill-dot>
+                <v-avatar slot="icon">
+                  <img :src="require('~/assets/images/icon-project_help.png')">
+                </v-avatar>
+                <v-layout justify-space-between>
+                  <v-flex
+                    xs9
+                    class="project-need">
+                    <v-chip
+                      v-if="projectNeed.isUrgent"
+                      class="white--text ml-0"
+                      color="purple"
+                      label small>
+                        {{ $t('pages.project.urgent') }}
+                    </v-chip>
+                    {{ projectNeed.description }}
+                  </v-flex>
+                </v-layout>
+              </v-timeline-item>
           </v-timeline>
-          <h2 class="mt-5">Project updates</h2>
+          <h2 class="mt-5 mb-4">{{ $t('pages.project.updates-title') }}</h2>
           <v-timeline dense clipped>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >We had our first show! It was great and there was a full house. Please see pictures of what it looked like on our website here: www.mywebsite.com</v-flex>
-                <v-flex xs3 text-xs-right timeline__date>May 12</v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into</v-flex>
-                <v-flex xs3 text-xs-right timeline__date>May 11</v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into</v-flex>
-                <v-flex xs3 text-xs-right timeline__date>May 10</v-flex>
-              </v-layout>
-            </v-timeline-item>
-            <v-timeline-item class="mb-3" large fill-dot>
-              <v-avatar slot="icon">
-                <img :src="require('~/assets/images/icon-project_help.png')">
-              </v-avatar>
-              <v-layout justify-space-between>
-                <v-flex
-                  xs9
-                >We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.</v-flex>
-                <v-flex xs3 text-xs-right timeline__date>May 09</v-flex>
-              </v-layout>
-            </v-timeline-item>
+              <v-timeline-item
+                :key="`project-update-${projectUpdateIndex}`"
+                v-for="(projectUpdate, projectUpdateIndex) in project.updates"
+                class="mb-3" large fill-dot>
+                <v-avatar slot="icon">
+                  <img :src="require('~/assets/images/icon-project_help.png')">
+                </v-avatar>
+                <v-layout justify-space-between>
+                  <v-flex
+                    xs9
+                    class="project-update"
+                  >{{ projectUpdate.description }}</v-flex>
+                  <v-flex xs3 text-xs-right timeline__date>{{ getFormattedDate(projectUpdate.Date) }}</v-flex>
+                </v-layout>
+              </v-timeline-item>
           </v-timeline>
         </v-flex>
         <v-flex md3>
           <div class="project__info">
-            <span>Project initiator:</span> John Smith
+            <span class="label">{{ $t('pages.project.initiator') }}</span> {{ project.initiatorName }}
             <br>
-            <span>Start date:</span> May 19
+            <div v-if="project.phoneNumber">
+              <span class="label">{{ $t('pages.project.contact-phone-number') }}</span> {{ project.phoneNumber }}
+            </div>
+            <div v-if="project.email">
+              <span class="label">{{ $t('pages.project.contact-email') }}</span> {{ project.email }}
+            </div>
+            <span class="label">{{ $t('pages.project.start-date') }}</span> <span class="project-date">{{ getFormattedDate(project.date) }}</span>
             <br>
-            <span>City:</span> Bucuresti
+            <span class="label">{{ $t('pages.project.city') }}</span> {{ project.city }}
             <br>
-            <span>Budget:</span> 12,000RON
+            <span class="label">{{ $t('pages.project.budget') }}</span> {{ project.budget }} {{ currency }}
           </div>
-          <h4 class="mb-3">Other Projects by John Smith</h4>
+          <h4 class="mb-3">{{ $t('pages.project.other-projects-by-title') }} {{ project.initiatorName }}</h4>
           <project-card
             project_url="https://google.com"
             project_title="Back to the basics - contemporary dance show"
@@ -132,15 +91,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import moment from 'moment';
 import Hero from '~/components/project/hero.vue';
 import ProjectCard from '~/components/shared/projectCard.vue';
 import VueGoodshareFacebook from '~/node_modules/vue-goodshare/src/providers/Facebook.vue';
 import VueGoodshareTwitter from '~/node_modules/vue-goodshare/src/providers/Twitter.vue';
+import { project } from '~/store/constants/mockdata';
+import { getConfig } from '../../config/env';
+
+const config = getConfig();
+
 
 export default {
   data () {
     return {
-      card_title: 'Back to the basics - contemporary dance show'
+      project
     };
   },
   components: {
@@ -149,7 +115,23 @@ export default {
     VueGoodshareFacebook,
     VueGoodshareTwitter
   },
-
+  computed: {
+    ...mapGetters({
+      locale: 'locale',
+      currencies: 'applicationData/currencies'
+    }),
+    currency: function () {
+        return this.currencies[project.currency].ID;
+    },
+    pageURL: function () {
+      return `${config.application.baseURL}/project`;
+    }
+  },
+  methods: {
+      getFormattedDate (date) {
+          return moment(date).locale(this.locale).format('LL');
+      }
+  },
   layout: 'default'
 };
 </script>
@@ -162,7 +144,7 @@ export default {
 .project__info {
   margin-bottom: 128px;
 
-  span {
+  span.label {
     font-weight: 700;
   }
 }
@@ -173,4 +155,13 @@ export default {
   font-size: 13px;
   color: #888;
 }
+
+.project-need, .project-update {
+  padding-left: 20px;
+}
+
+.project-date {
+  text-transform: uppercase;
+}
+
 </style>

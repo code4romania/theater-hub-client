@@ -78,7 +78,7 @@
                                 <td>
                                     <v-avatar size="30px">
                                         <img :src="require('~/assets/images/default-avatar.svg')" v-if="!dashboard.item.ProfileImage" />
-                                        <img :src="`data:image/png;base64,${dashboard.item.ProfileImage}`" v-if="dashboard.item.ProfileImage" />
+                                        <img :src="dashboard.item.ProfileImage" v-if="dashboard.item.ProfileImage" />
                                     </v-avatar>
                                 </td>
                                 <td class="text-xs-left">{{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}</td>

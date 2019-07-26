@@ -447,4 +447,111 @@ export const communityMembers = [
     skills: ['comedy', 'drama', 'acting'],
     profilePhoto: 'https://fillmurray.com/200/300'
   }
-]
+];
+
+export const projects = [
+  {
+    project_id: 'a8df9b6a-7d7b-44c5-96ab-de3f03878e99',
+    project_url: '',
+    project_title: 'Project Title 1',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John1 Doe1',
+    project_roles_number: '7'
+  },
+  {
+    project_id: 'e6e904ad-41c0-4928-b1b9-8504202f7fc4',
+    project_url: '',
+    project_title: 'Project Title 2',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John2 Doe2',
+    project_roles_number: '7'
+  },
+  {
+    project_id: 'fe093d58-65dd-4ac8-ade7-cb3c66bc9670',
+    project_url: '',
+    project_title: 'Project Title 3',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John3 Doe3',
+    project_roles_number: '7'
+  },
+  {
+    project_id: '793305ec-231e-46ba-a416-59639a7828ad',
+    project_url: '',
+    project_title: 'Project Title 4',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John4 Doe4',
+    project_roles_number: '7'
+  },
+  {
+    project_id: 'aa8eec6b-aec0-4980-b2bb-f46aa0d7bdfe',
+    project_url: '',
+    project_title: 'Project Title 5',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John5 Doe5',
+    project_roles_number: '7'
+  },
+  {
+    project_id: 'b6fbc6fb-d012-4fb9-a2d4-32642671bab0',
+    project_url: '',
+    project_title: 'Project Title 7',
+    project_image: 'https://www.fillmurray.com/200/300',
+    project_abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    project_initiator: 'John7 Doe7',
+    project_roles_number: '7'
+  }
+];
+
+export const project = {
+  name: 'Back to the Future - Contemporary Dance Show',
+  image: 'https://www.fillmurray.com/200/300',
+  initiatorImage: 'https://www.fillmurray.com/200/300',
+  initiatorName: 'John Smith',
+  email: 'andreim1778@yopmail.com',
+  phoneNumber: '0123456789',
+  date: new Date(),
+  city: 'Bucharest',
+  budget: 12000,
+  currency: 0,
+  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  needs: [
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      isUrgent: false
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      isUrgent: true
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      isUrgent: false
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      isUrgent: false
+    }
+  ],
+  updates: [
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      date: new Date()
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      date: new Date()
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      date: new Date()
+    },
+    {
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
+      date: new Date()
+    }
+  ]
+};

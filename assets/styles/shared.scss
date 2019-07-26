@@ -233,6 +233,11 @@ button {
   color: $white;
 }
 
+.v-date-picker-header button {
+  background-color: #FFF;
+  color: initial;
+}
+
 .link-button {
   text-decoration: none;
   color: $primary;
@@ -313,6 +318,7 @@ button {
   border: none;
   width: 119px;
   height: 26px;
+  line-height: 26px;
   display: flex;
   justify-content: center;
   font-size: 14px;
@@ -338,7 +344,7 @@ button {
   }
 }
 
-.profile-focused-row {
+.profile-focused-row, .project-focused-row {
   display: flex;
 
   .remove-icon {
@@ -365,12 +371,12 @@ button {
   font-size: 15px;
 }
 
-.profile-row-actions {
+.profile-row-actions, .project-row-actions {
   display: flex;
   justify-content: flex-end;
 }
 
-.edited-profile-section {
+.edited-section {
   z-index: 200;
   background-color: $white;
   border-radius: 10px;
@@ -385,11 +391,11 @@ button {
   padding-top: 0px;
 }
 
-.edited-profile-section {
+.edited-section {
   width: 100%;
 }
 
-.profile-row-actions {
+.profile-row-actions, .project-row-actions {
   .v-btn {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -505,6 +511,18 @@ button {
   }
 }
 
+@media screen and (min-width: 960px) {
+
+  .facebook-link-container {
+    padding-right: 10px;
+  }
+
+  .google-link-container {
+    padding-left: 10px;
+  }
+
+}
+
 @media screen and (max-width: 400px) {
   .add-achievement-btn {
     height: 100%;
@@ -518,12 +536,12 @@ button {
     flex-flow: column-reverse !important;
   }
 
-  .profile-row-actions-container {
+  .profile-row-actions-container, .project-row-actions-container {
     flex-flow: column-reverse !important;
     align-self: flex-end;
   }
 
-  .profile-row-actions {
+  .profile-row-actions, .project-row-actions {
     margin-bottom: 20px;
   }
 

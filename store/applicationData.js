@@ -3,6 +3,7 @@ import { ApplicationDataService }   from '../api/services';
 export const state = () => ({
     skills: [],
     locales: [],
+    currencies: [],
     generalApplicationInformation: {}
 });
 
@@ -12,6 +13,9 @@ export const mutations = {
     },
     SET_LOCALES: (state, value) => {
         state.locales = value;
+    },
+    SET_CURRENCIES: (state, value) => {
+        state.currencies = value;
     },
     SET_GENERAL_APPLICATION_INFORMATION: (state, value) => {
         state.generalApplicationInformation = value;
@@ -27,6 +31,7 @@ export const actions = {
     async getApplicationData ({ commit, dispatch }) {
         dispatch('getSkills');
         dispatch('getLocales');
+        dispatch('getCurrencies');
         dispatch('getGeneralApplicationInformation');
     },
     async getSkills ({ commit, dispatch }, request) {
@@ -39,6 +44,11 @@ export const actions = {
             dispatch('setLocales', response);
         });
     },
+    async getCurrencies ({ commit, dispatch }, request) {
+        return ApplicationDataService.getCurrencies().then(response => {
+            dispatch('setCurrencies', response);
+        });
+    },
     async getGeneralApplicationInformation ({ commit, dispatch }) {
         return ApplicationDataService.getGeneralApplicationInformation().then(response => {
             dispatch('setGeneralApplicationInformation', response);
@@ -49,6 +59,9 @@ export const actions = {
     },
     setLocales: ({ commit }, value) => {
         commit('SET_LOCALES', value);
+    },
+    setCurrencies: ({ commit }, value) => {
+        commit('SET_CURRENCIES', value);
     },
     setGeneralApplicationInformation: ({ commit }, value) => {
         commit('SET_GENERAL_APPLICATION_INFORMATION', value);
@@ -64,6 +77,9 @@ export const getters = {
     },
     locales (state) {
         return state.locales;
+    },
+    currencies (state) {
+        return state.currencies;
     },
     maxFileSize (state) {
         return state.generalApplicationInformation.MaxFileSize;

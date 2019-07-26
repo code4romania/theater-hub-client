@@ -14,7 +14,7 @@
                 :key="`award-${awardIndex}`"
                 v-for="(award, awardIndex) in awards"
                 v-bind:class="{'timeline-message': award.inEditMode || award.inDeleteMode}"
-                @mouseover.native="award.isHovered = true"  @mouseout.native="award.isHovered = false"
+                @mouseenter.native="award.isHovered = true"  @mouseleave.native="award.isHovered = false"
                 class="timeline-achievement-item" color="primary" small fill-dot right>
                     <v-card class="elevation-2" v-if="!award.inEditMode && !award.inDeleteMode">
                         <v-card-title>
@@ -40,10 +40,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inEditMode">
                         <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inDeleteMode">
                         <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
                     </v-card>
             </v-timeline-item>
@@ -64,7 +64,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingAward">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileAwardAdd @addAward="addAward"/>
                 </v-card>
             </v-timeline-item>
@@ -75,7 +75,7 @@
             <div :key="`award-${awardIndex}`"
                 v-for="(award, awardIndex) in awards"
                 v-bind:class="{'timeline-message': award.inEditMode || award.inDeleteMode}"
-                @mouseover="award.isHovered = true"  @mouseout="award.isHovered = false"
+                @mouseenter.native="award.isHovered = true"  @mouseleave.native="award.isHovered = false"
                 class="achievement-item" color="primary">
                     <v-card class="elevation-2" v-if="!award.inEditMode && !award.inDeleteMode">
                         <v-card-title>
@@ -101,10 +101,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inEditMode">
                         <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="award.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inDeleteMode">
                         <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
                     </v-card>
             </div>
@@ -122,7 +122,7 @@
             </v-btn>
 
             <div class="timeline-message" v-if="isAddingAward">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileAwardAdd @addAward="addAward"/>
                 </v-card>
             </div>
@@ -157,20 +157,20 @@
         methods: {
             onAddAwardClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedAwards();
                 this.isAddingAward = true;
             },
             onEditAwardClick: function (award, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedAwards();
                 this.isEditingAwards = true;
                 award.inEditMode = true;
             },
             onDeleteAwardClick: function (award, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedAwards();
                 this.isDeletingAward = true;
                 award.inDeleteMode = true;
@@ -217,7 +217,7 @@
                 }
 
                 this.isAddingAward = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             editAward: function (award, index) {
                 let newAward = {};
@@ -260,7 +260,7 @@
                     a.inEditMode = false;
                 });
                 this.isEditingAwards = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             deleteAward: function (index) {
                 if (index !== null && this.saveChanges) {
@@ -282,22 +282,22 @@
                     a.inDeleteMode = false;
                 });
                 this.isDeletingAward = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cancelAllUnsavedChanges: function () {
                 this.isAddingAward   = false;
                 this.isEditingAwards = false;
                 this.isDeletingAward = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cloneEditedAwards: function () {
                 this.editedAwards = Helpers.cloneObject(this.awards);
             },
-            initiateProfileSectionEditSession: function (navigateToElement) {
-                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Awards);
+            initiateEditSectionSession: function (navigateToElement) {
+                this.$emit('initiateEditSectionSession', navigateToElement, ProfileSectionType.Awards);
             },
-            endProfileSectionEditSession: function () {
-                this.$emit('endProfileSectionEditSession', ProfileSectionType.Awards);
+            endEditSectionSession: function () {
+                this.$emit('endEditSectionSession', ProfileSectionType.Awards);
             },
             updateAwards: function () {
                 this.$emit('updateAwards', this.editedAwards);

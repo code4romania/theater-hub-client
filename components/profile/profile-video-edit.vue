@@ -1,9 +1,9 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12 pa-5 ma-1>
-            <v-form ref="addVideoForm">
+            <v-form ref="editVideoForm">
                 <v-flex xs12 sm12 md12 lg12  class="profile-row-actions" v-if="videosFactory.inEditMode">
-                    <v-btn outline small fab class="done- edit-video-button"
+                    <v-btn outline small fab class="done-edit-video-button"
                                     v-on:click="onDoneEditVideoClick" :disabled="isAddVideoButtonDisabled()">
                         <v-icon>done</v-icon>
                     </v-btn>

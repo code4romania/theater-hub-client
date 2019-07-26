@@ -10,8 +10,15 @@
         </h4>
         <div v-if="$route.path !== '/project'" class="project__abstract d-flex">
           <p>{{ project_abstract }}</p>
-          <p>{{ project_initiator }}</p>
-          <p>{{ project_roles_number }}</p>
+          <p  class="bold">
+            {{ $t('shared.content.project-initiator') }}
+            <nuxt-link :to="`/profile/`">
+                <span>{{ project_initiator }}</span>
+            </nuxt-link>
+          </p>
+          <p class="bold">
+            {{ $t('shared.content.requested-roles') }} {{ project_roles_number }}
+          </p>
         </div>
       </div>
     </v-card-title>
@@ -57,11 +64,17 @@ export default {
 
 <style lang="scss" scoped>
 .project {
+  h4 {
+    margin-bottom: 10px;
+  }
   a {
     color: #000;
   }
   &__abstract {
     flex-direction: column;
+  }
+  .bold {
+    font-weight: 700;
   }
 }
 </style>

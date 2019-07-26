@@ -21,7 +21,7 @@
                         <v-flex xs12 sm12 md6 lg5>
                             <v-avatar>
                                 <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                                <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
+                                <img :src="profileImage" v-if="profileImage" />
                             </v-avatar>
                         </v-flex>
                         <v-flex xs12 sm12 md6 lg7 class="general-information">
@@ -109,7 +109,7 @@
                         </v-flex>
                         <v-flex xs12 pt-4 class="photo-gallery-row">
                             <no-ssr>
-                                <gallery :images="portfolioImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
+                                <gallery :images="portfolioFullImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
                             </no-ssr>
                             <Carousel @handleCarouselItemClick="handleCarouselItemClick" :selectedIndex="portfolioImagesIndex" :items="portfolioImages"></Carousel>
                         </v-flex>
@@ -391,7 +391,7 @@
                     return null;
                 }
 
-                return this.profile.profileGeneralInformation.profileImage.Image;
+                return this.profile.profileGeneralInformation.profileImage.ThumbnailLocation;
             },
             skillNameList: function () {
                 return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
@@ -402,6 +402,9 @@
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             portfolioImages: function () {
+                return this.profile.profilePhotoGallery.photoGallery.map(p => p.ThumbnailLocation);
+            },
+            portfolioFullImages: function () {
                 return this.profile.profilePhotoGallery.photoGallery.map(p => p.Location);
             },
             hasBirthDate: function () {
@@ -448,7 +451,7 @@
     }
 
     .v-avatar img {
-        border: 12px solid #979797;
+        border: 3px solid #979797;
     }
 
     .profile-section {

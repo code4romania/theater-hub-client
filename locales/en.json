@@ -233,6 +233,55 @@
             "validation-errors": {
                 "length": "Message must not exceed 500 characters"
             }
+        },
+        "project-photo-dropzone": {
+            "label": "Click or drop project poster here",
+            "photo-remove-button": "REMOVE"
+        },
+        "project-name": {
+            "label": "Project name",
+            "validation-errors": {
+                "required": "Project name is required",
+                "length": "Project name should have at most 100 characters"
+            }
+        },
+        "city": {
+            "label": "City",
+            "validation-errors": {
+                "required": "City is required",
+                "length": "City should have at most 100 characters"
+            }
+        },
+        "budget": {
+            "label": "Budget",
+            "validation-errors": {
+                "invalid": "Budget must be valid"
+            }
+        },
+        "currency": {
+            "label": "Currency"
+        },
+        "project-date": {
+            "label": "Start date"
+        },
+        "need": {
+            "description": {
+                "label": "Description",
+                "validation-errors": {
+                    "length": "Description's maximum length is of 500 characters"
+                }
+            },
+            "isUrgent": {
+                "label": "Is urgent"
+            }
+        },
+        "update": {
+            "description": {
+                "label": "Description",
+                "validation-errors": {
+                    "length": "Description's maximum length is of 500 characters"
+                }
+            }
         }
     },
     "shared": {
@@ -262,6 +311,8 @@
             "add-award-button": "Add award",
             "add-experience-button": "Add experience step",
             "add-education-button": "Add education step",
+            "add-need-button": "Add need",
+            "add-update-button": "Add update",
             "profile-visibility": "Profile visibility:",
             "email-visibility": "E-mail visibility:",
             "birth-date-visibility": "Birth date visibility:",
@@ -271,7 +322,9 @@
             "finish-button": "FINISH",
             "years": "years",
             "locale-setting": "Language:",
-            "close": "Close"
+            "close": "Close",
+            "project-initiator": "Project initiator:",
+            "requested-roles": "Number of requested roles:"
         }
     },
     "pages": {
@@ -325,6 +378,36 @@
         },
         "projects": {
             "title": "Projects"
+        },
+        "project": {
+            "needs-title": "Help Needed",
+            "updates-title": "Project updates",
+            "urgent": "URGENT",
+            "initiator": "Project initiator:",
+            "contact-phone-number": "Contact phone number:",
+            "contact-email": "Contact email:",
+            "start-date": "Start date:",
+            "city": "City:",
+            "budget": "Budget:",
+            "other-projects-by-title": "Other Projects by ",
+            "delete-need-message": "Are you sure you wish to delete this need?",
+            "delete-update-message": "Are you sure you wish to delete this update?",
+            "no-needs-message": "You haven't added any needs",
+            "no-updates-message": "You haven't added any updates",
+            "snackbar-messages": {
+                "update-needs": "Help needed section updated",
+                "update-updates": "Updates section updated"
+            }
+        },
+        "create-project": {
+            "steps": {
+                "general": {
+                    "title": "General"
+                },
+                "needs": {
+                    "title": "Needs"
+                }
+            }
         },
         "community": {
             "no-search-results": "No results",

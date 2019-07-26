@@ -85,7 +85,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-profile-section">
+                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-section">
                    <v-layout row wrap pa-5>
                        <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -126,7 +126,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingSkills" class="edited-profile-section">
+                <v-flex xs12 v-if="isEditingSkills" class="edited-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -142,7 +142,10 @@
                            </v-layout>
                        </v-flex>
                         <v-flex xs12>
-                            <ProfileSkills :profileSkills="editedProfile.profileSkills" :skills="skills" @updateProfileSkills="updateProfileSkills"/>
+                            <ProfileSkills
+                                :profileSkills="editedProfile.profileSkills"
+                                :skills="skills"
+                                @updateProfileSkills="updateProfileSkills" />
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -159,7 +162,7 @@
                         </v-flex>
                         <v-flex xs12 pt-4 class="photo-gallery-row" v-if="hasPhotoGallery">
                             <no-ssr>
-                                <gallery :images="portfolioImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
+                                <gallery :images="portfolioFullImages" :index="portfolioImagesIndex" @close="portfolioImagesIndex = null"></gallery>
                             </no-ssr>
                             <Carousel @handleCarouselItemClick="handleCarouselItemClick" :selectedIndex="portfolioImagesIndex" :items="portfolioImages"></Carousel>
                         </v-flex>
@@ -169,7 +172,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingPhotoGallery" class="edited-profile-section">
+                <v-flex xs12 v-if="isEditingPhotoGallery" class="edited-section">
                    <v-layout row wrap pa-5>
                        <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -201,8 +204,8 @@
                             <ProfileVideoGallery
                                 :videoGallery="profile.profileVideoGallery.videoGallery"
                                 :saveChanges="true"
-                                @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                @endProfileSectionEditSession="endProfileSectionEditSession"
+                                @initiateEditSectionSession="initiateEditSectionSession"
+                                @endEditSectionSession="endEditSectionSession"
                                 @updateVideoGallery="updateVideoGallery"
                                 @showSnackbar="showSnackbar" />
                         </v-flex>
@@ -228,8 +231,8 @@
                                             :awards="profile.profileAwards.awards"
                                             :isTimeline="true"
                                             :saveChanges="true"
-                                            @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                            @endProfileSectionEditSession="endProfileSectionEditSession"
+                                            @initiateEditSectionSession="initiateEditSectionSession"
+                                            @endEditSectionSession="endEditSectionSession"
                                             @updateAwards="updateAwards"
                                             @showSnackbar="showSnackbar" />
 
@@ -237,8 +240,8 @@
                                             :experienceSteps="profile.profileExperience.experienceSteps"
                                             :isTimeline="true"
                                             :saveChanges="true"
-                                            @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                            @endProfileSectionEditSession="endProfileSectionEditSession"
+                                            @initiateEditSectionSession="initiateEditSectionSession"
+                                            @endEditSectionSession="endEditSectionSession"
                                             @updateExperience="updateExperience"
                                             @showSnackbar="showSnackbar" />
 
@@ -246,8 +249,8 @@
                                             :educationSteps="profile.profileEducation.educationSteps"
                                             :isTimeline="true"
                                             :saveChanges="true"
-                                            @initiateProfileSectionEditSession="initiateProfileSectionEditSession"
-                                            @endProfileSectionEditSession="endProfileSectionEditSession"
+                                            @initiateEditSectionSession="initiateEditSectionSession"
+                                            @endEditSectionSession="endEditSectionSession"
                                             @updateEducation="updateEducation"
                                             @showSnackbar="showSnackbar" />
 
@@ -459,8 +462,8 @@ export default {
             getTimelineDate (date) {
                 return moment(date).format('MM/YYYY');
             },
-            initiateProfileSectionEditSession (navigateToElement, profileSection) {
-                this.$store.dispatch('users/initiateProfileSectionEditSession');
+            initiateEditSectionSession (navigateToElement, profileSection) {
+                this.$store.dispatch('users/initiateEditSectionSession');
 
                 if (profileSection === ProfileSectionType.GeneralInformation) {
                     this.isEditingGeneralInformation = true;
@@ -480,7 +483,7 @@ export default {
 
                 if (navigateToElement) {
                     setTimeout(() => {
-                        var element = document.getElementsByClassName('edited-profile-section')[0];
+                        var element = document.getElementsByClassName('edited-section')[0];
 
                         if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
                             HtmlHelpers.scrollToElement(element);
@@ -488,7 +491,7 @@ export default {
                     }, 0);
                 }
             },
-            endProfileSectionEditSession (profileSection) {
+            endEditSectionSession (profileSection) {
                 if (profileSection === ProfileSectionType.GeneralInformation) {
                     this.isEditingGeneralInformation = false;
                 } else if (profileSection === ProfileSectionType.Skills) {
@@ -505,21 +508,21 @@ export default {
                     this.isEditingEducation = false;
                 }
 
-                this.$store.dispatch('users/endProfileSectionEditSession');
+                this.$store.dispatch('users/endEditSectionSession');
             },
             onEditGeneralInformationClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true, ProfileSectionType.GeneralInformation);
+                this.initiateEditSectionSession(true, ProfileSectionType.GeneralInformation);
                 this.cloneEditedProfile();
             },
             onEditSkillsClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true, ProfileSectionType.Skills);
+                this.initiateEditSectionSession(true, ProfileSectionType.Skills);
                 this.cloneEditedProfile();
             },
             onEditPhotoGalleryClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true, ProfileSectionType.PhotoGallery);
+                this.initiateEditSectionSession(true, ProfileSectionType.PhotoGallery);
                 this.cloneEditedProfile();
             },
             onSaveEditGeneralInformationClick: function () {
@@ -537,11 +540,13 @@ export default {
                 generalInformationFormData.append('LinkedinLink', this.editedProfile.profileGeneralInformation.linkedinLink ? this.editedProfile.profileGeneralInformation.linkedinLink : '');
 
                 this.$store.dispatch('users/updateMyGeneralInformation', generalInformationFormData).then((response) => {
-                    this.endProfileSectionEditSession(ProfileSectionType.GeneralInformation);
+                    this.endEditSectionSession(ProfileSectionType.GeneralInformation);
 
                     if (response) {
                         this.editedProfile.profileGeneralInformation.profileImage = response.ProfileImage;
+                        this.$store.dispatch('users/setMe', response);
                     }
+
                     this.saveEditedProfile();
                     this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
                     this.snackbar = true;
@@ -550,7 +555,7 @@ export default {
             onSaveEditSkillsClick: function () {
                 this.$store.dispatch('users/updateMySkills', this.editedProfile.profileSkills.selectedSkills.map(s => s.ID)).then(() => {
                     if (!this.users.updateMySkillsErrors) {
-                        this.endProfileSectionEditSession(ProfileSectionType.Skills);
+                        this.endEditSectionSession(ProfileSectionType.Skills);
                         this.saveEditedProfile();
                         this.snackbarText = this.$t('pages.profile.snackbar-messages.update-skills');
                         this.snackbar = true;
@@ -559,7 +564,7 @@ export default {
             },
             onSaveEditPhotoGalleryClick: function () {
                 this.$store.dispatch('users/updateMyPhotoGallery', this.editedProfile.profilePhotoGallery.photoGallery).then((response) => {
-                        this.endProfileSectionEditSession(ProfileSectionType.PhotoGallery);
+                        this.endEditSectionSession(ProfileSectionType.PhotoGallery);
 
                         if (response && response.AddedPhotos.length !== 0) {
                             this.editedProfile.profilePhotoGallery.photoGallery = this.editedProfile.profilePhotoGallery.photoGallery.filter(p => !p.File);
@@ -570,17 +575,17 @@ export default {
                         this.snackbarText = this.$t('pages.profile.snackbar-messages.update-photo-gallery');
                         this.snackbar = true;
                 }).catch(() => {
-                    this.endProfileSectionEditSession(ProfileSectionType.PhotoGallery);
+                    this.endEditSectionSession(ProfileSectionType.PhotoGallery);
                 });
             },
             onCancelEditGeneralInformationClick: function () {
-                this.endProfileSectionEditSession(ProfileSectionType.GeneralInformation);
+                this.endEditSectionSession(ProfileSectionType.GeneralInformation);
             },
             onCancelEditSkillsClick: function () {
-                this.endProfileSectionEditSession(ProfileSectionType.Skills);
+                this.endEditSectionSession(ProfileSectionType.Skills);
             },
             onCancelEditPhotoGalleryClick: function () {
-                this.endProfileSectionEditSession(ProfileSectionType.PhotoGallery);
+                this.endEditSectionSession(ProfileSectionType.PhotoGallery);
             },
             cancelAllUnsavedChanges: function () {
                 this.isEditingGeneralInformation = false;
@@ -591,7 +596,7 @@ export default {
                 this.isEditingExperience         = false;
                 this.isEditingEducation          = false;
 
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cloneEditedProfile: function () {
                 this.editedProfile = Helpers.cloneObject(this.profile);
@@ -693,7 +698,7 @@ export default {
                     return null;
                 }
 
-                return this.profile.profileGeneralInformation.profileImage.Location;
+                return this.profile.profileGeneralInformation.profileImage.ThumbnailLocation;
             },
             skillNameList: function () {
                 return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
@@ -704,6 +709,9 @@ export default {
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             portfolioImages: function () {
+                return this.profile.profilePhotoGallery.photoGallery.map(p => p.ThumbnailLocation);
+            },
+            portfolioFullImages: function () {
                 return this.profile.profilePhotoGallery.photoGallery.map(p => p.Location);
             },
             isEditingProfileSection: function () {
@@ -722,7 +730,7 @@ export default {
             }
         },
         mounted () {
-            this.endProfileSectionEditSession();
+            this.endEditSectionSession();
 
             this.initializeData();
         }
@@ -742,7 +750,7 @@ export default {
     }
 
     .v-avatar img {
-        border: 12px solid #979797;
+        border: 3px solid #979797;
     }
 
     .download-resume {
@@ -777,8 +785,6 @@ export default {
         .general-information {
             margin-top: 40px;
         }
-
-
     }
 
     @media screen and (max-width: 400px) {

@@ -123,6 +123,9 @@ export var Validators = {
   },
   isValidURL (url) {
     return validator.isURL(url);
+  },
+  isValidBudget (budget) {
+    return _.isNumber(budget) && budget >= 0;
   }
 
 }

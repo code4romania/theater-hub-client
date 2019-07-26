@@ -32,29 +32,42 @@
             data: function () {
                 return {
                     profileSkillsModel: Helpers.cloneObject(this.profileSkills),
-                    selectedSkillNames: this.profileSkills.selectedSkills.map(s => s.Name).sort()
+                    selectedSkillNames: [],
+                    localizedSkills: []
                 };
             },
             methods: {
                 updateProfileSkillsModel: function () {
                     this.profileSkillsModel.selectedSkills = this.skills.filter(s => {
-                        return this.selectedSkillNames.indexOf(s.Name) !== -1;
+                        return this.selectedSkillNames.indexOf(this.$t(`application-data.${s.Name}`)) !== -1;
                     });
 
                     this.$emit('updateProfileSkills', this.profileSkillsModel);
                 },
                 removeSkill: function (item) {
-                    this.profileSkillsModel.selectedSkills.splice(this.profileSkillsModel.selectedSkills.map(s => s.Name).indexOf(item), 1);
+                    this.profileSkillsModel.selectedSkills
+                                        .splice(this.profileSkillsModel.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).indexOf(item), 1);
                     this.profileSkillsModel.selectedSkills = [...this.profileSkillsModel.selectedSkills];
-                    this.selectedSkillNames                = this.profileSkillsModel.selectedSkills.map(s => s.Name).sort();
+                    this.selectedSkillNames                = this.profileSkillsModel.selectedSkills
+                                        .map(s => this.$t(`application-data.${s.Name}`)).sort();
 
                     this.updateProfileSkillsModel();
                 }
             },
             computed: {
                 skillNameList: function () {
-                    return this.skills.map(s => s.Name).sort();
+                    return this.localizedSkills.map(s => s.Name).sort();
                 }
+            },
+            mounted: function () {
+                this.localizedSkills = this.skills.map(s => {
+                        return {
+                            ...s,
+                            Name: this.$t(`application-data.${s.Name}`)
+                        };
+                    }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
+
+                this.selectedSkillNames = this.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
             }
     }
 </script>

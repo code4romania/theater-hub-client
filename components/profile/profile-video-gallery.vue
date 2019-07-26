@@ -3,12 +3,14 @@
         <v-flex xs12 pt-4 v-if="hasVideoGallery" class="video-gallery-row">
             <v-layout row wrap
                 :key="`video-${videoIndex}`" v-for="(video, videoIndex) in videoGallery"
-                @mouseover="video.isHovered = true"  @mouseout="video.isHovered = false">
+                @mouseenter="video.isHovered = true"  @mouseleave="video.isHovered = false">
                 <v-layout row wrap v-if="!video.inEditMode && !video.inDeleteMode" class="profile-row-actions-container">
                     <v-flex xs12 sm10 md10 lg10 pa-1>
                         <iframe class="video-iframe" :src="video.embedLink" width="420" height="315" allowfullscreen></iframe>
                     </v-flex>
-                    <v-flex xs12 sm2 md2 lg2 class="profile-row-actions" v-if="videoIndex === 0 || video.isHovered">
+                    <v-flex xs12 sm2 md2 lg2
+                        class="profile-row-actions"
+                        v-if="videoIndex === 0 || video.isHovered">
                         <v-btn outline small fab class="edit-icon" v-on:click="onEditVideoClick(video, videoIndex)">
                             <v-icon>edit</v-icon>
                         </v-btn>
@@ -17,10 +19,10 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-                <v-flex xs12 class="elevation-2 edited-profile-section" v-if="video.inEditMode">
+                <v-flex xs12 class="elevation-2 edited-section" v-if="video.inEditMode">
                     <ProfileVideoEdit :video="video" :index="videoIndex" @editVideo="editVideo" />
                 </v-flex>
-                <v-flex xs12 class="elevation-2 edited-profile-section" v-if="video.inDeleteMode">
+                <v-flex xs12 class="elevation-2 edited-section" v-if="video.inDeleteMode">
                     <ProfileVideoDelete :index="videoIndex" @deleteVideo="deleteVideo"/>
                 </v-flex>
             </v-layout>
@@ -31,7 +33,7 @@
         <v-btn outline :light="false" class="add-video-btn add-entity-btn" v-if="!isAddingVideo" v-on:click.native="onAddVideoClick()">
             <v-icon>add</v-icon> {{ $t('shared.content.add-video-button') }}
         </v-btn>
-        <v-card mt-4 class="elevation-2 timeline-message-card edited-profile-section" v-if="isAddingVideo">
+        <v-card mt-4 class="elevation-2 timeline-message-card edited-section" v-if="isAddingVideo">
             <ProfileVideoAdd @addVideo="addVideo"/>
         </v-card>
     </v-layout>
@@ -62,20 +64,20 @@
 		methods: {
             onAddVideoClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedVideoGallery();
                 this.isAddingVideo = true;
             },
             onEditVideoClick: function (video, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedVideoGallery();
                 this.isEditingVideo = true;
                 video.inEditMode = true;
             },
             onDeleteVideoClick: function (video, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(true);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedVideoGallery();
                 this.isDeletingVideo = true;
                 video.inDeleteMode = true;
@@ -113,7 +115,7 @@
                 }
 
                 this.isAddingVideo = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             editVideo: function (video, index) {
                 if (video && this.saveChanges) {
@@ -141,7 +143,7 @@
                     v.inEditMode = false;
                 });
                 this.isEditingVideo = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             deleteVideo: function (index) {
                 if (index !== null && this.saveChanges) {
@@ -162,22 +164,22 @@
                     v.inDeleteMode = false;
                 });
                 this.isDeletingVideo = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cancelAllUnsavedChanges: function () {
                 this.isAddingVideo               = false;
                 this.isEditingVideo              = false;
                 this.isDeletingVideo             = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cloneEditedVideoGallery: function () {
                 this.editedVideoGallery = Helpers.cloneObject(this.videoGallery);
             },
-            initiateProfileSectionEditSession: function (navigateToElement) {
-                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.VideoGallery);
+            initiateEditSectionSession: function (navigateToElement) {
+                this.$emit('initiateEditSectionSession', navigateToElement, ProfileSectionType.VideoGallery);
             },
-            endProfileSectionEditSession: function () {
-                this.$emit('endProfileSectionEditSession', ProfileSectionType.VideoGallery);
+            endEditSectionSession: function () {
+                this.$emit('endEditSectionSession', ProfileSectionType.VideoGallery);
             },
             updateVideoGallery: function () {
                 this.$emit('updateVideoGallery', this.editedVideoGallery);

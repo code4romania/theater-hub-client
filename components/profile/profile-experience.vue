@@ -14,7 +14,7 @@
                 :key="`experience-${experienceIndex}`"
                 v-for="(step, experienceIndex) in experienceSteps"
                 v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
-                @mouseover.native="step.isHovered = true" @mouseout.native="step.isHovered = false"
+                @mouseenter.native="step.isHovered = true" @mouseleave.native="step.isHovered = false"
                 class="timeline-achievement-item" color="primary" small fill-dot right>
                     <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
@@ -46,11 +46,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
                         <ProfileExperienceEdit :experienceStep="step"
                                         :index="experienceIndex" @editExperienceStep="editExperienceStep" />
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
                         <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
                     </v-card>
             </v-timeline-item>
@@ -71,7 +71,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingExperienceStep">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
                 </v-card>
             </v-timeline-item>
@@ -83,7 +83,7 @@
             <div :key="`experience-${experienceIndex}`"
                 v-for="(step, experienceIndex) in experienceSteps"
                 v-bind:class="{'timeline-message': step.inEditMode || step.inDeleteMode}"
-                @mouseover="step.isHovered = true" @mouseout="step.isHovered = false"
+                @mouseenter="step.isHovered = true" @mouseleave="step.isHovered = false"
                 class="achievement-item" color="primary">
                     <v-card class="elevation-2" v-if="!step.inEditMode && !step.inDeleteMode">
                         <v-card-title>
@@ -115,11 +115,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
                         <ProfileExperienceEdit :experienceStep="step"
                                         :index="experienceIndex" @editExperienceStep="editExperienceStep" />
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-profile-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
                         <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
                     </v-card>
             </div>
@@ -135,7 +135,7 @@
                 <v-icon>add</v-icon> {{ $t('shared.content.add-experience-button') }}
             </v-btn>
             <div class="timeline-message" v-if="isAddingExperienceStep">
-                <v-card class="timeline-message-card elevation-2 edited-profile-section">
+                <v-card class="timeline-message-card elevation-2 edited-section">
                     <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
                 </v-card>
             </div>
@@ -172,20 +172,20 @@
         methods: {
             onAddExperienceStepClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedExperienceSteps();
                 this.isAddingExperienceStep = true;
             },
             onEditExperienceStepClick: function (experienceStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedExperienceSteps();
                 this.isEditingExperience = true;
                 experienceStep.inEditMode = true;
             },
             onDeleteExperienceStepClick: function (experienceStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateProfileSectionEditSession(false);
+                this.initiateEditSectionSession(false);
                 this.cloneEditedExperienceSteps();
                 this.isDeletingExperienceStep = true;
                 experienceStep.inDeleteMode = true;
@@ -234,7 +234,7 @@
                 }
 
                 this.isAddingExperienceStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             editExperienceStep: function (experienceStep, index) {
                 let newExperienceStep = {};
@@ -279,7 +279,7 @@
                     e.inEditMode = false;
                 });
                 this.isEditingExperience = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             deleteExperienceStep: function (index) {
                 if (index !== null && this.saveChanges) {
@@ -301,22 +301,22 @@
                     e.inDeleteMode = false;
                 });
                 this.isDeletingExperienceStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cancelAllUnsavedChanges: function () {
                 this.isAddingExperienceStep = false;
                 this.isEditingExperience = false;
                 this.isDeletingExperienceStep = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             cloneEditedExperienceSteps: function () {
                 this.editedExperienceSteps = Helpers.cloneObject(this.experienceSteps);
             },
-            initiateProfileSectionEditSession: function (navigateToElement) {
-                this.$emit('initiateProfileSectionEditSession', navigateToElement, ProfileSectionType.Experience);
+            initiateEditSectionSession: function (navigateToElement) {
+                this.$emit('initiateEditSectionSession', navigateToElement, ProfileSectionType.Experience);
             },
-            endProfileSectionEditSession: function () {
-                this.$emit('endProfileSectionEditSession', ProfileSectionType.Experience);
+            endEditSectionSession: function () {
+                this.$emit('endEditSectionSession', ProfileSectionType.Experience);
             },
             updateExperience: function () {
                 this.$emit('updateExperience', this.editedExperienceSteps);
