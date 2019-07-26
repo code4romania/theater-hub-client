@@ -37,8 +37,11 @@
                         dictRemoveFile: this.$t('fields.photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
+                            this.photoGalleryDropzoneOptions.maxFilesize   = 1 || this.maxFileSize;
+                            this.photoGalleryDropzoneOptions.maxFiles      = 1 || this.maxPhotoGalleryFileCount;
+
                             this.profilePhotoGallery.photoGallery.forEach(photo => {
-                                var file     = { url: photo.Location, size: photo.Size * 1000 * 1000, upload: { uuid: photo.ID } };
+                                var file     = { url: photo.ThumbnailLocation, size: photo.Size * 1000 * 1000, upload: { uuid: photo.ID } };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -80,6 +83,9 @@
                                 return false;
                             });
 
+                            this.maxFilesize   = 5;
+                            this.maxFiles      = 3;
+
                             this.options.initializePhotoGallery(this);
                         },
                         resize: function (file, width, height) {
@@ -98,6 +104,12 @@
                                 trgWidth,
                                 trgHeight: this.options.thumbnailHeight
                             };
+                        },
+                        maxfilesreached: function () {
+                            alert('maxfilesreached');
+                        },
+                        maxfilesexceeded: function (file) {
+                            alert('maxfilesexceeded');
                         }
                     }
                 };

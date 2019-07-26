@@ -90,10 +90,10 @@ export const mutations = {
     CLEAR_USERS_DATA: (state) => {
         state.me             = null;
     },
-    INITIATE_PROFILE_SECTION_EDIT_SESSION: (state) => {
+    INITIATE_EDIT_SECTION_SESSION: (state) => {
         state.isEditingProfileSection = true;
     },
-    END_PROFILE_SECTION_EDIT_SESSION: (state) => {
+    END_EDIT_SECTION_SESSION: (state) => {
         state.isEditingProfileSection = false;
     }
 };
@@ -306,12 +306,12 @@ export const actions = {
         commit('CLEAR_USERS_DATA');
         localStorage.removeItem('me');
     },
-    initiateProfileSectionEditSession ({ commit, dispatch }) {
-        commit('INITIATE_PROFILE_SECTION_EDIT_SESSION');
+    initiateEditSectionSession ({ commit, dispatch }) {
+        commit('INITIATE_EDIT_SECTION_SESSION');
         dispatch('setMainOverlayVisibility', true, { root: true });
     },
-    endProfileSectionEditSession ({ commit, dispatch }) {
-        commit('END_PROFILE_SECTION_EDIT_SESSION');
+    endEditSectionSession ({ commit, dispatch }) {
+        commit('END_EDIT_SECTION_SESSION');
         dispatch('setMainOverlayVisibility', false, { root: true });
     }
 };

@@ -10,7 +10,7 @@
                                 <v-flex xs12 sm12 md6 lg5>
                                     <v-avatar>
                                         <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                                        <img :src="`data:image/png;base64,${profileImage}`" v-if="profileImage" />
+                                        <img :src="profileImage" v-if="profileImage" />
                                     </v-avatar>
                                 </v-flex>
                                 <v-flex xs12 sm12 md6 lg7 class="general-information">
@@ -42,7 +42,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-profile-section">
+                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-section">
                    <v-layout row wrap pa-5>
 
                        <v-flex xs12 class="profile-information-group-header">
@@ -252,8 +252,8 @@
             };
         },
         methods: {
-            endProfileSectionEditSession () {
-                this.$store.dispatch('users/endProfileSectionEditSession');
+            endEditSectionSession () {
+                this.$store.dispatch('users/endEditSectionSession');
             },
             onEditGeneralInformationClick: function () {
                 this.editedProfileImage             = this.profileImage;
@@ -262,12 +262,12 @@
                 this.editedBirthDate                = this.birthDate;
                 this.editedPhoneNumber              = this.phoneNumber;
 
-                this.$store.dispatch('users/initiateProfileSectionEditSession');
+                this.$store.dispatch('users/initiateEditSectionSession');
                 this.isEditingGeneralInformation    = true;
             },
             onCancelEditGeneralInformationClick: function () {
                 this.isEditingGeneralInformation = false;
-                this.endProfileSectionEditSession();
+                this.endEditSectionSession();
             },
             onSaveEditGeneralInformationClick: function () {
                 var newGeneralInformationRequest = {
@@ -282,7 +282,7 @@
 
                 this.$store.dispatch('users/updateMyGeneralInformation', newGeneralInformationRequest).then(() => {
                     if (!this.users.updateMyGeneralInformationErrors) {
-                        this.endProfileSectionEditSession();
+                        this.endEditSectionSession();
                         this.profileImage                   = this.editedProfileImage;
                         this.firstName                      = this.editedFirstName;
                         this.lastName                       = this.editedLastName;
@@ -316,7 +316,7 @@
             })
         },
         mounted () {
-            this.endProfileSectionEditSession();
+            this.endEditSectionSession();
 
             window.onscroll = _.throttle(() => {
                 if (this.isEditingGeneralInformation) {
@@ -350,7 +350,7 @@
     }
 
     .v-avatar img {
-        border: 12px solid #979797;
+        border: 3px solid #979797;
     }
 
     #edit-general-information {

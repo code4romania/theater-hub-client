@@ -8,6 +8,11 @@ export var ProfileSectionType = {
   'Education': 6
 }
 
+export var ProjectSectionType = {
+  'Needs': 0,
+  'Updates': 1
+}
+
 export var SocialMediaCategoryType = {
   'Instagram': 0,
   'Youtube': 1,
@@ -54,6 +59,12 @@ export var UserRoleType = {
 export var LocaleType = {
   'RO': 'ro',
   'EN': 'en'
+}
+
+export var CurrencyType = {
+  'RON': 0,
+  'USD': 1,
+  'EUR': 2
 }
 
 export class Wish {

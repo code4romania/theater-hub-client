@@ -1,59 +1,104 @@
 <template>
-  <section class="terms-of-use">
-    <v-container fluid terms-of-use-container class="mt-5 pa-5">
-        <v-layout row wrap>
-            <v-flex>
-                <h1 class="mb-3">{{ $t('pages.projects.title') }}</h1>
-            </v-flex>
-            <v-flex xs12>
-            </v-flex>
-            <v-flex xs12>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui. 
-                </p> 
-            </v-flex>
-            <v-flex xs12>
-                <p>
-                    In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce tristique diam vel hendrerit mattis. Quisque molestie diam quis feugiat efficitur. Curabitur volutpat, quam sit amet consectetur sagittis, odio nisl tempus mi, id fringilla metus nunc vel quam. Praesent scelerisque, tellus a viverra accumsan, elit ligula faucibus nisi, vel varius justo risus eget massa. Duis semper iaculis leo, malesuada aliquet est euismod vitae. Mauris volutpat mi dolor, eu luctus ligula eleifend id.
-                </p>
-            </v-flex>
-            <v-flex xs12>
-                <p>
-                    Duis in tincidunt lorem, sit amet porttitor lorem. Vestibulum id sodales dolor, ac luctus orci. Vestibulum quis mi est. Nulla a urna ligula. Nullam eu enim dictum, iaculis lectus id, aliquam nulla. Praesent eu ipsum at dui placerat facilisis quis in urna. In hac habitasse platea dictumst. Pellentesque in consequat nisl, sit amet lobortis ipsum.
-                </p>
-            </v-flex>
-            <v-flex xs12>
-                <p>
-                    Cras tempor, quam ut cursus pharetra, leo mauris ullamcorper libero, non tristique leo erat nec eros. Pellentesque ut dui at nunc sodales varius ut vel nisl. Duis magna elit, viverra sit amet vulputate nec, molestie in tortor. Curabitur rhoncus enim tortor, venenatis gravida nisl pulvinar nec. Sed eu nulla diam. Phasellus at lorem interdum, tristique erat vel, pellentesque massa. Cras a molestie nibh. Quisque sit amet consectetur quam.
-                </p>
-            </v-flex>
-            <v-flex xs12>
-                <p>
-                    In id dapibus mauris, eget mollis enim. Sed non sem ut mi convallis tempus. Nulla in felis nec metus condimentum dapibus. Maecenas nec odio justo. Curabitur sit amet justo ut ante sagittis venenatis at a leo. Ut aliquam ligula consequat tortor rutrum, a ultricies ante bibendum. Suspendisse tempus elit id porttitor cursus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum eget dui augue. Pellentesque gravida dolor orci, ut euismod justo porttitor sit amet. Sed dapibus, mi in pretium porttitor, tellus sem pharetra diam, sit amet molestie ex metus sit amet sem. Maecenas laoreet tortor ac volutpat accumsan. Integer lacus risus, gravida nec aliquam at, facilisis sit amet lectus.
-                </p>
-            </v-flex>
-        </v-layout>
-    </v-container>
-  </section>
+    <section class="projects-section">
+		<nuxt-link to="/create-project">
+			<v-btn id="add-project-button"
+				absolute fab top
+				color="primary"
+				>
+					<v-icon>add</v-icon>
+			</v-btn>
+        </nuxt-link>
+        <v-container id="projects-container" class="main-container pa-5">
+			<v-layout row wrap>
+				<v-flex xs6 project-card-col :key="i" v-for="(project, i) in displayedProjects">
+					<ProjectCard
+						:project_url="project.project_url"
+						:project_title="project.project_title"
+						:project_image="project.project_image"
+						:project_abstract="project.project_abstract"
+						:project_initiator="project.project_initiator"
+						:project_roles_number="project.project_roles_number"
+					/>
+				</v-flex>
+				<v-flex xs12 v-if="!hasLoadedAll()">
+					<v-btn v-on:click="handleViewAllProjectsClick"
+						color="primary"
+						id = "view-all-projects-btn">
+							View all projects
+					</v-btn>
+				</v-flex>
+			</v-layout>
+        </v-container>
+    </section>
 </template>
 
 <script>
+import ProjectCard from '~/components/shared/projectCard.vue';
+import { projects } from '~/store/constants/mockdata'
 
-    export default {
-        layout: ({ store }) => {
-            if (!store.getters['authentication/isAuthenticated']) {
-                return 'visitor';
-            } else if (store.getters['users/isAdmin']) {
-                return 'administration';
-            } else {
-                return 'user';
+export default {
+	components: {
+		ProjectCard
+	},
+    layout: ({ store }) => {
+        if (!store.getters['authentication/isAuthenticated']) {
+            return 'visitor';
+        } else if (store.getters['users/isAdmin']) {
+            return 'administration';
+        } else {
+            return 'user';
+        }
+    },
+    middleware: ['visitor-or-enabled-user'],
+	data: () => ({
+		projects,
+		displayedProjects: projects.slice(0, 9),
+		page: 1,
+		isLoading: false
+	}),
+	methods: {
+		handleViewAllProjectsClick: function () {
+			this.isLoading  = true;
+            let pageSize    = 9;
+
+			if (pageSize > this.projects.length - this.displayedProjects.length) {
+				pageSize = this.projects.length - this.displayedProjects.length
+			} else {
+				this.page++
             }
-        },
-        middleware: ['visitor-or-enabled-user']
-    }
+
+			if (pageSize !== 0) {
+                this.displayedProjects = this.displayedProjects
+                                .concat(this.projects.slice(this.displayedProjects.length, this.displayedProjects.length + pageSize));
+            }
+
+			this.isLoading = false
+		},
+		hasLoadedAll: function () {
+			return this.displayedProjects.length === this.projects.length
+		}
+	}
+}
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
+  #projects-container {
+	  max-width: 1200px;
+  }
+
+  #add-project-button {
+	  right: 20vw;
+  }
+
+  .project-card-col {
+    padding: 20px;
+  }
+
+  #view-all-projects-btn {
+  	margin: auto;
+  	display: block;
+  }
 
 </style>
