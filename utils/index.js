@@ -82,6 +82,12 @@ export var SocialMediaManager = {
 export var Helpers = {
     cloneObject (sourceObject) {
         return _.cloneDeep(sourceObject);
+    },
+    getAge (birthDate) {
+      var currentDateMoment = moment(new Date());
+      var birthDateMoment   = moment(birthDate);
+
+      return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
     }
 }
 

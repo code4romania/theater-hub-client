@@ -1,4 +1,7 @@
 html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: Titillium Web;
   font-size: 16px;
   word-spacing: 1px;
@@ -17,6 +20,9 @@ html {
 }
 
 body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   background-color: $background;
 }
 
@@ -58,6 +64,11 @@ h5 {
   z-index: 100;
   background-color: $black;
   opacity: 0.8;
+}
+
+.page-title {
+  color: #AE2760;
+  text-decoration: underline;
 }
 
 .video-iframe {
@@ -299,8 +310,16 @@ button {
   flex-wrap: wrap;
 }
 
+main {
+  min-height: calc(100vh - 391px);
+}
+
 .main-container {
   max-width: 960px;
+}
+
+.v-messages {
+  height: 18px;
 }
 
 .v-tooltip--bottom .v-tooltip__content {
@@ -509,6 +528,11 @@ button {
     color: #ae2760;
     font-size: 30px;
   }
+}
+
+.search-field .v-icon {
+  cursor: pointer;
+  color: #000;
 }
 
 @media screen and (min-width: 960px) {

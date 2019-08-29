@@ -1,6 +1,6 @@
 <template>
-  <section class="privacy-policy">
-    <v-container fluid privacy-policy-container class="mt-5 pa-5">
+  <section class="projects">
+    <v-container fluid projects-container>
         <v-layout row wrap>
             <v-flex>
                 <h1 class="mb-3">{{ $t('pages.administration.projects.title') }}</h1>
@@ -45,5 +45,10 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .projects-container {
+        max-width: 1600px;
+        padding: 40px 40px 0px 40px;
+    }
 
 </style>

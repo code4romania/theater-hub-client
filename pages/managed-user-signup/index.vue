@@ -1,6 +1,6 @@
 <template>
   <section class="signup">
-    <v-container fluid managed-user-signup-container elevation-4 class="mt-5 pa-5">
+    <v-container fluid managed-user-signup-container elevation-4 class="pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="mb-3">{{ $t('pages.managed-user-signup.title') }}</h1>
@@ -36,7 +36,9 @@
                         </v-flex>
                         <v-flex xs11>
                           <label class="agree-to-terms-label" for="agree-to-terms">{{ $t('shared.content.agreement-text-beginning') }}</label>
-                          <nuxt-link to="terms-of-use" target="_blank">{{ $t('shared.content.agreement-terms-of-use') }}</nuxt-link> {{ $t('shared.content.agreement-text-separator') }} <nuxt-link to="privacy-policy" target="_blank">{{ $t('shared.content.agreement-text-privacy-policy') }}</nuxt-link>
+                          <nuxt-link to="terms-and-conditions" target="_blank">
+                            {{ $t('shared.content.agreement-terms-of-use') }}
+                          </nuxt-link> {{ $t('shared.content.agreement-text-separator') }} <nuxt-link to="privacy-policy" target="_blank">{{ $t('shared.content.agreement-text-privacy-policy') }}</nuxt-link>
                         </v-flex>
                     </v-layout>
                     <v-flex xs12 mt-3>

@@ -32,6 +32,35 @@
         "english": "Engleză"
     },
     "fields": {
+        "contact-full-name": {
+            "label": "Nume și prenume",
+            "validation-errors": {
+                "required": "Numele și prenumele sunt obligatorii",
+                "length": "Numele și prenumele trebuie să aibă cel mult 100 de caractere"
+            }
+        },
+        "contact-email": {
+            "label": "Adresa de e-mail",
+            "validation-errors": {
+                "required": "Adresa de e-mail este obligatorie",
+                "length": "Adresa de e-mail trebuie să aibă cel mult 100 de caractere",
+                "invalid": "E-mail-ul trebuie să fie valid"
+            }
+        },
+        "contact-subject": {
+            "label": "Subiect",
+            "validation-errors": {
+                "required": "Subiectul este obligatoriu",
+                "length": "Subiectul trebuie să aibă cel mult 50 de caractere"
+            }
+        },
+        "contact-message": {
+            "label": "Mesaj",
+            "validation-errors": {
+                "required": "Mesajul este obligatoriu",
+                "length": "Mesajul trebuie să aibă cel mult 200 de caractere"
+            }
+        },
         "first-name": {
             "label": "Prenume",
             "validation-errors": {
@@ -214,6 +243,12 @@
                 "label": "Căutați..."
             }
         },
+        "site-search": {
+            "label": "Caută în sit"
+        },
+        "projects-search": {
+            "label": "Caută proiecte"
+        },
         "select-skills": {
             "label": "Aptitudinile profesionale ale dumneavoastră",
             "hint": "Alegeți cel puțin o aptitudine",
@@ -285,8 +320,11 @@
     },
     "shared": {
         "header": {
-            "login-link": "Autentificare",
+            "app-developed-by": "Aplicație dezvoltată de",
+            "donate-link": "Donează",
+            "about-link": "Despre",
             "sign-up-link": "Înregistrare",
+            "login-link": "Autentificare",
             "create-profile-link": "Construiți Profilul",
             "projects-link": "Proiecte",
             "community-link": "Comunitate",
@@ -298,7 +336,16 @@
             "greeting": "Salut"
         },
         "footer": {
-
+            "useful-link": "Link-uri utile",
+            "about-code-link": "Despre Code for Romania",
+            "partners-link": "Parteneri",
+            "sponsors-link": "Sponsori",
+            "terms-use-link": "Termeni și condiții",
+            "cookie-policy-link": "Cookie policy",
+            "contact-us-link": "Contactează-ne",
+            "subscribe-newsletter-link": "Abonează-te la newsletter:",
+            "code-description-link": "Organizație neguvernamentală independentă, neafiliată politic și apolitică.",
+            "copyright": "@ 2019 Code for Romania."
         },
         "content": {
             "agreement-text-beginning": "Sunt de acord cu ",
@@ -319,16 +366,31 @@
             "back-button": "ÎNAPOI",
             "next-button": "ÎNAINTE",
             "finish-button": "GATA",
-            "years": "ani",
+            "years-old": "de ani",
             "locale-setting": "Limbă:",
             "close": "Închide",
             "project-initiator": "Inițiator proiect:",
-            "requested-roles": "Numărul de roluri cerute:"
+            "requested-roles": "Numărul de roluri cerute:",
+            "view-project-link": "Vizualizează proiect",
+            "view-profile-link": "Vizualizează profil",
+            "show-more-button": "Afișați mai mult"
         }
     },
     "pages": {
-        "hompeage": {
-            
+        "homepage": {
+            "introduction": "Bine ai venit in Theater Hub, platforma online pentru scena de teatru independent din România. Dacă ești actor, regizor, luminist, scenarist, chiar și sufleur! Creează-ți azi un cont în platformă, completează-ți profilul și pornește alături de comunitate noi proiecte.",
+            "find-out-link": "Află mai multe",
+            "register-now-link": "Înscrie-te acum",
+            "join-the-community": "Alătură-te comunității.",
+            "start-project": "Înregistrează un proiect azi",
+            "how-it-works": "Cum funcționează",
+            "how-it-works-item-1": "Creează-ți un cont în Theater Hub și completează-ți profilul. Astfel vei putea fi contactat de trupe de teatru pentru participarea în proiecte sau vei putea să pornești propriul tău proiect independent.",
+            "how-it-works-item-2": "După ce ți-ai creat proiectul poți cere ajutorul comunității pentru a-l transforma în realitate. Ai nevoie de lumini, de un poster, de decoruri sau de un scenarist poate? Postează anunțul tău de ajutor și convinge alți oameni să ți se alăture.",
+            "how-it-works-item-3": "Nu uita de publicul larg. Promovează-ți aici proiectele și ține audienta la curent cu cele mai noi informații despre spectacolul pe care îl pregătești pentru a da vestea mai departe la cât mai mulți pasionați de teatru.",
+            "latest-added-projects": "Proiectele adăugate cel mai recent",
+            "view-all-projects-link": "Vizualizează proiectele",
+            "meet-the-community": "Întâlnește comunitatea",
+            "view-public-profiles-link": "Vizualizează profilurile publice"
         },
         "login": {
             "title": "Autentificare", 
@@ -351,18 +413,32 @@
             "submit-button": "EXECUTĂ"
         },
         "about": {
-            
+            "title": "Despre acest proiect",
+            "paragraph-1": "Theater Hub este un proiect dezvoltat de Code for Romania alaturi de asociatia Punct.Art. Aceasta platforma isi propune sa vina ca un sprijin pentru comunitatea de teatru independent din Romania si Republica Moldova. Membrii care isi creeaza cont in platforma vor putea sa isi construiasca un profil, sa isi adauge portofoliul de artist si sa se inscrie sa ia parte la proiecte cat mai diverse din orice regiune a celor doua tari.",
+            "paragraph-2": "Scopul Theater Hub este de a facilita comunicarea dintre grupurile de teatru independent, de a sprijini colaborarea in crearea de proiecte comune, de a ajuta initiatorii de proiecte sa ia contact mai usor cu specialisti din domenii conexe - designeri, oameni de marketing, ingineri de sunet, cameramani, etc - si de a-i sustine prin promovarea spectacolelor lor.",
+            "paragraph-3": "Platforma Theater Hub a fost dezvoltata pro-bono de voluntarii Code for Romania cu sprijinul si know-how-ul Punct.Art. Poti sustine cele doua initiative distribuind aceasta platforma sau donand direct catre cele doua organizatii."
         },
         "contact": {
-            
+            "title": "Ia legătura cu noi",
+            "submit-button": "TRIMITE",
+            "agreement-text-1": "Prin această bifă îți exprimi acordul ca datele furnizate de tine prin acest formular să fie procesate exclusiv în scopul de a-ți trimite un răspuns solicitării tale. Aici puteti găsi",
+            "agreement-text-2": "regulamentul nostru cu privire la prelucrarea datelor cu caracter personal.",
+            "snackbar-messages": {
+                "send-message": "Mesaj trimis"
+            }
+        },
+        "search": {
+            "community-results": "Rezultate din comunitate:",
+            "projects-results": "Rezultate din proiecte:",
+            "no-members-message": "Nu există rezultate",
+            "no-projects-message": "Nu există rezultate"
         },
         "privacy-policy": {
             "title": "Politica de confidențialitate",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
         },
-        "terms-of-use": {
-            "title": "Termenii de utilizare",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
+        "terms-and-conditions": {
+            "title": "Termeni și condiții"
         },
         "forgot-password": {
             "title": "Parolă pierdută",
@@ -410,8 +486,8 @@
         },
         "community": {
             "no-search-results": "Nu există rezultate",
-            "show-more-button": "Afișați mai mulți",
-            "no-members-message": "Nu există membri care să fie afisați"
+            "no-members-message": "Nu există membri care să fie afisați",
+            "view-all": "Vizualizează tot"
         },
         "settings": {
             "title": "Setări",

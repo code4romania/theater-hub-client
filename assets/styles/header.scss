@@ -1,11 +1,8 @@
 header {
-	height: 75px;
+	margin-bottom: 20px;
 	background-color: $white;
 	width: 100%;
 	z-index: 1000;
-	-webkit-box-shadow: 0px 3px 10px -9px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 3px 10px -9px rgba(0,0,0,0.75);
-	box-shadow: 0px 3px 10px -9px rgba(0,0,0,0.75);
 
 	nav {
 		height: 100%;
@@ -19,6 +16,15 @@ header {
 			}
 		}
 
+	}
+
+	.visitor-menu-items {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	.visitor-menu-hamburger {
+		display: none;
 	}
 
 	.input-group {
@@ -46,6 +52,22 @@ header {
 			display: none;
 		}
 	}
+
+	.logo-wrapper {
+		display: inline-block;
+	}
+
+	.header-site-logo {
+		height: 50px;
+	}
+
+	#header-donate-button {
+		color: #FFF;
+		background-color: #27AE60;
+		text-transform: capitalize;
+		margin-left: 20px;
+	}
+
 }
 
 .menu-link {
@@ -55,4 +77,24 @@ header {
 	&.nuxt-link-active {
 		color: $primary;
 	}
+}
+
+@media screen and (max-width: 1200px) {
+
+	header .visitor-menu-items {
+		display: none;
+	}
+
+	header .visitor-menu-hamburger {
+		display: initial;
+	}
+
+}
+
+@media screen and (max-width: 960px) {
+
+	#header-donate-button {
+		margin-left: 0px;
+	}
+
 }

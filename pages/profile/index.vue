@@ -18,7 +18,7 @@
                                             <v-flex xs12 class="profile-information-row">
                                                 <span class="full-name-field">{{ fullName }}</span>
                                                 <span class="name-separator">,</span>
-                                                <span class="age-field">{{ age }} {{ $t('shared.content.years') }}</span>
+                                                <span class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
                                             </v-flex>
                                             <v-flex xs12 mt-2 class="profile-information-row">
                                                 <span class="field-label">{{ $t('fields.email.label') }}: </span>

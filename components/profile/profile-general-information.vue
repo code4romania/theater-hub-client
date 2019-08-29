@@ -45,7 +45,8 @@
         </v-layout>
         <v-flex xs12>
             <v-textarea
-                id="profile-description-field text-area-field"
+                id="profile-description-field"
+                class="text-area-field"
                 v-model="profileGeneralInformationModel.description"
                 @input="updateProfileGeneralInformationModel"
                 auto-grow

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-4 project">
+  <v-layout column class="mb-4 project">
     <a :href="project_url">
       <v-img :src="project_image" aspect-ratio="1.7"></v-img>
     </a>
@@ -23,9 +23,15 @@
       </div>
     </v-card-title>
     <v-card-actions v-if="$route.path !== '/project'" class="justify-center">
-      <v-btn color="primary" :href="project_url" depressed ripple>View Project</v-btn>
+      <v-btn
+        class="view-project-button"
+        color="primary"
+        :href="project_url"
+        depressed ripple>
+        {{ $t('shared.content.view-project-link') }}
+      </v-btn>
     </v-card-actions>
-  </v-card>
+  </v-layout>
 </template>
 
 
@@ -64,6 +70,9 @@ export default {
 
 <style lang="scss" scoped>
 .project {
+  border: 2px solid rgba(151, 151, 151, 0.6);
+  padding: 5px;
+
   h4 {
     margin-bottom: 10px;
   }
@@ -75,6 +84,9 @@ export default {
   }
   .bold {
     font-weight: 700;
+  }
+  .view-project-button {
+    text-transform: initial;
   }
 }
 </style>

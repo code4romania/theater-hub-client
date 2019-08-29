@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="nuxt-wrapper">
+    <div class="nuxt-wrapper" v-bar>
       <header>
 
         <v-layout justify-space-between align-center fill-height pl-5 v-if="isEnabled">

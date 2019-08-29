@@ -1,16 +1,19 @@
 <template>
     <section class="projects-section">
-		<nuxt-link to="/create-project">
-			<v-btn id="add-project-button"
-				absolute fab top
-				color="primary"
-				>
-					<v-icon>add</v-icon>
-			</v-btn>
-        </nuxt-link>
         <v-container id="projects-container" class="main-container pa-5">
-			<v-layout row wrap>
-				<v-flex xs6 project-card-col :key="i" v-for="(project, i) in displayedProjects">
+			<v-layout row justify-center>
+				<v-flex xs12 sm6>
+					<v-text-field type="search" append-icon="search"
+					 	id="projects-search-box"
+						solo hide-details single-line
+						:placeholder="$t('fields.projects-search.label')"
+						v-model="searchTerm"
+						@keyup="onSearchKeyup">
+					</v-text-field>
+				</v-flex>
+			</v-layout>
+			<v-layout row wrap mt-5>
+				<v-flex xs12 md6 project-card-col :key="i" v-for="(project, i) in displayedProjects">
 					<ProjectCard
 						:project_url="project.project_url"
 						:project_title="project.project_title"
@@ -24,8 +27,15 @@
 					<v-btn v-on:click="handleViewAllProjectsClick"
 						color="primary"
 						id = "view-all-projects-btn">
-							View all projects
+							{{ $t('pages.homepage.view-all-projects-link') }}
 					</v-btn>
+				</v-flex>
+			</v-layout>
+			<v-layout class="view-link-container">
+				<v-flex xs12 mt-3 mb-3 text-xs-center>
+					<a class="view-link" v-on:click="handleShowMoreClick">
+						{{ $t('shared.content.show-more-button') }}
+					</a>
 				</v-flex>
 			</v-layout>
         </v-container>
@@ -53,6 +63,7 @@ export default {
 	data: () => ({
 		projects,
 		displayedProjects: projects.slice(0, 9),
+        searchTerm: '',
 		page: 1,
 		isLoading: false
 	}),
@@ -76,6 +87,12 @@ export default {
 		},
 		hasLoadedAll: function () {
 			return this.displayedProjects.length === this.projects.length
+		},
+        async onSearchKeyup (event) {
+
+        },
+		handleShowMoreClick: function () {
+
 		}
 	}
 }
@@ -88,17 +105,14 @@ export default {
 	  max-width: 1200px;
   }
 
-  #add-project-button {
-	  right: 20vw;
-  }
-
   .project-card-col {
     padding: 20px;
   }
 
-  #view-all-projects-btn {
-  	margin: auto;
-  	display: block;
+  .view-link {
+  	font-size: 24px;
+    color: #00F;
+    text-decoration: underline;
   }
 
 </style>
