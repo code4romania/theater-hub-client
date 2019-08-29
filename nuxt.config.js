@@ -25,15 +25,17 @@ module.exports = {
     middleware: 'i18n'
   },
   plugins: [
-    { src: '~/plugins/vuex-persist', ssr: false },
-    '~/plugins/vuetify.js',
+    {
+      src: '~/plugins/vuex-persist', ssr: false },
+      '~/plugins/vuetify.js',
     {
       src: '~/plugins/vue-gallery.js',
       ssr: false
     },
     '~/plugins/axios.js',
     '~/plugins/services-axios.js',
-    '~/plugins/vue-i18n.js'
+    '~/plugins/vue-i18n.js',
+    '~/plugins/smooth-scrollbar.js'
   ],
   css: [
     'node_modules/vuetify/dist/vuetify.min.css',

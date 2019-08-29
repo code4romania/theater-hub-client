@@ -376,76 +376,60 @@ export const userProfile = {
 
 export const communityMembers = [
   {
-    firstName: 'John1',
-    lastName: 'Doe1',
-    skills: ['comedy', 'drama', 'acting', 'dancing', 'directing', 'lighting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd6-6364-4576-a7df-cf1d50d23617',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John1',
+    LastName: 'Doe1',
+    Username: 'john1.doe1.1',
+    SkillIDs: [1, 2, 3]
   },
   {
-    firstName: 'John2',
-    lastName: 'Doe2',
-    skills: ['comedy', 'drama', 'acting', 'stand-up', 'dancing', 'directing', 'lighting', 'playwright', 'sufleor'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd7-7364-4576-a7df-cf1d50d23617',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John2',
+    LastName: 'Doe2',
+    Username: 'john2.doe2.1',
+    SkillIDs: [1]
   },
   {
-    firstName: 'John3',
-    lastName: 'Doe3',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd6-6364-4576-a7df-cf1d50d23777',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John3',
+    LastName: 'Doe3',
+    Username: 'john3.doe3.1',
+    SkillIDs: [1, 8]
   },
   {
-    firstName: 'John4',
-    lastName: 'Doe4',
-    skills: ['comedy', 'drama'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd6-6364-4576-a7df-cfaa50d23617',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John4',
+    LastName: 'Doe4',
+    Username: 'john4.doe4.1',
+    SkillIDs: [4, 5]
   },
   {
-    firstName: 'John5',
-    lastName: 'Doe5',
-    skills: ['comedy'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd6-6364-7776-a7df-cf1d50d43617',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John5',
+    LastName: 'Doe5',
+    Username: 'john5.doe5.1',
+    SkillIDs: [1, 5, 7, 8]
   },
   {
-    firstName: 'John6',
-    lastName: 'Doe6',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e650fd6-6364-4576-a7df-cfed50d23617',
+    ProfileImage: 'https://www.fillmurray.com/200/300',
+    FirstName: 'John6',
+    LastName: 'Doe6',
+    Username: 'john6.doe6.1',
+    SkillIDs: [7, 8]
   },
   {
-    firstName: 'John7',
-    lastName: 'Doe7',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
-  },
-  {
-    firstName: 'John8',
-    lastName: 'Doe8',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
-  },
-  {
-    firstName: 'John9',
-    lastName: 'Doe9',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
-  },
-  {
-    firstName: 'John10',
-    lastName: 'Doe10',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
-  },
-  {
-    firstName: 'John11',
-    lastName: 'Doe11',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
-  },
-  {
-    firstName: 'John12',
-    lastName: 'Doe2',
-    skills: ['comedy', 'drama', 'acting'],
-    profilePhoto: 'https://fillmurray.com/200/300'
+    ID: '9e670fd6-6364-4576-a7df-cf1d50d23617',
+    ProfileImage: 'https://fillmurray.com/200/300',
+    FirstName: 'John7',
+    LastName: 'Doe7',
+    Username: 'john7.doe7.1',
+    SkillIDs: [4, 5, 7]
   }
 ];
 
@@ -552,6 +536,82 @@ export const project = {
     {
       description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
       date: new Date()
+    }
+  ]
+};
+
+
+export const searchPageResults = {
+  community: [
+    // {
+    //   ID: '9e650fd6-6364-4576-a7df-cf1d50d23617',
+    //   ProfileImage: 'https://www.fillmurray.com/200/300',
+    //   FirstName: 'John1',
+    //   LastName: 'Doe1',
+    //   Username: 'john1.doe1.1',
+    //   BirthDate: '1988-11-08',
+    //   Email: 'John1.Doe1@yopmail.com',
+    //   PhoneNumber: '0123456789',
+    //   Website: 'http://theaterhub.ro/',
+    //   InstagramLink: 'https://www.instagram.com',
+    //   YoutubeLink: 'https://www.youtube.com/',
+    //   FacebookLink: 'https://www.facebook.com/',
+    //   LinkedinLink: 'https://www.linkedin.com/',
+    //   SkillIDs: [2, 4, 7]
+    // },
+    // {
+    //   ID: '77650fd6-6364-4576-a7df-cf1d50d23617',
+    //   ProfileImage: 'https://www.fillmurray.com/200/300',
+    //   FirstName: 'John2',
+    //   LastName: 'Doe2',
+    //   Username: 'john2.doe2.1',
+    //   BirthDate: '1988-11-08',
+    //   Email: 'John2.Doe2@yopmail.com',
+    //   PhoneNumber: '0123456789',
+    //   Website: 'http://theaterhub.ro/',
+    //   InstagramLink: 'https://www.instagram.com',
+    //   YoutubeLink: 'https://www.youtube.com/',
+    //   FacebookLink: 'https://www.facebook.com/',
+    //   LinkedinLink: 'https://www.linkedin.com/',
+    //   SkillIDs: [2, 4, 7]
+    // },
+    {
+      ID: '9e650fd6-7777-4576-a7df-cf1d50d23617',
+      ProfileImage: 'https://www.fillmurray.com/200/300',
+      FirstName: 'John3',
+      LastName: 'Doe3',
+      Username: 'john3.doe3.1',
+      BirthDate: '1988-11-08',
+      Email: 'John3.Doe3@yopmail.com',
+      PhoneNumber: '0123456789',
+      Website: 'http://theaterhub.ro/',
+      InstagramLink: 'https://www.instagram.com',
+      YoutubeLink: 'https://www.youtube.com/',
+      FacebookLink: 'https://www.facebook.com/',
+      LinkedinLink: 'https://www.linkedin.com/',
+      SkillIDs: [2, 4, 7]
+    }
+  ],
+  projects: [
+    // {
+    //   ID: '97750fd6-7777-4576-a7df-cf1d50d23617',
+    //   Name: 'Back to the Future - Contemporary Dance Show',
+    //   Image: 'https://www.fillmurray.com/200/300',
+    //   InitiatorName: 'John Smith',
+    //   Date: new Date(),
+    //   City: 'Bucharest',
+    //   Budget: 12000,
+    //   Currency: 0,
+    // },
+    {
+      ID: '97750fd6-7777-4576-a7df-cf7750d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
     }
   ]
 };

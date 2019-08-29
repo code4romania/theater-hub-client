@@ -1,9 +1,9 @@
 <template>
   <section class="forgot-password-section">
-    <v-container fluid forgot-password-container elevation-4 class="mt-5 pa-5">
+    <v-container fluid forgot-password-container>
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">{{ $t('pages.forgot-password.title') }}</h1>
+            <h1 class="page-title mb-3">{{ $t('pages.forgot-password.title') }}</h1>
 
             <v-layout>
 
@@ -89,6 +89,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .forgot-password-section {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 	.forgot-password-container {
         max-width: 700px;

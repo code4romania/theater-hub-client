@@ -12,6 +12,8 @@ export class Endpoints {
 
     static CheckUserPassword                    = '/authentication/password/validity';
 
+    static Contact                              = '/users/contact';
+
     static Register                             = '/users/register';
 
     static ManagedUserSignup                    = '/users/register/managed';

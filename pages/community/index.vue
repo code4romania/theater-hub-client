@@ -1,14 +1,15 @@
 <template>
     <section class="community-section">
-        <v-container id="community-container" class="main-container pa-1">
+        <v-container id="community-container" class="main-container">
             <v-layout row wrap class="community-header-bar" pt-4>
-                <v-flex xs12 sm5 md5 lg5 pr-3 mt-3>
+                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2>
                     <v-text-field type="search" append-icon="search" solo
                         hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
                         v-model="searchTerm"
-                        @keyup="onSearchKeyup"></v-text-field>
+                        @keyup="onSearchKeyup">
+                    </v-text-field>
                 </v-flex>
-                <v-flex xs12 sm5 md5 lg5 pr-3 mt-3 class="skills-filter-container">
+                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2 class="skills-filter-container">
                     <v-flex xs12>
                         <v-autocomplete 
                             item-text="Name"
@@ -30,7 +31,7 @@
             </v-layout>
 
             <v-layout column wrap class="community-layers-wrapper" v-if="inCommunityLayersView">
-                <v-layout column wrap mt-5 class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
+                <v-layout column mt-5 class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
                     <v-flex xs12 class="skill-section-title">
                         <img width="40px" :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
                         <span class="skill-name">{{ layer.SkillName }}</span>
@@ -38,13 +39,21 @@
                     <v-flex xs12 class="skill-section-members">
                         <v-layout row wrap>
 
-                            <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in layer.Members" class="mt-4">
-                                <CommunityMember @handleSkillClick="handleSkillClick" :member="member" />
+                            <v-flex xs6 sm4 md3 lg3
+                                community-member
+                                :key="i" v-for="(member, i) in layer.Members"
+                                class="mt-4">
+                                    <CommunityMember
+                                        @handleSkillClick="handleSkillClick"
+                                        :member="member"
+                                        :showName="true"
+                                        :hasClickableSkills="true"
+                                    />
                             </v-flex>
 
                             <v-flex xs6 sm4 md3 lg3 community-member class="mt-4" v-if="layer.HasMore">
                                 <div class="view-all-container secondary-color" v-on:click="handleViewAllClick(layer)">
-                                    <span class="view-all-text">View all</span>
+                                    <span class="view-all-text">{{ $t('pages.community.view-all') }}</span>
                                 </div>
                             </v-flex>
 
@@ -55,16 +64,29 @@
 
             <v-layout row wrap class="community-members-wrapper" v-if="!inCommunityLayersView">
 
-                <v-flex xs6 sm4 md3 lg3 community-member :key="i" v-for="(member, i) in communityMembers" class="mt-4">
-                    <CommunityMember @handleSkillClick="handleSkillClick" :member="member" />
+                <v-flex xs6 sm4 md3 lg3
+                    community-member
+                    :key="i" v-for="(member, i) in communityMembers"
+                    class="mt-4">
+                        <CommunityMember
+                            :member="member"
+                            :showName="true"
+                            @handleSkillClick="handleSkillClick"
+                        />
                 </v-flex>
+
             </v-layout>
 
             <v-flex xs12 v-if="!hasLoadedAll" justify-center class="mt-5 show-more-members-row">
-                <v-btn v-on:click="onShowMoreClick" color="primary" id = "show-more-members-btn">{{ $t('pages.community.show-more-button') }}</v-btn>
+                <v-btn v-on:click="onShowMoreClick"
+                    color="primary" id = "show-more-members-btn">
+                        {{ $t('shared.content.show-more-button') }}
+                </v-btn>
             </v-flex>
-            <v-flex class="no-results-message text-xs-center mt-5" v-if="displayNoResultsMessage && !isLoading">
-                {{ $t('pages.community.no-members-message') }}
+            <v-flex
+                class="no-results-message text-xs-center mt-5"
+                v-if="displayNoResultsMessage && !isLoading">
+                    {{ $t('pages.community.no-members-message') }}
             </v-flex>
 
         </v-container>
@@ -88,7 +110,7 @@
                 return 'user';
             }
         },
-        middleware: ['visitor-or-enabled-user'],
+        middleware: ['visitor-or-enabled-user', 'get-skills'],
         data: () => ({
             localizedSkills: [],
             communityMembers: [],

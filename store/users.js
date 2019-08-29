@@ -9,6 +9,7 @@ export const state = () => ({
     communityMemberProfile: null,
     isFinishRegistrationSuccessful: false,
     isEditingProfileSection: false,
+    contactErrors: [],
     signupErrors: [],
     managedUserSignupErrors: [],
     forgotPasswordErrors: [],
@@ -33,6 +34,9 @@ const vuexLocal = new VuexPersistence({
 });
 
 export const mutations = {
+    SET_CONTACT_ERRORS: (state, errors) => {
+        state.contactErrors = errors;
+    },
     SET_SIGNUP_ERRORS: (state, errors) => {
         state.signupErrors = errors;
     },
@@ -99,6 +103,13 @@ export const mutations = {
 };
 
 export const actions = {
+    async contact ({ commit, dispatch }, request) {
+        await UserService.contact(request).then(response => {
+            dispatch('setContactErrors', '');
+        }).catch(error => {
+            dispatch('setContactErrors', error.response.data.errors);
+        });
+    },
     async signup ({ commit, dispatch }, request) {
         await UserService.register(request).then(response => {
             dispatch('setSignupErrors', '');
@@ -249,6 +260,9 @@ export const actions = {
     },
     async enableMe ({ commit, dispatch }, request) {
         commit('ENABLE_ME');
+    },
+    setContactErrors: ({ commit }, errors) => {
+        commit('SET_CONTACT_ERRORS', errors);
     },
     setSignupErrors: ({ commit }, errors) => {
         commit('SET_SIGNUP_ERRORS', errors);

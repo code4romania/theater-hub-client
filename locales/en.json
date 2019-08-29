@@ -32,6 +32,35 @@
         "english": "English"
     },
     "fields": {
+        "contact-full-name": {
+            "label": "Name and last name",
+            "validation-errors": {
+                "required": "Name and last name are required",
+                "length": "Name and last name should have at most 100 characters"
+            }
+        },
+        "contact-email": {
+            "label": "E-mail address",
+            "validation-errors": {
+                "required": "E-mail address is required",
+                "length": "E-mail address should have at most 100 characters",
+                "invalid": "E-mail must be valid"
+            }
+        },
+        "contact-subject": {
+            "label": "Subject",
+            "validation-errors": {
+                "required": "Subject is required",
+                "length": "Subject should have at most 50 characters"
+            }
+        },
+        "contact-message": {
+            "label": "Message",
+            "validation-errors": {
+                "required": "Message is required",
+                "length": "Message should have at most 200 characters"
+            }
+        },
         "first-name": {
             "label": "First name",
             "validation-errors": {
@@ -215,6 +244,12 @@
                 "label": "Search..."
             }
         },
+        "site-search": {
+            "label": "Search in website"
+        },
+        "projects-search": {
+            "label": "Search projects"
+        },
         "select-skills": {
             "label": "Your professional skills",
             "hint": "Select at least one skill",
@@ -286,6 +321,10 @@
     },
     "shared": {
         "header": {
+            "app-developed-by": "An app developed by",
+            "donate-link": "Donate",
+            "about-link": "About",
+            "sign-up-link": "Sign Up",
             "login-link": "Login",
             "sign-up-link": "Sign Up",
             "create-profile-link": "Create Profile",
@@ -299,7 +338,16 @@
             "greeting": "Hi"
         },
         "footer": {
-
+            "useful-link": "Useful links",
+            "about-code-link": "About Code for Romania",
+            "partners-link": "Partners",
+            "sponsors-link": "Sponsors",
+            "terms-use-link": "Terms of Use",
+            "cookie-policy-link": "Cookie policy",
+            "contact-us-link": "Contact us",
+            "subscribe-newsletter-link": "Subscribe to our newsletter:",
+            "code-description-link": "An independent, non-partisan, non-political, non-governmental organization.",
+            "copyright": "@ 2019 Code for Romania."
         },
         "content": {
             "agreement-text-beginning": "I agree to the ",
@@ -320,16 +368,31 @@
             "back-button": "BACK",
             "next-button": "NEXT",
             "finish-button": "FINISH",
-            "years": "years",
+            "years-old": "years old",
             "locale-setting": "Language:",
             "close": "Close",
             "project-initiator": "Project initiator:",
-            "requested-roles": "Number of requested roles:"
+            "requested-roles": "Number of requested roles:",
+            "view-project-link": "View project",
+            "view-profile-link": "View profile",
+            "show-more-button": "Show More"
         }
     },
     "pages": {
-        "hompeage": {
-            
+        "homepage": {
+            "introduction": "Welcome to Theater Hub, the online platform dedicated to independent theater in Romania and the Republic of Moldova. If you are an actor, director, sound engineer or screenwriter create an account today, fill in your profile and start a project together with the community.",
+            "find-out-link": "Find out more",
+            "register-now-link": "Register now",
+            "join-the-community": "Join the community.",
+            "start-project": "Start your project today",
+            "how-it-works": "How it works",
+            "how-it-works-item-1": "Create an account in Theater Hub and fill in your profile. This way you could be contacted by other groups to participate in projects or you could start your own.",
+            "how-it-works-item-2": "After adding a new project you can ask for help in the community to turn it into reality. Do you need lights, a poster, decor or maybe a screenwriter? Post your announcement and convince other people to join you.",
+            "how-it-works-item-3": "Don’t forget about the larger audience. Promote your projects here and keep people in the loop with the latest news about your future show in order to promote it better.",
+            "latest-added-projects": "Latest added projects",
+            "view-all-projects-link": "View all projects",
+            "meet-the-community": "Meet the community",
+            "view-public-profiles-link": "View all public profiles"
         },
         "login": {
             "title": "Login", 
@@ -352,17 +415,32 @@
             "submit-button": "SUBMIT"
         },
         "about": {
-            
+            "title": "About this project",
+            "paragraph-1": "Theater Hub is a project developed by Code for Romania next to Punct.Art. This platform aims to be a support for the independent theater community in both Romania and the Republic of Moldova. Members who create an account in the platform will be able to build a profile, add their portfolios and register to take part in diverse projects all over the two countries.",
+            "paragraph-2": "The purpose of Theater Hub is to facilitate the communication between independent theater groups, to encourage collaboration and building common projects, to help initiatiors get in touch easier with various other specialists - designers, marketeers, sound engineers, filmmakers etc - and to support them in promoting their shows.",
+            "paragraph-3": "The Theater Hub platform has been developed pro-bono by Code for Romania volunteers with the support and know-how from Punct.Art. You may support the two initiatives by sharing this platform and by donating directly to the organisations."
         },
         "contact": {
-            
+            "title": "Contact us",
+            "submit-button": "SEND",
+            "agreement-text-1": "By checking this box you agree that the data you provide in this form will be used solely with the purpose of sending you a response to your query. Here you can find",
+            "agreement-text-2": "our regulations with regards to processing of personal data.",
+            "snackbar-messages": {
+                "send-message": "Message sent"
+            }
+        },
+        "search": {
+            "community-results": "Community results:",
+            "projects-results": "Projects results:",
+            "no-members-message": "No results",
+            "no-projects-message": "No results"
         },
         "privacy-policy": {
             "title": "Privacy Policy",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
         },
-        "terms-of-use": {
-            "title": "Terms of use",
+        "terms-and-conditions": {
+            "title": "Terms and conditions",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui."
         },
         "forgot-password": {
@@ -411,8 +489,8 @@
         },
         "community": {
             "no-search-results": "No results",
-            "show-more-button": "Show More",
-            "no-members-message": "There are no members to display"
+            "no-members-message": "There are no members to display",
+            "view-all": "View all"
         },
         "settings": {
             "title": "Settings",

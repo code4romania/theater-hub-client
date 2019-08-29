@@ -1,9 +1,9 @@
 <template>
   <section class="signup">
-    <v-container fluid signup-container elevation-4 class="mt-5 pa-5">
+    <v-container fluid signup-container>
         <v-layout column>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">{{ $t('pages.sign-up.title') }}</h1>
+            <h1 class="page-title mb-3">{{ $t('pages.sign-up.title') }}</h1>
 
             <v-layout>
 
@@ -40,7 +40,7 @@
                         </v-flex>
                         <v-flex xs11>
                           <label class="agree-to-terms-label" for="agree-to-terms">{{ $t('shared.content.agreement-text-beginning') }}</label>
-                          <nuxt-link to="terms-of-use" target="_blank">{{ $t('shared.content.agreement-terms-of-use') }}</nuxt-link> {{ $t('shared.content.agreement-text-separator') }} <nuxt-link to="privacy-policy" target="_blank">{{ $t('shared.content.agreement-text-privacy-policy') }}</nuxt-link>
+                          <nuxt-link to="terms-and-conditions" target="_blank">{{ $t('shared.content.agreement-terms-of-use') }}</nuxt-link> {{ $t('shared.content.agreement-text-separator') }} <nuxt-link to="privacy-policy" target="_blank">{{ $t('shared.content.agreement-text-privacy-policy') }}</nuxt-link>
                         </v-flex>
                     </v-layout>
                     <v-flex xs12 mt-3>
@@ -188,6 +188,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .signup {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 	.signup-container {
     max-width: 700px;

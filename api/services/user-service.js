@@ -2,6 +2,10 @@ import { Endpoints }    from '../endpoints';
 import { BaseService }  from './index';
 
 export class UserService extends BaseService {
+    static async contact (request) {
+        return this.$axios.$post(Endpoints.Contact, request);
+    }
+
     static async register (request) {
         return this.$axios.$post(Endpoints.Register, request);
     }

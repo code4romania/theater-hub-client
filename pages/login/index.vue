@@ -1,9 +1,9 @@
 <template>
   <section class="login">
-    <v-container fluid login-container elevation-4 class="mt-5 pa-5">
+    <v-container fluid login-container>
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">{{ $t('pages.login.title') }}</h1>
+            <h1 class="page-title mb-3">{{ $t('pages.login.title') }}</h1>
             <v-form ref="loginForm" v-model="valid">
                 <v-flex xs12>
                     <v-text-field v-model="email" :rules="emailRules" :label="`${$t('fields.email.label')}*`"
@@ -134,6 +134,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 	.login-container {
     max-width: 700px;

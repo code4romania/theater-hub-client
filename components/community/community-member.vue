@@ -8,20 +8,27 @@
                 </v-avatar>
             </nuxt-link>
         </v-flex>
-        <v-flex xs12 class="member-name-container member-information-container mt-1">
+        <v-flex xs12
+            v-if="showName"
+            class="member-name-container member-information-container mt-1">
             <nuxt-link :to="`/profile/${member.Username}`">
-                <span>{{ member.FullName }}</span>
+                <span class="member-name">{{ member.FullName }}</span>
             </nuxt-link>
         </v-flex>
-        <v-flex xs12 class="member-skills-container member-information-container mt-1">
+        <v-flex xs12
+            v-if="member.Skills && member.Skills.length !== 0"
+            class="member-skills-container member-information-container mt-1">
             <v-chip
                 :key="j"
                 v-on:click="() => handleSkillClick(skill)"
                 v-for="(skill, j) in member.Skills"
+                v-bind:class="{'clickable': hasClickableSkills}"
                 class="member-skill skill secondary-color mr-2">
                     {{ skill.Name }}
-                </v-chip>
-            <v-chip v-if="member.Surplus" class="skill-surplus skill secondary-color mr-2">
+            </v-chip>
+            <v-chip
+                v-if="member.Surplus"
+                class="skill-surplus skill secondary-color mr-2">
                 {{ member.Surplus }}
             </v-chip>
         </v-flex>
@@ -31,21 +38,22 @@
 <script>
 
     export default {
-        props: ['member'],
+        props: ['member', 'hasClickableSkills', 'showName'],
         methods: {
             handleSkillClick: function (skill) {
+                if (!this.hasClickableSkills) {
+                    return;
+                }
+
                 this.$emit('handleSkillClick', skill);
             }
+        },
+        mounted: function () {
         }
     }
 </script>
 
 <style lang="scss">
-    
-    .community-member {
-        display: flex;
-        justify-content: center;
-    }
 
     .member-avatar-container {
 
@@ -57,6 +65,11 @@
     .member-information-container > * {
 		text-decoration: none;
         color: initial;
+    }
+
+    .member-name {
+        color: #AE2760;
+        text-decoration: underline;
     }
 
     .member-skills-container {
@@ -72,7 +85,7 @@
         width: 80px;
         height: 20px;
 
-        .v-chip__content {
+        .v-chip__content.clickable {
             cursor: pointer;
         }
     }

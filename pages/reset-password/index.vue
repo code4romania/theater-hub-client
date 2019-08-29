@@ -3,7 +3,7 @@
     <v-container fluid reset-password-container elevation-4 class="mt-5 pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">{{ $t('pages.reset-password.title') }}</h1>
+            <h1 class="page-title mb-3">{{ $t('pages.reset-password.title') }}</h1>
 
             <v-layout>
 
