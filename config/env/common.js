@@ -5,4 +5,4 @@ export const commonConfig = {
     API: {
         baseURL: 'https://localhost:443/api'
     }
-};
+ };
