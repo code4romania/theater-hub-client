@@ -96,7 +96,7 @@
             </v-flex>
           </v-layout>
 
-          <v-layout row wrap justify-space-around fill-height>
+          <v-layout row wrap justify-space-around>
             
             <v-flex xs12 md6
               project-card-col
