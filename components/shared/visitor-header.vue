@@ -33,13 +33,13 @@
             <v-layout justify-end>
 
               <v-flex xs12 class="visitor-menu-items">
-                <nuxt-link to="/about" id="about-btn" class="menu-link"><u>{{ $t('shared.header.about-link') }}</u></nuxt-link>
-                <nuxt-link to="/projects" id="projects-btn" class="menu-link"><u>{{ $t('shared.header.projects-link') }}</u></nuxt-link>
-                <nuxt-link to="/community" id="community-btn" class="menu-link"><u>{{ $t('shared.header.community-link') }}</u></nuxt-link>
+                <nuxt-link to="/about" id="about-btn" class="menu-link">{{ $t('shared.header.about-link') }}</nuxt-link>
+                <nuxt-link to="/projects" id="projects-btn" class="menu-link">{{ $t('shared.header.projects-link') }}</nuxt-link>
+                <nuxt-link to="/community" id="community-btn" class="menu-link">{{ $t('shared.header.community-link') }}</nuxt-link>
                 <div>
-                  <nuxt-link to="/login" id="login-btn" class="menu-link"><u>{{ $t('shared.header.login-link') }}</u></nuxt-link>
+                  <nuxt-link to="/login" id="login-btn" class="menu-link">{{ $t('shared.header.login-link') }}</nuxt-link>
                   /
-                  <nuxt-link to="/signup" id="sign-up-btn" class="menu-link"><u>{{ $t('shared.header.sign-up-link') }}</u></nuxt-link>
+                  <nuxt-link to="/signup" id="sign-up-btn" class="menu-link">{{ $t('shared.header.sign-up-link') }}</nuxt-link>
                 </div>
                 <v-menu offset-y>
                   <v-flex xs12 slot="activator">
@@ -58,7 +58,7 @@
                 </v-menu>
               </v-flex>
 
-              <v-menu class="visitor-menu-hamburger">
+              <v-menu class="menu-hamburger">
                 <v-flex xs12 slot="activator">
                   <v-icon>menu</v-icon>
                 </v-flex>
@@ -66,35 +66,35 @@
                   <v-list-tile>
                     <v-list-tile-title>
                       <nuxt-link to="/about" id="about-btn" class="menu-link">
-                        <u>{{ $t('shared.header.about-link') }}</u>
+                        {{ $t('shared.header.about-link') }}
                       </nuxt-link>
                     </v-list-tile-title>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-title>
                       <nuxt-link to="/projects" id="projects-btn" class="menu-link">
-                        <u>{{ $t('shared.header.projects-link') }}</u>
+                        {{ $t('shared.header.projects-link') }}
                       </nuxt-link>
                     </v-list-tile-title>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-title>
                       <nuxt-link to="/community" id="community-btn" class="menu-link">
-                        <u>{{ $t('shared.header.community-link') }}</u>
+                        {{ $t('shared.header.community-link') }}
                       </nuxt-link>
                     </v-list-tile-title>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-title>
                       <nuxt-link to="/signup" id="sign-up-btn" class="menu-link">
-                        <u>{{ $t('shared.header.sign-up-link') }}</u>
+                        {{ $t('shared.header.sign-up-link') }}
                       </nuxt-link>
                     </v-list-tile-title>
                   </v-list-tile>
                   <v-list-tile>
                     <v-list-tile-title>
                       <nuxt-link to="/login" id="login-btn" class="menu-link">
-                        <u>{{ $t('shared.header.login-link') }}</u>
+                        {{ $t('shared.header.login-link') }}
                       </nuxt-link>
                     </v-list-tile-title>
                   </v-list-tile>
@@ -109,6 +109,7 @@
                   </v-list-tile>
                 </v-list>
               </v-menu>
+
             </v-layout>
           </v-flex>
           
@@ -138,12 +139,14 @@
                 return this.locale ? this.locale.toUpperCase() : '';
             },
             homeLink: function () {
-                return config.application.homeLink.replace('{0}', this.locale);
+              return this.locale === LocaleType.RO
+                  ? config.CodeForRomania.homeLinkRO
+                  : config.CodeForRomania.homeLinkEN;
             },
             donationLink: function () {
               return this.locale === LocaleType.RO
-                  ? config.application.donationLinkRO
-                  : config.application.donationLinkEN;
+                  ? config.CodeForRomania.donationLinkRO
+                  : config.CodeForRomania.donationLinkEN;
             }
         },
         methods: {
@@ -219,14 +222,6 @@
     .menu-link {
       text-decoration: underline;
       color: #AE2760;
-      &.nuxt-link-active {
-        color: black;
-      }
-    }
-
-    .add-link {
-      text-decoration: underline;
-      color: #0000FF;
       &.nuxt-link-active {
         color: black;
       }

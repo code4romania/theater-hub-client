@@ -4,7 +4,7 @@
             <v-flex>
             <nav>
                 <a class="logo-wrapper" href="/">
-                <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
+                    <img :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
                 </a>
             </nav>
             </v-flex>
@@ -21,9 +21,9 @@
 </template>
 
 <script>
-export default {
+    export default {
 
-}
+    }
 </script>
 
 <style lang="scss" scoped>

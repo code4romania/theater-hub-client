@@ -134,13 +134,13 @@
             }),
             aboutLink: function () {
               return this.locale === LocaleType.RO
-                  ? config.application.aboutLinkRO
-                  : config.application.aboutLinkEN;
+                  ? config.CodeForRomania.aboutLinkRO
+                  : config.CodeForRomania.aboutLinkEN;
             },
             donationLink: function () {
               return this.locale === LocaleType.RO
-                  ? config.application.donationLinkRO
-                  : config.application.donationLinkEN;
+                  ? config.CodeForRomania.donationLinkRO
+                  : config.CodeForRomania.donationLinkEN;
             }
         },
         methods: {
