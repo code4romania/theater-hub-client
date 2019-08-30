@@ -18,12 +18,12 @@ header {
 
 	}
 
-	.visitor-menu-items {
+	.visitor-menu-items, .user-menu-items {
 		display: flex;
 		justify-content: space-around;
 	}
 
-	.visitor-menu-hamburger {
+	.menu-hamburger {
 		display: none;
 	}
 
@@ -80,15 +80,15 @@ header {
 }
 
 @media screen and (max-width: 1200px) {
-
-	header .visitor-menu-items {
-		display: none;
+	header {
+		.visitor-menu-items, .user-menu-items {
+		   display: none;
+	   	}
+   
+	   	.menu-hamburger {
+		   display: initial;
+	   	}
 	}
-
-	header .visitor-menu-hamburger {
-		display: initial;
-	}
-
 }
 
 @media screen and (max-width: 960px) {
