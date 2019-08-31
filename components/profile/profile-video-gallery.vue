@@ -19,10 +19,10 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-                <v-flex xs12 class="elevation-2 edited-section" v-if="video.inEditMode">
+                <v-flex xs12 class="elevation-2 highlighted-section" v-if="video.inEditMode">
                     <ProfileVideoEdit :video="video" :index="videoIndex" @editVideo="editVideo" />
                 </v-flex>
-                <v-flex xs12 class="elevation-2 edited-section" v-if="video.inDeleteMode">
+                <v-flex xs12 class="elevation-2 highlighted-section" v-if="video.inDeleteMode">
                     <ProfileVideoDelete :index="videoIndex" @deleteVideo="deleteVideo"/>
                 </v-flex>
             </v-layout>
@@ -33,7 +33,7 @@
         <v-btn outline :light="false" class="add-video-btn add-entity-btn" v-if="!isAddingVideo" v-on:click.native="onAddVideoClick()">
             <v-icon>add</v-icon> {{ $t('shared.content.add-video-button') }}
         </v-btn>
-        <v-card mt-4 class="elevation-2 timeline-message-card edited-section" v-if="isAddingVideo">
+        <v-card mt-4 class="elevation-2 timeline-message-card highlighted-section" v-if="isAddingVideo">
             <ProfileVideoAdd @addVideo="addVideo"/>
         </v-card>
     </v-layout>

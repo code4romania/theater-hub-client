@@ -28,10 +28,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="update.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="update.inEditMode">
                         <ProjectUpdateEdit :update="update" :index="updateIndex" @editUpdate="editUpdate"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="update.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="update.inDeleteMode">
                         <ProjectUpdateDelete :index="updateIndex" @deleteUpdate="deleteUpdate"/>
                     </v-card>
             </v-timeline-item>
@@ -52,7 +52,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingUpdate">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProjectUpdateAdd @addUpdate="addUpdate"/>
                 </v-card>
             </v-timeline-item>
@@ -84,10 +84,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="update.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="update.inEditMode">
                         <ProjectUpdateEdit :update="update" :index="updateIndex" @editUpdate="editUpdate"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="update.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="update.inDeleteMode">
                         <ProjectUpdateDelete :index="updateIndex" @deleteUpdate="deleteUpdate"/>
                     </v-card>
             </div>
@@ -105,7 +105,7 @@
             </v-btn>
 
             <div class="timeline-message" v-if="isAddingUpdate">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProjectUpdateAdd @addUpdate="addUpdate"/>
                 </v-card>
             </div>

@@ -40,10 +40,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="award.inEditMode">
                         <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="award.inDeleteMode">
                         <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
                     </v-card>
             </v-timeline-item>
@@ -64,7 +64,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingAward">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileAwardAdd @addAward="addAward"/>
                 </v-card>
             </v-timeline-item>
@@ -101,10 +101,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="award.inEditMode">
                         <ProfileAwardEdit :award="award" :index="awardIndex" @editAward="editAward"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="award.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="award.inDeleteMode">
                         <ProfileAwardDelete :index="awardIndex" @deleteAward="deleteAward"/>
                     </v-card>
             </div>
@@ -122,7 +122,7 @@
             </v-btn>
 
             <div class="timeline-message" v-if="isAddingAward">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileAwardAdd @addAward="addAward"/>
                 </v-card>
             </div>

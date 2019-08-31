@@ -36,16 +36,15 @@
                 <nuxt-link to="/projects" class="menu-link">
                     {{ $t('shared.header.projects-link') }}
                 </nuxt-link>
-                <nuxt-link to="/create-project" class="menu-link">
-                    {{ $t('shared.header.create-project-link') }}
-                </nuxt-link>
                 <nuxt-link to="/community" class="menu-link">
                     {{ $t('shared.header.community-link') }}
                 </nuxt-link>
                 <v-menu offset-y>
                     <v-flex xs12 slot="activator">
                         <div class="header-name-container">
-                            <span>{{ $t('shared.header.greeting') }}, {{ myFullName }}</span>
+                            <span>
+                                {{ $t('shared.header.greeting') }}, {{ myFullName }}
+                            </span>
                         </div>
                         <v-avatar size="30px">
                             <img :src="require('~/assets/images/default-avatar.svg')" />
@@ -63,6 +62,13 @@
                             <v-list-tile-title>
                                 <nuxt-link to="/my-projects" class="menu-link">
                                     {{ $t('shared.header.my-projects-link') }}
+                                </nuxt-link>
+                            </v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-title>
+                                <nuxt-link to="/create-project" class="menu-link">
+                                    {{ $t('shared.header.create-project-link') }}
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
@@ -103,13 +109,6 @@
                           </v-list-tile>
                           <v-list-tile>
                               <v-list-tile-title>
-                                  <nuxt-link to="/create-project" class="menu-link">
-                                      {{ $t('shared.header.create-project-link') }}
-                                  </nuxt-link>
-                              </v-list-tile-title>
-                          </v-list-tile>
-                          <v-list-tile>
-                              <v-list-tile-title>
                                   <nuxt-link to="/community" class="menu-link">
                                       {{ $t('shared.header.community-link') }}
                                   </nuxt-link>
@@ -126,6 +125,13 @@
                               <v-list-tile-title>
                                   <nuxt-link to="/my-projects" class="menu-link">
                                       {{ $t('shared.header.my-projects-link') }}
+                                  </nuxt-link>
+                              </v-list-tile-title>
+                          </v-list-tile>
+                          <v-list-tile>
+                              <v-list-tile-title>
+                                  <nuxt-link to="/create-project" class="menu-link">
+                                      {{ $t('shared.header.create-project-link') }}
                                   </nuxt-link>
                               </v-list-tile-title>
                           </v-list-tile>
@@ -250,7 +256,10 @@
             padding: 0px 10px;
         }
 
-
+        .header-name-container {
+            max-width: 90px;
+            text-overflow: ellipsis;
+        }
 
     }
 

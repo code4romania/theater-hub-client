@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import ProjectCard from '~/components/shared/projectCard.vue';
+import ProjectCard from '~/components/project/project-card.vue';
 import { projects } from '~/store/constants/mockdata'
 
 export default {

@@ -6,8 +6,15 @@
             <v-flex xs12 v-if="!isEditingSettings">
                 <v-layout row wrap class="profile-information-group">
                     <v-flex xs12 mb-3 class="profile-information-group-header">
-                        <h2>{{ $t('pages.settings.title') }}</h2>
-                        <v-btn outline small fab class="mt-0" v-on:click="onEditSettingsClick"><v-icon>edit</v-icon></v-btn>
+                        <h1 class="page-title">
+                            {{ $t('pages.settings.title') }}
+                        </h1>
+                        <v-btn
+                            outline small fab
+                            class="mt-0"
+                            v-on:click="onEditSettingsClick">
+                                <v-icon>edit</v-icon>
+                        </v-btn>
                     </v-flex>
                     <v-flex xs12 class="setings-row" v-if="isUser && isEnabled">
                         <v-flex xs4>
@@ -52,24 +59,50 @@
                 </v-layout>
             </v-flex>
 
-            <v-flex xs12 v-if="isEditingSettings">
-               <v-layout row wrap elevation-5 pa-5>
+            <v-flex
+                xs12
+                v-if="isEditingSettings"
+                class="highlighted-section"
+            >
+               <v-layout row wrap pa-5>
                     <v-flex xs12 class="profile-information-group-header">
                         <h2>{{ $t('pages.settings.edit-settings-title') }}</h2>
                         <div>
-                            <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditSettingsClick"><v-icon>done</v-icon></v-btn>
-                            <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelEditSettingsClick"><v-icon>clear</v-icon></v-btn>
+                            <v-btn
+                                outline small fab
+                                slot="activator"
+                                class="mt-0"
+                                v-on:click="onSaveEditSettingsClick">
+                                    <v-icon>done</v-icon>
+                            </v-btn>
+                            <v-btn
+                                outline small fab
+                                slot="activator"
+                                class="mt-0"
+                                v-on:click="onCancelEditSettingsClick">
+                                    <v-icon>clear</v-icon>
+                            </v-btn>
                         </div>
                     </v-flex>
                     <v-flex xs12>
-                        <ProfilePrivacy v-if="isUser && isEnabled"
-                                :profilePrivacy="editedProfilePrivacy" @updateProfilePrivacy="updateProfilePrivacy"/>
 
-                        <ProfileLocaleSetting :localeSetting="editedLocaleSetting" @updateLocaleSetting="updateLocaleSetting" />
+                        <ProfilePrivacy
+                            v-if="isUser && isEnabled"
+                            :profilePrivacy="editedProfilePrivacy"
+                            @updateProfilePrivacy="updateProfilePrivacy"
+                        />
+
+                        <ProfileLocaleSetting
+                            :localeSetting="editedLocaleSetting"
+                            @updateLocaleSetting="updateLocaleSetting"
+                        />
 
                         <v-flex v-if="users.updateSettingsErrors">
-                            <ServerSideErrors :errors="users.updateSettingsErrors"/>
+                            <ServerSideErrors
+                                :errors="users.updateSettingsErrors"
+                            />
                         </v-flex>
+
                     </v-flex>
                 </v-layout>
             </v-flex>
@@ -79,34 +112,75 @@
             </v-flex>
 
             <v-flex xs12 v-if="!isChangingPassword">
-                <v-btn id="change-password-button" class="primary settings-section-button" large @click="onChangePasswordClick">{{ $t('pages.settings.change-password-button') }}</v-btn>
+                <v-btn
+                    id="change-password-button"
+                    class="settings-section-button"
+                    outline large
+                    @click="onChangePasswordClick">
+                        {{ $t('pages.settings.change-password-button') }}
+                </v-btn>
             </v-flex>
 
-            <v-flex xs12 v-if="isChangingPassword">
-               <v-layout row wrap elevation-5 pa-5>
+            <v-flex
+                xs12
+                v-if="isChangingPassword"
+                class="highlighted-section"
+            >
+               <v-layout row wrap pa-5>
                     <v-flex xs12 class="profile-information-group-header">
                         <h2>{{ $t('pages.settings.change-password-title') }}</h2>
+
                         <div>
-                            <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onConfirmChangePasswordClick"><v-icon>done</v-icon></v-btn>
-                            <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelChangePasswordClick"><v-icon>clear</v-icon></v-btn>
+                            <v-btn
+                                outline small fab
+                                slot="activator"
+                                class="mt-0"
+                                v-on:click="onConfirmChangePasswordClick">
+                                    <v-icon>done</v-icon>
+                            </v-btn>
+                            <v-btn
+                                outline small fab
+                                slot="activator"
+                                class="mt-0"
+                                v-on:click="onCancelChangePasswordClick">
+                                    <v-icon>clear</v-icon>
+                            </v-btn>
                         </div>
+
                     </v-flex>
                     <v-flex xs12 pt-3>
                         <v-form ref="changePasswordForm" v-model="isChangePasswordFormValid">
                             <v-flex xs12>
-                                <v-text-field v-model="password"     :rules="passwordRules"
-                                            :label="`${$t('fields.password.label')}*`" validate-on-blur required type="password"></v-text-field>
+                                <v-text-field
+                                    v-model="password"
+                                    :rules="passwordRules"
+                                    :label="`${$t('fields.password.label')}*`"
+                                    validate-on-blur required
+                                    type="password">
+                                </v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field v-model="newPassword"  :rules="passwordRules"
-                                        :label="`${$t('fields.new-password.label')}*`" validate-on-blur required type="password"></v-text-field>
+                                <v-text-field
+                                    v-model="newPassword"
+                                    :rules="passwordRules"
+                                    :label="`${$t('fields.new-password.label')}*`"
+                                    validate-on-blur required
+                                    type="password">
+                                </v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field v-model="confirmNewPassword" :rules="validateConfirmNewPassword()"
-                                            :label="`${$t('fields.confirm-password.label')}*`" validate-on-blur required type="password"></v-text-field>
+                                <v-text-field
+                                    v-model="confirmNewPassword"
+                                    :rules="validateConfirmNewPassword()"
+                                    :label="`${$t('fields.confirm-password.label')}*`"
+                                    validate-on-blur required
+                                    type="password">
+                                </v-text-field>
                             </v-flex>
                             <v-flex xs12 v-if="users.changePasswordErrors">
-                                <ServerSideErrors :errors="users.changePasswordErrors"/>
+                                <ServerSideErrors
+                                    :errors="users.changePasswordErrors"
+                                />
                             </v-flex>
                         </v-form>
                     </v-flex>
@@ -118,11 +192,21 @@
             </v-flex>
 
             <v-flex xs12 v-if="!isDeletingAccount">
-                <v-btn id="delete-account-button" large @click="onDeleteAccountClick" class="settings-section-button">{{ $t('pages.settings.delete-account-button') }}</v-btn>
+                <v-btn
+                    id="delete-account-button"
+                    class="settings-section-button"
+                    outline large
+                    @click="onDeleteAccountClick">
+                        {{ $t('pages.settings.delete-account-button') }}
+                </v-btn>
             </v-flex>
 
-            <v-flex xs12 v-if="isDeletingAccount">
-               <v-layout row wrap elevation-5 pa-5>
+            <v-flex
+                xs12
+                v-if="isDeletingAccount"
+                class="highlighted-section"
+            >
+               <v-layout row wrap pa-5>
                     <v-flex xs12 class="profile-information-group-header">
                         <h2>{{ $t('pages.settings.delete-account-title') }}</h2>
                         <div>
@@ -236,9 +320,21 @@
                 locales: 'applicationData/locales',
                 localeName: 'localeName'
             }),
-            ...mapState(['authentication', 'users'])
+            ...mapState(['authentication', 'users']),
+            shouldDisplayOverlay: function () {
+                return this.isEditingSettings ||
+                        this.isChangingPassword ||
+                        this.isDeletingAccount;
+            }
         },
         methods: {
+            initializeData: function () {
+                window.onscroll = _.throttle(() => {
+                    if (this.shouldDisplayOverlay) {
+                        this.$store.dispatch('syncMainOverlaySize');
+                    }
+                }, 100);
+            },
             validateConfirmNewPassword () {
                 if (!this.confirmNewPassword) {
                     return [this.$t('fields.confirm-password.validation-errors.required')];
@@ -254,6 +350,7 @@
                 return this.$t(`application-data.${(_.invert(VisibilityType))[value].toLowerCase()}`);
             },
             onEditSettingsClick: function () {
+                this.$store.dispatch('users/initiateEditSectionSession');
                 this.cancelAllUnsavedChanges();
                 this.editedProfilePrivacy   = Helpers.cloneObject(this.profilePrivacy);
                 this.editedLocaleSetting    = this.localeSetting;
@@ -278,6 +375,7 @@
                     Locale: this.localeSetting
                 }).then((response) => {
                     if (!this.users.updateSettingsErrors) {
+                        this.$store.dispatch('users/endEditSectionSession');
                         setTimeout(() => {
                             this.snackbarText = this.$t('pages.settings.snackbar-messages.update-settings');
                             this.snackbar = true;
@@ -287,9 +385,12 @@
             },
             onCancelEditSettingsClick: function () {
                 this.isEditingSettings = false;
+                this.$store.dispatch('users/endEditSectionSession');
             },
             onChangePasswordClick: function () {
                 this.$store.dispatch('users/setChangePasswordErrors', '');
+                this.$store.dispatch('users/initiateEditSectionSession');
+
                 this.cancelAllUnsavedChanges();
                 this.isChangingPassword = true;
             },
@@ -306,6 +407,7 @@
                     ConfirmNewPassword: this.confirmNewPassword
                 }).then((response) => {
                     if (!this.users.changePasswordErrors) {
+                        this.$store.dispatch('users/endEditSectionSession');
                         this.cancelAllUnsavedChanges();
                         this.snackbarText = this.$t('pages.settings.snackbar-messages.change-password');
                         this.snackbar = true;
@@ -314,6 +416,7 @@
             },
             onCancelChangePasswordClick: function () {
                 this.isChangingPassword = false;
+                this.$store.dispatch('users/endEditSectionSession');
             },
             cancelAllUnsavedChanges: function () {
                 this.isEditingSettings     = false;
@@ -328,6 +431,8 @@
             onDeleteAccountClick: function () {
                 this.$store.dispatch('authentication/setCheckUserPasswordErrors', '');
                 this.$store.dispatch('users/setDeleteMeErrors', '');
+                this.$store.dispatch('users/initiateEditSectionSession');
+
                 this.cancelAllUnsavedChanges();
                 this.isDeletingAccount = true;
             },
@@ -344,6 +449,7 @@
                     if (!this.authentication.checkUserPasswordErrors) {
                         this.$store.dispatch('users/deleteMe').then(() => {
                             if (!this.users.deleteMeErrors) {
+                                this.$store.dispatch('users/endEditSectionSession');
                                 this.$store.dispatch('authentication/logout');
                                 this.$router.push({ path: '/login' });
                             }
@@ -353,6 +459,7 @@
             },
             onCancelDeleteAccountClick: function () {
                 this.isDeletingAccount = false;
+                this.$store.dispatch('users/endEditSectionSession');
             }
         }
     }
@@ -371,12 +478,8 @@
     }
 
     #delete-account-button {
-        background-color: #F00;
-        color: #FFF;
+        color: #F00;
     }
 
-    #change-password-button {
-        color: #FFF;
-    }
 
 </style>

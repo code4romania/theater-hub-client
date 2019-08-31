@@ -326,7 +326,6 @@
             "about-link": "About",
             "sign-up-link": "Sign Up",
             "login-link": "Login",
-            "create-profile-link": "Create profile",
             "projects-link": "Projects",
             "my-projects-link": "My projects",
             "create-project-link": "Create project",
@@ -457,6 +456,12 @@
         },
         "projects": {
             "title": "Projects"
+        },
+        "my-projects": {
+            "title": "My projects",
+            "delete-project-message": "Are you sure you wish to delete this project?",
+            "no-projects-message": "You have no projects",
+            "go-to-create-project": "Create project"
         },
         "project": {
             "needs-title": "Help Needed",

@@ -28,10 +28,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="need.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inEditMode">
                         <ProjectNeedEdit :need="need" :index="needIndex" @editNeed="editNeed"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="need.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inDeleteMode">
                         <ProjectNeedDelete :index="needIndex" @deleteNeed="deleteNeed"/>
                     </v-card>
             </v-timeline-item>
@@ -52,7 +52,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingNeed">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProjectNeedAdd @addNeed="addNeed"/>
                 </v-card>
             </v-timeline-item>
@@ -84,10 +84,10 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="need.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inEditMode">
                         <ProjectNeedEdit :need="need" :index="needIndex" @editNeed="editNeed"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="need.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inDeleteMode">
                         <ProjectNeedDelete :index="needIndex" @deleteNeed="deleteNeed"/>
                     </v-card>
             </div>
@@ -105,7 +105,7 @@
             </v-btn>
 
             <div class="timeline-message" v-if="isAddingNeed">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProjectNeedAdd @addNeed="addNeed"/>
                 </v-card>
             </div>
