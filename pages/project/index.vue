@@ -94,7 +94,7 @@
 import { mapGetters } from 'vuex';
 import moment from 'moment';
 import Hero from '~/components/project/hero.vue';
-import ProjectCard from '~/components/shared/projectCard.vue';
+import ProjectCard from '~/components/project/project-card.vue';
 import VueGoodshareFacebook from '~/node_modules/vue-goodshare/src/providers/Facebook.vue';
 import VueGoodshareTwitter from '~/node_modules/vue-goodshare/src/providers/Twitter.vue';
 import { project } from '~/store/constants/mockdata';
@@ -104,6 +104,16 @@ const config = getConfig();
 
 
 export default {
+  layout: ({ store }) => {
+      if (!store.getters['authentication/isAuthenticated']) {
+          return 'visitor';
+      } else if (store.getters['users/isAdmin']) {
+          return 'administration';
+      } else {
+          return 'user';
+      }
+  },
+  middleware: ['visitor-or-enabled-user'],
   data () {
     return {
       project
@@ -131,8 +141,7 @@ export default {
       getFormattedDate (date) {
           return moment(date).locale(this.locale).format('LL');
       }
-  },
-  layout: 'default'
+  }
 };
 </script>
 

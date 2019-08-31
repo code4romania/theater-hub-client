@@ -46,11 +46,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inEditMode">
                         <ProfileExperienceEdit :experienceStep="step"
                                         :index="experienceIndex" @editExperienceStep="editExperienceStep" />
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inDeleteMode">
                         <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
                     </v-card>
             </v-timeline-item>
@@ -71,7 +71,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingExperienceStep">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
                 </v-card>
             </v-timeline-item>
@@ -115,11 +115,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inEditMode">
                         <ProfileExperienceEdit :experienceStep="step"
                                         :index="experienceIndex" @editExperienceStep="editExperienceStep" />
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inDeleteMode">
                         <ProfileExperienceDelete :index="experienceIndex" @deleteExperienceStep="deleteExperienceStep"/>
                     </v-card>
             </div>
@@ -135,7 +135,7 @@
                 <v-icon>add</v-icon> {{ $t('shared.content.add-experience-button') }}
             </v-btn>
             <div class="timeline-message" v-if="isAddingExperienceStep">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileExperienceAdd @addExperienceStep="addExperienceStep"/>
                 </v-card>
             </div>

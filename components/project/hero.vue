@@ -30,7 +30,9 @@ export default {
 .projectHero__image {
   object-fit: cover;
   width: 100%;
-  height: 420px;
+  height: 100%;
+  max-height: 400px;
+  margin-bottom: -6px;
 }
 
 .projectHero__content {

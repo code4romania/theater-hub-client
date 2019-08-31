@@ -6,9 +6,7 @@
 
       <main>
         <v-content>
-          <v-container>
             <nuxt />
-          </v-container>
         </v-content>
       </main>
 
@@ -32,9 +30,13 @@
       Footer
     },
     computed: {
-      ...mapState({
-        displayMainOverlay: 'displayMainOverlay'
-      })
+      ...mapState([
+        'displayMainOverlay',
+        'users'
+      ])
+    },
+    mounted: function () {
+      this.$store.dispatch('users/endEditSectionSession');
     }
   }
 </script>

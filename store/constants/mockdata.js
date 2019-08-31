@@ -543,38 +543,38 @@ export const project = {
 
 export const searchPageResults = {
   community: [
-    // {
-    //   ID: '9e650fd6-6364-4576-a7df-cf1d50d23617',
-    //   ProfileImage: 'https://www.fillmurray.com/200/300',
-    //   FirstName: 'John1',
-    //   LastName: 'Doe1',
-    //   Username: 'john1.doe1.1',
-    //   BirthDate: '1988-11-08',
-    //   Email: 'John1.Doe1@yopmail.com',
-    //   PhoneNumber: '0123456789',
-    //   Website: 'http://theaterhub.ro/',
-    //   InstagramLink: 'https://www.instagram.com',
-    //   YoutubeLink: 'https://www.youtube.com/',
-    //   FacebookLink: 'https://www.facebook.com/',
-    //   LinkedinLink: 'https://www.linkedin.com/',
-    //   SkillIDs: [2, 4, 7]
-    // },
-    // {
-    //   ID: '77650fd6-6364-4576-a7df-cf1d50d23617',
-    //   ProfileImage: 'https://www.fillmurray.com/200/300',
-    //   FirstName: 'John2',
-    //   LastName: 'Doe2',
-    //   Username: 'john2.doe2.1',
-    //   BirthDate: '1988-11-08',
-    //   Email: 'John2.Doe2@yopmail.com',
-    //   PhoneNumber: '0123456789',
-    //   Website: 'http://theaterhub.ro/',
-    //   InstagramLink: 'https://www.instagram.com',
-    //   YoutubeLink: 'https://www.youtube.com/',
-    //   FacebookLink: 'https://www.facebook.com/',
-    //   LinkedinLink: 'https://www.linkedin.com/',
-    //   SkillIDs: [2, 4, 7]
-    // },
+    {
+      ID: '9e650fd6-6364-4576-a7df-cf1d50d23617',
+      ProfileImage: 'https://www.fillmurray.com/200/300',
+      FirstName: 'John1',
+      LastName: 'Doe1',
+      Username: 'john1.doe1.1',
+      BirthDate: '1988-11-08',
+      Email: 'John1.Doe1@yopmail.com',
+      PhoneNumber: '0123456789',
+      Website: 'http://theaterhub.ro/',
+      InstagramLink: 'https://www.instagram.com',
+      YoutubeLink: 'https://www.youtube.com/',
+      FacebookLink: 'https://www.facebook.com/',
+      LinkedinLink: 'https://www.linkedin.com/',
+      SkillIDs: [2, 4, 7]
+    },
+    {
+      ID: '77650fd6-6364-4576-a7df-cf1d50d23617',
+      ProfileImage: 'https://www.fillmurray.com/200/300',
+      FirstName: 'John2',
+      LastName: 'Doe2',
+      Username: 'john2.doe2.1',
+      BirthDate: '1988-11-08',
+      Email: 'John2.Doe2@yopmail.com',
+      PhoneNumber: '0123456789',
+      Website: 'http://theaterhub.ro/',
+      InstagramLink: 'https://www.instagram.com',
+      YoutubeLink: 'https://www.youtube.com/',
+      FacebookLink: 'https://www.facebook.com/',
+      LinkedinLink: 'https://www.linkedin.com/',
+      SkillIDs: [2, 4, 7]
+    },
     {
       ID: '9e650fd6-7777-4576-a7df-cf1d50d23617',
       ProfileImage: 'https://www.fillmurray.com/200/300',
@@ -593,16 +593,16 @@ export const searchPageResults = {
     }
   ],
   projects: [
-    // {
-    //   ID: '97750fd6-7777-4576-a7df-cf1d50d23617',
-    //   Name: 'Back to the Future - Contemporary Dance Show',
-    //   Image: 'https://www.fillmurray.com/200/300',
-    //   InitiatorName: 'John Smith',
-    //   Date: new Date(),
-    //   City: 'Bucharest',
-    //   Budget: 12000,
-    //   Currency: 0,
-    // },
+    {
+      ID: '97750fd6-7777-4576-a7df-cf1d50d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
+    },
     {
       ID: '97750fd6-7777-4576-a7df-cf7750d23617',
       Name: 'Back to the Future - Contemporary Dance Show',
@@ -615,3 +615,46 @@ export const searchPageResults = {
     }
   ]
 };
+
+export const  myProjects = [
+    {
+      ID: '97750fd6-7777-4576-a7df-cf1d50d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
+    },
+    {
+      ID: '97750fd6-7777-4576-a7df-cf7750d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
+    },
+    {
+      ID: '97750fd6-7777-4576-a7df-cf1d50d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
+    },
+    {
+      ID: '97750fd6-7777-4576-a7df-cf7750d23617',
+      Name: 'Back to the Future - Contemporary Dance Show',
+      Image: 'https://www.fillmurray.com/200/300',
+      InitiatorName: 'John Smith',
+      Date: new Date(),
+      City: 'Bucharest',
+      Budget: 12000,
+      Currency: 0
+    }
+];

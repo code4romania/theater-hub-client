@@ -293,7 +293,7 @@ export default {
 
             if (navigateToElement) {
                 setTimeout(() => {
-                    var element = document.getElementsByClassName('edited-section')[0];
+                    var element = document.getElementsByClassName('highlighted-section')[0];
 
                     if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
                         HtmlHelpers.scrollToElement(element);

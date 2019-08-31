@@ -1,6 +1,7 @@
 <template>
     <section class="search-section">
         <v-container id="search-container" class="main-container pa-1">
+
             <v-layout
                 row wrap pt-4
                 justify-center
@@ -23,7 +24,9 @@
 
             <v-layout mt-3>
                 <v-flex xs12 text-xs-center text-sm-left>
-                    <h2 class="mt-5 mb-4">{{ $t('pages.search.community-results') }}</h2>
+                    <h2 class="mt-5 mb-4 ml-4">
+                        {{ $t('pages.search.community-results') }}
+                    </h2>
 
                     <v-layout column>
 
@@ -46,7 +49,9 @@
 
             <v-layout mt-3>
                 <v-flex xs12 text-xs-center text-sm-left>
-                    <h2 class="mt-5 mb-4">{{ $t('pages.search.projects-results') }}</h2>
+                    <h2 class="mt-5 mb-4 ml-4">
+                        {{ $t('pages.search.projects-results') }}
+                    </h2>
 
 
                     <v-layout column>
@@ -54,8 +59,10 @@
                       <v-flex  xs12
                         :key="i" v-for="(project, i) in displayedProjects"
                         class="mb-5">
-                            <ProjectSearchResult
+                            <ProjectListItem
                                 :project="project"
+                                :hasCenteredImage="true"
+                                :showInitiator="true"
                             />
                         </v-flex>
 
@@ -76,7 +83,7 @@
 
   import { Helpers } from '~/utils';
   import MemberSearchResult from '~/components/search/member-search-result';
-  import ProjectSearchResult from '~/components/search/project-search-result';
+  import ProjectListItem from '~/components/project/project-list-item';
   import { searchPageResults } from '~/store/constants/mockdata';
   import { mapGetters } from 'vuex';
 
@@ -84,7 +91,7 @@
     middleware: ['get-skills', 'get-currencies'],
     components: {
         MemberSearchResult,
-        ProjectSearchResult
+        ProjectListItem
     },
     layout: ({ store }) => {
         if (!store.getters['authentication/isAuthenticated']) {

@@ -325,7 +325,6 @@
             "about-link": "Despre",
             "sign-up-link": "Înregistrare",
             "login-link": "Autentificare",
-            "create-profile-link": "Construiți profilul",
             "projects-link": "Proiecte",
             "my-projects-link": "Proiectele mele",
             "create-project-link": "Creează proiect",
@@ -455,6 +454,12 @@
         },
         "projects": {
             "title": "Proiecte"
+        },
+        "my-projects": {
+            "title": "Proiectele mele",
+            "delete-project-message": "Sunteți sigur că doriți să ștergeți acest proiect?",
+            "no-projects-message": "Nu aveți nici un proiect",
+            "go-to-create-project": "Creează proiect"
         },
         "project": {
             "needs-title": "Necesități",

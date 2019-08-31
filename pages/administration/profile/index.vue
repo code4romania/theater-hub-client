@@ -42,7 +42,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-section">
+                <v-flex xs12 v-if="isEditingGeneralInformation" class="highlighted-section">
                    <v-layout row wrap pa-5>
 
                        <v-flex xs12 class="profile-information-group-header">
@@ -355,7 +355,8 @@
     }
 
     #edit-general-information {
-        align-self: start;
+        display: flex;
+        justify-content: flex-end;
     }
 
     .profile-section {
@@ -412,11 +413,6 @@
             height: 150px;
             min-height: 150px;
         }
-
-        #edit-general-information {
-            align-self: flex-end;
-        }
-    
 
     }
 

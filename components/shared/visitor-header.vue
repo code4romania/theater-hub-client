@@ -32,7 +32,7 @@
           <v-flex xs5 class="menu-container">
             <v-layout justify-end>
 
-              <v-flex xs12 class="visitor-menu-items">
+              <v-flex xs12 pl-5 class="visitor-menu-items">
                 <nuxt-link to="/about" id="about-btn" class="menu-link">{{ $t('shared.header.about-link') }}</nuxt-link>
                 <nuxt-link to="/projects" id="projects-btn" class="menu-link">{{ $t('shared.header.projects-link') }}</nuxt-link>
                 <nuxt-link to="/community" id="community-btn" class="menu-link">{{ $t('shared.header.community-link') }}</nuxt-link>

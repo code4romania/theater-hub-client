@@ -395,10 +395,11 @@ main {
   justify-content: flex-end;
 }
 
-.edited-section {
+.highlighted-section {
   z-index: 200;
   background-color: $white;
   border-radius: 10px;
+  width: 100%;
 }
 
 .button-wrapper-link {
@@ -408,10 +409,6 @@ main {
 .v-input--selection-controls[name='agree-to-terms'] {
   margin-top: 0px;
   padding-top: 0px;
-}
-
-.edited-section {
-  width: 100%;
 }
 
 .profile-row-actions, .project-row-actions {

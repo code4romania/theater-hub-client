@@ -45,11 +45,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inEditMode">
                         <ProfileEducationEdit :educationStep="step"
                                     :index="educationIndex" @editEducationStep="editEducationStep"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inDeleteMode">
                         <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
                     </v-card>
             </v-timeline-item>
@@ -70,7 +70,7 @@
                 </v-card>
             </v-timeline-item>
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingEducationStep">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileEducationAdd @addEducationStep="addEducationStep"/>
                 </v-card>
             </v-timeline-item>
@@ -113,11 +113,11 @@
                             </p>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inEditMode">
                         <ProfileEducationEdit :educationStep="step"
                                     :index="educationIndex" @editEducationStep="editEducationStep"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card edited-section" v-if="step.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="step.inDeleteMode">
                         <ProfileEducationDelete :index="educationIndex" @deleteEducationStep="deleteEducationStep"/>
                     </v-card>
             </div>
@@ -133,7 +133,7 @@
                 <v-icon>add</v-icon> {{ $t('shared.content.add-education-button') }}
             </v-btn>
             <div class="timeline-message" v-if="isAddingEducationStep">
-                <v-card class="timeline-message-card elevation-2 edited-section">
+                <v-card class="timeline-message-card elevation-2 highlighted-section">
                     <ProfileEducationAdd @addEducationStep="addEducationStep"/>
                 </v-card>
             </div>

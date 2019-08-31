@@ -137,7 +137,8 @@
                         dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializeProfileImage: (dropzone) => {
-                            if (this.profileGeneralInformation.profileImage && this.profileGeneralInformation.profileImage.ThumbnailLocation) {
+                            if (this.profileGeneralInformation.profileImage &&
+                                        this.profileGeneralInformation.profileImage.ThumbnailLocation) {
                                 var profileImage = this.profileGeneralInformation.profileImage || {};
                                 var file     = { url: profileImage.ThumbnailLocation, size: profileImage.Size * 1000 * 1000 };
                                 dropzone.emit('addedfile', file);

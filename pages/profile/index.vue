@@ -85,7 +85,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingGeneralInformation" class="edited-section">
+                <v-flex xs12 v-if="isEditingGeneralInformation" class="highlighted-section">
                    <v-layout row wrap pa-5>
                        <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -126,7 +126,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingSkills" class="edited-section">
+                <v-flex xs12 v-if="isEditingSkills" class="highlighted-section">
                    <v-layout row wrap pa-5>
                         <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -172,7 +172,7 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 v-if="isEditingPhotoGallery" class="edited-section">
+                <v-flex xs12 v-if="isEditingPhotoGallery" class="highlighted-section">
                    <v-layout row wrap pa-5>
                        <v-flex xs12 class="profile-information-group-header">
                            <v-layout row wrap class="profile-row-actions-container">
@@ -483,7 +483,7 @@ export default {
 
                 if (navigateToElement) {
                     setTimeout(() => {
-                        var element = document.getElementsByClassName('edited-section')[0];
+                        var element = document.getElementsByClassName('highlighted-section')[0];
 
                         if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
                             HtmlHelpers.scrollToElement(element);
@@ -653,9 +653,9 @@ export default {
             },
             isSaveEditGeneralInformationButtonDisabled: function () {
                 var isWebsiteFieldValid     = !this.editedProfile.profileGeneralInformation.website ||
-                                                        Validators.isValidURL(this.editedProfile.profileGeneralInformation.website);
+                                                Validators.isValidURL(this.editedProfile.profileGeneralInformation.website);
                 var isDescriptionFieldValid = !this.editedProfile.profileGeneralInformation.description ||
-                                                        this.editedProfile.profileGeneralInformation.description.length <= 500;
+                                                this.editedProfile.profileGeneralInformation.description.length <= 500;
 
                 return !this.editedProfile.profileGeneralInformation.firstName || !this.editedProfile.profileGeneralInformation.lastName ||
                         !this.editedProfile.profileGeneralInformation.phoneNumber ||
@@ -681,8 +681,8 @@ export default {
                 this.profile.profileEducation.educationSteps = [...editedEducation];
             },
             showSnackbar: function (snackbarText) {
-                this.snackbarText = snackbarText;
-                this.snackbar = true;
+                this.snackbarText   = snackbarText;
+                this.snackbar       = true;
             }
         },
         computed: {
@@ -715,9 +715,13 @@ export default {
                 return this.profile.profilePhotoGallery.photoGallery.map(p => p.Location);
             },
             isEditingProfileSection: function () {
-                return this.isEditingGeneralInformation || this.isEditingSkills ||
-                                        this.isEditingPhotoGallery || this.isEditingVideoGallery ||
-                                        this.isEditingAwards || this.isEditingExperience || this.isEditingEducation;
+                return this.isEditingGeneralInformation ||
+                            this.isEditingSkills ||
+                            this.isEditingPhotoGallery ||
+                            this.isEditingVideoGallery ||
+                            this.isEditingAwards ||
+                            this.isEditingExperience ||
+                            this.isEditingEducation;
             },
             isSaveEditSkillsButtonDisabled: function () {
                 return this.editedProfile.profileSkills.selectedSkills.length === 0;
@@ -762,7 +766,8 @@ export default {
     }
 
     #edit-general-information {
-        align-self: start;
+        display: flex;
+        justify-content: flex-end;
     }
 
     .skills-row .skill {
@@ -793,11 +798,6 @@ export default {
             width: 200px !important;
             height: 200px !important;
         }
-
-        #edit-general-information {
-            align-self: flex-end;
-        }
-    
 
     }
 

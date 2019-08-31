@@ -11,7 +11,13 @@
                 </p> 
             </v-flex>
             <v-flex xs12 mt-5 text-xs-center>
-                <v-btn color="primary" dark large @click="isCreatingProfile = true">{{ $t('pages.create-profile.account-created-button') }}</v-btn>
+                <v-btn
+                    color="primary"
+                    dark large
+                    @click="isCreatingProfile = true"
+                >
+                    {{ $t('pages.create-profile.account-created-button') }}
+                </v-btn>
             </v-flex>
         </v-layout>
         <v-layout row wrap v-if="isCreatingProfile && !isCreatedProfile" class="create-profile-main-layout">
@@ -546,7 +552,7 @@ export default {
 
         if (navigateToElement) {
             setTimeout(() => {
-                var element = document.getElementsByClassName('edited-section')[0];
+                var element = document.getElementsByClassName('highlighted-section')[0];
 
                 if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
                     HtmlHelpers.scrollToElement(element);

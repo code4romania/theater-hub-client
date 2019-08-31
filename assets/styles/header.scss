@@ -2,7 +2,7 @@ header {
 	margin-bottom: 20px;
 	background-color: $white;
 	width: 100%;
-	z-index: 1000;
+	z-index: 100;
 
 	nav {
 		height: 100%;
@@ -18,9 +18,19 @@ header {
 
 	}
 
-	.visitor-menu-items, .user-menu-items {
+	.visitor-menu-items {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
+	}
+
+	.user-menu-items {
+		display: flex;
+		justify-content: flex-end;
+
+		&>* {
+			margin-left: 70px
+		}
+
 	}
 
 	.menu-hamburger {

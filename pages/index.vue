@@ -161,7 +161,7 @@
 <script>
 
   import CommunityMember from '~/components/community/community-member.vue';
-  import ProjectCard from '~/components/shared/projectCard.vue';
+  import ProjectCard from '~/components/project/project-card.vue';
   import { projects, communityMembers } from '~/store/constants/mockdata';
 
   export default {
