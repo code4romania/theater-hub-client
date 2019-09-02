@@ -33,7 +33,16 @@
 <script>
 
     export default {
-        props: ['error']
+        props: ['error'],
+        layout: ({ store }) => {
+            if (store.getters['authentication/isAuthenticated']) {
+                return 'user';
+            } else if (store.getters['users/isAdmin']) {
+                return 'administration';
+            }
+
+            return 'visitor';
+        }
     }
 
 </script>
