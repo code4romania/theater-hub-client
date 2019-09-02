@@ -53,6 +53,13 @@
       },
       layout: 'visitor',
       middleware: 'visitor',
+      validate ({ params, query, store }) {
+        if (!query.resetForgottenPasswordID) {
+          return false;
+        }
+
+          return true;
+      },
       data: function () {
         return {
           valid: false,
