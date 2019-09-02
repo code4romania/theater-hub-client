@@ -1,6 +1,6 @@
 <template>
   <section class="reset-password-section">
-    <v-container fluid reset-password-container elevation-4 class="mt-5 pa-5">
+    <v-container fluid reset-password-container>
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="page-title mb-3">{{ $t('pages.reset-password.title') }}</h1>
@@ -11,14 +11,19 @@
                     <v-form ref="resetPasswordForm" v-model="valid">
                         <v-flex xs12>
                             <v-text-field v-model="password"  :rules="passwordRules"
-                                :label="`${$t('fields.password.label')}*`" validate-on-blur required type="password"></v-text-field>
+                                :label="`${$t('fields.password.label')}*`"
+                                validate-on-blur required type="password"></v-text-field>
                         </v-flex>
                         <v-flex xs12>
                             <v-text-field v-model="confirmPassword" :rules="validateConfirmPassword()"
-                                :label="`${$t('fields.confirm-password.label')}*`" validate-on-blur required type="password"></v-text-field>
+                                :label="`${$t('fields.confirm-password.label')}*`"
+                                validate-on-blur required type="password">
+                            </v-text-field>
                         </v-flex>
                         <v-flex xs12 mt-3>
-                            <v-btn @click="submit" class="ml-0" color="primary">{{ $t('pages.reset-password.submit-button') }}</v-btn>
+                            <v-btn @click="submit" class="ml-0" color="primary">
+                              {{ $t('pages.reset-password.submit-button') }}
+                            </v-btn>
                         </v-flex>
                         <v-flex v-if="users.resetPasswordErrors">
                             <ServerSideErrors :errors="users.resetPasswordErrors"/>
@@ -104,6 +109,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .reset-password-section {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 	.reset-password-container {
         max-width: 700px;
