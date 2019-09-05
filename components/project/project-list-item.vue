@@ -85,6 +85,7 @@
                 </v-flex>
             </v-layout>
         </v-flex>
+
         <v-flex
             xs12
             v-if="isDeletingProject"
@@ -125,6 +126,7 @@
                 </v-flex>
             </v-layout>
         </v-flex>
+
     </v-layout>
 </template>
 

@@ -1,5 +1,6 @@
 <template>
-    <section class="create-project-section">
+    <section
+        class="create-project-section mt-5">
         <v-container id="create-project-container" class="main-container pa-1">
 
             <v-stepper v-model="wizardStep" vertical>
@@ -35,18 +36,23 @@
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
+                                            id="city-input"
+                                            placeholder=""
                                             v-model="city"
                                             :rules="cityRules"
                                             :label="`${$t('fields.city.label')}*`"
+                                            v-on:keyup="handleCitySearch($event)"
                                             validate-on-blur required>
                                         </v-text-field>
                                     </v-flex>
                                     <v-flex xs12 class="project-date-container">
                                         <v-menu
+                                            attach left
                                             :close-on-content-click="false"
                                             v-model="isProjectDateMenuOpen"
-                                            :nudge-right="40"
-                                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
+                                            lazy transition="scale-transition"
+                                            offset-y full-width
+                                            max-width="290px" min-width="290px">
                                             <v-text-field
                                                 slot="activator"
                                                 v-model="projectDate"
@@ -70,8 +76,9 @@
                                             box
                                             :label="$t('fields.description.label')"
                                             rows="1"
-                                            counter=500
-                                            :rules="descriptionRules" validate-on-blur>
+                                            counter=5000
+                                            :rules="descriptionRules"
+                                            validate-on-blur>
                                         </v-textarea>
                                     </v-flex>
                                     <v-flex xs12>
@@ -106,11 +113,31 @@
                                             xs12 sm2 md2 lg2
                                             class="currency-container">
                                             <v-select
+                                                attach
                                                 v-model="currency"
                                                 :items="currencyItems"
                                                 :label="$t('fields.currency.label')"
                                             ></v-select>
                                         </v-flex>
+                                    </v-layout>
+                                    <v-layout row wrap class="section-visibility-row mt-4">
+                                        <span class="field-title">{{ $t('shared.content.project-visibility') }}</span>
+                                        <v-radio-group
+                                            v-model="projectVisibility"
+                                            row
+                                            class="ml-3 mt-0 pt-0 pl-2">
+                                            <v-layout row wrap>
+                                                <v-flex xs12 md4 lg4 mb-2>
+                                                    <v-radio :key="0" :value="0" :label="$t('application-data.everyone')"></v-radio>
+                                                </v-flex>
+                                                <v-flex xs12 md4 lg4 mb-2>
+                                                    <v-radio :key="1" :value="1" :label="$t('application-data.community')"></v-radio>
+                                                </v-flex>
+                                                <v-flex xs12 md4 lg4 mb-2>
+                                                    <v-radio :key="2" :value="2" :label="$t('application-data.private')"></v-radio>
+                                                </v-flex>
+                                            </v-layout>
+                                        </v-radio-group>
                                     </v-layout>
                                 </v-flex>
                             </v-layout>
@@ -137,11 +164,16 @@
 
                        <v-flex xs12 my-5>
                            <v-btn flat @click="wizardStep = 1">{{ $t('shared.content.back-button') }}</v-btn>
-                           <v-btn color="primary" @click="createProject">
-                               {{ $t('shared.content.finish-button') }}
+                           <v-btn
+                                color="primary"
+                                @click="createProject"
+                                :disabled="isProcessing">
+                                    {{ $t('shared.content.finish-button') }}
                            </v-btn>
                        </v-flex>
-
+                       <v-flex v-if="projects.createProjectErrors">
+                           <ServerSideErrors :errors="projects.createProjectErrors"/>
+                       </v-flex>
                   </v-layout>
               </v-stepper-content>
 			</v-stepper>
@@ -153,21 +185,40 @@
 
 
 <script>
-   import { HtmlHelpers, Validators } from '~/utils';
-   import { mapGetters } from 'vuex';
-   import ProjectNeeds from '~/components/project/project-needs.vue';
-   import Dropzone from 'nuxt-dropzone';
-   import 'nuxt-dropzone/dropzone.css';
+import { HtmlHelpers, Validators } from '~/utils';
+import { mapGetters, mapState } from 'vuex';
+import ProjectNeeds from '~/components/project/project-needs.vue';
+import Dropzone from 'nuxt-dropzone';
+import ServerSideErrors from '~/components/errors/server-side-errors.vue';
+import { getConfig } from '~/config/env';
+
+import 'nuxt-dropzone/dropzone.css';
 
 export default {
     components: {
         Dropzone,
-        ProjectNeeds
+        ProjectNeeds,
+        ServerSideErrors
     },
     layout: 'user',
+    middleware: ['authenticated', 'enabled', 'user'],
+    head () {
+        if (window.google) {
+            return [];
+        }
+
+        return {
+            script: [
+                {
+                    src: `https://maps.googleapis.com/maps/api/js?key=${getConfig().google.placeAutocomplete.api_key}&libraries=places`
+                }
+            ]
+        };
+    },
     data: function () {
         return {
             wizardStep: 1,
+            projectVisibility: 0,
             projectName: '',
             projectNameRules: [
                 v => !!v || this.$t('fields.project-name.validation-errors.required'),
@@ -202,11 +253,13 @@ export default {
             currency: '',
             description: '',
             descriptionRules: [
-                v => !v || v.length <= 500 || this.$t('fields.description.validation-errors.length')
+                v => !v || v.length <= 5000 || this.$t('fields.project-description.validation-errors.length')
             ],
             projectNeeds: {
                 needs: []
             },
+            isProcessing: false,
+            citySearchToken: '',
             projectImageDropzoneOptions: {
                 url: '/',
                 maxFilesize: 5,
@@ -217,8 +270,8 @@ export default {
                 acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                 initializeProjectImage: (dropzone) => {
                     if (this.projectImage && this.projectImage.ThumbnailLocation) {
-                        var projectImage = this.projectImage || {};
-                        var file     = { url: projectImage.ThumbnailLocation, size: projectImage.Size * 1000 * 1000 };
+                        var projectImage    = this.projectImage || {};
+                        var file            = { url: projectImage.ThumbnailLocation, size: projectImage.Size * 1000 * 1000 };
                         dropzone.emit('addedfile', file);
                         dropzone.emit('thumbnail', file, file.url);
                         dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -256,7 +309,8 @@ export default {
 
                     this.options.initializeProjectImage(this);
                 }
-            }
+            },
+            autocompleteService: null
         }
 	},
 	methods: {
@@ -286,8 +340,50 @@ export default {
             this.projectNeeds.needs = [...editedNeeds];
         },
         async createProject () {
-   
-     },
+            if (this.isProcessing) {
+                return;
+            }
+            this.isProcessing = true;
+
+            var createProjectFormData = new FormData();
+
+            const needs = JSON.stringify(this.projectNeeds.needs.map(n => {
+                return {
+                    Description: n.description,
+                    IsMandatory: n.isMandatory
+                };
+            }));
+
+            const image         = this.projectImage && this.projectImage.File ? this.projectImage.File : null;
+            const email         = this.email || '';
+            const phoneNumber   = this.phoneNumber || '';
+            let city            = this.city;
+
+            if (this.autocompleteService && this.autocompleteService.getPlace()) {
+                city = this.autocompleteService.getPlace().formatted_address;
+            }
+
+            createProjectFormData.append('Image', image);
+            createProjectFormData.append('Name', this.projectName);
+            createProjectFormData.append('Description', this.description);
+            createProjectFormData.append('Email', email);
+            createProjectFormData.append('PhoneNumber', phoneNumber);
+            createProjectFormData.append('Date', this.projectDate);
+            createProjectFormData.append('Budget', this.budget);
+            createProjectFormData.append('Currency', this.currency);
+            createProjectFormData.append('City', city);
+            createProjectFormData.append('Visibility', this.projectVisibility);
+            createProjectFormData.append('Needs', needs);
+            createProjectFormData.append('DateCreated', new Date());
+
+            await this.$store.dispatch('projects/create', createProjectFormData)
+                .then(() => {
+                    this.isProcessing = false;
+                    if (!this.projects.createProjectErrors || this.projects.createProjectErrors.length === 0) {
+                        this.$router.push({ path: `/project/${this.projects.newProject.ID}` });
+                    }
+                });
+        },
         initiateEditSectionSession (navigateToElement, projectSection) {
             this.$store.dispatch('users/initiateEditSectionSession');
 
@@ -303,9 +399,13 @@ export default {
         },
         endEditSectionSession (projectSection) {
             this.$store.dispatch('users/endEditSectionSession');
+        },
+        async handleCitySearch ($event) {
+
         }
 	},
     computed: {
+        ...mapState([ 'projects' ]),
         ...mapGetters({
             locale: 'locale',
             currencies: 'applicationData/currencies'
@@ -315,6 +415,25 @@ export default {
         }
     },
     mounted: function () {
+        const autocompleteServiceInterval = setInterval(() => {
+            if (this.autocompleteService) {
+                clearInterval(autocompleteServiceInterval);
+            }
+
+            const google = window.google;
+
+            if (!google) {
+                return;
+            }
+
+            this.autocompleteService = new google.maps.places.Autocomplete(
+                (document.getElementById('city-input')),
+                {types: ['(cities)']}
+            );
+        }, 100);
+
+        this.$store.dispatch('projects/setCreateProjectErrors', []);
+
         if (this.currencyItems.length !== 0) {
             this.currency = this.currencyItems[0];
         }
@@ -342,9 +461,23 @@ export default {
     }
 
     #project-image-dropzone {
+        width: 200px;
+        height: 200px;
+        padding: 0px;
+
         .dz-progress {
             display: none;
         }
+
+        img {
+            width: 100%;
+        }
+
+    }
+
+    #city-input::placeholder {
+        opacity: 0;
+        color: #FFF;
     }
 
     .project-date-container {
@@ -358,9 +491,13 @@ export default {
         padding-left: 10px;
 
         .v-menu__content {
-            left: 0px !important;
+            left: -2px !important;
             top: 0px !important;
         }
+    }
+
+    #create-project-container .section-visibility-row .v-input__control {
+        width: 100%;
     }
 
 </style>

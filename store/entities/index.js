@@ -62,9 +62,9 @@ export var LocaleType = {
 }
 
 export var CurrencyType = {
-  'RON': 0,
-  'USD': 1,
-  'EUR': 2
+  'Romania Leu': 'RON',
+  'US Dollar': 'USD',
+  'Euro': 'EUR'
 }
 
 export class Wish {

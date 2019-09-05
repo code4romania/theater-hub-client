@@ -1,6 +1,6 @@
 <template>
     <section class="projects-section">
-        <v-container id="projects-container" class="main-container pa-5">
+        <v-container id="projects-container" class="main-container pa-5 mt-5">
 			<v-layout row justify-center>
 				<v-flex xs12 sm6>
 					<v-text-field type="search" append-icon="search"
