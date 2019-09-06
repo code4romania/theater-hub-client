@@ -12,5 +12,10 @@ export const commonConfig = {
         donationLinkEN: 'https://code4.ro/en/donate/',
         aboutLinkRO: 'https://code4.ro/ro/cine-suntem/',
         aboutLinkEN: 'https://code4.ro/en/who-we-are/'
+    },
+    google: {
+        placeAutocomplete: {
+            api_key: ''
+        }
     }
  };

@@ -505,19 +505,19 @@ export const project = {
   needs: [
     {
       description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isUrgent: false
+      isMandatory: false
     },
     {
       description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isUrgent: true
+      isMandatory: true
     },
     {
       description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isUrgent: false
+      isMandatory: false
     },
     {
       description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isUrgent: false
+      isMandatory: false
     }
   ],
   updates: [

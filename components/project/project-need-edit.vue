@@ -29,11 +29,18 @@
                         </v-textarea>
                     </v-flex>
                     <v-flex xs12>
-                          <v-checkbox
-                              class="important-need-checkbox"
-                              v-model="needsFactory.isUrgent">
-                          </v-checkbox>
-                          <label>{{ $t('fields.need.isUrgent.label') }}</label>
+                        <v-layout row wrap>
+                            <v-checkbox
+                                name="important-need-checkbox"
+                                id="important-need-checkbox"
+                                v-model="needsFactory.isMandatory">
+                            </v-checkbox>
+                            <label
+                                for="important-need-checkbox"
+                                class="important-need-checkbox-label">
+                                {{ $t('fields.need.isMandatory.label') }}
+                            </label>
+                        </v-layout>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -67,7 +74,7 @@
                 this.$emit('editNeed', null);
             },
             onDoneEditNeedClick: function () {
-                var isCurrentNeedValid = this.iNeedValid(this.needsFactory);
+                var isCurrentNeedValid = this.isNeedValid(this.needsFactory);
 
                 if (!isCurrentNeedValid) {
                     return;
@@ -84,10 +91,20 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+    [name="important-need-checkbox"] {
+        margin-top: 0px;
+        padding-top: 0px;
+        max-width: 40px;
+    }
 
     .v-menu__activator > .v-text-field {
         overflow-x: hidden;
+    }
+
+    .important-need-checkbox-label {
+        cursor: pointer;
     }
 
 </style>

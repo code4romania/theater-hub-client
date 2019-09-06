@@ -1,12 +1,12 @@
 <template>
     <section class="search-section">
-        <v-container id="search-container" class="main-container pa-1">
+        <v-container id="search-container" class="main-container pa-5 mt-5">
 
             <v-layout
-                row wrap pt-4
+                row wrap
                 justify-center
                 class="search-header-bar">
-                <v-flex xs12 sm5 md5 lg5 mt-3>
+                <v-flex xs12 sm6>
                     <v-text-field
                         class="search-field"
                         type="search"
@@ -164,5 +164,5 @@
 </script>
 
 <style lang="scss" scoped>
-  
+
 </style>
