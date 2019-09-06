@@ -9,3 +9,8 @@ npm-debug.log
 
 # Nuxt generate
 dist
+
+#Ignore file containing sensitive information
+config/env/common.js
+config/env/development.js
+config/env/production.js

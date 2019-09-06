@@ -23,11 +23,11 @@
                     xs9
                     class="project-need">
                     <v-chip
-                      v-if="projectNeed.isUrgent"
+                      v-if="projectNeed.isMandatory"
                       class="white--text ml-0"
                       color="purple"
                       label small>
-                        {{ $t('pages.project.urgent') }}
+                        {{ $t('pages.project.mandatory') }}
                     </v-chip>
                     {{ projectNeed.description }}
                   </v-flex>

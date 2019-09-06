@@ -280,6 +280,12 @@
                 "length": "Project name should have at most 100 characters"
             }
         },
+        "project-description": {
+            "label": "Description",
+            "validation-errors": {
+                "length": "Description's maximum length is of 5000 characters"
+            }
+        },
         "city": {
             "label": "City",
             "validation-errors": {
@@ -306,8 +312,8 @@
                     "length": "Description's maximum length is of 500 characters"
                 }
             },
-            "isUrgent": {
-                "label": "Is urgent"
+            "isMandatory": {
+                "label": "Is mandatory"
             }
         },
         "update": {
@@ -365,6 +371,7 @@
             "email-visibility": "E-mail visibility:",
             "birth-date-visibility": "Birth date visibility:",
             "phone-number-visibility": "Phone number visibility:",
+            "project-visibility": "Project visibility:",
             "back-button": "BACK",
             "next-button": "NEXT",
             "finish-button": "FINISH",
@@ -466,7 +473,7 @@
         "project": {
             "needs-title": "Help Needed",
             "updates-title": "Project updates",
-            "urgent": "URGENT",
+            "mandatory": "MANDATORY",
             "initiator": "Project initiator:",
             "contact-phone-number": "Contact phone number:",
             "contact-email": "Contact email:",

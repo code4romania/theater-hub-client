@@ -29,16 +29,16 @@
                         </v-textarea>
                     </v-flex>
                     <v-flex xs12>
-                        <v-layout>
+                        <v-layout row wrap>
                             <v-checkbox
                                 name="important-need-checkbox"
                                 id="important-need-checkbox"
-                                v-model="needsFactory.isUrgent">
+                                v-model="needsFactory.isMandatory">
                             </v-checkbox>
                             <label 
                                 for="important-need-checkbox"
                                 class="important-need-label">
-                                    {{ $t('fields.need.isUrgent.label') }}
+                                    {{ $t('fields.need.isMandatory.label') }}
                             </label>
                         </v-layout>
                     </v-flex>
@@ -58,7 +58,7 @@
                 ],
                 needsFactory: {
                     description: '',
-                    isUrgent: false
+                    isMandatory: false
                 }
             };
         },

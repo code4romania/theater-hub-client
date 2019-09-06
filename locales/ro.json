@@ -279,6 +279,12 @@
                 "length": "Numele proiectului trebuie să aibă cel mult 100 de caractere"
             }
         },
+        "project-description": {
+            "label": "Descriere",
+            "validation-errors": {
+                "length": "Descrierea trebuie să aibă cel mult 5000 de caractere"
+            }
+        },
         "city": {
             "label": "Oraș",
             "validation-errors": {
@@ -305,8 +311,8 @@
                     "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
                 }
             },
-            "isUrgent": {
-                "label": "Este urgent"
+            "isMandatory": {
+                "label": "Este obligatoriu"
             }
         },
         "update": {
@@ -364,6 +370,7 @@
             "email-visibility": "Vizibilitatea e-mail-ului:",
             "birth-date-visibility": "Vizibilitatea zilei de naștere:",
             "phone-number-visibility": "Vizibilitatea numărului de telefon:",
+            "project-visibility": "Vizibilitatea proiectului:",
             "back-button": "ÎNAPOI",
             "next-button": "ÎNAINTE",
             "finish-button": "GATA",
@@ -464,7 +471,7 @@
         "project": {
             "needs-title": "Necesități",
             "updates-title": "Noutăți",
-            "urgent": "URGENT",
+            "mandatory": "OBLIGATORIU",
             "initiator": "Inițiator proiect:",
             "contact-phone-number": "Număr de telefon:",
             "contact-email": "Email:",

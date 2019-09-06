@@ -6,13 +6,12 @@
             <v-timeline-item
                 :key="`need-${needIndex}`"
                 v-for="(need, needIndex) in needs"
-                v-bind:class="{'timeline-message': need.inEditMode || need.inDeleteMode}"
                 @mouseenter.native="need.isHovered = true"  @mouseleave.native="need.isHovered = false"
                 color="primary" small fill-dot right>
                     <v-card class="elevation-2" v-if="!need.inEditMode && !need.inDeleteMode">
                         <v-card-title>
-                            <v-layout row class="timeline-item-action-row project-row-actions-container">
-                                <v-flex xs12 sm2 md2 lg2 class="project-row-actions" v-if="needIndex === 0 || need.isHovered">
+                            <v-layout row class="need-row-actions-container">
+                                <v-flex xs12 class="need-row-actions" v-if="needIndex === 0 || need.isHovered">
                                     <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
                                         <v-icon>edit</v-icon>
                                     </v-btn>
@@ -62,13 +61,12 @@
 
             <div :key="`need-${needIndex}`"
                 v-for="(need, needIndex) in needs"
-                v-bind:class="{'timeline-message': need.inEditMode || need.inDeleteMode}"
-                @mouseenter.native="need.isHovered = true" @mouseleave.native="need.isHovered = false"
-                color="primary">
+                @mouseenter="need.isHovered = true" @mouseleave="need.isHovered = false"
+                class="need-item" color="primary">
                     <v-card class="elevation-2" v-if="!need.inEditMode && !need.inDeleteMode">
                         <v-card-title>
-                            <v-layout row class="item-action-row project-row-actions-container">
-                                <v-flex xs12 sm2 md2 lg2 class="project-row-actions" v-if="needIndex === 0 || need.isHovered">
+                            <v-layout row class="need-row-actions-container">
+                                <v-flex xs12 class="need-row-actions" v-if="needIndex === 0 || need.isHovered">
                                     <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
                                         <v-icon>edit</v-icon>
                                     </v-btn>
@@ -79,9 +77,22 @@
                             </v-layout>
                         </v-card-title>
                         <v-card-text v-if="need.description">
-                            <p class="need-description">
-                                {{ need.description }}
-                            </p>
+                            <v-layout column>
+                                <v-flex xs12>
+                                    <p class="need-description">
+                                        {{ need.description }}
+                                    </p>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-chip
+                                        v-if="need.isMandatory"
+                                        class="white--text ml-0"
+                                        color="purple"
+                                        label small>
+                                        {{ $t('pages.project.mandatory') }}
+                                    </v-chip>
+                                </v-flex>
+                            </v-layout>
                         </v-card-text>
                     </v-card>
                     <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inEditMode">
@@ -164,7 +175,7 @@
                 if (need) {
                     newNeed = {
                         description: need.description,
-                        isUrgent: need.isUrgent,
+                        isMandatory: need.isMandatory,
                         isHovered: false,
                         inEditMode: false,
                         inDeleteMode: false
@@ -174,7 +185,7 @@
                 if (need && this.saveChanges) {
                     var request = {
                         Description: need.description,
-                        IsUrgent: need.isUrgent
+                        IsMandatory: need.isMandatory
                     };
 
                     this.$store.dispatch('needs/create', request).then((response) => {
@@ -203,14 +214,14 @@
                 if (need) {
                     newNeed = {
                         description: need.description,
-                        isUrgent: need.isUrgent
+                        isMandatory: need.isMandatory
                     };
                 }
 
                 if (need && this.saveChanges) {
                     var request = {
                         Description: need.description,
-                        IsUrgent: need.isUrgent
+                        IsMandatory: need.isMandatory
                     };
 
                     this.$store.dispatch('needs/update', request).then(() => {
@@ -286,5 +297,26 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .need-item {
+        padding: 8px 3px 8px 8px;
+
+        .need-row-actions-container {
+            min-height: 52px;
+        }
+
+        .need-row-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .v-card__title {
+            padding-bottom: 0px;
+        }
+
+        .v-card__text {
+            padding-top: 0px;
+        }
+    }
 
 </style>
