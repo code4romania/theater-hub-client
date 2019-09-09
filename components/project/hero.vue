@@ -5,7 +5,7 @@
         <img class="projectHero__image" :src="image">
       </v-flex>
       <v-flex sm6 order-sm1 px-5 class="projectHero__content">
-        <h1 class="pb-4">{{ title }}</h1>
+        <h1>{{ title }}</h1>
         <v-avatar size="200px">
           <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
           <img :src="initiatorImage" v-if="initiatorImage">
@@ -22,6 +22,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+h1 {
+  text-decoration: underline;
+  font-size: 30px;
+}
+
 .projectHero {
   background: #000;
   color: #fff;
