@@ -84,6 +84,8 @@ export class Endpoints {
 
     static DeleteExperienceStepByID             = '/experience';
 
+    static GetProject                           = '/projects';
+
     static GetProjects                          = '/projects';
 
     static CreateProject                        = '/projects';
