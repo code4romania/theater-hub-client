@@ -471,8 +471,8 @@
             "go-to-create-project": "Create project"
         },
         "project": {
-            "needs-title": "Help Needed",
-            "updates-title": "Project updates",
+            "needs-title": "Help Needed:",
+            "updates-title": "Project updates:",
             "mandatory": "MANDATORY",
             "initiator": "Project initiator:",
             "contact-phone-number": "Contact phone number:",
@@ -485,6 +485,10 @@
             "delete-update-message": "Are you sure you wish to delete this update?",
             "no-needs-message": "You haven't added any needs",
             "no-updates-message": "You haven't added any updates",
+            "share-on-facebook": "Share on Facebook",
+            "share-on-twitter": "Share on Twitter",
+            "invalid-project-title": "Project",
+            "invalid-project-content": "The project you are trying to view is either private or does not exist.",
             "snackbar-messages": {
                 "update-needs": "Help needed section updated",
                 "update-updates": "Updates section updated"

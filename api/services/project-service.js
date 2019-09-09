@@ -6,6 +6,10 @@ export class ProjectService extends BaseService {
         return this.$axios.$post(Endpoints.CreateProject, request);
     }
 
+    static async getProject (id) {
+        return this.$axios.$get(`${Endpoints.GetProject}/${id}`);
+    }
+
     static async getProjects (request) {
         return this.$axios.$get(Endpoints.GetProjects, request);
     }

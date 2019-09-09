@@ -469,8 +469,8 @@
             "go-to-create-project": "Creează proiect"
         },
         "project": {
-            "needs-title": "Necesități",
-            "updates-title": "Noutăți",
+            "needs-title": "Necesități:",
+            "updates-title": "Noutăți:",
             "mandatory": "OBLIGATORIU",
             "initiator": "Inițiator proiect:",
             "contact-phone-number": "Număr de telefon:",
@@ -483,6 +483,10 @@
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
             "no-needs-message": "Nu ați adăugat nevoi",
             "no-updates-message": "Nu ați adăugat actualizări",
+            "share-on-facebook": "Afișează pe Facebook",
+            "share-on-twitter": "Afișează pe Twitter",
+            "invalid-project-title": "Proiect",
+            "invalid-project-content": "Proiectul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {
                 "update-needs": "Secțiunea de nevoi a fost actualizată",
                 "update-updates": "Secțiunea de noutăți a fost actualizată"
