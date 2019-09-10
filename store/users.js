@@ -246,6 +246,9 @@ export const actions = {
     async getCommunityMembers ({ commit, dispatch }, query) {
         return UserService.getCommunityMembers(query);
     },
+    async getRandomCommunityMembers ({ commit, dispatch }, count) {
+        return UserService.getRandomCommunityMembers(count);
+    },
     async getCommunityMemberProfile ({ commit, dispatch }, id) {
         return UserService.getCommunityMemberProfile(id).then(response => {
             dispatch('setCommunityMemberProfile', response);

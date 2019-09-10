@@ -21,6 +21,9 @@ export const actions = {
     async getProjects ({ commit, dispatch }, query) {
         return ProjectService.getProjects(query);
     },
+    async getRandomProjects ({ commit, dispatch }, count) {
+        return ProjectService.getRandomProjects(count);
+    },
     async create ({ commit, dispatch }, request) {
         await ProjectService.create(request).then(response => {
             dispatch('setNewProject', response);

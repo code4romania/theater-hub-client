@@ -14,6 +14,10 @@ export class ProjectService extends BaseService {
         return this.$axios.$get(`${Endpoints.GetProjects}?searchTerm=${query.searchTerm}&skills=${query.skills}&page=${query.page}&pageSize=${query.pageSize}`);
     }
 
+    static async getRandomProjects (count = 2) {
+        return this.$axios.$get(`${Endpoints.GetRandomProjects}?count=${count}`);
+    }
+
     static async delete (id) {
         return this.$axios.$delete(`${Endpoints.DeleteProjectByID}/${id}`);
     }
