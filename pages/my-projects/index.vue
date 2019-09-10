@@ -21,6 +21,7 @@
                             :showInitiator="false"
                             :isEditable="true"
                             :isFirstItem="index === 0"
+                            @handleDeleteProject="handleDeleteProject"
                         />
                 </v-flex>
 
@@ -54,6 +55,12 @@
                 </v-flex>
             </v-layout>
         </v-container>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="3000">
+                {{ snackbarText }}
+                <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+        </v-snackbar>
     </section>
 </template>
 
@@ -68,6 +75,8 @@
             ProjectListItem
         },
         data: () => ({
+            snackbar: false,
+            snackbarText: ''
         }),
         async asyncData ({ store, query, params }) {
             const myProjects = await store.dispatch('users/getMyProjects');
@@ -75,6 +84,13 @@
             return {
                 myProjects
             };
+        },
+        methods: {
+            handleDeleteProject (id) {
+                this.myProjects     = this.myProjects.filter(p => p.ID !== id);
+                this.snackbarText   = this.$t('pages.my-projects.snackbar-messages.project-deleted');
+                this.snackbar       = true;
+            }
         },
         computed: {
             hasProjects: function () {

@@ -13,4 +13,8 @@ export class ProjectService extends BaseService {
     static async getProjects (query) {
         return this.$axios.$get(`${Endpoints.GetProjects}?searchTerm=${query.searchTerm}&skills=${query.skills}&page=${query.page}&pageSize=${query.pageSize}`);
     }
+
+    static async delete (id) {
+        return this.$axios.$delete(`${Endpoints.DeleteProjectByID}/${id}`);
+    }
 }
