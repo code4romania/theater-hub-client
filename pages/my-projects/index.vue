@@ -60,7 +60,6 @@
 <script>
 
     import ProjectListItem from '~/components/project/project-list-item';
-    import { myProjects } from '~/store/constants/mockdata';
 
     export default {
         layout: 'user',
@@ -69,11 +68,17 @@
             ProjectListItem
         },
         data: () => ({
-            myProjects
         }),
+        async asyncData ({ store, query, params }) {
+            const myProjects = await store.dispatch('users/getMyProjects');
+
+            return {
+                myProjects
+            };
+        },
         computed: {
             hasProjects: function () {
-                return this.myProjects.length !== 0;
+                return this.myProjects && this.myProjects.length !== 0;
             }
         }
     }

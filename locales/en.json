@@ -379,7 +379,7 @@
             "locale-setting": "Language:",
             "close": "Close",
             "project-initiator": "Project initiator:",
-            "requested-roles": "Number of requested roles:",
+            "city": "City:",
             "view-project-link": "View project",
             "view-profile-link": "View profile",
             "show-more-button": "Show More"
@@ -462,7 +462,8 @@
             "submit-success-message": "Your password has been successfully changed."
         },
         "projects": {
-            "title": "Projects"
+            "title": "Projects",
+            "no-projects-message": "There are no projects to display"
         },
         "my-projects": {
             "title": "My projects",

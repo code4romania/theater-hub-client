@@ -58,6 +58,10 @@ export class Endpoints {
 
     static GetCommunityMemberProfile            = '/users/profile';
 
+    static GetMyProjects                        = '/users/me/projects';
+
+    static GetProjects                          = '/users/projects';
+
     static DeleteMe                             = '/users/me';
 
     static CreateVideo                          = '/videos';
