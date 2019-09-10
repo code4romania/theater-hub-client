@@ -29,6 +29,9 @@ export const actions = {
             dispatch('setCreateProjectErrors', error.response.data.errors);
         });
     },
+    async delete ({ commit, dispatch }, id) {
+        await ProjectService.delete(id);
+    },
     setNewProject: ({ commit }, value) => {
         commit('SET_NEW_PROJECT', value);
     },

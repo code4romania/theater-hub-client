@@ -469,7 +469,10 @@
             "title": "My projects",
             "delete-project-message": "Are you sure you wish to delete this project?",
             "no-projects-message": "You have no projects",
-            "go-to-create-project": "Create project"
+            "go-to-create-project": "Create project",
+            "snackbar-messages": {
+                "project-deleted": "Project has been deleted"
+            }
         },
         "project": {
             "needs-title": "Help Needed:",

@@ -160,6 +160,8 @@
             },
             onDoneDeleteProjectClick: function () {
                 this.isDeletingProject = false;
+                this.$store.dispatch('projects/delete', this.project.ID);
+                this.$emit('handleDeleteProject', this.project.ID);
                 this.$store.dispatch('users/endEditSectionSession');
             },
             onCancelDeleteProjectClick: function () {
