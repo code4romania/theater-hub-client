@@ -467,7 +467,10 @@
             "title": "Proiectele mele",
             "delete-project-message": "Sunteți sigur că doriți să ștergeți acest proiect?",
             "no-projects-message": "Nu aveți nici un proiect",
-            "go-to-create-project": "Creează proiect"
+            "go-to-create-project": "Creează proiect",
+            "snackbar-messages": {
+                "project-deleted": "Proiectul a fost șters"
+            }
         },
         "project": {
             "needs-title": "Necesități:",

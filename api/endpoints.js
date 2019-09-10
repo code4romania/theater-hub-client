@@ -94,6 +94,8 @@ export class Endpoints {
 
     static CreateProject                        = '/projects';
 
+    static DeleteProjectByID                    = '/projects';
+
     static Administration = {
         GetUsers: '/administration/users',
         InviteUser: '/administration/user/invite',
