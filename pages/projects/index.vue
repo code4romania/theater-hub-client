@@ -87,12 +87,7 @@ export default {
         isLoading: false
 	}),
 	methods: {
-		handleViewAllProjectsClick: function () {
-			this.isLoading  = true;
-
-			this.isLoading = false;
-		},
-        async onSearchKeyup (event) {
+		async loadProjects () {
             if (this.isLoading) {
                 return;
             }
@@ -101,27 +96,7 @@ export default {
 
 			var requestQuery = {
                 searchTerm: this.searchTerm,
-                page: 0,
-                pageSize: this.pageSize
-			};
-
-            await this.$store.dispatch('projects/getProjects', requestQuery).then(response => {
-				this.projects  	= response.Projects;
-				this.pageCount	= response.PageCount;
-				this.page		= response.Page;
-                this.isLoading 	= false;
-            });
-        },
-		async handleShowMoreClick () {
-			if (this.isLoading || this.page >= this.pageCount) {
-                return;
-            }
-
-			this.isLoading = true;
-
-			var requestQuery = {
-                searchTerm: this.searchTerm,
-                page: this.page + 1,
+                page: this.page,
                 pageSize: this.pageSize
 			};
 
@@ -130,7 +105,23 @@ export default {
 				this.pageCount	= response.PageCount;
 				this.page		= response.Page;
                 this.isLoading 	= false;
-			});
+            });
+		},
+        async onSearchKeyup (event) {
+            if (this.isLoading) {
+                return;
+            }
+
+            this.projects = [];
+            this.pageCount = 0;
+			this.page = 0;
+
+            this.loadProjects();
+        },
+		async handleShowMoreClick () {
+			this.page++;
+
+			this.loadProjects();
 		}
 	},
     computed: {
