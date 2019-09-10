@@ -13,29 +13,32 @@
 				</v-flex>
 			</v-layout>
 			<v-layout row wrap mt-5>
-				<v-flex xs12 md6 project-card-col :key="i" v-for="(project, i) in displayedProjects">
+				<v-flex xs12 md6 project-card-col :key="i" v-for="(project, i) in projects">
 					<ProjectCard
-						:project_url="project.project_url"
-						:project_title="project.project_title"
-						:project_image="project.project_image"
-						:project_abstract="project.project_abstract"
-						:project_initiator="project.project_initiator"
-						:project_roles_number="project.project_roles_number"
+						:project_id="project.ID"
+						:project_title="project.Name"
+						:project_image="project.Image"
+						:project_abstract="project.Abstract"
+						:project_username="project.InitiatorUsername"
+						:project_initiator="project.InitiatorName"
+						:project_city="project.City"
 					/>
 				</v-flex>
-				<v-flex xs12 v-if="!hasLoadedAll()">
-					<v-btn v-on:click="handleViewAllProjectsClick"
-						color="primary"
-						id = "view-all-projects-btn">
-							{{ $t('pages.homepage.view-all-projects-link') }}
-					</v-btn>
-				</v-flex>
 			</v-layout>
-			<v-layout class="view-link-container">
+			<v-layout
+				v-if="!hasLoadedAll"
+				class="view-link-container">
 				<v-flex xs12 mt-3 mb-3 text-xs-center>
 					<a class="view-link" v-on:click="handleShowMoreClick">
 						{{ $t('shared.content.show-more-button') }}
 					</a>
+				</v-flex>
+			</v-layout>
+			<v-layout
+				v-if="displayNoResultsMessage && !isLoading">
+				<v-flex
+					class="no-results-message text-xs-center mt-5">
+						{{ $t('pages.projects.no-projects-message') }}
 				</v-flex>
 			</v-layout>
         </v-container>
@@ -44,7 +47,6 @@
 
 <script>
 import ProjectCard from '~/components/project/project-card.vue';
-import { projects } from '~/store/constants/mockdata'
 
 export default {
 	components: {
@@ -60,41 +62,85 @@ export default {
         }
     },
     middleware: ['visitor-or-enabled-user'],
+    async asyncData ({ store, query, params }) {
+        var requestQuery = {
+            searchTerm: '',
+            page: 0,
+            pageSize: 2
+		};
+
+		const response 	= await store.dispatch('projects/getProjects', requestQuery);
+		const projects 	= response.Projects;
+		const page		= response.Page;
+		const pageSize	= response.PageSize;
+		const pageCount	= response.PageCount;
+
+        return {
+			projects,
+			page,
+			pageSize,
+			pageCount
+		};
+	},
 	data: () => ({
-		projects,
-		displayedProjects: projects.slice(0, 9),
         searchTerm: '',
-		page: 1,
-		isLoading: false
+        isLoading: false
 	}),
 	methods: {
 		handleViewAllProjectsClick: function () {
 			this.isLoading  = true;
-            let pageSize    = 9;
 
-			if (pageSize > this.projects.length - this.displayedProjects.length) {
-				pageSize = this.projects.length - this.displayedProjects.length
-			} else {
-				this.page++
-            }
-
-			if (pageSize !== 0) {
-                this.displayedProjects = this.displayedProjects
-                                .concat(this.projects.slice(this.displayedProjects.length, this.displayedProjects.length + pageSize));
-            }
-
-			this.isLoading = false
-		},
-		hasLoadedAll: function () {
-			return this.displayedProjects.length === this.projects.length
+			this.isLoading = false;
 		},
         async onSearchKeyup (event) {
+            if (this.isLoading) {
+                return;
+            }
 
+			this.isLoading = true;
+
+			var requestQuery = {
+                searchTerm: this.searchTerm,
+                page: 0,
+                pageSize: this.pageSize
+			};
+
+            await this.$store.dispatch('projects/getProjects', requestQuery).then(response => {
+				this.projects  	= response.Projects;
+				this.pageCount	= response.PageCount;
+				this.page		= response.Page;
+                this.isLoading 	= false;
+            });
         },
-		handleShowMoreClick: function () {
+		async handleShowMoreClick () {
+			if (this.isLoading || this.page >= this.pageCount) {
+                return;
+            }
 
+			this.isLoading = true;
+
+			var requestQuery = {
+                searchTerm: this.searchTerm,
+                page: this.page + 1,
+                pageSize: this.pageSize
+			};
+
+            await this.$store.dispatch('projects/getProjects', requestQuery).then(response => {
+				this.projects  	= this.projects.concat(response.Projects);
+				this.pageCount	= response.PageCount;
+				this.page		= response.Page;
+                this.isLoading 	= false;
+			});
 		}
-	}
+	},
+    computed: {
+		hasLoadedAll: function () {
+			return this.page === this.pageCount;
+		},
+        displayNoResultsMessage: function () {
+            return this.projects.length === 0;
+        }
+    }
 }
 
 </script>

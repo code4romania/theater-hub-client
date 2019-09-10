@@ -251,6 +251,9 @@ export const actions = {
             dispatch('setCommunityMemberProfile', response);
         });
     },
+    async getMyProjects ({ commit, dispatch }) {
+        return UserService.getMyProjects();
+    },
     async deleteMe ({ commit, dispatch }, request) {
         await UserService.deleteMe().then(() => {
             dispatch('setDeleteMeErrors', '');
