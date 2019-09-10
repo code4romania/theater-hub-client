@@ -56,6 +56,8 @@ export class Endpoints {
 
     static GetCommunityMembers                  = '/users/community/members';
 
+    static GetRandomCommunityMembers            = '/users/community/members/random';
+
     static GetCommunityMemberProfile            = '/users/profile';
 
     static GetMyProjects                        = '/users/me/projects';
@@ -91,6 +93,8 @@ export class Endpoints {
     static GetProject                           = '/projects';
 
     static GetProjects                          = '/projects';
+
+    static GetRandomProjects                    = '/projects/random';
 
     static CreateProject                        = '/projects';
 
