@@ -89,7 +89,10 @@
           </v-layout>
         </section>
 
-        <section id="latest_projects" class="centered-section">
+        <section
+          v-if="hasProjects"
+          id="latest_projects"
+          class="centered-section">
           <v-layout>
             <v-flex xs12 my-5>
               <h2 class="text-xs-center section-title">{{ $t('pages.homepage.latest-added-projects') }}</h2>
@@ -100,14 +103,15 @@
             
             <v-flex xs12 md6
               project-card-col
-              :key="i" v-for="(project, i) in displayedProjects">
+              :key="i" v-for="(project, i) in projects">                
                 <ProjectCard
-                  :project_url="project.project_url"
-                  :project_title="project.project_title"
-                  :project_image="project.project_image"
-                  :project_abstract="project.project_abstract"
-                  :project_initiator="project.project_initiator"
-                  :project_roles_number="project.project_roles_number"
+                  :project_id="project.ID"
+                  :project_title="project.Name"
+                  :project_image="project.Image"
+                  :project_abstract="project.Abstract"
+                  :project_username="project.InitiatorUsername"
+                  :project_initiator="project.InitiatorName"
+                  :project_city="project.City"
                 />
             </v-flex>
 
@@ -124,18 +128,21 @@
           </v-layout>
         </section>
 
-        <section id="meet_the_community" class="centered-section">
+        <section
+          v-if="hasCommunity"
+          id="meet_the_community"
+          class="centered-section">
           <v-layout>
             <v-flex xs12 my-5>
               <h2 class="text-xs-center section-title">{{ $t('pages.homepage.meet-the-community') }}</h2>
             </v-flex>
           </v-layout>
 
-          <v-layout row wrap justify-space-between>
+          <v-layout row wrap justify-center>
 
             <v-flex xs12 sm4 md4 lg2
                 community-member
-                :key="i" v-for="(member, i) in displayedCommunityMembers"
+                :key="i" v-for="(member, i) in communityMembers"
                 class="mt-4">
                     <CommunityMember
                       :member="member"
@@ -162,7 +169,6 @@
 
   import CommunityMember from '~/components/community/community-member.vue';
   import ProjectCard from '~/components/project/project-card.vue';
-  import { projects, communityMembers } from '~/store/constants/mockdata';
 
   export default {
     components: {
@@ -171,12 +177,25 @@
     },
     layout: 'visitor',
     middleware: 'visitor',
+    async asyncData ({ store, query, params }) {
+        let communityMembers  = await store.dispatch('users/getRandomCommunityMembers', 5);
+        communityMembers      = communityMembers.map(m => {
+              return {
+                  ID: m.ID,
+                  FullName: `${m.FirstName} ${m.LastName}`,
+                  Username: m.Username,
+                  ProfileImage: m.ProfileImage
+              };
+          });
+        const projects          = await store.dispatch('projects/getRandomProjects', 2);
+
+        return {
+            projects,
+            communityMembers
+
+        };
+    },
     data: () => ({
-      projects,
-      displayedProjects: projects.slice(0, 2),
-      communityMembers,
-      displayedCommunityMembers: [],
-      page: 1,
       isLoading: false
     }),
     async fetch ({ store, redirect }) {
@@ -201,8 +220,13 @@
       }
   
     },
-    mounted: function () {
-      this.displayedCommunityMembers = this.initializeCommunityMembers().slice(0, 5);
+    computed: {
+      hasProjects: function () {
+        return this.projects.length !== 0;
+      },
+      hasCommunity: function () {
+        return this.communityMembers.length !== 0;
+      }
     }
   }
 

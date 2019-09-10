@@ -112,6 +112,10 @@ export class UserService extends BaseService {
         return this.$axios.$get(`${Endpoints.GetCommunityMembers}?searchTerm=${query.searchTerm}&skills=${query.skills}&page=${query.page}&pageSize=${query.pageSize}`);
     }
 
+    static async getRandomCommunityMembers (count = 5) {
+        return this.$axios.$get(`${Endpoints.GetRandomCommunityMembers}?count=${count}`);
+    }
+
     static async getCommunityMemberProfile (id) {
         return this.$axios.$get(`${Endpoints.GetCommunityMemberProfile}/${id}`);
     }
