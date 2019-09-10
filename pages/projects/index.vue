@@ -66,7 +66,7 @@ export default {
         var requestQuery = {
             searchTerm: '',
             page: 0,
-            pageSize: 2
+            pageSize: 4
 		};
 
 		const response 	= await store.dispatch('projects/getProjects', requestQuery);
