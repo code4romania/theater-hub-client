@@ -341,10 +341,6 @@
         }
     }
 
-    .no-results-message {
-        font-size: 28px;
-    }
-
     .show-more-members-row {
         display: flex;
     }

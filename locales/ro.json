@@ -378,7 +378,7 @@
             "locale-setting": "Limbă:",
             "close": "Închide",
             "project-initiator": "Inițiator proiect:",
-            "requested-roles": "Numărul de roluri cerute:",
+            "city": "Oraș:",
             "view-project-link": "Vizualizează proiect",
             "view-profile-link": "Vizualizează profil",
             "show-more-button": "Afișați mai mult"
@@ -460,7 +460,8 @@
             "submit-success-message": "Parola a fost schimbată cu succes."
         },
         "projects": {
-            "title": "Proiecte"
+            "title": "Proiecte",
+            "no-projects-message": "Nu există proiecte care să fie afișate"
         },
         "my-projects": {
             "title": "Proiectele mele",

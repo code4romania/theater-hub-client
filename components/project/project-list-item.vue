@@ -70,7 +70,7 @@
                             </v-flex>
                             <v-flex xs12 class="project-information-row">
                                 <span class="field-label">{{ $t('pages.project.budget') }} </span>
-                                <span>{{ project.Budget }} {{ currencies[project.Currency].ID }} </span>
+                                <span>{{ project.Budget }} {{ project.Currency }} </span>
                             </v-flex>
                             <v-flex xs12 class="project-information-row">
                             <v-btn class="primary ml-0 view-project-button"
@@ -143,8 +143,7 @@
         computed: {
             ...mapState(['users']),
             ...mapGetters({
-                locale: 'locale',
-                currencies: 'applicationData/currencies'
+                locale: 'locale'
             }),
             hasEditOptions: function () {
                 return this.isEditable &&

@@ -1,32 +1,39 @@
 <template>
-  <v-layout column class="mb-4 project">
-    <a :href="project_url">
-      <v-img :src="project_image" aspect-ratio="1.7"></v-img>
-    </a>
+  <v-layout column fill-height class="mb-4 project">
+    <v-img
+      v-if="project_image"
+      :src="project_image"
+      aspect-ratio="1.7"
+    ></v-img>
+    <v-img
+      v-if="!project_image"
+      :src="require('~/assets/images/main_image.png')"
+      aspect-ratio="1.7"
+    ></v-img>
     <v-card-title primary-title>
       <div>
         <h4>
-          <a :href="project_url">{{ project_title }}</a>
+          {{ project_title }}
         </h4>
-        <div v-if="$route.path !== '/project'" class="project__abstract d-flex">
+        <div class="project__abstract d-flex">
           <p>{{ project_abstract }}</p>
           <p  class="bold">
             {{ $t('shared.content.project-initiator') }}
-            <nuxt-link :to="`/profile/`">
+            <nuxt-link :to="`/profile/${project_username}`">
                 <span>{{ project_initiator }}</span>
             </nuxt-link>
           </p>
           <p class="bold">
-            {{ $t('shared.content.requested-roles') }} {{ project_roles_number }}
+            {{ $t('shared.content.city') }} {{ project_city }}
           </p>
         </div>
       </div>
     </v-card-title>
-    <v-card-actions v-if="$route.path !== '/project'" class="justify-center">
+    <v-card-actions class="justify-center">
       <v-btn
         class="view-project-button"
         color="primary"
-        :href="project_url"
+        :to="`/project/${project_id}`"
         depressed ripple>
         {{ $t('shared.content.view-project-link') }}
       </v-btn>
@@ -38,6 +45,14 @@
 <script>
 export default {
   props: {
+    project_id: {
+      type: String,
+      default: ''
+    },
+    project_username: {
+      type: String,
+      default: ''
+    },
     project_url: {
       type: String,
       default: ''
@@ -60,7 +75,7 @@ export default {
       type: String,
       default: 'John Doe'
     },
-    project_roles_number: {
+    project_city: {
       type: String,
       default: ''
     }
@@ -75,9 +90,14 @@ export default {
 
   h4 {
     margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: #777;
   }
   a {
     color: #000;
+    text-decoration-color: #777;
   }
   &__abstract {
     flex-direction: column;
