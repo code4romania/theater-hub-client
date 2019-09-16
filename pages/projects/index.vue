@@ -8,7 +8,7 @@
 						solo hide-details single-line
 						:placeholder="$t('fields.projects-search.label')"
 						v-model="searchTerm"
-						@keyup="onSearchKeyup">
+						@keyup="handleSearchKeyup">
 					</v-text-field>
 				</v-flex>
 			</v-layout>
@@ -47,6 +47,7 @@
 
 <script>
 import ProjectCard from '~/components/project/project-card.vue';
+import _ from 'lodash';
 
 export default {
 	components: {
@@ -84,7 +85,7 @@ export default {
 	},
 	data: () => ({
         searchTerm: '',
-        isLoading: false
+		isLoading: false
 	}),
 	methods: {
 		async loadProjects () {
@@ -107,7 +108,7 @@ export default {
                 this.isLoading 	= false;
             });
 		},
-        async onSearchKeyup (event) {
+        handleSearchKeyup: _.throttle(function () {
             if (this.isLoading) {
                 return;
             }
@@ -116,8 +117,8 @@ export default {
             this.pageCount = 0;
 			this.page = 0;
 
-            this.loadProjects();
-        },
+			this.loadProjects();
+        }, 1000),
 		async handleShowMoreClick () {
 			this.page++;
 
@@ -131,7 +132,9 @@ export default {
         displayNoResultsMessage: function () {
             return this.projects.length === 0;
         }
-    }
+	},
+	mounted: function () {
+	}
 }
 
 </script>
