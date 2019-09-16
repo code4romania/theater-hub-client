@@ -96,6 +96,7 @@
 <script>
     import CommunityMember from '~/components/community/community-member.vue';
     import { mapGetters } from 'vuex';
+    import _ from 'lodash';
 
     export default {
         components: {
@@ -228,7 +229,8 @@
 
                 this.loadCommunityMembers();
             },
-            async onSearchKeyup (event) {
+    
+            onSearchKeyup: _.throttle(function () {
                 if (this.inCommunityLayersView) {
                     this.loadCommunityLayers();
                     return;
@@ -239,7 +241,7 @@
                 this.page = 0;
 
                 this.loadCommunityMembers();
-            },
+            }, 1000),
             removeSkill (skill) {
                 this.filterSkills.splice(this.filterSkills.indexOf(skill.ID), 1);
                 this.filterSkills = [...this.filterSkills];

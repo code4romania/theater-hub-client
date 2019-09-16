@@ -106,10 +106,10 @@
                             };
                         },
                         maxfilesreached: function () {
-                            alert('maxfilesreached');
+                            console.log('maxfilesreached');
                         },
                         maxfilesexceeded: function (file) {
-                            alert('maxfilesexceeded');
+                            console.log('maxfilesexceeded');
                         }
                     }
                 };
