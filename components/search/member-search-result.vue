@@ -12,22 +12,32 @@
                 <v-flex xs12 pl-4>
                     <v-flex xs12 class="search-information-row">
                         <span class="full-name-field">{{ member.FullName }}</span>
-                        <span class="name-separator">,</span>
-                        <span class="age-field">{{ member.Age }} {{ $t('shared.content.years-old') }}</span>
+                        <span
+                            v-if="age"
+                            class="name-separator">,</span>
+                        <span
+                            v-if="age"
+                            class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
                     </v-flex>
-                    <v-flex xs12 class="search-information-row">
-                        <span class="field-label">{{ $t('fields.email.label') }}: </span>
-                        <span class="email-field">{{ member.Email }}</span>
-                        <a class="email-icon" :href="`mailto:${member.Email}`">
-                            <v-icon>email</v-icon>
-                        </a>
+                    <v-flex
+                        v-if="member.Email"
+                        xs12
+                        class="search-information-row">
+                            <span class="field-label">{{ $t('fields.email.label') }}: </span>
+                            <span class="email-field">{{ member.Email }}</span>
+                            <a class="email-icon" :href="`mailto:${member.Email}`">
+                                <v-icon>email</v-icon>
+                            </a>
                     </v-flex>
-                    <v-flex xs12 class="search-information-row">
-                        <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
-                        <span class="phone-number-field">{{ member.PhoneNumber }}</span>
-                        <a class="phone-icon" :href="`tel:${member.PhoneNumber}`">
-                            <v-icon>phone</v-icon>
-                        </a>
+                    <v-flex
+                        v-if="member.PhoneNumber"
+                        xs12
+                        class="search-information-row">
+                            <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
+                            <span class="phone-number-field">{{ member.PhoneNumber }}</span>
+                            <a class="phone-icon" :href="`tel:${member.PhoneNumber}`">
+                                <v-icon>phone</v-icon>
+                            </a>
                     </v-flex>
                     <v-flex xs12 v-if="member.Website" class="search-information-row">
                         <span class="field-label">{{ $t('fields.website.label') }}: </span>
@@ -64,14 +74,25 @@
 
 <script>
 
-
+    import moment from 'moment';
     import CommunityMember from '~/components/community/community-member.vue';
 
     export default {
         components: {
             CommunityMember
         },
-        props: ['member']
+        props: ['member'],
+        computed: {
+            age: function () {
+                if (!this.member.BirthDate) {
+                    return null;
+                }
+
+                var currentDateMoment = moment(new Date());
+                var birthDateMoment   = moment(this.member.BirthDate);
+                return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
+            }
+        }
     }
 
 </script>
