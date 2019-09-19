@@ -35,7 +35,9 @@
                             <v-text-field v-model="profileGeneralInformationModel.phoneNumber" @input="updateProfileGeneralInformationModel"
                                     :rules="phoneNumberRules" :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
                         </v-flex>
-                        <v-flex xs12>
+                        <v-flex
+                            v-if="!hideOptionalFields"
+                            xs12>
                             <v-text-field v-model="profileGeneralInformationModel.website" @input="updateProfileGeneralInformationModel"
                                     :rules="websiteRules" validate-on-blur :label="$t('fields.website.label')"></v-text-field>
                         </v-flex>
@@ -43,7 +45,9 @@
                 </v-layout>
             </v-flex>
         </v-layout>
-        <v-flex xs12>
+        <v-flex
+            v-if="!hideOptionalFields"
+            xs12>
             <v-textarea
                 id="profile-description-field"
                 class="text-area-field"
@@ -57,7 +61,9 @@
                 :rules="descriptionRules" validate-on-blur>
             </v-textarea>
         </v-flex>
-        <v-layout row wrap>
+        <v-layout
+            v-if="!hideOptionalFields"
+            row wrap>
             <v-flex xs12 sm6 md6 lg6 class="left-field-container">
                 <v-text-field v-model="profileGeneralInformationModel.instagramLink" @input="updateProfileGeneralInformationModel"
                             :rules="instagramLinkRules" :label="$t('fields.instagram.label')"></v-text-field>
@@ -90,7 +96,7 @@
             components: {
                 Dropzone
             },
-            props: ['profileGeneralInformation', 'displayNameFields'],
+            props: ['profileGeneralInformation', 'displayNameFields', 'hideOptionalFields'],
             data: function () {
                 return {
                     profileGeneralInformationModel: Helpers.cloneObject(this.profileGeneralInformation),
@@ -156,8 +162,7 @@
                             this.updateProfileGeneralInformationModel();
                         },
                         removedfileEventHandler: (file) => {
-                            this.profileGeneralInformationModel.profileImage.Location = '';
-                            this.profileGeneralInformationModel.profileImage.ThumbnailLocation = '';
+                            this.profileGeneralInformationModel.profileImage = null;
 
                             this.updateProfileGeneralInformationModel();
                         },

@@ -7,6 +7,11 @@ export const state = () => ({
     enableUserErrors: [],
     disableUserErrors: [],
     deleteUserErrors: [],
+    dashboardProjects: [],
+    dashboardProjectsTotal: 0,
+    enableProjectErrors: [],
+    disableProjectErrors: [],
+    deleteProjectErrors: [],
     isAdministrationEditing: false,
     isAdministrationAddingUser: false
 });
@@ -29,6 +34,21 @@ export const mutations = {
     },
     SET_DELETE_USER_ERRORS: (state, errors) => {
         state.deleteUserErrors = errors;
+    },
+    SET_DASHBOARD_PROJECTS: (state, value) => {
+        state.dashboardProjects = value;
+    },
+    SET_DASHBOARD_PROJECTS_TOTAL: (state, value) => {
+        state.dashboardProjectsTotal = value;
+    },
+    SET_ENABLE_PROJECT_ERRORS: (state, errors) => {
+        state.enableProjectErrors = errors;
+    },
+    SET_DISABLE_PROJECT_ERRORS: (state, errors) => {
+        state.disableProjectErrors = errors;
+    },
+    SET_DELETE_PROJECT_ERRORS: (state, errors) => {
+        state.deleteProjectErrors = errors;
     },
     INITIATE_ADMINISTRATION_EDIT_SESSION: (state) => {
         state.isAdministrationEditing = true;
@@ -79,6 +99,33 @@ export const actions = {
             dispatch('setDashboardUsersTotal', response.Total);
         });
     },
+    async enableProject ({ commit, dispatch }, request) {
+        await AdministrationService.enableProject(request.id, request.body).then(response => {
+            dispatch('setEnableProjectErrors', '');
+        }).catch(error => {
+            dispatch('setEnableProjectErrors', error.response.data.errors);
+        });
+    },
+    async disableProject ({ commit, dispatch }, request) {
+        await AdministrationService.disableProject(request.id, request.body).then(response => {
+            dispatch('setDisableProjectErrors', '');
+        }).catch(error => {
+            dispatch('setDisableProjectErrors', error.response.data.errors);
+        });
+    },
+    async deleteProject ({ commit, dispatch }, request) {
+        await AdministrationService.deleteProject(request.id, request.body).then(response => {
+            dispatch('setDeleteProjectErrors', '');
+        }).catch(error => {
+            dispatch('setDeleteProjectErrors', error.response.data.errors);
+        });
+    },
+    async getDashboardProjects ({ commit, dispatch }, query) {
+        return AdministrationService.getProjects(query).then(response => {
+            dispatch('setDashboardProjects', response.Data);
+            dispatch('setDashboardProjectsTotal', response.Total);
+        });
+    },
     setDashboardUsers: ({ commit }, value) => {
         commit('SET_DASHBOARD_USERS', value);
     },
@@ -96,6 +143,21 @@ export const actions = {
     },
     setDeleteUserErrors: ({ commit }, errors) => {
         commit('SET_DELETE_USER_ERRORS', errors);
+    },
+    setDashboardProjects: ({ commit }, value) => {
+        commit('SET_DASHBOARD_PROJECTS', value);
+    },
+    setDashboardProjectsTotal: ({ commit }, value) => {
+        commit('SET_DASHBOARD_PROJECTS_TOTAL', value);
+    },
+    setEnableProjectErrors: ({ commit }, errors) => {
+        commit('SET_ENABLE_PROJECT_ERRORS', errors);
+    },
+    setDisableProjectErrors: ({ commit }, errors) => {
+        commit('SET_DISABLE_PROJECT_ERRORS', errors);
+    },
+    setDeleteProjectErrors: ({ commit }, errors) => {
+        commit('SET_DELETE_PROJECT_ERRORS', errors);
     },
     initiateAdministrationEditSession ({ commit, dispatch }) {
         commit('INITIATE_ADMINISTRATION_EDIT_SESSION');

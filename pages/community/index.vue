@@ -229,7 +229,6 @@
 
                 this.loadCommunityMembers();
             },
-    
             onSearchKeyup: _.throttle(function () {
                 if (this.inCommunityLayersView) {
                     this.loadCommunityLayers();

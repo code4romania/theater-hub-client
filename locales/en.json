@@ -627,7 +627,26 @@
                 }
             },
             "projects": {
-                "title": "Projects dashboard"
+                "title": "Projects dashboard",
+                "name-header": "Name",
+                "city-header": "City",
+                "initiator-name-header": "Initiator",
+                "status-header": "Status",
+                "visibility-header": "Visibility",
+                "actions-header": "Actions",
+                "no-search-results": "No results",
+                "no-matching-projects": "No projects matching your criteria",
+                "enable-project-button": "ENABLE",
+                "disable-project-button": "DISABLE",
+                "delete-project-button": "DELETE",
+                "enable-project-message": "Are you sure you wish to enable the project: {0}? Please provide a reason to the initiator:",
+                "disable-project-message": "Are you sure you wish to disable the project: {0}? Please provide a reason to the initiator:",
+                "delete-project-message": "Are you sure you wish to delete the project: {0}? Please provide a reason to the initiator:",
+                "snackbar-messages": {
+                    "enable-project": "Project enabled",
+                    "disable-project": "Project disabled",
+                    "delete-project": "Project deleted"
+                }
             }
         },
         "errors": {

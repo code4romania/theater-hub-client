@@ -102,9 +102,13 @@ export class Endpoints {
 
     static Administration = {
         GetUsers: '/administration/users',
-        InviteUser: '/administration/user/invite',
-        EnableUser: '/administration/user/{0}/enable',
-        DisableUser: '/administration/user/{0}/disable',
-        DeleteUser: '/administration/user/{0}/delete'
+        InviteUser: '/administration/users/invite',
+        EnableUser: '/administration/users/{0}/enable',
+        DisableUser: '/administration/users/{0}/disable',
+        DeleteUser: '/administration/users/{0}/delete',
+        GetProjects: '/administration/projects',
+        EnableProject: '/administration/projects/{0}/enable',
+        DisableProject: '/administration/projects/{0}/disable',
+        DeleteProject: '/administration/projects/{0}/delete'
     }
 };
