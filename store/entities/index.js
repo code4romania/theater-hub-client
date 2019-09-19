@@ -35,6 +35,15 @@ export var UserSortCriterion = {
   'ProfileVisibility': 5
 }
 
+export var ProjectSortCriterion = {
+  'None': 0,
+  'Name': 1,
+  'City': 2,
+  'InitiatorName': 3,
+  'Status': 4,
+  'Visibility': 5
+}
+
 export var VisibilityType = {
   'Everyone': 0,
   'Community': 1,
@@ -48,6 +57,12 @@ export var UserAccountStatusType = {
   'Enabled': 3,
   'Disabled': 4,
   'Deleted': 5
+}
+
+export var ProjectStatusType = {
+  'Enabled': 0,
+  'Disabled': 1,
+  'Deleted': 2
 }
 
 export var UserRoleType = {

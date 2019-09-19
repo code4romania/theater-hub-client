@@ -47,16 +47,26 @@
                                                 </a>
                                             </v-flex>
                                             <v-flex xs12 class="profile-information-row">
-                                                <nuxt-link :to="`/profile/${profile.profileGeneralInformation.username}`" class="preview-profile-link" target="_blank">
-                                                    <v-btn id="preview-profile-button" class="primary ml-0" small>
-                                                        {{ $t('pages.profile.preview-profile-button') }}
-                                                    </v-btn>
+                                                <nuxt-link
+                                                    :to="`/profile/${profile.profileGeneralInformation.username}`"
+                                                    class="preview-profile-link"
+                                                    target="_blank">
+                                                        <v-btn id="preview-profile-button" class="primary ml-0" small>
+                                                            {{ $t('pages.profile.preview-profile-button') }}
+                                                        </v-btn>
                                                 </nuxt-link>
-                                                <v-btn v-if="!isDownloadingResume" id="download-resume-button" class="primary ml-0" small @click="handleDownloadResumeClick">
-                                                    {{ $t('pages.profile.download-resume-button') }}
+                                                <v-btn
+                                                    v-if="!isDownloadingResume"
+                                                    id="download-resume-button"
+                                                    class="primary ml-0" small
+                                                    @click="handleDownloadResumeClick">
+                                                        {{ $t('pages.profile.download-resume-button') }}
                                                 </v-btn>
-                                                <v-btn v-if="isDownloadingResume" id="downloading-resume-button" class="primary ml-0" small>
-                                                    {{ $t('pages.profile.downloading-resume-button') }}
+                                                <v-btn
+                                                    v-if="isDownloadingResume"
+                                                    id="downloading-resume-button"
+                                                    class="primary ml-0" small>
+                                                        {{ $t('pages.profile.downloading-resume-button') }}
                                                 </v-btn>
                                             </v-flex>
                                         </v-flex>
@@ -272,10 +282,8 @@
 </template>
 
 <script>
-import Dropzone from 'nuxt-dropzone';
 import moment from 'moment';
 import _ from 'lodash';
-import 'nuxt-dropzone/dropzone.css';
 import ProfileGeneralInformation from '~/components/profile/profile-general-information.vue';
 import ProfileSkills from '~/components/profile/profile-skills.vue';
 import ProfilePhotoGallery from '~/components/profile/profile-photo-gallery.vue';
@@ -290,7 +298,6 @@ import { mapGetters, mapState } from 'vuex';
 
 export default {
         components: {
-            Dropzone,
             moment,
             ProfileGeneralInformation,
             ProfileSkills,
@@ -526,10 +533,14 @@ export default {
                 this.cloneEditedProfile();
             },
             onSaveEditGeneralInformationClick: function () {
+                const profileImage = this.editedProfile.profileGeneralInformation.profileImage
+                                                    ? this.editedProfile.profileGeneralInformation.profileImage.File
+                                                    : '';
+
                 var generalInformationFormData = new FormData();
                 generalInformationFormData.append('FirstName', this.editedProfile.profileGeneralInformation.firstName);
                 generalInformationFormData.append('LastName', this.editedProfile.profileGeneralInformation.lastName);
-                generalInformationFormData.append('ProfileImage', this.editedProfile.profileGeneralInformation.profileImage.File);
+                generalInformationFormData.append('ProfileImage', profileImage);
                 generalInformationFormData.append('BirthDate', this.editedProfile.profileGeneralInformation.birthDate);
                 generalInformationFormData.append('PhoneNumber', this.editedProfile.profileGeneralInformation.phoneNumber);
                 generalInformationFormData.append('Description', this.editedProfile.profileGeneralInformation.description);
