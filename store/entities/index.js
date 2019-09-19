@@ -50,6 +50,12 @@ export var VisibilityType = {
   'Private': 2
 }
 
+export var UserAccountProviderType = {
+  'Local': 0,
+  'Facebook': 1,
+  'Google': 2
+}
+
 export var UserAccountStatusType = {
   'Managed': 0,
   'Registered': 1,

@@ -107,10 +107,11 @@
                                 <td class="text-xs-left">{{  dashboard.item.Email }}</td>
                                 <td class="text-xs-left">{{  getRoleElementText(dashboard.item.Role) }}</td>
                                 <td class="text-xs-left">{{  getAccountStatusElementText(dashboard.item.AccountStatus) }}</td>
+                                <td class="text-xs-left">{{  dashboard.item.AccountSource }}</td>
                                 <td class="text-xs-left">{{  getPrivacyElementText(dashboard.item.ProfileVisibility) }}</td>
                                 <td class="text-xs-left">
                                     <v-layout>
-                                        <v-flex xs12 md6 lg4>
+                                        <v-flex xs12>
                                             <v-btn
                                                 v-if="showEnableUserButton(dashboard.item)"
                                                 small
@@ -129,8 +130,6 @@
                                             >
                                                 {{ $t('pages.administration.users.disable-user-button') }}
                                             </v-btn>
-                                        </v-flex>
-                                        <v-flex xs12 md6 lg4 pl-3>
                                             <v-btn
                                                 small
                                                 id="delete-user-button"
@@ -260,7 +259,7 @@
 <script>
     import _ from 'lodash';
     import { mapGetters, mapState } from 'vuex';
-    import { UserAccountStatusType, UserRoleType, VisibilityType, UserSortCriterion } from '~/store/entities';
+    import { UserAccountProviderType, UserAccountStatusType, UserRoleType, VisibilityType, UserSortCriterion } from '~/store/entities';
     import { HtmlHelpers, Validators } from '~/utils';
     import ProfileLocaleSetting from '~/components/profile/profile-locale-setting.vue';
     import ServerSideErrors from '~/components/errors/server-side-errors.vue';
@@ -288,6 +287,7 @@
                     { text: this.$t('pages.administration.users.email-address-header'), value: 'Email' },
                     { text: this.$t('pages.administration.users.role-header'), value: 'Role' },
                     { text: this.$t('pages.administration.users.account-status-header'), value: 'AccountStatus' },
+                    { text: this.$t('pages.administration.users.account-source-header'), value: 'AccountSource' },
                     { text: this.$t('pages.administration.users.profile-visibility-header'), value: 'ProfileVisibility' },
                     { text: this.$t('pages.administration.users.actions-header'), value: 'Actions', sortable: false }
                 ],
@@ -392,6 +392,7 @@
                 this.dashboardUsers = this.$store.state.administration.dashboardUsers.map(u => {
                     return {
                         ...u,
+                        AccountSource: this.getAccountSource(u),
                         isEnabling: false,
                         isDisabling: false,
                         isDeleting: false
@@ -539,6 +540,13 @@
             },
             isConfirmInviteUserDisabled: function () {
                 return !this.newUserEmail || this.newUserEmail.length > 100 || !Validators.isValidEmailAddress(this.newUserEmail);
+            },
+            getAccountSource: function (user) {
+                if (user.InviterEmail) {
+                    return `${this.$t('pages.administration.users.invited-by')} ${user.InviterEmail}`;
+                }
+
+                return this.$t(`application-data.${((_.invert(UserAccountProviderType))[user.AccountProvider]).toLowerCase()}`);
             }
         }
     }
