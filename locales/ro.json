@@ -625,7 +625,26 @@
                 }
             },
             "projects": {
-                "title": "Bord proiecte"
+                "title": "Bord proiecte",
+                "name-header": "Nume",
+                "city-header": "Oraș",
+                "initiator-name-header": "Inițiator",
+                "status-header": "Status",
+                "visibility-header": "Vizibilitate",
+                "actions-header": "Acțiuni",
+                "no-search-results": "Nu există rezultate",
+                "no-matching-projects": "Nici un proiect nu satisface condițiile",
+                "enable-project-button": "ACTIVEAZĂ",
+                "disable-project-button": "DEZACTIVEAZĂ",
+                "delete-project-button": "ȘTERGE",
+                "enable-project-message": "Sunteți sigur că doriți să activați proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
+                "disable-project-message": "Sunteți sigur că doriți să dezactivați proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
+                "delete-project-message": "Sunteți sigur că doriți să ștergeți proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
+                "snackbar-messages": {
+                    "enable-project": "Proiect activat",
+                    "disable-project": "Proiect dezactivat",
+                    "delete-project": "Proiect șters"
+                }
             }
         },
         "errors": {

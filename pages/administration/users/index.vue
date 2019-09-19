@@ -1,20 +1,29 @@
 <template>
   <section class="users-dashboard">
-    <v-container fluid users-dashboard-container class="mt-5 pa-5">
-        <v-layout column wrap>
+    <v-container users-dashboard-container class="mt-5 pt-5">
+        <v-layout column>
             <v-flex>
-                <h1 class="mb-3">{{ $t('pages.administration.users.title') }}</h1>
+                <h1 class="page-title mb-3">
+                    {{ $t('pages.administration.users.title') }}
+                </h1>
             </v-flex>
 
-            <v-layout mt-3>
+            <v-layout row wrap>
 
-                <v-flex xs12 sm12 md8 v-if="!isInviteUser">
+                <v-flex
+                    v-if="!isInviteUser"
+                    xs12 sm12 md8
+                    mt-3>
                     <v-btn id="invite-user-button" class="primary" large @click="onInviteUserClick">
                         {{ $t('pages.administration.users.invite-user-button') }}
                     </v-btn>
                 </v-flex>
 
-                <v-flex xs12 v-if="isInviteUser" class="invite-user-card-container">
+                <v-flex
+                    v-if="isInviteUser"
+                    xs12 sm12 md8
+                    mt-3
+                    class="invite-user-card-container">
                     <v-layout row wrap elevation-5 pa-5>
                         <v-flex xs12 class="profile-information-group-header">
                             <h2>{{ $t('pages.administration.users.invite-user-title') }}</h2>
@@ -30,17 +39,17 @@
                                             :label="`${$t('fields.email.label')}*`" validate-on-blur required></v-text-field>
                                 </v-flex>
                                 <v-layout row wrap class="section-visibility-row mt-4" v-if="isSuperAdmin">
-                                    <v-flex xs1>
+                                    <v-flex xs2>
                                         <span class="field-title">{{ $t('pages.administration.users.user-role-label') }}</span>
                                     </v-flex>
-                                    <v-flex xs11>
+                                    <v-flex xs10>
                                         <v-radio-group v-model="newUserRole" row class="ml-3 mt-0 pt-0">
                                             <v-radio :key="0" :value="0" :label="$t('application-data.user')"></v-radio>
                                             <v-radio :key="1" :value="1" :label="$t('application-data.admin')"></v-radio>
                                         </v-radio-group>
                                     </v-flex>
                                 </v-layout>
-                                <v-flex xs3>
+                                <v-flex xs6>
                                     <ProfileLocaleSetting :localeSetting="newUserLocale"
                                                                     @updateLocaleSetting="updateLocaleSetting" />
                                 </v-flex>
@@ -52,7 +61,10 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 sm12 md4 v-if="!isInviteUser">
+                <v-flex
+                    v-if="!isInviteUser"
+                    xs12 sm12 md4
+                    mt-3>
                     <v-text-field id="users-search-box"
                         v-model="searchTerm" append-icon="search" :label="$t('fields.search.admin.label')"
                         single-line hide-details @keyup="onSearchKeyup"></v-text-field>
@@ -68,20 +80,30 @@
                     :pagination.sync="dashboardUsersTablePagination"
                     :total-items="dashboardUsersTotal"
                     :loading="isLoading"
+                    :mobile-breakpoint="1200"
                     rows-per-page-text=""
                     :rows-per-page-items="[]"
                     :no-data-text="$t('pages.administration.users.no-search-results')"
                     :no-results-text="$t('pages.administration.users.no-matching-users')"
                     class="elevation-1">
                         <template slot="items" slot-scope="dashboard">
-                            <tr class="users-dashboard-row" @click="onDashboardUserClick(dashboard.item)" v-if="!isEditedUser(dashboard.item)">
+                            <tr
+                                class="users-dashboard-row"
+                                v-if="!isEditedUser(dashboard.item)"
+                            >
                                 <td>
                                     <v-avatar size="30px">
                                         <img :src="require('~/assets/images/default-avatar.svg')" v-if="!dashboard.item.ProfileImage" />
                                         <img :src="dashboard.item.ProfileImage" v-if="dashboard.item.ProfileImage" />
                                     </v-avatar>
                                 </td>
-                                <td class="text-xs-left">{{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}</td>
+                                <td class="text-xs-left">
+                                    <nuxt-link
+                                        :to="`/profile/${dashboard.item.Username}`"
+                                        target="_blank">
+                                        <span class="member-name">{{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}</span>
+                                    </nuxt-link>
+                                </td>
                                 <td class="text-xs-left">{{  dashboard.item.Email }}</td>
                                 <td class="text-xs-left">{{  getRoleElementText(dashboard.item.Role) }}</td>
                                 <td class="text-xs-left">{{  getAccountStatusElementText(dashboard.item.AccountStatus) }}</td>
@@ -89,25 +111,42 @@
                                 <td class="text-xs-left">
                                     <v-layout>
                                         <v-flex xs12 md6 lg4>
-                                            <v-btn id="enable-user-button" small class="dashboard-action-button primary"
-                                                        @click="onEnableUserClick($event, dashboard.item)" v-if="showEnableUserButton(dashboard.item)">
+                                            <v-btn
+                                                v-if="showEnableUserButton(dashboard.item)"
+                                                small
+                                                id="enable-user-button" 
+                                                class="dashboard-action-button primary"
+                                                @click="onEnableUserClick($event, dashboard.item)"
+                                            >
                                                 {{ $t('pages.administration.users.enable-user-button') }}            
                                             </v-btn>
-                                            <v-btn id="disable-user-button" small class="dashboard-action-button primary"
-                                                        @click="onDisableUserClick($event, dashboard.item)" v-if="showDisabledUserButton(dashboard.item)">
+                                            <v-btn
+                                                 v-if="showDisabledUserButton(dashboard.item)"
+                                                 small
+                                                 id="disable-user-button"
+                                                 class="dashboard-action-button primary"
+                                                @click="onDisableUserClick($event, dashboard.item)"
+                                            >
                                                 {{ $t('pages.administration.users.disable-user-button') }}
                                             </v-btn>
                                         </v-flex>
                                         <v-flex xs12 md6 lg4 pl-3>
-                                            <v-btn id="delete-user-button" small class="dashboard-action-button"
-                                                        @click="onDeleteUserClick($event, dashboard.item)">
+                                            <v-btn
+                                                small
+                                                id="delete-user-button"
+                                                class="dashboard-action-button"
+                                                @click="onDeleteUserClick($event, dashboard.item)"
+                                            >
                                                 {{ $t('pages.administration.users.delete-user-button') }}
                                             </v-btn>
                                         </v-flex>
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr v-if="dashboard.item.isEnabling" class="edited-dashboard-user">
+                            <tr
+                                v-if="dashboard.item.isEnabling"
+                                class="edited-dashboard-user highlighted-section"
+                            >
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
                                          {{ $t('pages.administration.users.enable-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
@@ -137,7 +176,10 @@
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr v-if="dashboard.item.isDisabling" class="edited-dashboard-user">
+                            <tr
+                                v-if="dashboard.item.isDisabling"
+                                class="edited-dashboard-user highlighted-section"
+                            >
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
                                         {{ $t('pages.administration.users.disable-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
@@ -167,7 +209,10 @@
                                     </v-layout>
                                 </td>
                             </tr>
-                            <tr v-if="dashboard.item.isDeleting" class="edited-dashboard-user">
+                            <tr
+                                v-if="dashboard.item.isDeleting"
+                                class="edited-dashboard-user highlighted-section"
+                            >
                                 <td colspan="6" text-xs-left>
                                     <div class="user-action-content">
                                         {{ $t('pages.administration.users.delete-user-message').replace("{0}", `${dashboard.item.FirstName} ${dashboard.item.LastName}`) }}
@@ -215,7 +260,7 @@
 <script>
     import _ from 'lodash';
     import { mapGetters, mapState } from 'vuex';
-    import { UserAccountStatusType, UserRoleType, VisibilityType } from '~/store/entities';
+    import { UserAccountStatusType, UserRoleType, VisibilityType, UserSortCriterion } from '~/store/entities';
     import { HtmlHelpers, Validators } from '~/utils';
     import ProfileLocaleSetting from '~/components/profile/profile-locale-setting.vue';
     import ServerSideErrors from '~/components/errors/server-side-errors.vue';
@@ -336,7 +381,7 @@
 
                 var requestQuery = {
                     searchTerm: this.searchTerm,
-                    sortCriterion: sortBy,
+                    sortCriterion: UserSortCriterion[sortBy],
                     sortOrientation: descending ? 'DESC' : 'ASC',
                     page: page - 1,
                     pageSize: 10
@@ -354,12 +399,9 @@
                 });
                 this.dashboardUsersTotal = this.$store.state.administration.dashboardUsersTotal;
             },
-            onSearchKeyup: function (event) {
+            onSearchKeyup: _.throttle(function () {
                 this.updateUsersDashboardTable();
-            },
-            onDashboardUserClick: function (user) {
-                window.open(`/profile/${user.username}`, '_blank')
-            },
+            }, 1000),
             onEnableUserClick: function (event, user) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -505,15 +547,21 @@
 
 <style lang="scss">
 
+    .users-dashboard-container {
+        max-width: 1600px;
+        padding: 40px 40px 0px 40px;
+    }
+
+    #invite-user-button {
+        margin-left: 0px;
+    }
+
     #users-search-box {
         width: 400px;
     }
 
-    .users-dashboard-row {
-        cursor: pointer;
-    }
-
     .dashboard-action-button {
+        margin-left: 0px;
         color: #FFF;
     }
 

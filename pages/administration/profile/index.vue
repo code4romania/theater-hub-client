@@ -9,8 +9,14 @@
                             <v-layout row wrap align-center>
                                 <v-flex xs12 sm12 md6 lg5>
                                     <v-avatar>
-                                        <img :src="require('~/assets/images/default-avatar.svg')" v-if="!profileImage" />
-                                        <img :src="profileImage" v-if="profileImage" />
+                                        <img
+                                            v-if="!profileGeneralInformation.profileImage"
+                                            :src="require('~/assets/images/default-avatar.svg')"
+                                        />
+                                        <img
+                                            v-if="profileGeneralInformation.profileImage"
+                                            :src="profileGeneralInformation.profileImage.Location"
+                                        />
                                     </v-avatar>
                                 </v-flex>
                                 <v-flex xs12 sm12 md6 lg7 class="general-information">
@@ -18,16 +24,20 @@
                                         <v-flex xs12 pl-4>
                                             <v-flex xs12 class="profile-information-row">
                                                 <span class="full-name-field">{{ fullName }}</span>
-                                                <span v-if="birthDate" class="name-separator">,</span>
-                                                <span v-if="birthDate" class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
+                                                <span
+                                                    v-if="profileGeneralInformation.birthDate"
+                                                    class="name-separator">,</span>
+                                                <span
+                                                    v-if="profileGeneralInformation.birthDate"
+                                                    class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
                                             </v-flex>
                                             <v-flex xs12 mt-2 class="profile-information-row">
                                                 <span class="field-label">{{ $t('fields.email.label') }}: </span>
-                                                <span class="email-field">{{ email }}</span>
+                                                <span class="email-field">{{ profileGeneralInformation.email }}</span>
                                             </v-flex>
-                                            <v-flex xs12 class="profile-information-row" v-if="phoneNumber">
+                                            <v-flex xs12 class="profile-information-row" v-if="profileGeneralInformation.phoneNumber">
                                                 <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
-                                                <span class="phone-number-field">{{ phoneNumber }}</span>
+                                                <span class="phone-number-field">{{ profileGeneralInformation.phoneNumber }}</span>
                                             </v-flex>
                                         </v-flex>
                                     </v-layout>
@@ -51,7 +61,7 @@
                                     <h2>{{ $t('pages.profile.edit-general-information-title') }}</h2>
                                </v-flex>
                                <v-flex xs12 sm4 md4 lg4 class="profile-row-actions">
-                                    <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditGeneralInformationClick" :disabled="isSaveEditGeneralInformationButtonDisabled()">
+                                    <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditGeneralInformationClick" :disabled="isSaveEditGeneralInformationButtonDisabled">
                                         <v-icon>done</v-icon>
                                     </v-btn>
                                     <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelEditGeneralInformationClick">
@@ -61,42 +71,12 @@
                            </v-layout>
                        </v-flex>
 
-                        <v-layout row wrap>
-                            <v-flex xs12 sm12 md6 lg6 mb-3>
-                                <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
-                                    :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
-                                    <div class="dz-message" data-dz-message><span>{{ $t('fields.profile-photo-dropzone.label') }}</span></div>
-                                </dropzone>
-                            </v-flex>
-                            <v-flex xs12 sm12 md6 lg6 mb-3>
-                                <v-flex xs12>
-                                    <v-text-field v-model="editedFirstName" :rules="firstNameRules"
-                                            :label="`${$t('fields.first-name.label')}*`" validate-on-blur required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-text-field v-model="editedLastName" :rules="lastNameRules"
-                                                :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
-                                        lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
-                                        <v-text-field slot="activator" v-model="editedBirthDate"
-                                                                                :rules="birthDateRules"
-                                                                                :label="$t('fields.date-of-birth.label')" prepend-icon="event" readonly>
-                                        </v-text-field>
-                                        <v-date-picker
-                                            v-model="editedBirthDate"
-                                            @input="isBirthDateMenuOpen = false"
-                                            :locale="locale">
-                                        </v-date-picker>
-                                    </v-menu>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-text-field v-model="editedPhoneNumber" :rules="phoneNumberRules"
-                                            :label="`${$t('fields.phone-number.label')}*`" validate-on-blur required></v-text-field>
-                                </v-flex>
-                            </v-flex>
-                        </v-layout>
+                        <v-flex xs12 pt-4>
+                            <ProfileGeneralInformation  :profileGeneralInformation="editedProfileGeneralInformation"
+                                                        :displayNameFields="true"
+                                                        :hideOptionalFields="true"
+                                                        @updateProfileGeneralInformation="updateProfileGeneralInformation"/>
+                        </v-flex>
                     </v-layout>
                 </v-flex>
 
@@ -113,119 +93,25 @@
 
 
 <script>
-    import Dropzone from 'nuxt-dropzone';
     import moment from 'moment';
     import _ from 'lodash';
-    import 'nuxt-dropzone/dropzone.css';
-    import { Validators } from '~/utils';
+    import ProfileGeneralInformation from '~/components/profile/profile-general-information.vue';
+    import { Helpers, Validators } from '~/utils';
     import { mapGetters, mapState } from 'vuex';
 
     export default {
         components: {
-            Dropzone,
-            moment
+            moment,
+            ProfileGeneralInformation
         },
         layout: 'administration',
         middleware: ['authenticated', 'admin'],
         data: function () {
             return {
                 isEditingGeneralInformation: false,
-                isBirthDateMenuOpen: false,
-                phoneNumberRules: [
-                    v => !!v || this.$t('fields.phone-number.validation-errors.required'),
-                    v => Validators.isValidPhoneNumber(v) || this.$t('fields.phone-number.validation-errors.invalid')
-                ],
-                firstNameRules: [
-                    v => !!v || this.$t('fields.first-name.validation-errors.required'),
-                    v => v.length <= 50 || this.$t('fields.first-name.validation-errors.length')
-                ],
-                lastNameRules: [
-                    v => !!v || this.$t('fields.last-name.validation-errors.required'),
-                    v => v.length <= 50 || this.$t('fields.last-name.validation-errors.length')
-                ],
-                birthDateRules: [
-                    v => Validators.isValidBirthDate(v) || this.$t('fields.date-of-birth.validation-errors.invalid')
-                ],
-                editedProfileImage: '',
-                editedFirstName: '',
-                editedLastName: '',
-                editedBirthDate: '',
-                editedPhoneNumber: '',
-                profileImageDropzoneOptions: {
-                    url: '/',
-                    maxFilesize: 5,
-                    addRemoveLinks: true,
-                    autoProcessQueue: false,
-                    dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
-                    acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
-                    initializeProfileImage: (dropzone) => {
-                        if (this.editedProfileImage) {
-                            var fileSize = atob(this.editedProfileImage).length;
-                            var file     = { url: `data:image/png;base64,${this.editedProfileImage}`, size: fileSize };
-                            dropzone.emit('addedfile', file);
-                            dropzone.emit('thumbnail', file, file.url);
-                            dropzone.createThumbnailFromUrl(file, file.url, null, null);
-                            dropzone.emit('complete', file);
-                            dropzone.files.push(file);
-                        }
-                    },
-                    thumbnailEventHandler: (dataUrl) => {
-                        this.editedProfileImage = dataUrl.replace('data:image/png;base64,', '');
-                    },
-                    removedfileEventHandler: (file) => {
-                        this.editedProfileImage = '';
-                    },
-                    maxFiles: 1,
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 200,
-                    init: function () {
-                        this.on('thumbnail', (file, dataUrl) => {
-                            this.options.thumbnailEventHandler(dataUrl);
-                        });
-
-                        this.on('removedfile', (file) => {
-                            this.options.removedfileEventHandler(file);
-                        });
-
-                        this.on('addedfile', () => {
-                            if (this.files.length === 2) {
-                                this.removeFile(this.files[0]);
-                            }
-                        });
-
-                        this.on('sending', () => {
-                            return false;
-                        });
-
-                        this.options.initializeProfileImage(this);
-                    },
-                    resize: function (file, width, height) {
-                        var trgWidth = this.options.thumbnailWidth;
-                        var trgHeight = this.options.thumbnailHeight;
-                        var trgX = 0;
-
-                        if (file.width > file.height) {
-                            trgHeight = this.options.thumbnailWidth * file.height / file.width;
-                        } else {
-                            trgWidth = this.options.thumbnailHeight * file.width / file.height;
-                        }
-
-                        if (trgWidth  > this.options.thumbnailHeight * 3) {
-                            trgX = (trgWidth - this.options.thumbnailHeight * 3) / 2;
-                            trgWidth = this.options.thumbnailHeight * 3;
-                        }
-
-                        return {
-                            srcWidth: file.width,
-                            srcHeight: file.height,
-                            trgX,
-                            trgWidth,
-                            trgHeight
-                        };
-                    }
-                },
                 snackbar: false,
-                snackbarText: ''
+                snackbarText: '',
+                isSaveEditGeneralInformationButtonDisabled: false
             };
         },
         async asyncData ({ store, query }) {
@@ -241,8 +127,8 @@
                 birthDate = null;
             }
 
-            return {
-                profileImage: response.ProfileImage ? response.ProfileImage.Image.replace('data:image/png;base64,', '') : null,
+            const profileGeneralInformation = {
+                profileImage: response.ProfileImage ? response.ProfileImage : {},
                 birthDate,
                 firstName: response.FirstName,
                 lastName: response.LastName,
@@ -250,17 +136,17 @@
                 email: response.Email,
                 username: response.Username
             };
+
+            return {
+                profileGeneralInformation
+            };
         },
         methods: {
             endEditSectionSession () {
                 this.$store.dispatch('users/endEditSectionSession');
             },
             onEditGeneralInformationClick: function () {
-                this.editedProfileImage             = this.profileImage;
-                this.editedFirstName                = this.firstName;
-                this.editedLastName                 = this.lastName;
-                this.editedBirthDate                = this.birthDate;
-                this.editedPhoneNumber              = this.phoneNumber;
+                this.editedProfileGeneralInformation = Helpers.cloneObject(this.profileGeneralInformation);
 
                 this.$store.dispatch('users/initiateEditSectionSession');
                 this.isEditingGeneralInformation    = true;
@@ -270,45 +156,49 @@
                 this.endEditSectionSession();
             },
             onSaveEditGeneralInformationClick: function () {
-                var newGeneralInformationRequest = {
-                    FirstName: this.editedFirstName,
-                    LastName: this.editedLastName,
-                    ProfileImage: {
-                        Image: this.editedProfileImage
-                    },
-                    BirthDate: this.editedBirthDate,
-                    PhoneNumber: this.editedPhoneNumber
-                };
+                const profileImage = this.editedProfileGeneralInformation.profileImage
+                                                ? this.editedProfileGeneralInformation.profileImage.File
+                                                : '';
 
-                this.$store.dispatch('users/updateMyGeneralInformation', newGeneralInformationRequest).then(() => {
-                    if (!this.users.updateMyGeneralInformationErrors) {
-                        this.endEditSectionSession();
-                        this.profileImage                   = this.editedProfileImage;
-                        this.firstName                      = this.editedFirstName;
-                        this.lastName                       = this.editedLastName;
-                        this.birthDate                      = this.editedBirthDate;
-                        this.phoneNumber                    = this.editedPhoneNumber;
+                var generalInformationFormData = new FormData();
+                generalInformationFormData.append('FirstName', this.editedProfileGeneralInformation.firstName);
+                generalInformationFormData.append('LastName', this.editedProfileGeneralInformation.lastName);
+                generalInformationFormData.append('ProfileImage', profileImage);
+                generalInformationFormData.append('BirthDate', this.editedProfileGeneralInformation.birthDate);
+                generalInformationFormData.append('PhoneNumber', this.editedProfileGeneralInformation.phoneNumber);
 
-                        this.isEditingGeneralInformation    = false;
-                        this.snackbarText = this.$t('pages.profile.snackbar-messages.update-general-information');
-                        this.snackbar = true;
+                this.$store.dispatch('users/updateMyGeneralInformation', generalInformationFormData).then((response) => {
+                    this.endEditSectionSession();
+                    this.profileGeneralInformation = Helpers.cloneObject(this.editedProfileGeneralInformation);
+
+                    if (response) {
+                        this.profileGeneralInformation.profileImage = response.ProfileImage;
+                        this.$store.dispatch('users/setMe', response);
                     }
+
+                    this.isEditingGeneralInformation    = false;
+                    this.snackbarText                   = this.$t('pages.profile.snackbar-messages.update-general-information');
+                    this.snackbar                       = true;
                 });
             },
-            isSaveEditGeneralInformationButtonDisabled: function () {
-                return !this.editedFirstName || !this.editedLastName ||
-                        !this.editedPhoneNumber || !Validators.isValidPhoneNumber(this.editedPhoneNumber) ||
-                        !Validators.isValidBirthDate(this.birthDate);
+            updateProfileGeneralInformation: function (model) {
+                this.editedProfileGeneralInformation = Helpers.cloneObject(model);
+
+                this.isSaveEditGeneralInformationButtonDisabled = !this.editedProfileGeneralInformation.firstName ||
+                        !this.editedProfileGeneralInformation.lastName ||
+                        !this.editedProfileGeneralInformation.phoneNumber ||
+                        !Validators.isValidPhoneNumber(this.editedProfileGeneralInformation.phoneNumber) ||
+                        !Validators.isValidBirthDate(this.editedProfileGeneralInformation.birthDate);
             }
         },
         computed: {
             ...mapState(['users']),
             fullName: function () {
-                return `${this.firstName} ${this.lastName}`;
+                return `${this.profileGeneralInformation.firstName} ${this.profileGeneralInformation.lastName}`;
             },
             age: function () {
                 var currentDateMoment = moment(new Date());
-                var birthDateMoment   = moment(this.birthDate);
+                var birthDateMoment   = moment(this.profileGeneralInformation.birthDate);
                 return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
             },
             ...mapGetters({
@@ -327,16 +217,6 @@
     }
 
 </script>
-
-<style lang="scss">
-
-    html, body {
-        height: 100%;
-        min-height: 100vh;
-    }
-
-</style>
-
 
 <style lang="scss" scoped>
 
@@ -376,22 +256,6 @@
         font-size: 24px;
     }
 
-    #profile-image-dropzone {
-        width: 300px;
-        height: 300px;
-        min-height: 300px;
-        border-radius: 100%;
-
-        .dz-message {
-            margin: 0px;
-        }
-
-        .dz-progress {
-            display: none;
-        }
-
-    }
-
     @media screen and (max-width: 800px) {
 
         .general-information {
@@ -406,12 +270,6 @@
         .v-avatar {
             width: 200px !important;
             height: 200px !important;
-        }
-
-        #profile-image-dropzone {
-            width: 150px;
-            height: 150px;
-            min-height: 150px;
         }
 
     }

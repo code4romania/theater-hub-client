@@ -1,6 +1,6 @@
 <template>
   <section class="settings-section">
-    <v-container id="settings-container" class="main-container pa-5">
+    <v-container id="settings-container" class="main-container pa-5 mt-5">
         <v-layout row wrap>
 
             <v-flex xs12 v-if="!isEditingSettings">
