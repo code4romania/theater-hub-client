@@ -82,8 +82,6 @@
                                                 >
                                                     {{ $t('pages.administration.projects.disable-project-button') }}
                                                 </v-btn>
-                                            </v-flex>
-                                            <v-flex xs12 md6 lg4 pl-3>
                                                 <v-btn
                                                     small
                                                     id="delete-project-button"
