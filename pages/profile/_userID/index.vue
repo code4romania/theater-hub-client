@@ -249,6 +249,38 @@
                     </v-layout>
                 </v-flex>
 
+
+                <v-flex
+                    v-if="hasProjects"
+                    xs12 my-5
+                >
+                    <v-divider class="profile-section-separator"></v-divider>
+                </v-flex>
+                <v-flex
+                    v-if="hasProjects"
+                    xs12
+                >
+                    <v-layout row wrap class="profile-information-group">
+                        <v-flex xs12 class="profile-information-group-header">
+                            <h2>{{ $t('pages.profile.projects-title') }}</h2>
+                        </v-flex>
+                        <v-flex
+                            xs12 md6 mt-2
+                            :key="`profile-project-${projectIndex}`"
+                            v-for="(project, projectIndex) in profile.projects"
+                            class="profile-project-item"
+                        >
+                            <ProjectCard
+                                :project_id="project.ID"
+                                :project_title="project.Name"
+                                :project_image="project.Image"
+                                :project_abstract="project.Abstract"
+                                :has_border="false"
+                            />
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+
             </v-layout>
 
         </v-container>
@@ -259,11 +291,13 @@
 
     import moment from 'moment';
     import { mapGetters, mapState } from 'vuex';
+    import ProjectCard from '~/components/project/project-card.vue';
     import Carousel from '~/components/shared/carousel.vue';
     import { SocialMediaManager } from '~/utils';
 
     export default {
         components: {
+            ProjectCard,
             Carousel
         },
         layout: ({ store }) => {
@@ -364,6 +398,8 @@
                     })
                 };
 
+                profile.projects = response.Projects;
+
                 return {
                     profile
                 };
@@ -435,6 +471,9 @@
             },
             hasAchievements: function () {
                 return this.hasAwards || this.hasExperience || this.hasEducation;
+            },
+            hasProjects: function () {
+                return this.profile.projects && this.profile.projects.length !== 0;
             }
         }
     }
@@ -499,6 +538,10 @@
 
     .v-timeline-item:last-of-type {
         padding-bottom: 0px;
+    }
+
+    .profile-project-item {
+        padding: 20px;
     }
 
     @media screen and (max-width: 800px) {

@@ -1,5 +1,9 @@
 <template>
-  <v-layout column fill-height class="mb-4 project">
+  <v-layout
+      column fill-height
+      class="mb-4 project"
+      v-bind:class="{'border': has_border}"
+    >
     <v-img
       v-if="project_image"
       :src="project_image"
@@ -17,13 +21,19 @@
         </h4>
         <div class="project__abstract d-flex">
           <p>{{ project_abstract }}</p>
-          <p  class="bold">
+          <p
+            v-if="project_initiator"
+            class="bold"
+          >
             {{ $t('shared.content.project-initiator') }}
             <nuxt-link :to="`/profile/${project_username}`">
                 <span>{{ project_initiator }}</span>
             </nuxt-link>
           </p>
-          <p class="bold">
+          <p
+            v-if="project_city"
+            class="bold"
+          >
             {{ $t('shared.content.city') }} {{ project_city }}
           </p>
         </div>
@@ -59,25 +69,27 @@ export default {
     },
     project_title: {
       type: String,
-      default: 'Hello World'
+      default: ''
     },
     project_image: {
       type: String,
-      default:
-        'https://images.unsplash.com/photo-1554317280-a89ec28bf9bc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80'
+      default: ''
     },
     project_abstract: {
       type: String,
-      default:
-        'Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy'
+      default: ''
     },
     project_initiator: {
       type: String,
-      default: 'John Doe'
+      default: ''
     },
     project_city: {
       type: String,
       default: ''
+    },
+    has_border: {
+      type: Boolean,
+      default: true
     }
   }
 };
@@ -85,8 +97,11 @@ export default {
 
 <style lang="scss" scoped>
 .project {
-  border: 2px solid rgba(151, 151, 151, 0.6);
   padding: 5px;
+
+  &.border {
+    border: 2px solid rgba(151, 151, 151, 0.6);
+  }
 
   h4 {
     margin-bottom: 10px;
