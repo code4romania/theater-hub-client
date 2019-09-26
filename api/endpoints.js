@@ -92,6 +92,7 @@ export class Endpoints {
 
     static Projects = {
         GetProject: '/projects',
+        GetMyProject: '/projects/me',
         GetProjects: '/projects',
         GetRandomProjects: '/projects/random',
         CreateProject: '/projects',
