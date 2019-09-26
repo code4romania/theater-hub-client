@@ -90,15 +90,20 @@ export class Endpoints {
 
     static DeleteExperienceStepByID             = '/experience';
 
-    static GetProject                           = '/projects';
-
-    static GetProjects                          = '/projects';
-
-    static GetRandomProjects                    = '/projects/random';
-
-    static CreateProject                        = '/projects';
-
-    static DeleteProjectByID                    = '/projects';
+    static Projects = {
+        GetProject: '/projects',
+        GetProjects: '/projects',
+        GetRandomProjects: '/projects/random',
+        CreateProject: '/projects',
+        UpdateProjectGeneralInformation: '/projects/{0}/general',
+        DeleteProjectByID: '/projects',
+        CreateProjectNeed: '/projects/{0}/needs',
+        UpdateProjectNeed: '/projects/{0}/needs/{1}',
+        DeleteProjectNeedByID: '/projects/{0}/needs/{1}',
+        CreateProjectUpdate: '/projects/{0}/updates',
+        UpdateProjectUpdate: '/projects/{0}/updates/{1}',
+        DeleteProjectUpdateByID: '/projects/{0}/updates/{1}'
+    }
 
     static Administration = {
         GetUsers: '/administration/users',

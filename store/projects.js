@@ -32,6 +32,11 @@ export const actions = {
             dispatch('setCreateProjectErrors', error.response.data.errors);
         });
     },
+    async updateGeneralInformation ({ commit, dispatch }, request) {
+        var { id, generalInformation } = request;
+
+        return ProjectService.updateGeneralInformation(id, generalInformation);
+    },
     async delete ({ commit, dispatch }, id) {
         await ProjectService.delete(id);
     },

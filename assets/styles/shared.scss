@@ -90,7 +90,7 @@ h5 {
   font-size: 20px;
 }
 
-.profile-information-row {
+.profile-information-row, .project-information-section {
   padding: 2px 0px;
   font-size: 17px;
 
@@ -481,7 +481,7 @@ main {
   padding-top: 0px;
 }
 
-.profile-entity-layout {
+.profile-entity-layout, .project-entity-layout {
   .timeline-message {
     .timeline-message-card::after,
     .timeline-message-card::before {
@@ -489,7 +489,7 @@ main {
     }
   }
 
-  .add-achievement-timeline-item {
+  .add-entity-timeline-item {
     cursor: pointer;
 
     .timeline-message-card {
@@ -546,6 +546,19 @@ main {
 
   .google-link-container {
     padding-left: 10px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  .project-item-content {
+      flex-direction: column-reverse;
+      align-content: flex-start;
+
+      &>div {
+          width: 100%;
+      }
   }
 
 }

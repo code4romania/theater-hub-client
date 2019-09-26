@@ -34,17 +34,24 @@
                                 <v-layout
                                     row
                                     wrap
+                                    class="project-item-content"
                                 >
                                     <v-flex
-                                        xs12 md9
+                                        xs12 sm8
                                         class="project-name-container"
                                     >
                                         <span class="project-name-field">{{ project.Name }}</span>
                                     </v-flex>
                                     <v-flex
-                                        xs12 md3
+                                        xs12 sm4
                                         v-if="hasEditOptions"
                                     >
+                                        <v-btn
+                                            outline small fab
+                                            class="edit-icon"
+                                            nuxt :to="`/project/${project.ID}/edit`">
+                                            <v-icon>edit</v-icon>
+                                        </v-btn>
                                         <v-btn
                                             outline small fab
                                             class="remove-icon"

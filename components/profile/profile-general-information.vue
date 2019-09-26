@@ -4,7 +4,9 @@
             <v-flex xs12 sm12 md6 lg6 mb-3>
                 <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
                     :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
-                    <div class="dz-message" data-dz-message><span>{{ $t('fields.profile-photo-dropzone.label') }}</span></div>
+                    <div class="dz-message" data-dz-message>
+                        <span>{{ $t('fields.profile-photo-dropzone.label') }}</span>
+                    </div>
                 </dropzone>
             </v-flex>
             <v-flex xs12 sm12 md6 lg6 mb-3>

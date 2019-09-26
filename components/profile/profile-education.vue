@@ -60,7 +60,7 @@
                     </v-card-title>
                 </v-card>
             </v-timeline-item>
-            <v-timeline-item medium hide-dot class="timeline-message add-achievement-timeline-item add-education-timeline-item"
+            <v-timeline-item medium hide-dot class="timeline-message add-entity-timeline-item add-education-timeline-item"
                                                                             v-if="!isAddingEducationStep">
                 <v-card class="timeline-message-card text-xs-center"  v-on:click.native="onAddEducationStepClick()">
                     <v-card-title>

@@ -312,6 +312,7 @@
             "description": {
                 "label": "Description",
                 "validation-errors": {
+                    "required": "Description is required",
                     "length": "Description's maximum length is of 500 characters"
                 }
             },
@@ -323,6 +324,7 @@
             "description": {
                 "label": "Description",
                 "validation-errors": {
+                    "required": "Description is required",
                     "length": "Description's maximum length is of 500 characters"
                 }
             }
@@ -478,6 +480,8 @@
             }
         },
         "project": {
+            "view-project-button": "View project",
+            "edit-general-information-title": "Edit General Information",
             "needs-title": "Help Needed:",
             "updates-title": "Project updates:",
             "mandatory": "MANDATORY",
@@ -487,6 +491,7 @@
             "start-date": "Start date:",
             "city": "City:",
             "budget": "Budget:",
+            "visibility": "Visibility:",
             "other-projects-by-title": "Other Projects by ",
             "delete-need-message": "Are you sure you wish to delete this need?",
             "delete-update-message": "Are you sure you wish to delete this update?",
@@ -497,6 +502,7 @@
             "invalid-project-title": "Project",
             "invalid-project-content": "The project you are trying to view is either private or does not exist.",
             "snackbar-messages": {
+                "update-general-information": "General information section updated",
                 "update-needs": "Help needed section updated",
                 "update-updates": "Updates section updated"
             }
@@ -564,8 +570,8 @@
 
         },
         "profile": {
+            "view-profile-button": "View profile",
             "edit-general-information-title": "Edit General Information",
-            "preview-profile-button": "Preview profile",
             "download-resume-button": "Download resume",
             "downloading-resume-button": "Downloading resume...",
             "description-title": "Description",
