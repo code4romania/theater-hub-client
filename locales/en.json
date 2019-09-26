@@ -12,6 +12,9 @@
         "lighting": "lighting",
         "playwright": "playwright",
         "sufleor": "sufleor",
+        "local": "Local",
+        "facebook": "Facebook",
+        "google": "Google",
         "managed": "Managed",
         "registered": "Registered",
         "confirmed": "Confirmed",
@@ -309,6 +312,7 @@
             "description": {
                 "label": "Description",
                 "validation-errors": {
+                    "required": "Description is required",
                     "length": "Description's maximum length is of 500 characters"
                 }
             },
@@ -320,6 +324,7 @@
             "description": {
                 "label": "Description",
                 "validation-errors": {
+                    "required": "Description is required",
                     "length": "Description's maximum length is of 500 characters"
                 }
             }
@@ -475,6 +480,8 @@
             }
         },
         "project": {
+            "view-project-button": "View project",
+            "edit-general-information-title": "Edit General Information",
             "needs-title": "Help Needed:",
             "updates-title": "Project updates:",
             "mandatory": "MANDATORY",
@@ -484,6 +491,7 @@
             "start-date": "Start date:",
             "city": "City:",
             "budget": "Budget:",
+            "visibility": "Visibility:",
             "other-projects-by-title": "Other Projects by ",
             "delete-need-message": "Are you sure you wish to delete this need?",
             "delete-update-message": "Are you sure you wish to delete this update?",
@@ -494,6 +502,7 @@
             "invalid-project-title": "Project",
             "invalid-project-content": "The project you are trying to view is either private or does not exist.",
             "snackbar-messages": {
+                "update-general-information": "General information section updated",
                 "update-needs": "Help needed section updated",
                 "update-updates": "Updates section updated"
             }
@@ -561,8 +570,8 @@
 
         },
         "profile": {
+            "view-profile-button": "View profile",
             "edit-general-information-title": "Edit General Information",
-            "preview-profile-button": "Preview profile",
             "download-resume-button": "Download resume",
             "downloading-resume-button": "Downloading resume...",
             "description-title": "Description",
@@ -609,6 +618,7 @@
                 "email-address-header": "E-mail address",
                 "role-header": "Role",
                 "account-status-header": "Account status",
+                "account-source-header": "Account source",
                 "profile-visibility-header": "Profile visibility",
                 "actions-header": "Actions",
                 "no-search-results": "No results",
@@ -619,6 +629,7 @@
                 "enable-user-message": "Are you sure you wish to enable {0}'s account? Please provide a reason to the user:",
                 "disable-user-message": "Are you sure you wish to disable {0}'s account? Please provide a reason to the user:",
                 "delete-user-message": "Are you sure you wish to delete {0}'s account? Please provide a reason to the user:",
+                "invited-by": "Invited by:",
                 "snackbar-messages": {
                     "invite-user": "Invitation sent",
                     "enable-user": "User enabled",

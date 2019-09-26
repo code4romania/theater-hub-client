@@ -1,9 +1,9 @@
 <template>
   <section class="signup">
-    <v-container fluid managed-user-signup-container elevation-4 class="pa-5">
+    <v-container fluid managed-user-signup-container class="pa-5">
         <v-layout>
           <v-flex xs12 align-end flexbox>
-            <h1 class="mb-3">{{ $t('pages.managed-user-signup.title') }}</h1>
+            <h1 class="page-title my-3">{{ $t('pages.managed-user-signup.title') }}</h1>
 
             <v-layout>
 

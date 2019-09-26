@@ -444,13 +444,13 @@
 <style lang="scss" scoped>
 
     .v-avatar {
-        box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
+        box-shadow: 0px 3px 15px -9px rgba(0,0,0,0.75);
         width: 300px !important;
         height: 300px !important;
     }
 
     .v-avatar img {
-        border: 3px solid #979797;
+        border: 3px solid #e1e1e1;
     }
 
     .profile-section {

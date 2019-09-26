@@ -1,7 +1,8 @@
 import _                            from 'lodash';
 import moment                       from 'moment';
 import validator                    from 'validator';
-import { SocialMediaCategoryType }  from '../store/entities';
+import { SocialMediaCategoryType,
+                  VisibilityType }  from '../store/entities';
 
 export var SocialMediaManager = {
   baseURL: {
@@ -88,6 +89,9 @@ export var Helpers = {
       var birthDateMoment   = moment(birthDate);
 
       return Math.floor(moment.duration(currentDateMoment.diff(birthDateMoment)).asYears());
+    },
+    getPrivacyElementText (value) {
+        return (_.invert(VisibilityType))[value].toLowerCase();
     }
 }
 

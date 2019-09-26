@@ -12,6 +12,9 @@
         "lighting": "lumină",
         "playwright": "dramaturgie",
         "sufleor": "sufleor",
+        "local": "Local",
+        "facebook": "Facebook",
+        "google": "Google",
         "managed": "Administrat",
         "registered": "Înregistrat",
         "confirmed": "Confirmat",
@@ -473,6 +476,8 @@
             }
         },
         "project": {
+            "view-project-button": "Vizualizare proiect",
+            "edit-general-information-title": "Editare informații generale",
             "needs-title": "Necesități:",
             "updates-title": "Noutăți:",
             "mandatory": "OBLIGATORIU",
@@ -482,6 +487,7 @@
             "start-date": "Data începerii:",
             "city": "Oraș:",
             "budget": "Buget:",
+            "visibility": "Vizibilitate:",
             "other-projects-by-title": "Alte Proiecte de către ",
             "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
@@ -492,6 +498,7 @@
             "invalid-project-title": "Proiect",
             "invalid-project-content": "Proiectul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {
+                "update-general-information": "Secțiunea de informații generale a fost actualizată",
                 "update-needs": "Secțiunea de nevoi a fost actualizată",
                 "update-updates": "Secțiunea de noutăți a fost actualizată"
             }
@@ -559,8 +566,8 @@
 
         },
         "profile": {
+            "view-profile-button": "Vizualizare profil",
             "edit-general-information-title": "Editare informații generale",
-            "preview-profile-button": "Previzualizare",
             "download-resume-button": "Descarcă CV",
             "downloading-resume-button": "Se descarcă CV-ul...",
             "description-title": "Descriere",
@@ -607,6 +614,7 @@
                 "email-address-header": "Adresa de e-mail",
                 "role-header": "Rol",
                 "account-status-header": "Starea contului",
+                "account-source-header": "Sursa contului",
                 "profile-visibility-header": "Vizibilitatea profilului",
                 "actions-header": "Acțiuni",
                 "no-search-results": "Nu există rezultate",
@@ -617,6 +625,7 @@
                 "enable-user-message": "Sunteți sigur că doriți să activați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
                 "disable-user-message": "Sunteți sigur că doriți să dezactivați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
                 "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "invited-by": "Invitat de:",
                 "snackbar-messages": {
                     "invite-user": "Invitație trimisă",
                     "enable-user": "Utilizator activat",
