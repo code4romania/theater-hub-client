@@ -596,6 +596,7 @@
             "education-title": "Education",
             "delete-education-message": "Are you sure you wish to delete this education step?",
             "no-education-message": "You haven't added any education information",
+            "projects-title": "Projects",
             "invalid-profile-title": "Profile",
             "invalid-profile-content": "The profile you are trying to view is either private or does not exist.",
             "snackbar-messages": {

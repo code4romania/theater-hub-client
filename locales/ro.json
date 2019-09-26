@@ -592,6 +592,7 @@
             "education-title": "Educație",
             "delete-education-message":  "Sunteți sigur că doriți să ștergeți această experiență educațională?",
             "no-education-message": "Nu ați adăugat informații despre educație",
+            "projects-title": "Proiecte",
             "invalid-profile-title": "Profil",
             "invalid-profile-content": "Profilul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {
