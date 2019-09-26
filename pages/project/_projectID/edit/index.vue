@@ -236,8 +236,12 @@ export default {
       editedGeneralInformation: {}
     };
   },
-  async asyncData ({ store, query, params }) {
+  async asyncData ({ store, query, params, error }) {
     const project = await store.dispatch('projects/getMyProject', params.projectID);
+
+    if (!project) {
+      return error({ statusCode: 404 });
+    }
 
     var generalInformation = {
       Visibility: project.Visibility,
