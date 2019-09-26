@@ -103,7 +103,7 @@
             
             <v-flex xs12 md6
               project-card-col
-              :key="i" v-for="(project, i) in projects">                
+              :key="i" v-for="(project, i) in projects">
                 <ProjectCard
                   :project_id="project.ID"
                   :project_title="project.Name"
