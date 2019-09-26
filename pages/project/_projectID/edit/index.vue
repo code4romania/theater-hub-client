@@ -237,7 +237,7 @@ export default {
     };
   },
   async asyncData ({ store, query, params }) {
-    const project = await store.dispatch('projects/getProject', params.projectID);
+    const project = await store.dispatch('projects/getMyProject', params.projectID);
 
     var generalInformation = {
       Visibility: project.Visibility,

@@ -18,6 +18,9 @@ export const actions = {
     async getProject ({ commit, dispatch }, id) {
         return ProjectService.getProject(id);
     },
+    async getMyProject ({ commit, dispatch }, id) {
+        return ProjectService.getMyProject(id);
+    },
     async getProjects ({ commit, dispatch }, query) {
         return ProjectService.getProjects(query);
     },
