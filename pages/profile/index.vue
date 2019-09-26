@@ -49,10 +49,10 @@
                                             <v-flex xs12 class="profile-information-row">
                                                 <nuxt-link
                                                     :to="`/profile/${profile.profileGeneralInformation.username}`"
-                                                    class="preview-profile-link"
+                                                    class="view-profile-link"
                                                     target="_blank">
-                                                        <v-btn id="preview-profile-button" class="primary ml-0" small>
-                                                            {{ $t('pages.profile.preview-profile-button') }}
+                                                        <v-btn id="view-profile-button" class="primary ml-0" small>
+                                                            {{ $t('pages.profile.view-profile-button') }}
                                                         </v-btn>
                                                 </nuxt-link>
                                                 <v-btn
@@ -103,10 +103,21 @@
                                     <h2>{{ $t('pages.profile.edit-general-information-title') }}</h2>
                                </v-flex>
                                <v-flex xs12 sm4 md4 lg4 class="profile-row-actions">
-                                    <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onSaveEditGeneralInformationClick" :disabled="isSaveEditGeneralInformationButtonDisabled()">
+                                    <v-btn
+                                        outline small fab
+                                        slot="activator"
+                                        class="mt-0"
+                                        v-on:click="onSaveEditGeneralInformationClick"
+                                        :disabled="isSaveEditGeneralInformationButtonDisabled()"
+                                    >
                                         <v-icon>done</v-icon>
                                     </v-btn>
-                                    <v-btn outline small fab slot="activator" class="mt-0" v-on:click="onCancelEditGeneralInformationClick">
+                                    <v-btn
+                                        outline small fab
+                                        slot="activator"
+                                        class="mt-0"
+                                        v-on:click="onCancelEditGeneralInformationClick"
+                                    >
                                         <v-icon>clear</v-icon>
                                     </v-btn>
                                </v-flex>
@@ -759,20 +770,20 @@ export default {
     }
 
     .v-avatar {
-        box-shadow: 0px 3px 23px -9px rgba(0,0,0,0.75);
+        box-shadow: 0px 3px 15px -9px rgba(0,0,0,0.75);
         width: 300px !important;
         height: 300px !important;
     }
 
     .v-avatar img {
-        border: 3px solid #979797;
+        border: 3px solid #e1e1e1;
     }
 
     .download-resume {
         margin-right: 20%;
     }
 
-    .preview-profile-link {
+    .view-profile-link {
         text-decoration: none;
     }
 

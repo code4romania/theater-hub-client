@@ -4,44 +4,99 @@
         <v-flex xs12 v-if="isTimeline">
 
             <v-timeline-item
-                :key="`need-${needIndex}`"
+                :key="`project-need-${needIndex}`"
+                class="mb-3" large fill-dot
                 v-for="(need, needIndex) in needs"
-                @mouseenter.native="need.isHovered = true"  @mouseleave.native="need.isHovered = false"
-                color="primary" small fill-dot right>
-                    <v-card class="elevation-2" v-if="!need.inEditMode && !need.inDeleteMode">
-                        <v-card-title>
-                            <v-layout row class="need-row-actions-container">
-                                <v-flex xs12 class="need-row-actions" v-if="needIndex === 0 || need.isHovered">
-                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
-                                        <v-icon>edit</v-icon>
-                                    </v-btn>
-                                    <v-btn outline small fab class="remove-icon" v-on:click="onDeleteNeedClick(need, needIndex)">
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </v-card-title>
-                        <v-card-text v-if="need.description">
-                            <p class="need-description">
-                                {{ need.description }}
-                            </p>
-                        </v-card-text>
-                    </v-card>
-                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inEditMode">
-                        <ProjectNeedEdit :need="need" :index="needIndex" @editNeed="editNeed"/>
-                    </v-card>
-                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inDeleteMode">
-                        <ProjectNeedDelete :index="needIndex" @deleteNeed="deleteNeed"/>
-                    </v-card>
+                v-bind:class="{'timeline-message': need.InEditMode || need.InDeleteMode}"
+                @mouseenter.native="need.IsHovered = true"
+                @mouseleave.native="need.IsHovered = false"
+            >
+
+                <v-avatar slot="icon">
+                    <img :src="require('~/assets/images/icon-project_help.png')">
+                </v-avatar>
+
+                <v-layout
+                    v-if="!need.InEditMode && !need.InDeleteMode"
+                    class="need-item-content"
+                    row wrap align-center
+                >
+                    <v-flex 
+                        xs12
+                        :class="{'sm10': needIndex === 0 || need.IsHovered, 'sm12': needIndex !== 0 && !need.IsHovered }">
+                        <v-layout justify-space-between>
+                            <v-flex
+                                class="project-need">
+                                <v-chip
+                                    v-if="need.IsMandatory"
+                                    class="white--text ml-0"
+                                    color="purple"
+                                    label small
+                                >
+                                    {{ $t('pages.project.mandatory') }}
+                                </v-chip>
+                                {{ need.Description }}
+                            </v-flex>
+                        </v-layout>
+                    </v-flex>
+                    <v-flex xs12 sm2>
+                        <v-layout
+                            v-if="needIndex === 0 || need.IsHovered"
+                            row
+                            class="need-row-actions-container"
+                        >
+                            <v-flex
+                                v-if="needIndex === 0 || need.IsHovered"
+                                xs12
+                                class="need-row-actions"
+                            >
+                                <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
+                                    <v-icon>edit</v-icon>
+                                </v-btn>
+                                <v-btn outline small fab class="remove-icon" v-on:click="onDeleteNeedClick(need, needIndex)">
+                                    <v-icon>delete</v-icon>
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
+                    </v-flex>
+                </v-layout>
+
+                <v-card
+                    v-if="need.InEditMode"
+                    class="elevation-2 timeline-message-card highlighted-section">
+                        <ProjectNeedEdit
+                            :need="need"
+                            :index="needIndex"
+                            @editNeed="editNeed"
+                        />
+                </v-card>
+
+                <v-card
+                    v-if="need.InDeleteMode"
+                    class="elevation-2 timeline-message-card highlighted-section">
+                        <ProjectNeedDelete
+                            :index="needIndex"
+                            @deleteNeed="deleteNeed"
+                        />
+                </v-card>
+
             </v-timeline-item>
-            <v-timeline-item  v-if="!hasNeeds() && !isEditingNeeds" medium hide-dot class="timeline-message">
+
+            <v-timeline-item
+                v-if="!hasNeeds() && !isEditingNeeds"
+                medium hide-dot
+                class="timeline-message"
+            >
                 <v-card class="timeline-message-card elevation-2">
                     <v-card-title>
                         {{ $t('pages.project.no-needs-message') }}
                     </v-card-title>
                 </v-card>
             </v-timeline-item>
-            <v-timeline-item medium hide-dot class="timeline-message"
+
+            <v-timeline-item
+                medium hide-dot
+                class="timeline-message add-entity-timeline-item"
                 v-if="!isAddingNeed">
                 <v-card class="timeline-message-card text-xs-center" v-on:click.native="onAddNeedClick()">
                     <v-card-title>
@@ -50,9 +105,12 @@
                     </v-card-title>
                 </v-card>
             </v-timeline-item>
+
             <v-timeline-item medium hide-dot class="timeline-message" v-if="isAddingNeed">
                 <v-card class="timeline-message-card elevation-2 highlighted-section">
-                    <ProjectNeedAdd @addNeed="addNeed"/>
+                    <ProjectNeedAdd
+                        @addNeed="addNeed"
+                    />
                 </v-card>
             </v-timeline-item>
         </v-flex>
@@ -61,47 +119,52 @@
 
             <div :key="`need-${needIndex}`"
                 v-for="(need, needIndex) in needs"
-                @mouseenter="need.isHovered = true" @mouseleave="need.isHovered = false"
+                @mouseenter="need.IsHovered = true" @mouseleave="need.IsHovered = false"
                 class="need-item" color="primary">
-                    <v-card class="elevation-2" v-if="!need.inEditMode && !need.inDeleteMode">
-                        <v-card-title>
-                            <v-layout row class="need-row-actions-container">
-                                <v-flex xs12 class="need-row-actions" v-if="needIndex === 0 || need.isHovered">
-                                    <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
-                                        <v-icon>edit</v-icon>
-                                    </v-btn>
-                                    <v-btn outline small fab class="remove-icon" v-on:click="onDeleteNeedClick(need, needIndex)">
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </v-card-title>
-                        <v-card-text v-if="need.description">
-                            <v-layout column>
-                                <v-flex xs12>
-                                    <p class="need-description">
-                                        {{ need.description }}
-                                    </p>
-                                </v-flex>
-                                <v-flex xs12>
+                    <v-card class="elevation-2" v-if="!need.InEditMode && !need.InDeleteMode">
+                        <v-card-text v-if="need.Description">
+                            <v-layout
+                                class="need-item-content"
+                                row wrap align-center>
+                                <v-flex
+                                    xs12
+                                    :class="{'sm10': needIndex === 0 || need.IsHovered, 'sm12': needIndex !== 0 && !need.IsHovered }"
+                                >
                                     <v-chip
-                                        v-if="need.isMandatory"
+                                        v-if="need.IsMandatory"
                                         class="white--text ml-0"
                                         color="purple"
                                         label small>
                                         {{ $t('pages.project.mandatory') }}
                                     </v-chip>
+                                    {{ need.Description }}
+                                </v-flex>
+                                <v-flex
+                                    v-if="needIndex === 0 || need.IsHovered"
+                                    xs12
+                                    sm2
+                                    class="need-row-actions"
+                                >
+                                    <v-layout row wrap justify-end>
+                                        <v-btn outline small fab class="edit-icon" v-on:click="onEditNeedClick(need, needIndex)">
+                                            <v-icon>edit</v-icon>
+                                        </v-btn>
+                                        <v-btn outline small fab class="remove-icon" v-on:click="onDeleteNeedClick(need, needIndex)">
+                                            <v-icon>delete</v-icon>
+                                        </v-btn>
+                                    </v-layout>
                                 </v-flex>
                             </v-layout>
                         </v-card-text>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inEditMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.InEditMode">
                         <ProjectNeedEdit :need="need" :index="needIndex" @editNeed="editNeed"/>
                     </v-card>
-                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.inDeleteMode">
+                    <v-card class="elevation-2 timeline-message-card highlighted-section" v-if="need.InDeleteMode">
                         <ProjectNeedDelete :index="needIndex" @deleteNeed="deleteNeed"/>
                     </v-card>
             </div>
+
             <div v-if="!hasNeeds && !isEditingNeeds" class="timeline-message">
                 <v-card class="timeline-message-card elevation-2">
                     <v-card-title>
@@ -139,7 +202,7 @@
             ProjectNeedEdit,
             ProjectNeedDelete
         },
-        props: ['needs', 'isTimeline', 'saveChanges'],
+        props: ['needs', 'projectID', 'isTimeline', 'saveChanges'],
 		data: function () {
             return {
                 editedNeeds: [...this.needs],
@@ -160,49 +223,53 @@
                 this.initiateEditSectionSession(false);
                 this.cloneEditedNeeds();
                 this.isEditingNeeds = true;
-                need.inEditMode = true;
+                need.InEditMode = true;
             },
             onDeleteNeedClick: function (need, index) {
                 this.cancelAllUnsavedChanges();
                 this.initiateEditSectionSession(false);
                 this.cloneEditedNeeds();
                 this.isDeletingNeed = true;
-                need.inDeleteMode = true;
+                need.InDeleteMode = true;
             },
             addNeed: function (need) {
                 let newNeed = {};
 
                 if (need) {
                     newNeed = {
-                        description: need.description,
-                        isMandatory: need.isMandatory,
-                        isHovered: false,
-                        inEditMode: false,
-                        inDeleteMode: false
+                        Description: need.Description,
+                        IsMandatory: need.IsMandatory,
+                        IsHovered: false,
+                        InEditMode: false,
+                        InDeleteMode: false
                     };
                 }
 
                 if (need && this.saveChanges) {
                     var request = {
-                        Description: need.description,
-                        IsMandatory: need.isMandatory
+                        projectID: this.projectID,
+                        need: {
+                            Description: need.Description,
+                            IsMandatory: need.IsMandatory
+                        }
                     };
 
-                    this.$store.dispatch('needs/create', request).then((response) => {
-                        newNeed.id = this.$store.state.needs.newNeed.ID;
+                    this.$store.dispatch('project-needs/create', request).then((response) => {
+                        newNeed.ID      = response.ID;
+                        newNeed.Date    = response.Date;
 
                         this.editedNeeds.push(newNeed);
 
                         this.editedNeeds = this.editedNeeds
-                                    .sort((n1, n2) => new Date(n1.date).getTime() > new Date(n2.date).getTime() ? -1 : 1);
+                                    .sort((n1, n2) => new Date(n1.Date).getTime() > new Date(n2.Date).getTime() ? -1 : 1);
 
-                        this.updateNeeds();
+                        this.updateProjectNeeds();
                         this.showSnackbar(this.$t('pages.project.snackbar-messages.update-needs'));
                     });
                 } else if (need) {
                     this.editedNeeds.push(newNeed);
 
-                    this.updateNeeds();
+                    this.updateProjectNeeds();
                 }
 
                 this.isAddingNeed = false;
@@ -213,56 +280,68 @@
 
                 if (need) {
                     newNeed = {
-                        description: need.description,
-                        isMandatory: need.isMandatory
+                        Description: need.Description,
+                        IsMandatory: need.IsMandatory,
+                        IsHovered: false,
+                        InEditMode: false,
+                        InDeleteMode: false
                     };
                 }
 
                 if (need && this.saveChanges) {
                     var request = {
-                        Description: need.description,
-                        IsMandatory: need.isMandatory
+                        projectID: this.projectID,
+                        id: need.ID,
+                        need: {
+                            Description: need.Description,
+                            IsMandatory: need.IsMandatory
+                        }
                     };
 
-                    this.$store.dispatch('needs/update', request).then(() => {
-                        this.editedNeeds[index] = newNeed;
+                    this.$store.dispatch('project-needs/update', request).then((response) => {
+                        this.editedNeeds[index]         = newNeed;
+                        this.editedNeeds[index].ID      = response.ID;
+                        this.editedNeeds[index].Date    = response.Date;
 
-                        this.updateNeeds();
+                        this.updateProjectNeeds();
                         this.showSnackbar(this.$t('pages.project.snackbar-messages.update-needs'));
                     });
                 } else if (need) {
                     this.editedNeeds[index] = newNeed;
 
                     this.editedNeeds = this.editedNeeds
-                                        .sort((n1, n2) => new Date(n1.date).getTime() > new Date(n2.date).getTime() ? -1 : 1);
+                                        .sort((n1, n2) => new Date(n1.Date).getTime() > new Date(n2.Date).getTime() ? -1 : 1);
 
-                    this.updateNeeds();
+                    this.updateProjectNeeds();
                 }
 
                 this.needs.forEach(n => {
-                    n.inEditMode = false;
+                    n.InEditMode = false;
                 });
                 this.isEditingNeeds = false;
                 this.endEditSectionSession();
             },
             deleteNeed: function (index) {
                 if (index !== null && this.saveChanges) {
-                    var id = this.editedNeeds[index].id;
+                    var request = {
+                        projectID: this.projectID,
+                        id: this.editedNeeds[index].ID
+                    };
 
-                    this.$store.dispatch('needs/delete', id).then(() => {
+                    this.$store.dispatch('project-needs/delete', request).then(() => {
                         this.editedNeeds.splice(index, 1);
 
-                        this.updateNeeds();
+                        this.updateProjectNeeds();
                         this.showSnackbar(this.$t('pages.project.snackbar-messages.update-needs'));
                     });
                 } else if (index !== null) {
                     this.editedNeeds.splice(index, 1);
 
-                    this.updateNeeds();
+                    this.updateProjectNeeds();
                 }
 
                 this.needs.forEach(n => {
-                    n.inDeleteMode = false;
+                    n.InDeleteMode = false;
                 });
                 this.isDeletingNeed = false;
                 this.endEditSectionSession();
@@ -282,8 +361,8 @@
             endEditSectionSession: function () {
                 this.$emit('endEditSectionSession', ProjectSectionType.Needs);
             },
-            updateNeeds: function () {
-                this.$emit('updateNeeds', this.editedNeeds);
+            updateProjectNeeds: function () {
+                this.$emit('updateProjectNeeds', this.editedNeeds);
             },
             showSnackbar: function (snackbarText) {
                 this.$emit('showSnackbar', snackbarText);
@@ -296,27 +375,41 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-    .need-item {
-        padding: 8px 3px 8px 8px;
-
-        .need-row-actions-container {
-            min-height: 52px;
-        }
-
+    .project-needs-layout {
         .need-row-actions {
             display: flex;
             justify-content: flex-end;
         }
 
-        .v-card__title {
-            padding-bottom: 0px;
+        .project-need {
+            padding-left: 20px;
         }
 
-        .v-card__text {
-            padding-top: 0px;
+        .need-item {
+            padding: 8px 3px 8px 8px;
         }
+
+        .need-item-content {
+            min-height: 52px;
+            align-content: center;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .need-item-content {
+                flex-direction: column-reverse;
+                align-content: flex-start;
+
+                &>div {
+                    width: 100%;
+                }
+            }
+
+        }
+
     }
+
 
 </style>

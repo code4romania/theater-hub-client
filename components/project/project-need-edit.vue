@@ -19,7 +19,7 @@
                     <v-flex xs12 mt-3 class="project-focused-row">
                         <v-textarea
                             class="need-description-field text-area-field"
-                            v-model="needsFactory.description"
+                            v-model="needsFactory.Description"
                             auto-grow
                             box
                             :label="$t('fields.need.description.label')"
@@ -33,7 +33,7 @@
                             <v-checkbox
                                 name="important-need-checkbox"
                                 id="important-need-checkbox"
-                                v-model="needsFactory.isMandatory">
+                                v-model="needsFactory.IsMandatory">
                             </v-checkbox>
                             <label
                                 for="important-need-checkbox"
@@ -65,7 +65,7 @@
         },
         methods: {
             isNeedValid: function (need) {
-                return need.description !== '' && need.description.length <= 500;
+                return need.Description !== '' && need.Description.length <= 500;
             },
             isNeedButtonDisabled: function () {
                 return !this.isNeedValid(this.needsFactory);

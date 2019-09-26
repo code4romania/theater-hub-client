@@ -19,7 +19,7 @@
                     <v-flex xs12 mt-3 class="project-focused-row">
                         <v-textarea
                             class="update-description-field text-area-field"
-                            v-model="updatesFactory.description"
+                            v-model="updatesFactory.Description"
                             auto-grow
                             box
                             :label="$t('fields.update.description.label')"
@@ -43,13 +43,13 @@
                     v => v === '' || v.length <= 500 || this.$t('fields.update.description.validation-errors.length')
                 ],
                 updatesFactory: {
-                    description: ''
+                    Description: ''
                 }
             };
         },
         methods: {
             isUpdateValid: function (update) {
-                return update.description !== '' && update.description.length <= 500;
+                return update.Description !== '' && update.Description.length <= 500;
             },
             isUpdateButtonDisabled: function () {
                 return !this.isUpdateValid(this.updatesFactory);

@@ -17,95 +17,117 @@
     </v-layout>
 
     <v-layout row wrap v-if="project">
-      <Hero :title="project.Name" :image="project.Image" :initiatorImage="project.InitiatorImage"/>
-      <v-container>
-        <v-layout row wrap justify-space-between mt-5>
-          <v-flex md8>
-            <p>{{ project.Description }}</p>
-            <v-layout justify-end row>
-              <vue-goodshare-facebook
-                :page_url="pageURL"
-                :title_social="$t('pages.project.share-on-facebook')"
-                has_icon
-              />
-              <vue-goodshare-twitter
-                :page_url="pageURL"
-                :title_social="$t('pages.project.share-on-twitter')"
-                has_icon
-              />
+      <Hero
+        :title="project.Name"
+        :image="project.Image"
+        :initiatorName="project.InitiatorName"
+        :initiatorImage="project.InitiatorImage"
+      />
+      <v-container mt-5>
+        <v-layout column>
+          <v-flex xs12>
+            <v-layout row wrap>
+              <v-flex md7 mt-5>
+                <p>{{ project.Description }}</p>
+                <v-layout justify-end row>
+                  <vue-goodshare-facebook
+                    :page_url="pageURL"
+                    :title_social="$t('pages.project.share-on-facebook')"
+                    has_icon
+                  />
+                  <vue-goodshare-twitter
+                    :page_url="pageURL"
+                    :title_social="$t('pages.project.share-on-twitter')"
+                    has_icon
+                  />
+                </v-layout>
+              </v-flex>
+              <v-flex md3 offset-md1 mt-5 class="project-information-section">
+                <div class="project__info">
+                  <span class="label">{{ $t('pages.project.initiator') }}</span> {{ project.InitiatorName }}
+                  <br>
+                  <div v-if="project.PhoneNumber">
+                    <span class="label">{{ $t('pages.project.contact-phone-number') }}</span> {{ project.PhoneNumber }}
+                  </div>
+                  <div v-if="project.Email">
+                    <span class="label">{{ $t('pages.project.contact-email') }}</span> {{ project.Email }}
+                  </div>
+                  <span class="label">{{ $t('pages.project.start-date') }}</span> <span class="project-date">{{ getFormattedDate(project.Date) }}</span>
+                  <br>
+                  <span class="label">{{ $t('pages.project.city') }}</span> {{ project.City }}
+                  <br>
+                  <span class="label">{{ $t('pages.project.budget') }}</span> {{ project.Budget }} {{ currency }}
+                </div>
+              </v-flex>
             </v-layout>
-            <h2 class="mt-5 mb-5">{{ $t('pages.project.needs-title') }}</h2>
-            <v-timeline dense clipped>
-              <v-timeline-item
-                  :key="`project-need-${projectNeedIndex}`"
-                  v-for="(projectNeed, projectNeedIndex) in project.Needs"
-                  class="mb-3" large fill-dot>
-                  <v-avatar slot="icon">
-                    <img :src="require('~/assets/images/icon-project_help.png')">
-                  </v-avatar>
-                  <v-layout justify-space-between>
-                    <v-flex
-                      xs9
-                      class="project-need">
-                      <v-chip
-                        v-if="projectNeed.IsMandatory"
-                        class="white--text ml-0"
-                        color="purple"
-                        label small>
-                          {{ $t('pages.project.mandatory') }}
-                      </v-chip>
-                      {{ projectNeed.Description }}
-                    </v-flex>
-                  </v-layout>
-                </v-timeline-item>
-            </v-timeline>
-            <h2 class="mt-5 mb-5">{{ $t('pages.project.updates-title') }}</h2>
-            <v-timeline dense clipped>
-                <v-timeline-item
-                  :key="`project-update-${projectUpdateIndex}`"
-                  v-for="(projectUpdate, projectUpdateIndex) in project.Updates"
-                  class="mb-3" large fill-dot>
-                  <v-avatar slot="icon">
-                    <img :src="require('~/assets/images/icon-project_help.png')">
-                  </v-avatar>
-                  <v-layout justify-space-between>
-                    <v-flex
-                      xs9
-                      class="project-update"
-                    >{{ projectUpdate.Description }}</v-flex>
-                    <v-flex xs3 text-xs-right timeline__date>{{ getFormattedDate(projectUpdate.Date) }}</v-flex>
-                  </v-layout>
-                </v-timeline-item>
-            </v-timeline>
-          </v-flex>
-          <v-flex md3>
-            <div class="project__info">
-              <span class="label">{{ $t('pages.project.initiator') }}</span> {{ project.InitiatorName }}
-              <br>
-              <div v-if="project.PhoneNumber">
-                <span class="label">{{ $t('pages.project.contact-phone-number') }}</span> {{ project.PhoneNumber }}
-              </div>
-              <div v-if="project.Email">
-                <span class="label">{{ $t('pages.project.contact-email') }}</span> {{ project.Email }}
-              </div>
-              <span class="label">{{ $t('pages.project.start-date') }}</span> <span class="project-date">{{ getFormattedDate(project.Date) }}</span>
-              <br>
-              <span class="label">{{ $t('pages.project.city') }}</span> {{ project.City }}
-              <br>
-              <span class="label">{{ $t('pages.project.budget') }}</span> {{ project.Budget }} {{ currency }}
-            </div>
-            <h2 class="mb-3">{{ $t('pages.project.other-projects-by-title') }} {{ project.InitiatorName }}</h2>
-            <v-layout column>
-              <v-flex
-                xs12
-                :key="`other-project-${otherProjectIndex}`"
-                v-for="(otherProject, otherProjectIndex) in project.OtherProjects"
-              >
-                <OtherProject
-                  :id="otherProject.ID"
-                  :name="otherProject.Name"
-                  :image="otherProject.Image"
-                />
+            <v-layout row wrap>
+              <v-flex md7 mt-5>
+                <h2
+                  v-if="project.Needs.length !== 0"
+                  class="mb-5">
+                    {{ $t('pages.project.needs-title') }}
+                </h2>
+                <v-timeline dense clipped>
+                  <v-timeline-item
+                      :key="`project-need-${projectNeedIndex}`"
+                      v-for="(projectNeed, projectNeedIndex) in project.Needs"
+                      class="mb-3" large fill-dot>
+                      <v-avatar slot="icon">
+                        <img :src="require('~/assets/images/icon-project_help.png')">
+                      </v-avatar>
+                      <v-layout justify-space-between>
+                        <v-flex
+                          class="project-need">
+                          <v-chip
+                            v-if="projectNeed.IsMandatory"
+                            class="white--text ml-0"
+                            color="purple"
+                            label small>
+                              {{ $t('pages.project.mandatory') }}
+                          </v-chip>
+                          {{ projectNeed.Description }}
+                        </v-flex>
+                      </v-layout>
+                    </v-timeline-item>
+                </v-timeline>
+                <h2
+                  v-if="project.Updates.length !== 0"
+                  class="mt-5 mb-5">
+                    {{ $t('pages.project.updates-title') }}
+                </h2>
+                <v-timeline dense clipped>
+                    <v-timeline-item
+                      :key="`project-update-${projectUpdateIndex}`"
+                      v-for="(projectUpdate, projectUpdateIndex) in project.Updates"
+                      class="mb-3" large fill-dot>
+                      <v-avatar slot="icon">
+                        <img :src="require('~/assets/images/icon-project_help.png')">
+                      </v-avatar>
+                      <v-layout justify-space-between>
+                        <v-flex
+                          xs9
+                          class="project-update"
+                        >{{ projectUpdate.Description }}</v-flex>
+                        <v-flex xs3 text-xs-right timeline__date>{{ getFormattedDate(projectUpdate.Date) }}</v-flex>
+                      </v-layout>
+                    </v-timeline-item>
+                </v-timeline>
+              </v-flex>
+              <v-flex md3 offset-md1 mt-5>
+                <h2 class="mb-5">{{ $t('pages.project.other-projects-by-title') }} {{ project.InitiatorName }}</h2>
+                <v-layout column>
+                  <v-flex
+                    xs12
+                    :key="`other-project-${otherProjectIndex}`"
+                    v-for="(otherProject, otherProjectIndex) in project.OtherProjects"
+                  >
+                    <OtherProject
+                      :id="otherProject.ID"
+                      :name="otherProject.Name"
+                      :image="otherProject.Image"
+                    />
+                  </v-flex>
+                </v-layout>
               </v-flex>
             </v-layout>
           </v-flex>
@@ -122,7 +144,6 @@ import Hero from '~/components/project/hero.vue';
 import OtherProject from '~/components/project/other-project.vue';
 import VueGoodshareFacebook from '~/node_modules/vue-goodshare/src/providers/Facebook.vue';
 import VueGoodshareTwitter from '~/node_modules/vue-goodshare/src/providers/Twitter.vue';
-import { project } from '~/store/constants/mockdata';
 import { getConfig } from '../../../config/env';
 
 const config = getConfig();
@@ -141,6 +162,7 @@ export default {
   middleware: ['visitor-or-enabled-user', 'get-currencies'],
   data () {
     return {
+
     };
   },
   async asyncData ({ store, query, params }) {
@@ -162,7 +184,7 @@ export default {
       currencies: 'applicationData/currencies'
     }),
     currency: function () {
-        return this.currencies[project.currency].ID;
+        return this.project.Currency;
     },
     pageURL: function () {
       return `${config.application.baseURL}/project`;
@@ -193,7 +215,6 @@ h2 {
 }
 
 .project__info {
-  margin-bottom: 128px;
 
   span.label {
     font-weight: 700;

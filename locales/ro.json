@@ -476,6 +476,8 @@
             }
         },
         "project": {
+            "view-project-button": "Vizualizare proiect",
+            "edit-general-information-title": "Editare informații generale",
             "needs-title": "Necesități:",
             "updates-title": "Noutăți:",
             "mandatory": "OBLIGATORIU",
@@ -485,6 +487,7 @@
             "start-date": "Data începerii:",
             "city": "Oraș:",
             "budget": "Buget:",
+            "visibility": "Vizibilitate:",
             "other-projects-by-title": "Alte Proiecte de către ",
             "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
@@ -495,6 +498,7 @@
             "invalid-project-title": "Proiect",
             "invalid-project-content": "Proiectul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {
+                "update-general-information": "Secțiunea de informații generale a fost actualizată",
                 "update-needs": "Secțiunea de nevoi a fost actualizată",
                 "update-updates": "Secțiunea de noutăți a fost actualizată"
             }
@@ -562,8 +566,8 @@
 
         },
         "profile": {
+            "view-profile-button": "Vizualizare profil",
             "edit-general-information-title": "Editare informații generale",
-            "preview-profile-button": "Previzualizare",
             "download-resume-button": "Descarcă CV",
             "downloading-resume-button": "Se descarcă CV-ul...",
             "description-title": "Descriere",

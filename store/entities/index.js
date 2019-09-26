@@ -9,8 +9,9 @@ export var ProfileSectionType = {
 }
 
 export var ProjectSectionType = {
-  'Needs': 0,
-  'Updates': 1
+  'GeneralInformation': 0,
+  'Needs': 1,
+  'Updates': 2
 }
 
 export var SocialMediaCategoryType = {
