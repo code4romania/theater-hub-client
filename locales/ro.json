@@ -12,6 +12,9 @@
         "lighting": "lumină",
         "playwright": "dramaturgie",
         "sufleor": "sufleor",
+        "done": "FINALIZAT",
+        "mandatory": "OBLIGATORIU",
+        "urgent": "URGENT",
         "local": "Local",
         "facebook": "Facebook",
         "google": "Google",
@@ -313,9 +316,6 @@
                 "validation-errors": {
                     "length": "Descrierea trebuie să aibă cel mult 500 de caractere"
                 }
-            },
-            "isMandatory": {
-                "label": "Este obligatoriu"
             }
         },
         "update": {
@@ -488,6 +488,8 @@
             "city": "Oraș:",
             "budget": "Buget:",
             "visibility": "Vizibilitate:",
+            "tags": "Etichete:",
+            "no-tags": "Nu există etichete",
             "other-projects-by-title": "Alte Proiecte de către ",
             "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",

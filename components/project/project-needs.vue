@@ -28,12 +28,13 @@
                             <v-flex
                                 class="project-need">
                                 <v-chip
-                                    v-if="need.IsMandatory"
-                                    class="white--text ml-0"
-                                    color="purple"
-                                    label small
-                                >
-                                    {{ $t('pages.project.mandatory') }}
+                                    :key="index"
+                                    v-for="(tag, index) in need.Tags"
+                                    class="ml-0"
+                                    :text-color="tag.Color"
+                                    :color="tag.BackgroundColor"
+                                    label small>
+                                    {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
                                 </v-chip>
                                 {{ need.Description }}
                             </v-flex>
@@ -96,7 +97,7 @@
 
             <v-timeline-item
                 medium hide-dot
-                class="timeline-message add-entity-timeline-item"
+                class="timeline-message add-entity-timeline-item add-need-timeline-item"
                 v-if="!isAddingNeed">
                 <v-card class="timeline-message-card text-xs-center" v-on:click.native="onAddNeedClick()">
                     <v-card-title>
@@ -131,11 +132,13 @@
                                     :class="{'sm10': needIndex === 0 || need.IsHovered, 'sm12': needIndex !== 0 && !need.IsHovered }"
                                 >
                                     <v-chip
-                                        v-if="need.IsMandatory"
-                                        class="white--text ml-0"
-                                        color="purple"
+                                        :key="index"
+                                        v-for="(tag, index) in need.Tags"
+                                        class="ml-0"
+                                        :text-color="tag.Color"
+                                        :color="tag.BackgroundColor"
                                         label small>
-                                        {{ $t('pages.project.mandatory') }}
+                                        {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
                                     </v-chip>
                                     {{ need.Description }}
                                 </v-flex>
@@ -190,6 +193,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import { Helpers } from '~/utils';
     import { ProjectSectionType } from '~/store/entities';
     import ProjectNeedAdd from '~/components/project/project-need-add.vue';
@@ -210,6 +214,12 @@
                 isAddingNeed: false,
                 isDeletingNeed: false
             };
+        },
+        computed: {
+            ...mapGetters({
+                projectNeedTags: 'applicationData/projectNeedTags'
+            })
+
         },
         methods: {
             onAddNeedClick: function () {
@@ -238,7 +248,7 @@
                 if (need) {
                     newNeed = {
                         Description: need.Description,
-                        IsMandatory: need.IsMandatory,
+                        Tags: need.Tags.map(t => this.projectNeedTags.find(pnt => pnt.ID === t)),
                         IsHovered: false,
                         InEditMode: false,
                         InDeleteMode: false
@@ -250,7 +260,7 @@
                         projectID: this.projectID,
                         need: {
                             Description: need.Description,
-                            IsMandatory: need.IsMandatory
+                            Tags: need.Tags
                         }
                     };
 
@@ -280,8 +290,8 @@
 
                 if (need) {
                     newNeed = {
-                        Description: need.Description,
-                        IsMandatory: need.IsMandatory,
+                        ...need,
+                        Tags: need.Tags.map(t => this.projectNeedTags.find(pnt => pnt.ID === t)),
                         IsHovered: false,
                         InEditMode: false,
                         InDeleteMode: false
@@ -294,14 +304,12 @@
                         id: need.ID,
                         need: {
                             Description: need.Description,
-                            IsMandatory: need.IsMandatory
+                            Tags: need.Tags
                         }
                     };
 
                     this.$store.dispatch('project-needs/update', request).then((response) => {
-                        this.editedNeeds[index]         = newNeed;
-                        this.editedNeeds[index].ID      = response.ID;
-                        this.editedNeeds[index].Date    = response.Date;
+                        this.editedNeeds[index] = newNeed;
 
                         this.updateProjectNeeds();
                         this.showSnackbar(this.$t('pages.project.snackbar-messages.update-needs'));
@@ -385,6 +393,10 @@
 
         .project-need {
             padding-left: 20px;
+        }
+
+        .add-need-timeline-item {
+            padding-bottom: 0px;
         }
 
         .need-item {

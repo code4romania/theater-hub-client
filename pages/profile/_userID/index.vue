@@ -309,7 +309,7 @@
                 return 'user';
             }
         },
-        middleware: ['visitor-or-enabled-user'],
+        middleware: ['visitor-or-enabled-user', 'get-tags'],
         data: () => ({
             portfolioImagesIndex: null
         }),

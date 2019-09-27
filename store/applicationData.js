@@ -4,6 +4,7 @@ export const state = () => ({
     skills: [],
     locales: [],
     currencies: [],
+    tags: {},
     generalApplicationInformation: {}
 });
 
@@ -16,6 +17,9 @@ export const mutations = {
     },
     SET_CURRENCIES: (state, value) => {
         state.currencies = value;
+    },
+    SET_TAGS: (state, value) => {
+        state.tags = value;
     },
     SET_GENERAL_APPLICATION_INFORMATION: (state, value) => {
         state.generalApplicationInformation = value;
@@ -49,6 +53,11 @@ export const actions = {
             dispatch('setCurrencies', response);
         });
     },
+    async getTags ({ commit, dispatch }, request) {
+        return ApplicationDataService.getTags().then(response => {
+            dispatch('setTags', response);
+        });
+    },
     async getGeneralApplicationInformation ({ commit, dispatch }) {
         return ApplicationDataService.getGeneralApplicationInformation().then(response => {
             dispatch('setGeneralApplicationInformation', response);
@@ -62,6 +71,9 @@ export const actions = {
     },
     setCurrencies: ({ commit }, value) => {
         commit('SET_CURRENCIES', value);
+    },
+    setTags: ({ commit }, value) => {
+        commit('SET_TAGS', value);
     },
     setGeneralApplicationInformation: ({ commit }, value) => {
         commit('SET_GENERAL_APPLICATION_INFORMATION', value);
@@ -80,6 +92,12 @@ export const getters = {
     },
     currencies (state) {
         return state.currencies;
+    },
+    projectTags (state) {
+        return state.tags.ProjectTags;
+    },
+    projectNeedTags (state) {
+        return state.tags.ProjectNeedTags;
     },
     maxFileSize (state) {
         return state.generalApplicationInformation.MaxFileSize;

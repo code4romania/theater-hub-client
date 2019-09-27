@@ -29,18 +29,14 @@
                         </v-textarea>
                     </v-flex>
                     <v-flex xs12>
-                        <v-layout row wrap>
-                            <v-checkbox
-                                name="important-need-checkbox"
-                                id="important-need-checkbox"
-                                v-model="needsFactory.IsMandatory">
-                            </v-checkbox>
-                            <label 
-                                for="important-need-checkbox"
-                                class="important-need-label">
-                                    {{ $t('fields.need.isMandatory.label') }}
-                            </label>
-                        </v-layout>
+                        <v-checkbox
+                            :key="index"
+                            v-for="(tag, index) in projectNeedTags"
+                            v-model="needsFactory.Tags"
+                            :label="$t(`application-data.${tag.ID.toLowerCase()}`)"
+                            :value="tag.ID"
+                            class="tag-checkbox"
+                        ></v-checkbox>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -50,6 +46,8 @@
 
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
         data: function () {
             return {
@@ -58,9 +56,14 @@
                 ],
                 needsFactory: {
                     Description: '',
-                    IsMandatory: false
+                    Tags: []
                 }
             };
+        },
+        computed: {
+            ...mapGetters({
+                projectNeedTags: 'applicationData/projectNeedTags'
+            })
         },
         methods: {
             isNeedValid: function (need) {
@@ -95,6 +98,11 @@
 
     .important-need-label {
         cursor: pointer;
+    }
+
+    .tag-checkbox {
+        display: inline-block;
+        margin-right: 20px;
     }
 
 </style>

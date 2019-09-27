@@ -6,6 +6,8 @@ export class Endpoints {
 
     static GetCurrencies                        = '/applicationdata/currencies';
 
+    static GetTags                              = '/applicationdata/tags';
+
     static GetGeneralApplicationInformation     = '/applicationdata/general';
 
     static Login                                = '/authentication';
