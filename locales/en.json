@@ -12,6 +12,9 @@
         "lighting": "lighting",
         "playwright": "playwright",
         "sufleor": "sufleor",
+        "done": "DONE",
+        "mandatory": "MANDATORY",
+        "urgent": "URGENT",
         "local": "Local",
         "facebook": "Facebook",
         "google": "Google",
@@ -315,9 +318,6 @@
                     "required": "Description is required",
                     "length": "Description's maximum length is of 500 characters"
                 }
-            },
-            "isMandatory": {
-                "label": "Is mandatory"
             }
         },
         "update": {
@@ -492,6 +492,8 @@
             "city": "City:",
             "budget": "Budget:",
             "visibility": "Visibility:",
+            "tags": "Tags:",
+            "no-tags": "No tags",
             "other-projects-by-title": "Other Projects by ",
             "delete-need-message": "Are you sure you wish to delete this need?",
             "delete-update-message": "Are you sure you wish to delete this update?",

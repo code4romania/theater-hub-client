@@ -70,7 +70,7 @@ export default {
         ServerSideErrors
     },
     layout: 'user',
-    middleware: ['authenticated', 'enabled', 'user'],
+    middleware: ['authenticated', 'enabled', 'user', 'get-tags'],
     data: function () {
         return {
             wizardStep: 1,
@@ -120,8 +120,7 @@ export default {
 
             const needs = JSON.stringify(this.needs.map(n => {
                 return {
-                    Description: n.Description,
-                    IsMandatory: n.IsMandatory
+                    Description: n.Description
                 };
             }));
 

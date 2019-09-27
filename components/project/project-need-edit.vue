@@ -29,18 +29,14 @@
                         </v-textarea>
                     </v-flex>
                     <v-flex xs12>
-                        <v-layout row wrap>
-                            <v-checkbox
-                                name="important-need-checkbox"
-                                id="important-need-checkbox"
-                                v-model="needsFactory.IsMandatory">
-                            </v-checkbox>
-                            <label
-                                for="important-need-checkbox"
-                                class="important-need-checkbox-label">
-                                {{ $t('fields.need.isMandatory.label') }}
-                            </label>
-                        </v-layout>
+                        <v-checkbox
+                            :key="index"
+                            v-for="(tag, index) in projectNeedTags"
+                            v-model="needsFactory.Tags"
+                            :label="$t(`application-data.${tag.ID.toLowerCase()}`)"
+                            :value="tag.ID"
+                            class="tag-checkbox"
+                        ></v-checkbox>
                     </v-flex>
                 </v-layout>
             </v-form>
@@ -59,7 +55,8 @@
                     v => v === '' || v.length <= 500 || this.$t('fields.need.description.validation-errors.length')
                 ],
                 needsFactory: {
-                    ...this.need
+                    ...this.need,
+                    Tags: this.need.Tags.map(t => t.ID)
                 }
             };
         },
@@ -85,7 +82,8 @@
         },
         computed: {
             ...mapGetters({
-                locale: 'locale'
+                locale: 'locale',
+                projectNeedTags: 'applicationData/projectNeedTags'
             })
         }
     }

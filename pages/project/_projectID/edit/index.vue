@@ -118,6 +118,23 @@
                   <span class="label">{{ $t('pages.project.budget') }}</span> {{ generalInformation.Budget }} {{ currency }}
                   <br>
                   <span class="label">{{ $t('pages.project.visibility') }}</span> {{ visibilityLiteral }}
+                  <div
+                      v-if="!generalInformation.Tags">
+                    <span class="label">{{ $t('pages.project.tags') }}</span>
+                    <span
+                      v-if="!generalInformation.Tags">
+                        {{ $t('pages.project.no-tags') }}
+                    </span>
+                    <v-chip
+                        :key="index"
+                        v-for="(tag, index) in generalInformation.Tags"
+                        class="ml-0"
+                        :text-color="tag.Color"
+                        :color="tag.BackgroundColor"
+                        label small>
+                        {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
+                    </v-chip>
+                  </div>
                   <br>
                   <nuxt-link
                       :to="`/project/${ID}`"
@@ -168,7 +185,10 @@
                   />
                 </v-timeline>
               </v-flex>
-              <v-flex md3 offset-md1 mt-5>
+              <v-flex
+                v-if="hasOtherProjects"
+                md3 offset-md1 mt-5
+              >
                 <h2 class="mb-5">{{ $t('pages.project.other-projects-by-title') }} {{ generalInformation.InitiatorName }}</h2>
                 <v-layout column>
                   <v-flex
@@ -225,7 +245,7 @@ export default {
           return 'user';
       }
   },
-  middleware: ['visitor-or-enabled-user', 'get-currencies'],
+  middleware: ['visitor-or-enabled-user', 'get-currencies', 'get-tags'],
   data () {
     return {
       isEditingGeneralInformation: false,
@@ -238,6 +258,7 @@ export default {
   },
   async asyncData ({ store, query, params, error }) {
     const project = await store.dispatch('projects/getMyProject', params.projectID);
+
 
     if (!project) {
       return error({ statusCode: 404 });
@@ -255,12 +276,14 @@ export default {
       Currency: project.Currency,
       Description: project.Description,
       InitiatorName: project.InitiatorName,
-      InitiatorImage: project.InitiatorImage
+      InitiatorImage: project.InitiatorImage,
+      Tags: project.Tags
     };
 
     var needs = project.Needs.map(n => {
       return {
         ...n,
+        Tags: n.Tags ? n.Tags.map(t => store.getters['applicationData/projectNeedTags'].find(pnt => pnt.ID === t)) : [],
         IsHovered: false,
         InEditMode: false,
         InDeleteMode: false
@@ -308,6 +331,9 @@ export default {
     },
     visibilityLiteral: function () {
        return this.$t(`application-data.${Helpers.getPrivacyElementText(this.generalInformation.Visibility)}`);
+    },
+    hasOtherProjects: function () {
+      return this.project && this.project.OtherProjects && this.project.OtherProjects.length !== 0;
     }
   },
   methods: {

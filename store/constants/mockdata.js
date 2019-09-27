@@ -504,20 +504,16 @@ export const project = {
   description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
   needs: [
     {
-      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isMandatory: false
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.'
     },
     {
-      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isMandatory: true
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.'
     },
     {
-      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isMandatory: false
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.'
     },
     {
-      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.',
-      isMandatory: false
+      description: 'We are in search of three camera operators that can help us with all he setup necessary for our play between march and april 2019. We need a person who can use his own equipment This is a paid position.'
     }
   ],
   updates: [
