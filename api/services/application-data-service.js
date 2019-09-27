@@ -14,6 +14,10 @@ export class ApplicationDataService extends BaseService {
         return this.$axios.$get(Endpoints.GetCurrencies);
     }
 
+    static async getTags () {
+        return this.$axios.$get(Endpoints.GetTags);
+    }
+
     static async getGeneralApplicationInformation () {
         return this.$axios.$get(Endpoints.GetGeneralApplicationInformation);
     }

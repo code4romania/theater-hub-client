@@ -70,7 +70,7 @@
 
     export default {
         layout: 'user',
-        middleware: ['authenticated'],
+        middleware: ['authenticated', 'get-tags'],
         components: {
             ProjectListItem
         },

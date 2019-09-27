@@ -57,6 +57,22 @@
                   <span class="label">{{ $t('pages.project.city') }}</span> {{ project.City }}
                   <br>
                   <span class="label">{{ $t('pages.project.budget') }}</span> {{ project.Budget }} {{ currency }}
+                  <div>
+                    <span class="label">{{ $t('pages.project.tags') }}</span>
+                    <span
+                      v-if="!project.Tags">
+                        {{ $t('pages.project.no-tags') }}
+                    </span>
+                    <v-chip
+                        :key="index"
+                        v-for="(tag, index) in project.Tags"
+                        class="ml-0"
+                        :text-color="tag.Color"
+                        :color="tag.BackgroundColor"
+                        label small>
+                        {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
+                    </v-chip>
+                  </div>
                 </div>
               </v-flex>
             </v-layout>
@@ -79,11 +95,13 @@
                         <v-flex
                           class="project-need">
                           <v-chip
-                            v-if="projectNeed.IsMandatory"
-                            class="white--text ml-0"
-                            color="purple"
-                            label small>
-                              {{ $t('pages.project.mandatory') }}
+                              :key="index"
+                              v-for="(tag, index) in projectNeed.Tags"
+                              class="ml-0"
+                              :text-color="tag.Color"
+                              :color="tag.BackgroundColor"
+                              label small>
+                              {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
                           </v-chip>
                           {{ projectNeed.Description }}
                         </v-flex>
@@ -113,7 +131,10 @@
                     </v-timeline-item>
                 </v-timeline>
               </v-flex>
-              <v-flex md3 offset-md1 mt-5>
+              <v-flex
+                v-if="hasOtherProjects"
+                md3 offset-md1 mt-5
+              >
                 <h2 class="mb-5">{{ $t('pages.project.other-projects-by-title') }} {{ project.InitiatorName }}</h2>
                 <v-layout column>
                   <v-flex
@@ -159,7 +180,7 @@ export default {
           return 'user';
       }
   },
-  middleware: ['visitor-or-enabled-user', 'get-currencies'],
+  middleware: ['visitor-or-enabled-user', 'get-currencies', 'get-tags'],
   data () {
     return {
 
@@ -167,6 +188,13 @@ export default {
   },
   async asyncData ({ store, query, params }) {
     const project = await store.dispatch('projects/getProject', params.projectID);
+
+    project.Needs = project.Needs.map(n => {
+      return {
+        ...n,
+        Tags: n.Tags ? n.Tags.map(t => store.getters['applicationData/projectNeedTags'].find(pnt => pnt.ID === t)) : []
+      };
+    });
 
     return {
       project
@@ -181,13 +209,17 @@ export default {
   computed: {
     ...mapGetters({
       locale: 'locale',
-      currencies: 'applicationData/currencies'
+      currencies: 'applicationData/currencies',
+      projectNeedTags: 'applicationData/projectNeedTags'
     }),
     currency: function () {
         return this.project.Currency;
     },
     pageURL: function () {
       return `${config.application.baseURL}/project`;
+    },
+    hasOtherProjects: function () {
+      return this.project.OtherProjects && this.project.OtherProjects.length !== 0;
     }
   },
   methods: {

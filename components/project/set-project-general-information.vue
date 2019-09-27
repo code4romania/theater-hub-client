@@ -137,6 +137,25 @@
                             </v-layout>
                         </v-radio-group>
                     </v-layout>
+                    <v-layout
+                        v-if="projectTags"
+                        column
+                    >
+                        <v-flex xs12>
+                            <span class="label">{{ $t('pages.project.tags') }}</span>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-checkbox
+                                :key="index"
+                                v-for="(tag, index) in projectTags"
+                                v-model="generalInformation.Tags"
+                                :label="$t(`application-data.${tag.ID.toLowerCase()}`)"
+                                :value="tag.ID"
+                                class="tag-checkbox"
+                                @change="updateProjectGeneralInformationModel"
+                            ></v-checkbox>
+                        </v-flex>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -259,7 +278,8 @@
         computed: {
             ...mapGetters({
                 locale: 'locale',
-                currencies: 'applicationData/currencies'
+                currencies: 'applicationData/currencies',
+                projectTags: 'applicationData/projectTags'
             }),
             currencyItems: function () {
                 return this.currencies.map(c => c.ID);
@@ -362,6 +382,11 @@
 
     .project-section-visibility-row .v-input__control {
         width: 100%;
+    }
+
+    .tag-checkbox {
+        display: inline-block;
+        margin-right: 20px;
     }
 
 </style>
