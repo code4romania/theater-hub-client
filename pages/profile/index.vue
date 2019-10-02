@@ -1,6 +1,9 @@
 <template>
     <section class="profile-section">
-        <v-container id="profile-container" class="main-container pa-5">
+        <v-container
+            id="profile-container"
+            class="main-container px-5"
+        >
             <v-layout row wrap>
                 <v-flex xs12 v-if="!isEditingGeneralInformation" class="mb-5">
                     <v-layout row wrap class="profile-information-group general-information-section">
@@ -17,8 +20,14 @@
                                         <v-flex xs12 pl-4>
                                             <v-flex xs12 class="profile-information-row">
                                                 <span class="full-name-field">{{ fullName }}</span>
-                                                <span class="name-separator">,</span>
-                                                <span class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
+                                                <span
+                                                    v-if="age"
+                                                    class="name-separator"
+                                                >,</span>
+                                                <span
+                                                    v-if="age"
+                                                    class="age-field"
+                                                >{{ age }} {{ $t('shared.content.years-old') }}</span>
                                             </v-flex>
                                             <v-flex xs12 mt-2 class="profile-information-row">
                                                 <span class="field-label">{{ $t('fields.email.label') }}: </span>

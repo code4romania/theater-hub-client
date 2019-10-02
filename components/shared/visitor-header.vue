@@ -41,7 +41,11 @@
                   /
                   <nuxt-link to="/signup" id="sign-up-btn" class="menu-link">{{ $t('shared.header.sign-up-link') }}</nuxt-link>
                 </div>
-                <v-menu offset-y>
+                <v-menu
+                  offset-x
+                  offset-y
+                  content-class="language-menu"
+                >
                   <v-flex xs12 slot="activator">
                     <div class="header-language-container">
                       <span>{{ currentLocale }}</span>
@@ -58,7 +62,9 @@
                 </v-menu>
               </v-flex>
 
-              <v-menu class="menu-hamburger">
+              <v-menu
+                  class="menu-hamburger"
+                  content-class="visitor-hamburger-menu">
                 <v-flex xs12 slot="activator">
                   <v-icon>menu</v-icon>
                 </v-flex>
@@ -162,7 +168,7 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
     header {
       padding: 0px 48px;
@@ -215,8 +221,18 @@
       margin-top: 5px;
     }
 
-    .selected-language {
-      color: #7E57C2;
+    .language-menu {
+      margin-left: -17px;
+    }
+
+    .language-menu, .visitor-hamburger-menu {
+      .v-list__tile {
+        color: #AE2760;
+      }
+
+      .selected-language .v-list__tile {
+        color: #000;
+      }
     }
 
     .menu-link {

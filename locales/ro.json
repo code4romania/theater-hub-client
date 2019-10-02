@@ -241,7 +241,7 @@
             }
         },
         "search-by-skills": {
-            "label": "Caută după aptitudini"
+            "label": "Căutați după aptitudini..."
         },
         "search": {
             "label": "Căutați...",
@@ -250,10 +250,10 @@
             }
         },
         "site-search": {
-            "label": "Caută în sit"
+            "label": "Căutați în sit..."
         },
         "projects-search": {
-            "label": "Caută proiecte"
+            "label": "Căutați proiecte..."
         },
         "select-skills": {
             "label": "Aptitudinile profesionale ale dumneavoastră",
@@ -266,7 +266,10 @@
         },
         "photo-dropzone": {
             "label": "Apăsați sau plasați imagini aici",
-            "photo-remove-button": "ȘTERGE"
+            "photo-remove-button": "ȘTERGE",
+            "validation-errors": {
+                "count": "Prea multe fișiere"
+            }
         },
         "optional-user-message": {
             "label": "Mesaj opțional pentru utilizator",
@@ -301,7 +304,7 @@
         "budget": {
             "label": "Buget",
             "validation-errors": {
-                "invalid": "Bugetul trebuie sa fie valid"
+                "invalid": "Bugetul trebuie să fie valid"
             }
         },
         "currency": {
@@ -413,7 +416,7 @@
         },
         "sign-up": {
             "title": "Înregistrare",
-            "submit-button": "EXECUTĂ",
+            "submit-button": "Creează cont",
             "separator-text": "SAU",
             "facebook-sign-up-button-text": "Continuă cu Facebook",
             "google-sign-up-button-text": "Înregistrare cu Google",
@@ -440,7 +443,7 @@
         },
         "search": {
             "community-results": "Rezultate din comunitate:",
-            "projects-results": "Rezultate din proiecte:",
+            "projects-results": "Rezultate dintre proiecte:",
             "no-members-message": "Nu există rezultate",
             "no-projects-message": "Nu există rezultate"
         },
@@ -495,8 +498,8 @@
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
             "no-needs-message": "Nu ați adăugat nevoi",
             "no-updates-message": "Nu ați adăugat actualizări",
-            "share-on-facebook": "Afișează pe Facebook",
-            "share-on-twitter": "Afișează pe Twitter",
+            "share-on-facebook": "Distribuie pe Facebook",
+            "share-on-twitter": "Distribuie pe Twitter",
             "invalid-project-title": "Proiect",
             "invalid-project-content": "Proiectul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {

@@ -22,8 +22,19 @@
                                 :label="`${$t('fields.award.issuer.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm12 md3 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="awardsFactory.isAwardDateMenuOpen" :nudge-right="40"
-                            lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
+                        <v-menu
+                            absolute top
+                            content-class="date-picker-menu"
+                            :close-on-content-click="false"
+                            v-model="awardsFactory.isAwardDateMenuOpen"
+                            :nudge-right="40"
+                            lazy
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            max-width="290px"
+                            min-width="290px"
+                        >
                             <v-text-field slot="activator" type="month" v-model="awardsFactory.date"
                                 :label="$t('fields.award.date.label')"
                                 prepend-icon="event" readonly>

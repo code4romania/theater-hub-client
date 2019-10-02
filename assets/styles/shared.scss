@@ -26,6 +26,7 @@ body {
   min-height: 100vh;
   overflow: auto;
   background-color: $background;
+  position: relative;
 }
 
 h1,
@@ -246,6 +247,17 @@ button {
   color: $white;
 }
 
+input[type="search"],
+input[type="search"]::placeholder,
+input[type="search"]::-webkit-input-placeholder {
+  font-weight: 500;
+  font-family: Titillium Web;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: #000 !important;
+}
+
 .v-date-picker-header button {
   background-color: #FFF;
   color: initial;
@@ -271,6 +283,7 @@ button {
 }
 
 .v-menu__content {
+
   .v-date-picker-table {
     button {
       background-color: transparent;
@@ -313,11 +326,25 @@ button {
 }
 
 main {
-  min-height: calc(100vh - 391px);
+  min-height: calc(100vh - 389px);
 }
 
 .main-container {
+  padding-top: 70px;
   max-width: 960px;
+
+  &.extra-large {
+    max-width: 1600px;
+  }
+
+  &.large {
+    max-width: 1200px;
+  }
+
+  &.small {
+    max-width: 700px;
+  }
+
 }
 
 .v-messages {
@@ -566,6 +593,7 @@ main {
 @media screen and (max-width: 400px) {
   .add-achievement-btn {
     height: 100%;
+    max-height: 88px;
 
     .v-btn__content {
       white-space: normal;
@@ -589,4 +617,13 @@ main {
     max-width: 100px;
     max-height: 100px;
   }
+
+  
+
+}
+.date-picker-menu {
+  // position: fixed !important;
+  position: absolute;
+  top: calc(50vh - (/* height */100px / 2));
+  left: calc(50vw - (/* width */140px / 2)); 
 }

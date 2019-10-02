@@ -1,6 +1,9 @@
 <template>
   <section class="login">
-    <v-container fluid login-container>
+    <v-container
+      login-container
+      class="main-container small"
+    >
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="page-title mb-3">{{ $t('pages.login.title') }}</h1>
@@ -30,7 +33,7 @@
                 </v-flex>
                 <v-layout row wrap mt-1>
                   <v-flex xs12 md6 class="facebook-link-container">
-                      <a href="https://localhost:443/api/authentication/facebook" class="facebook-login-link social-media-login-link">
+                      <a href="http://theaterhubapi-env-1.tq2hysnc5z.eu-central-1.elasticbeanstalk.com/api/authentication/facebook" class="facebook-login-link social-media-login-link">
                         <v-btn class="facebook-login-button social-media-login-button">
                           <img :src="require('~/assets/images/flogo-HexRBG-Wht-72.png')" />
                           {{ $t('pages.login.facebook-login-button-text') }}
@@ -38,7 +41,7 @@
                       </a>
                   </v-flex>
                   <v-flex xs12 md6 class="google-link-container">
-                      <a href="https://localhost:443/api/authentication/google" class="google-login-link social-media-login-link">
+                      <a href="http://theaterhubapi-env-1.tq2hysnc5z.eu-central-1.elasticbeanstalk.com/api/authentication/google" class="google-login-link social-media-login-link">
                         <v-btn class="google-login-button social-media-login-button">
                           <img :src="require('~/assets/images/64px-Google__G__Logo.png')" />
                           {{ $t('pages.login.google-login-button-text') }}
@@ -140,10 +143,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-	.login-container {
-    max-width: 700px;
   }
 
   .login-button {

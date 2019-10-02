@@ -1,6 +1,11 @@
 <template>
-  <section class="about-section">
-    <v-container about-container>
+  <section
+    class="about-section"
+  >
+    <v-container
+        about-container
+        class="main-container"
+    >
         <v-layout column>
             <v-flex mb-3>
                 <h1 class="page-title">{{ $t('pages.about.title') }}</h1>
@@ -35,11 +40,3 @@
 
 </script>
 
-<style lang="scss" scoped>
-
-    .about-container {
-        max-width: 1600px;
-        padding: 40px 40px 0px 40px;
-    }
-
-</style>

@@ -5,34 +5,46 @@
           <v-layout>
             <v-flex xs12 md12>
               <v-card dark color="black">
-                <v-layout row wrap align-center>
-                  <v-flex xs12 md6 px-5>
-                    <h1>
-                      {{ $t('pages.homepage.join-the-community') }}
-                      <br />
-                      {{ $t('pages.homepage.start-project') }}
-                    </h1>
-                    <v-layout mt-3>
-                      <p>
-                        {{ $t('pages.homepage.introduction') }}
-                      </p>
-                    </v-layout>
+                <v-layout
+                  row
+                  wrap
+                  align-center
+                  justify-end
+                >
+                  <v-flex
+                    class="hompage-hero-left-container"
+                    xs12
+                    md6
+                    pr-1
+                  >
+                    <div class="hompage-hero-content">
+                      <h1>
+                        {{ $t('pages.homepage.join-the-community') }}
+                        <br />
+                        {{ $t('pages.homepage.start-project') }}
+                      </h1>
+                      <v-layout mt-3>
+                        <p>
+                          {{ $t('pages.homepage.introduction') }}
+                        </p>
+                      </v-layout>
 
-                    <v-layout row align-center>
+                      <v-layout row align-center>
 
-                      <nuxt-link to="/about"
-                        class="yellow--text find-out-link">
-                        {{ $t('pages.homepage.find-out-link') }}
-                      </nuxt-link>
+                        <nuxt-link to="/about"
+                          class="yellow--text find-out-link">
+                          {{ $t('pages.homepage.find-out-link') }}
+                        </nuxt-link>
 
-                      <v-btn
-                        depressed color="white"
-                        class="blue--text register-now-link"
-                        nuxt to="/signup">
-                        <span>{{ $t('pages.homepage.register-now-link') }}</span>
-                      </v-btn>
+                        <v-btn
+                          depressed color="white"
+                          class="blue--text register-now-link"
+                          nuxt to="/signup">
+                          <span>{{ $t('pages.homepage.register-now-link') }}</span>
+                        </v-btn>
 
-                    </v-layout>
+                      </v-layout>
+                    </div>
 
                   </v-flex>
 
@@ -53,7 +65,7 @@
             </v-flex>
           </v-layout>
 
-          <v-layout row wrap justify-space-around>
+          <v-layout row wrap justify-space-between>
             <v-flex xs10 md2 lg2 ma-3>
               <v-layout column align-center>
                 <v-flex xs12>
@@ -99,7 +111,7 @@
             </v-flex>
           </v-layout>
 
-          <v-layout row wrap justify-space-around>
+          <v-layout row wrap justify-space-between>
             
             <v-flex xs12 md6
               project-card-col
@@ -248,6 +260,15 @@
       i {
         margin-right: 10px;
       }
+    }
+
+    .hompage-hero-left-container {
+      justify-content: flex-end;
+      display: flex;
+    }
+
+    .hompage-hero-content {
+      max-width: 800px;
     }
   }
 

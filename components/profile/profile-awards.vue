@@ -54,7 +54,7 @@
                     </v-card-title>
                 </v-card>
             </v-timeline-item>
-            <v-timeline-item medium hide-dot class="timeline-message add-achievement-timeline-item"
+            <v-timeline-item medium hide-dot class="timeline-message add-entity-timeline-item"
                 v-if="!isAddingAward">
                 <v-card class="timeline-message-card text-xs-center" v-on:click.native="onAddAwardClick()">
                     <v-card-title>
@@ -75,7 +75,7 @@
             <div :key="`award-${awardIndex}`"
                 v-for="(award, awardIndex) in awards"
                 v-bind:class="{'timeline-message': award.inEditMode || award.inDeleteMode}"
-                @mouseenter.native="award.isHovered = true"  @mouseleave.native="award.isHovered = false"
+                @mouseenter="award.isHovered = true"  @mouseleave="award.isHovered = false"
                 class="achievement-item" color="primary">
                     <v-card class="elevation-2" v-if="!award.inEditMode && !award.inDeleteMode">
                         <v-card-title>

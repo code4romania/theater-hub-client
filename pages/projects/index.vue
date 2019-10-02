@@ -1,8 +1,15 @@
 <template>
-    <section class="projects-section">
-        <v-container id="projects-container" class="main-container pa-5 mt-5">
+    <section
+		class="projects-section"
+	>
+        <v-container
+			class="main-container large"
+		>
 			<v-layout row justify-center>
-				<v-flex xs12 sm6>
+				<v-flex
+					xs12 sm6
+					class="projects-search-container"
+				>
 					<v-text-field type="search" append-icon="search"
 					 	id="projects-search-box"
 						solo hide-details single-line
@@ -139,11 +146,11 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 
-  #projects-container {
-	  max-width: 1200px;
-  }
+	.projects-search-container {
+		padding: 0px 20px;
+	}
 
   .project-card-col {
     padding: 20px;

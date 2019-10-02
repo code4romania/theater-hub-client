@@ -1,6 +1,9 @@
 <template>
     <section class="profile-section">
-        <v-container id="profile-container" class="main-container pa-5">
+        <v-container
+            id="profile-container"
+            class="main-container px-5"
+        >
             <v-layout row wrap>
 
                 <v-flex xs12 v-if="!isEditingGeneralInformation" class="mb-5">

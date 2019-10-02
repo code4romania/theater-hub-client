@@ -242,7 +242,7 @@
             }
         },
         "search-by-skills": {
-            "label": "Search by skills"
+            "label": "Search by skills..."
         },
         "search": {
             "label": "Search...",
@@ -251,10 +251,10 @@
             }
         },
         "site-search": {
-            "label": "Search in website"
+            "label": "Search in website..."
         },
         "projects-search": {
-            "label": "Search projects"
+            "label": "Search projects..."
         },
         "select-skills": {
             "label": "Your professional skills",
@@ -267,7 +267,10 @@
         },
         "photo-dropzone": {
             "label": "Click or drop images here",
-            "photo-remove-button": "REMOVE"
+            "photo-remove-button": "REMOVE",
+            "validation-errors": {
+                "count": "Too many files"
+            }
         },
         "optional-user-message": {
             "label": "Optional message for user",

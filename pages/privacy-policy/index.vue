@@ -1,6 +1,9 @@
 <template>
   <section class="privacy-policy">
-    <v-container fluid privacy-policy-container class="mt-5 pa-5">
+    <v-container
+        privacy-policy-container
+        class="main-container"
+    >
         <v-layout row wrap>
             <v-flex mb-3>
                 <h1 class="page-title">{{ $t('pages.privacy-policy.title') }}</h1>

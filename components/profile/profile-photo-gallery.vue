@@ -2,9 +2,17 @@
     <v-layout row wrap>
         <v-flex xs12 mb-3>
             <dropzone id="photo-gallery-dropzone" ref="photoGalleryDropzone"
-                :options="photoGalleryDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true"
+                :options="photoGalleryDropzoneOptions"
+                :destroyDropzone="true"
+                :duplicateCheck="true"
                 width="200px" height="80px">
                 <div class="dz-message" data-dz-message><span>{{ $t('fields.photo-dropzone.label') }}</span></div>
+                <div
+                    v-if="this.profilePhotoGallery.photoGallery.length !== 0"
+                    class="add-images-item"
+                >
+                    <span>{{ $t('fields.photo-dropzone.label') }}</span>
+                </div>
             </dropzone>
         </v-flex>
     </v-layout>
@@ -35,11 +43,9 @@
                         addRemoveLinks: true,
                         autoProcessQueue: false,
                         dictRemoveFile: this.$t('fields.photo-dropzone.photo-remove-button'),
+                        dictMaxFilesExceeded: this.$t('fields.photo-dropzone.validation-errors.count'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
-                            this.photoGalleryDropzoneOptions.maxFilesize   = 1 || this.maxFileSize;
-                            this.photoGalleryDropzoneOptions.maxFiles      = 1 || this.maxPhotoGalleryFileCount;
-
                             this.profilePhotoGallery.photoGallery.forEach(photo => {
                                 var file     = { url: photo.ThumbnailLocation, size: photo.Size * 1000 * 1000, upload: { uuid: photo.ID } };
                                 dropzone.emit('addedfile', file);
@@ -82,9 +88,6 @@
                             this.on('sending', () => {
                                 return false;
                             });
-
-                            this.maxFilesize   = 5;
-                            this.maxFiles      = 3;
 
                             this.options.initializePhotoGallery(this);
                         },
@@ -131,6 +134,8 @@
 <style lang="scss">
 
     #photo-gallery-dropzone {
+        flex-wrap: wrap-reverse;
+        flex-direction: row-reverse;
 
         .dz-progress {
             display: none;
@@ -139,6 +144,20 @@
         .dz-image img  {
             height: 200px;
             object-fit: cover;
+        }
+
+        .add-images-item {
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ae2760;
+            color: #FFF;
+            cursor: pointer;
+            pointer-events: none;
+            border-radius: 5px;
         }
 
     }

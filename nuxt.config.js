@@ -34,8 +34,8 @@ module.exports = {
     },
     '~/plugins/axios.js',
     '~/plugins/services-axios.js',
-    '~/plugins/vue-i18n.js',
-    '~/plugins/smooth-scrollbar.js'
+    '~/plugins/vue-i18n.js'
+    // '~/plugins/smooth-scrollbar.js'
   ],
   css: [
     'node_modules/vuetify/dist/vuetify.min.css',

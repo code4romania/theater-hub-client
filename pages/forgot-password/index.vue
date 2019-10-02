@@ -1,13 +1,17 @@
 <template>
   <section class="forgot-password-section">
-    <v-container fluid forgot-password-container>
+    <v-container
+      forgot-password-container
+      class="main-container small"
+    >
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="page-title mb-3">{{ $t('pages.forgot-password.title') }}</h1>
 
-            <v-layout>
-
-                <v-flex xs12 v-if="!isSuccessfulSubmit" pt-2>
+            <v-layout
+              v-if="!isSuccessfulSubmit"
+            >
+                <v-flex xs12 pt-2>
                     <v-flex xs12>
                         {{ $t('pages.forgot-password.description') }}
                     </v-flex>
@@ -24,11 +28,13 @@
                         </v-flex>
                     </v-form>
                 </v-flex>
-
-                <v-flex xs12 align-end flexbox v-if="isSuccessfulSubmit" pt-2>
+            </v-layout>
+            <v-layout
+              v-if="isSuccessfulSubmit"
+            >
+                <v-flex xs12 align-end flexbox pt-2>
                     {{ $t('pages.forgot-password.submit-success-message') }}
                 </v-flex>
-
             </v-layout>
           </v-flex>
         </v-layout>
@@ -95,10 +101,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-	.forgot-password-container {
-    max-width: 700px;
   }
 
 </style>

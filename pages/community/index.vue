@@ -1,15 +1,20 @@
 <template>
-    <section class="community-section">
-        <v-container id="community-container" class="main-container">
-            <v-layout row wrap class="community-header-bar" pt-4>
-                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2>
+    <section
+        class="community-section"
+    >
+        <v-container
+            class="main-container"
+        >
+            <v-layout row wrap class="community-header-bar">
+                <v-flex xs12 sm5 md5 lg5 mx-2 mb-1>
                     <v-text-field type="search" append-icon="search" solo
-                        hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
+                        hide-details single-line :placeholder="$t('fields.search.label')"
+                        id="members-search-box"
                         v-model="searchTerm"
                         @keyup="onSearchKeyup">
                     </v-text-field>
                 </v-flex>
-                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2 class="skills-filter-container">
+                <v-flex xs12 sm5 md5 lg5 mx-2 mb-1 class="skills-filter-container">
                     <v-flex xs12>
                         <v-autocomplete 
                             item-text="Name"
@@ -31,9 +36,8 @@
             </v-layout>
 
             <v-layout column wrap class="community-layers-wrapper" v-if="inCommunityLayersView">
-                <v-layout column mt-5 class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
+                <v-layout column class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
                     <v-flex xs12 class="skill-section-title">
-                        <img width="40px" :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
                         <span class="skill-name">{{ layer.SkillName }}</span>
                     </v-flex>
                     <v-flex xs12 class="skill-section-members">
@@ -296,16 +300,12 @@
     .community-header-bar {
         justify-content: center;
 
-        label, input, input::placeholder, input::-webkit-input-placeholder {
+        label {
             font-weight: 500;
             font-family: Titillium Web;
             font-style: normal;
             font-weight: normal;
             font-size: 14px;
-            color: #000 !important;
-        }
-
-        i {
             color: #000 !important;
         }
 

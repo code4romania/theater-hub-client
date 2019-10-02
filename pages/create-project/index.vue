@@ -1,7 +1,10 @@
 <template>
     <section
-        class="create-project-section mt-5">
-        <v-container id="create-project-container" class="main-container pa-1">
+        class="create-project-section">
+        <v-container
+            id="create-project-container"
+            class="main-container"
+        >
 
             <v-stepper v-model="wizardStep" vertical>
 
@@ -120,7 +123,8 @@ export default {
 
             const needs = JSON.stringify(this.needs.map(n => {
                 return {
-                    Description: n.Description
+                    Description: n.Description,
+                    Tags: n.Tags.map(t => t.ID)
                 };
             }));
 

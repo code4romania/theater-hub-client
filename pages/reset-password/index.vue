@@ -1,6 +1,10 @@
 <template>
   <section class="reset-password-section">
-    <v-container fluid reset-password-container>
+    <v-container
+      fluid
+      reset-password-container
+      class="main-container small"
+    >
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="page-title mb-3">{{ $t('pages.reset-password.title') }}</h1>
@@ -123,9 +127,5 @@
     align-items: center;
     justify-content: center;
   }
-
-	.reset-password-container {
-        max-width: 700px;
-    }
 
 </style>
