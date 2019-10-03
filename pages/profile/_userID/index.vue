@@ -28,7 +28,7 @@
                         <v-flex xs12 sm12 md6 lg7 class="general-information">
                             <v-layout>
                                 <v-flex xs12 pl-4>
-                                    <v-flex xs12 class="profile-information-row">
+                                    <v-flex xs12 class="profile-information-row name-information-row">
                                         <span class="full-name-field">{{ fullName }}</span>
                                         <span
                                             v-if="age"
@@ -291,6 +291,7 @@
                                 :project_title="project.Name"
                                 :project_image="project.Image"
                                 :project_abstract="project.Abstract"
+                                :project_is_completed="project.IsCompleted"
                                 :has_border="false"
                             />
                         </v-flex>

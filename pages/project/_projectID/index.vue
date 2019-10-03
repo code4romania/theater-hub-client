@@ -21,6 +21,7 @@
         :title="project.Name"
         :image="project.Image"
         :initiatorImage="project.InitiatorImage"
+        :isCompleted="project.IsCompleted"
       />
       <v-container
         class="main-container extra-large"
@@ -58,22 +59,6 @@
                   <span class="label">{{ $t('pages.project.city') }}</span> {{ project.City }}
                   <br>
                   <span class="label">{{ $t('pages.project.budget') }}</span> {{ project.Budget }} {{ currency }}
-                  <div>
-                    <span class="label">{{ $t('pages.project.tags') }}</span>
-                    <span
-                      v-if="!project.Tags">
-                        {{ $t('pages.project.no-tags') }}
-                    </span>
-                    <v-chip
-                        :key="index"
-                        v-for="(tag, index) in project.Tags"
-                        class="ml-0"
-                        :text-color="tag.Color"
-                        :color="tag.BackgroundColor"
-                        label small>
-                        {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
-                    </v-chip>
-                  </div>
                 </div>
               </v-flex>
             </v-layout>
@@ -147,6 +132,7 @@
                       :id="otherProject.ID"
                       :name="otherProject.Name"
                       :image="otherProject.Image"
+                      :isCompleted="otherProject.IsCompleted"
                     />
                   </v-flex>
                 </v-layout>

@@ -40,7 +40,18 @@
                                         xs12 sm8
                                         class="project-name-container"
                                     >
-                                        <span class="project-name-field">{{ project.Name }}</span>
+                                        <v-chip
+                                            v-if="project.IsCompleted"
+                                            class="ml-0 completed-project-tag"
+                                            text-color="#FFF"
+                                            color="#27AE60"
+                                            label small
+                                        >
+                                            {{ $t('application-data.completed') }}
+                                        </v-chip>
+                                        <span class="project-name-field">
+                                            {{project.Name }}
+                                        </span>
                                     </v-flex>
                                     <v-flex
                                         xs12 sm4

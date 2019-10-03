@@ -14,6 +14,7 @@
                     <v-layout row wrap>
                         <SetProjectGeneralInformation 
                             :projectGeneralInformation="generalInformation"
+                            :isCreating="true"
                             @updateProjectGeneralInformation="updateProjectGeneralInformation"
                         />
                         <v-flex xs12 my-5>

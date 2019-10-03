@@ -124,6 +124,7 @@
                   :project_username="project.InitiatorUsername"
                   :project_initiator="project.InitiatorName"
                   :project_city="project.City"
+                  :project_is_completed="project.IsCompleted"
                 />
             </v-flex>
 

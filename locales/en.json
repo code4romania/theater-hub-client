@@ -15,6 +15,7 @@
         "done": "DONE",
         "mandatory": "MANDATORY",
         "urgent": "URGENT",
+        "completed": "COMPLETED",
         "local": "Local",
         "facebook": "Facebook",
         "google": "Google",
@@ -314,6 +315,9 @@
         "project-date": {
             "label": "Start date"
         },
+        "is-completed": {
+            "label": "Is completed"
+        },
         "need": {
             "description": {
                 "label": "Description",
@@ -495,8 +499,6 @@
             "city": "City:",
             "budget": "Budget:",
             "visibility": "Visibility:",
-            "tags": "Tags:",
-            "no-tags": "No tags",
             "other-projects-by-title": "Other Projects by ",
             "delete-need-message": "Are you sure you wish to delete this need?",
             "delete-update-message": "Are you sure you wish to delete this update?",
