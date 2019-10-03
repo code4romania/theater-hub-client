@@ -65,7 +65,7 @@
             "label": "Message",
             "validation-errors": {
                 "required": "Message is required",
-                "length": "Message should have at most 200 characters"
+                "length": "Message should have at most 500 characters"
             }
         },
         "first-name": {
@@ -171,7 +171,7 @@
             "title": {
                 "label": "Award title",
                 "validation-errors": {
-                    "required": "Title is required"
+                    "required": "Award name is required"
                 }
             },
             "issuer": {
@@ -194,7 +194,7 @@
             "title": {
                 "label": "Title",
                 "validation-errors": {
-                    "required": "Title is required"
+                    "required": "Specialization is required"
                 }
             },
             "institution": {
@@ -299,8 +299,8 @@
         "city": {
             "label": "City",
             "validation-errors": {
-                "required": "City is required",
-                "length": "City should have at most 100 characters"
+                "required": "City name is required",
+                "length": "City name should have at most 100 characters"
             }
         },
         "budget": {
@@ -375,9 +375,9 @@
             "video-message": "Please provide links from Youtube or Vimeo.",
             "add-video-button": "Add video",
             "add-award-button": "Add award",
-            "add-experience-button": "Add experience step",
-            "add-education-button": "Add education step",
-            "add-need-button": "Add need",
+            "add-experience-button": "Add experience",
+            "add-education-button": "Add education",
+            "add-need-button": "Add a request",
             "add-update-button": "Add update",
             "profile-visibility": "Profile visibility:",
             "email-visibility": "E-mail visibility:",
@@ -435,7 +435,7 @@
         },
         "about": {
             "title": "About this project",
-            "paragraph-1": "Theater Hub is a project developed by Code for Romania next to Punct.Art. This platform aims to be a support for the independent theater community in both Romania and the Republic of Moldova. Members who create an account in the platform will be able to build a profile, add their portfolios and register to take part in diverse projects all over the two countries.",
+            "paragraph-1": "Theater Hub is a project developed by Code for Romania in partnership with Punct.Art. This platform aims to be a support for the independent theater community in both Romania and the Republic of Moldova. Members who create an account in the platform will be able to build a profile, add their portfolios and register to take part in diverse projects all over the two countries.",
             "paragraph-2": "The purpose of Theater Hub is to facilitate the communication between independent theater groups, to encourage collaboration and building common projects, to help initiatiors get in touch easier with various other specialists - designers, marketeers, sound engineers, filmmakers etc - and to support them in promoting their shows.",
             "paragraph-3": "The Theater Hub platform has been developed pro-bono by Code for Romania volunteers with the support and know-how from Punct.Art. You may support the two initiatives by sharing this platform and by donating directly to the organisations."
         },
@@ -500,9 +500,9 @@
             "budget": "Budget:",
             "visibility": "Visibility:",
             "other-projects-by-title": "Other Projects by ",
-            "delete-need-message": "Are you sure you wish to delete this need?",
+            "delete-need-message": "Are you sure you wish to delete this request?",
             "delete-update-message": "Are you sure you wish to delete this update?",
-            "no-needs-message": "You haven't added any needs",
+            "no-needs-message": "You haven't added any requests",
             "no-updates-message": "You haven't added any updates",
             "share-on-facebook": "Share on Facebook",
             "share-on-twitter": "Share on Twitter",
@@ -520,7 +520,7 @@
                     "title": "General"
                 },
                 "needs": {
-                    "title": "Needs"
+                    "title": "Requests"
                 }
             }
         },
