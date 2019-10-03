@@ -1,9 +1,21 @@
 <template>
   <section class="create-profile-section">
-    <v-container id="create-profile-container" class="main-container pa-1">
-        <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && !isCreatedProfile" class="create-account-success">
+    <v-container
+        id="create-profile-container"
+        class="main-container px-1"
+    >
+        <v-layout
+            row wrap
+            mt-5
+            px-5
+            v-if="!isCreatingProfile && !isCreatedProfile"
+            class="create-account-success"
+        >
             <v-flex text-xs-center>
-                <h1 mb-3>{{ $t('pages.create-profile.account-created-title') }}</h1>
+                <h1
+                    class="page-title"
+                    mb-3
+                >{{ $t('pages.create-profile.account-created-title') }}</h1>
             </v-flex>
             <v-flex xs12 mt-5>
                 <p>
@@ -21,8 +33,8 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap v-if="isCreatingProfile && !isCreatedProfile" class="create-profile-main-layout">
-            <v-flex xs12 align-end flexbox pt-5>
-                <v-stepper v-model="wizardStep" vertical>
+            <v-flex xs12 align-end flexbox>
+                <v-stepper v-model="wizardStep" vertical transition="scale-transition">
 
                     <v-stepper-step :complete="wizardStep > 1" step="1">{{ $t('pages.create-profile.steps.general.title') }}</v-stepper-step>
 

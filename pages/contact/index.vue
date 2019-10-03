@@ -1,6 +1,9 @@
 <template>
     <section class="contact-section">
-        <v-container contact-container>
+        <v-container
+            contact-container
+            class="main-container extra-large"
+        >
             <v-layout>
                 <v-flex xs12>
                     <h1 class="page-title">{{ $t('pages.contact.title') }}</h1>
@@ -20,13 +23,8 @@
                             <v-flex xs12>
                                 <v-layout column>
                                     <v-flex xs12>
-                                        <span class="field-title">
-                                            {{ $t('fields.contact-full-name.label') }}*:
-                                        </span>
-                                    </v-flex>
-                                    <v-flex xs12>
                                         <v-text-field
-                                            solo
+                                            :label="`${$t('fields.contact-full-name.label')}*`"
                                             v-model="fullName"
                                             :rules="fullNameRules"
                                         ></v-text-field>
@@ -35,14 +33,9 @@
                             </v-flex>
                             <v-flex xs12 mt-5>
                                 <v-layout wrap>
-                                    <v-flex xs12>
-                                        <span class="field-title">
-                                            {{ $t('fields.contact-email.label') }}*:
-                                        </span>
-                                    </v-flex>
                                     <v-flex xs6>
                                         <v-text-field
-                                            solo
+                                            :label="`${$t('fields.contact-email.label')}*`"
                                             v-model="email"
                                             :rules="emailRules"
                                         ></v-text-field>
@@ -51,14 +44,9 @@
                             </v-flex>
                             <v-flex xs12 mt-5>
                                 <v-layout wrap>
-                                    <v-flex xs12>
-                                        <span class="field-title">
-                                            {{ $t('fields.contact-subject.label') }}*:
-                                        </span>
-                                    </v-flex>
                                     <v-flex xs6>
                                         <v-text-field
-                                            solo
+                                            :label="`${$t('fields.contact-subject.label')}*`"
                                             v-model="subject"
                                             :rules="subjectRules"
                                         ></v-text-field>
@@ -68,19 +56,14 @@
                             <v-flex xs12 mt-5>
                                 <v-layout column>
                                     <v-flex xs12>
-                                        <span class="field-title">
-                                            {{ $t('fields.contact-message.label') }}*:
-                                        </span>
-                                    </v-flex>
-                                    <v-flex xs12>
                                         <v-textarea
+                                            :label="`${$t('fields.contact-message.label')}*`"
                                             class="text-area-field"
                                             v-model="message"
                                             :rules="messageRules"
-                                            solo
                                             auto-grow
                                             box
-                                            rows="5"
+                                            rows="3"
                                             validate-on-blur>
                                         </v-textarea>
                                     </v-flex>
@@ -92,7 +75,6 @@
                                         <v-checkbox
                                             id="agree-to-terms"
                                             name="agree-to-terms"
-                                            color="#27AE60"
                                             v-model="agreeToTerms"
                                             :rules="agreeToTermsRules">
                                         </v-checkbox>
@@ -115,7 +97,9 @@
                             <v-flex xs12 mt-3 class="submit-button-container">
                                 <v-btn
                                     @click="submit"
-                                    class="contact-button ml-0">
+                                    class="contact-button ml-0"
+                                    color="primary"
+                                >
                                         {{ $t('pages.contact.submit-button') }}
                                 </v-btn>
                             </v-flex>
@@ -167,7 +151,6 @@
               return 'user';
           }
       },
-      middleware: 'visitor',
         data: function () {
             return {
                 valid: false,
@@ -223,7 +206,7 @@
                     AgreeToTerms: this.agreeToTerms
                 });
 
-                if (this.users.contactErrors) {
+                if (!this.users.contactErrors) {
                     this.snackbarText = this.$t('pages.contact.snackbar-messages.send-message');
                     this.snackbar = true;
 
@@ -253,18 +236,8 @@
         padding-right: 40px;
     }
 
-    .contact-container {
-        max-width: 1600px;
-        padding: 40px 40px 0px 40px;
-    }
-
     #contact-image {
         max-width: 100%;
-    }
-
-    .field-title {
-        font-weight: 700;
-        margin-bottom: 10px;
     }
 
     #contact-form {
@@ -285,10 +258,6 @@
             padding-left: 0px;
         }
 
-        textarea {
-            padding-left: 10px;
-        }
-
     }
 
     .agree-to-terms-label {
@@ -306,8 +275,6 @@
     }
 
     .contact-button {
-        background-color: #2E7D32 !important;
-        color: #FFF !important;
         min-width: 20%;
     }
 

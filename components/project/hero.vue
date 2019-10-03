@@ -9,8 +9,7 @@
           :src="image.ThumbnailLocation"
         >
       </v-flex>
-      <v-flex sm6 px-5 class="projectHero__content">
-        <h1>{{ title }}</h1>
+      <v-flex sm6 class="projectHero__content" align-end>
         <v-layout row>
           <h1>
             <v-chip
@@ -29,10 +28,6 @@
               <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
               <img :src="initiatorImage.ThumbnailLocation" v-if="initiatorImage">
             </v-avatar>
-            <v-layout row wrap>
-              <span class="label ml-2">{{ $t('pages.project.initiator') }}</span>
-              <span class="initiator-name ml-2">{{ initiatorName }}</span>
-            </v-layout>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -74,6 +69,11 @@ h1 {
   justify-content: flex-end;
   position: relative;
   min-height: 300px;
+}
+
+.projectHero__content  > div {
+    max-width: 800px;
+    width: 100%;
 }
 
 .projectHero__content .v-avatar {

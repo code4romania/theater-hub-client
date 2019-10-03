@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap>
         <v-layout row wrap>
-            <v-flex xs12 sm12 md6 lg6 mb-3>
+            <v-flex xs12 sm12 md5 lg5 mb-3>
                 <dropzone id="profile-image-dropzone" ref="profileImageDropzone"
                     :options="profileImageDropzoneOptions" :destroyDropzone="true" :duplicateCheck="true">
                     <div class="dz-message" data-dz-message>
@@ -9,7 +9,7 @@
                     </div>
                 </dropzone>
             </v-flex>
-            <v-flex xs12 sm12 md6 lg6 mb-3>
+            <v-flex xs12 sm12 md7 lg7 mb-3>
                 <v-layout align-center row wrap>
                     <v-flex xs12>
                         <v-flex xs12 v-if="displayNameFields">
@@ -21,7 +21,9 @@
                                     :rules="lastNameRules" :label="`${$t('fields.last-name.label')}*`" validate-on-blur required></v-text-field>
                         </v-flex>
                         <v-flex xs12>
-                            <v-menu :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
+                            <v-menu
+                                content-class="date-picker-menu"
+                                :close-on-content-click="false" v-model="isBirthDateMenuOpen" :nudge-right="40"
                                 lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                                 <v-text-field slot="activator" v-model="profileGeneralInformationModel.birthDate"
                                                 :rules="birthDateRules" :label="`${$t('fields.date-of-birth.label')}*`" prepend-icon="event" readonly>
@@ -233,10 +235,25 @@
 <style lang="scss">
 
     #profile-image-dropzone {
-        width: 300px;
-        height: 300px;
-        min-height: 300px;
+        width: 250px;
+        height: 250px;
+        min-height: 250px;
+        padding: 0px;
         border-radius: 100%;
+
+        .dz-preview.dz-image-preview {
+            margin: 0px;
+            width: calc(100% - 2px);
+            height: calc(100% - 2px);
+            border-radius: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        .dz-remove {
+            margin: 0px;
+            bottom: 50px;
+        }
 
         .dz-message {
             margin: 0px;
@@ -246,10 +263,19 @@
             display: none;
         }
 
+        .dz-image {
+            border-radius: 100%;
+        }
+
+        .dz-details {
+            padding: 50px;
+            border-radius: 100%;
+        }
+
         .dz-image img  {
-            max-height: 200px;
-            max-width: 200px;
-            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
         }
 
     }
@@ -268,6 +294,11 @@
             width: 150px;
             height: 150px;
             min-height: 150px;
+
+            .dz-image img  {
+                max-width: 100%;
+                max-height: 100%;
+            }
         }
 
         .left-field-container {

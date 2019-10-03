@@ -1,6 +1,9 @@
 <template>
   <section class="terms-and-conditions">
-    <v-container fluid terms-and-conditions-container class="mt-5 pa-5">
+    <v-container
+        terms-and-conditions-container
+        class="main-container"
+    >
         <v-layout row wrap>
             <v-flex mb-3>
                 <h1 class="page-title">{{ $t('pages.terms-and-conditions.title') }}</h1>

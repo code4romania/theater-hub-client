@@ -20,11 +20,12 @@
       <Hero
         :title="project.Name"
         :image="project.Image"
-        :initiatorName="project.InitiatorName"
         :initiatorImage="project.InitiatorImage"
         :isCompleted="project.IsCompleted"
       />
-      <v-container mt-5>
+      <v-container
+        class="main-container extra-large"
+      >
         <v-layout column>
           <v-flex xs12>
             <v-layout row wrap>
@@ -233,6 +234,8 @@ h2 {
 }
 
 .project__info {
+  border: 2px solid rgba(151, 151, 151, 0.6);
+  padding: 20px;
 
   span.label {
     font-weight: 700;

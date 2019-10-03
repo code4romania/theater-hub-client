@@ -244,7 +244,6 @@ export default {
   async asyncData ({ store, query, params, error }) {
     const project = await store.dispatch('projects/getMyProject', params.projectID);
 
-
     if (!project) {
       return error({ statusCode: 404 });
     }
@@ -443,6 +442,8 @@ h2 {
 }
 
 .project__info {
+  border: 2px solid rgba(151, 151, 151, 0.6);
+  padding: 20px;
 
   span.label {
     font-weight: 700;

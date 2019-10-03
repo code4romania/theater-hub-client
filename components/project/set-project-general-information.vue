@@ -39,6 +39,7 @@
                     </v-flex>
                     <v-flex xs12 class="project-date-container">
                         <v-menu
+                            class="date-picker-menu"
                             attach left
                             :close-on-content-click="false"
                             v-model="isProjectDateMenuOpen"

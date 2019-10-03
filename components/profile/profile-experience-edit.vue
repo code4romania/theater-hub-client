@@ -23,7 +23,9 @@
                                 :label="`${$t('fields.experience.employer.label')}*`" required></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="experienceFactory.isStartDateMenuOpen" :nudge-right="40"
+                        <v-menu
+                            content-class="date-picker-menu"
+                            :close-on-content-click="false" v-model="experienceFactory.isStartDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                             <v-text-field slot="activator" type="month" v-model="experienceFactory.startDate"
                                     :label="$t('fields.experience.start-date.label')" prepend-icon="event" readonly>
@@ -37,7 +39,9 @@
                         </v-menu>
                     </v-flex>
                     <v-flex xs12 sm6 md6 lg3 class="date-menu-container px-2">
-                        <v-menu :close-on-content-click="false" v-model="experienceFactory.isEndDateMenuOpen" :nudge-right="40"
+                        <v-menu
+                            content-class="date-picker-menu"
+                            :close-on-content-click="false" v-model="experienceFactory.isEndDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                             <v-text-field slot="activator" type="month" v-model="experienceFactory.endDate"
                                     :label="$t('fields.experience.end-date.label')" prepend-icon="event" readonly>
