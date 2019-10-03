@@ -94,6 +94,11 @@ h5 {
   padding: 2px 0px;
   font-size: 17px;
 
+  &.name-information-row {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   button {
     border-radius: 3px;
     font-weight: 400;
@@ -589,4 +594,7 @@ main {
     max-width: 100px;
     max-height: 100px;
   }
+
+  
+
 }

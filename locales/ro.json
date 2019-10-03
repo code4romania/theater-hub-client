@@ -15,6 +15,7 @@
         "done": "FINALIZAT",
         "mandatory": "OBLIGATORIU",
         "urgent": "URGENT",
+        "completed": "FINALIZAT",
         "local": "Local",
         "facebook": "Facebook",
         "google": "Google",
@@ -310,6 +311,9 @@
         "project-date": {
             "label": "Data lansării"
         },
+        "is-completed": {
+            "label": "E finalizat"
+        },
         "need": {
             "description": {
                 "label": "Descriere",
@@ -488,8 +492,6 @@
             "city": "Oraș:",
             "budget": "Buget:",
             "visibility": "Vizibilitate:",
-            "tags": "Etichete:",
-            "no-tags": "Nu există etichete",
             "other-projects-by-title": "Alte Proiecte de către ",
             "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",

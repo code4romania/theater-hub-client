@@ -137,25 +137,25 @@
                             </v-layout>
                         </v-radio-group>
                     </v-layout>
-                    <v-layout
-                        v-if="projectTags"
-                        column
+                    <v-flex
+                        v-if="!isCreating"
+                        xs12
                     >
-                        <v-flex xs12>
-                            <span class="label">{{ $t('pages.project.tags') }}</span>
-                        </v-flex>
-                        <v-flex xs12>
+                        <v-layout row align-center>
                             <v-checkbox
-                                :key="index"
-                                v-for="(tag, index) in projectTags"
-                                v-model="generalInformation.Tags"
-                                :label="$t(`application-data.${tag.ID.toLowerCase()}`)"
-                                :value="tag.ID"
-                                class="tag-checkbox"
+                                name="completed-project-checkbox"
+                                id="completed-project-checkbox"
+                                v-model="generalInformation.IsCompleted"
                                 @change="updateProjectGeneralInformationModel"
-                            ></v-checkbox>
-                        </v-flex>
-                    </v-layout>
+                            >
+                            </v-checkbox>
+                            <label 
+                                for="completed-project-checkbox"
+                                class="completed-project-label">
+                                    {{ $t('fields.is-completed.label') }}
+                            </label>
+                        </v-layout>
+                    </v-flex>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -174,7 +174,7 @@
         components: {
             Dropzone
         },
-        props: ['projectGeneralInformation'],
+        props: ['projectGeneralInformation', 'isCreating'],
         head () {
             if (window.google) {
                 return [];
@@ -278,8 +278,7 @@
         computed: {
             ...mapGetters({
                 locale: 'locale',
-                currencies: 'applicationData/currencies',
-                projectTags: 'applicationData/projectTags'
+                currencies: 'applicationData/currencies'
             }),
             currencyItems: function () {
                 return this.currencies.map(c => c.ID);
@@ -384,9 +383,10 @@
         width: 100%;
     }
 
-    .tag-checkbox {
-        display: inline-block;
-        margin-right: 20px;
+    div[name="completed-project-checkbox"] {
+        max-width: 34px;
+        max-height: 34px;
+        margin-top: 0px;
     }
 
 </style>

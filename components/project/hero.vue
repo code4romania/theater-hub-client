@@ -12,6 +12,18 @@
       <v-flex sm6 px-5 class="projectHero__content">
         <h1>{{ title }}</h1>
         <v-layout row>
+          <h1>
+            <v-chip
+                v-if="isCompleted"
+                class="ml-0 completed-project-tag"
+                text-color="#FFF"
+                color="#27AE60"
+                label small
+            >
+                {{ $t('application-data.completed') }}
+            </v-chip>
+            {{ title }}
+          </h1>
           <v-flex xs12 class="projectHero__initiator">
             <v-avatar size="200px">
               <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
@@ -30,7 +42,7 @@
 
 <script>
 export default {
-  props: ['title', 'image', 'initiatorName', 'initiatorImage']
+  props: ['title', 'image', 'initiatorName', 'initiatorImage', 'isCompleted']
 };
 </script>
 

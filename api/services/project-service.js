@@ -42,6 +42,7 @@ export class ProjectService extends BaseService {
         generalInformationFormData.append('Currency', generalInformation.Currency);
         generalInformationFormData.append('City', generalInformation.City);
         generalInformationFormData.append('Visibility', generalInformation.Visibility);
+        generalInformationFormData.append('IsCompleted', generalInformation.IsCompleted);
 
         return this.$axios.$patch(Endpoints.Projects.UpdateProjectGeneralInformation.replace('{0}', id), generalInformationFormData, config);
     }

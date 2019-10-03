@@ -22,7 +22,7 @@
                                 <v-flex xs12 sm12 md6 lg7 class="general-information">
                                     <v-layout>
                                         <v-flex xs12 pl-4>
-                                            <v-flex xs12 class="profile-information-row">
+                                            <v-flex xs12 class="profile-information-row name-information-row">
                                                 <span class="full-name-field">{{ fullName }}</span>
                                                 <span
                                                     v-if="profileGeneralInformation.birthDate"
