@@ -42,8 +42,15 @@
                     column
                     class="skill-section"
                 >
+
                     <v-flex xs12 class="skill-section-title">
-                        <span class="skill-name">{{ layer.SkillName }}</span>
+                        <div
+                            v-if="layer.Image"
+                            :id="`skill-image-wrapper-${layer.SkillID}`"
+                            class="skill-image-wrapper"
+                        >
+                        </div>
+                        <span class="skill-name">{{ $t(`application-data.${layer.SkillName}`) }}</span>
                     </v-flex>
                     <v-flex xs12 class="skill-section-members">
                         <v-layout row wrap>
@@ -122,7 +129,6 @@
         },
         middleware: ['visitor-or-enabled-user', 'get-skills'],
         data: () => ({
-            localizedSkills: [],
             communityMembers: [],
             communitySize: 0,
             filterSkills: [],
@@ -168,9 +174,19 @@
             },
             initializeCommunityLayers: function () {
                 this.communityLayers.forEach(l => {
-                    l.SkillName = this.localizedSkills.find(s => s.ID === l.SkillID).Name;
+                    var skill   = this.skills.find(s => s.ID === l.SkillID);
+                    l.SkillName = skill.Name;
 
                     l.Members = this.initializeCommunityMembers(l.Members);
+                    l.Image   = skill.Image;
+
+                    setTimeout(() => {
+                        if (skill.Image) {
+                            var element = document.getElementById(`skill-image-wrapper-${l.SkillID}`);
+
+                            element.innerHTML = skill.Image;
+                        }
+                    }, 0);
                 });
 
                 this.communityLayers = this.communityLayers.sort((l1, l2) => l1.SkillName > l2.SkillName ? 1 : -1);
@@ -283,17 +299,17 @@
             },
             hasLoadedAll: function () {
 				return this.communityMembers.length === this.communitySize;
-            }
-        },
-        mounted: function () {
-            this.localizedSkills = this.skills.map(s => {
+            },
+            localizedSkills: function () {
+                return this.skills.map(s => {
                     return {
                         ...s,
                         Name: this.$t(`application-data.${s.Name}`)
                     };
                 }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
-
-
+            }
+        },
+        mounted: function () {
             this.initializeCommunityLayers();
         }
     }
@@ -322,8 +338,13 @@
         &:first-of-type {
             margin-top: 0px;
         }
-    }
 
+        .skill-image-wrapper {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+    }
 
     .skill-section-title {
         display: flex;
