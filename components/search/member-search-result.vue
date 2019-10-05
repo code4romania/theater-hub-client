@@ -45,16 +45,16 @@
                     </v-flex>
                     <v-flex mt-3 class="search-information-row">
                         <a v-if="member.FacebookLink" class="social-media-icon-wrapper" :href="member.FacebookLink" target="_blank">
-                            <img class="social-media-icon" :src="require('~/assets/images/facebook.png')" />
+                            <img class="social-media-icon" :src="require('~/assets/images/facebook.svg')" />
                         </a>
                         <a v-if="member.InstagramLink" class="social-media-icon-wrapper" :href="member.InstagramLink" target="_blank">
-                            <img class="social-media-icon" :src="require('~/assets/images/instagram.png')" />
+                            <img class="social-media-icon" :src="require('~/assets/images/instagram.svg')" />
                         </a>
                         <a v-if="member.LinkedinLink" class="social-media-icon-wrapper" :href="member.LinkedinLink" target="_blank">
-                            <img class="social-media-icon" :src="require('~/assets/images/linkedin.png')" />
+                            <img class="social-media-icon" :src="require('~/assets/images/linkedin.svg')" />
                         </a>
                         <a v-if="member.YoutubeLink" class="social-media-icon-wrapper" :href="member.YoutubeLink" target="_blank">
-                            <img class="social-media-icon" :src="require('~/assets/images/youtube.png')" />
+                            <img class="social-media-icon" :src="require('~/assets/images/youtube.svg')" />
                         </a>
                     </v-flex>
                     <v-flex xs12 class="search-information-row">

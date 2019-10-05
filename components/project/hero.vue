@@ -2,16 +2,26 @@
   <v-container fluid pa-0>
     <v-layout row wrap class="projectHero">
       <v-flex
-        v-if="image && image.ThumbnailLocation"
         sm6 order-sm2>
-        <img
+        <v-img
+          v-if="image && image.Location"
           class="projectHero__image"
-          :src="image.ThumbnailLocation"
-        >
+          :src="image.Location"
+        ></v-img>
+        <v-img
+            v-if="!image || !image.Location"
+            class="projectHero__image"
+            :src="require('~/assets/images/main_image.png')"
+            aspect-ratio="1.7"
+        ></v-img>
       </v-flex>
       <v-flex sm6 class="projectHero__content" align-end>
         <v-layout row>
-          <h1>
+          <v-layout
+            row
+            align-center
+            class="name-container"
+          >
             <v-chip
                 v-if="isCompleted"
                 class="ml-0 completed-project-tag"
@@ -21,8 +31,10 @@
             >
                 {{ $t('application-data.completed') }}
             </v-chip>
-            {{ title }}
-          </h1>
+            <h1>
+              {{ title }}
+            </h1>
+          </v-layout>
           <v-flex xs12 class="projectHero__initiator">
             <v-avatar size="200px">
               <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
@@ -43,11 +55,14 @@ export default {
 
 <style lang="scss" scoped>
 
+.name-container {
+  top: calc(50% - 20px);
+  position: absolute;
+}
+
 h1 {
   text-decoration: underline;
   font-size: 30px;
-  top: calc(50% - 20px);
-  position: absolute;
 }
 
 .projectHero {

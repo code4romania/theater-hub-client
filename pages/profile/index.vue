@@ -43,16 +43,16 @@
                                             </v-flex>
                                             <v-flex mt-3 class="profile-information-row">
                                                 <a v-if="profile.profileGeneralInformation.facebookLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.facebookLink" target="_blank">
-                                                    <img class="social-media-icon" :src="require('~/assets/images/facebook.png')" />
+                                                    <img class="social-media-icon" :src="require('~/assets/images/facebook.svg')" />
                                                 </a>
                                                 <a v-if="profile.profileGeneralInformation.instagramLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.instagramLink" target="_blank">
-                                                    <img class="social-media-icon" :src="require('~/assets/images/instagram.png')" />
+                                                    <img class="social-media-icon" :src="require('~/assets/images/instagram.svg')" />
                                                 </a>
                                                 <a v-if="profile.profileGeneralInformation.linkedinLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.linkedinLink" target="_blank">
-                                                    <img class="social-media-icon" :src="require('~/assets/images/linkedin.png')" />
+                                                    <img class="social-media-icon" :src="require('~/assets/images/linkedin.svg')" />
                                                 </a>
                                                 <a v-if="profile.profileGeneralInformation.youtubeLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.youtubeLink" target="_blank">
-                                                    <img class="social-media-icon" :src="require('~/assets/images/youtube.png')" />
+                                                    <img class="social-media-icon" :src="require('~/assets/images/youtube.svg')" />
                                                 </a>
                                             </v-flex>
                                             <v-flex xs12 class="profile-information-row">

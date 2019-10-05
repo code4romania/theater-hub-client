@@ -64,6 +64,7 @@
                                             auto-grow
                                             box
                                             rows="3"
+                                            counter=500
                                             validate-on-blur>
                                         </v-textarea>
                                     </v-flex>
@@ -173,7 +174,7 @@
                 message: '',
                 messageRules: [
                     v => !!v || this.$t('fields.contact-message.validation-errors.required'),
-                    v => v.length <= 200 || this.$t('fields.contact-message.validation-errors.length')
+                    v => v.length <= 500 || this.$t('fields.contact-message.validation-errors.length')
                 ],
                 contactErrors: [],
                 agreeToTerms: false,

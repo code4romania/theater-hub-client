@@ -36,7 +36,12 @@
             </v-layout>
 
             <v-layout column wrap class="community-layers-wrapper" v-if="inCommunityLayersView">
-                <v-layout column class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
+                <v-layout
+                    v-for="(layer, i) in communityLayers"
+                    :key="i"
+                    column
+                    class="skill-section"
+                >
                     <v-flex xs12 class="skill-section-title">
                         <span class="skill-name">{{ layer.SkillName }}</span>
                     </v-flex>
@@ -309,6 +314,14 @@
             color: #000 !important;
         }
 
+    }
+
+    .skill-section {
+        margin-top: 30px;
+
+        &:first-of-type {
+            margin-top: 0px;
+        }
     }
 
 
