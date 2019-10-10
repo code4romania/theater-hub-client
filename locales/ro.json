@@ -361,8 +361,12 @@
             "cookie-policy-link": "Cookie policy",
             "contact-us-link": "Contactează-ne",
             "subscribe-newsletter-link": "Abonează-te la newsletter:",
+            "signup-to-newsletter": "Trimite",
             "code-description-link": "Organizație neguvernamentală independentă, neafiliată politic și apolitică.",
-            "copyright": "@ 2019 Code for Romania."
+            "copyright": "@ 2019 Code for Romania.",
+            "snackbar-messages": {
+                "subscribe-to-newsletter-success-message": "E-mail-ul a fost adăugat la newsletter"
+            }
         },
         "content": {
             "agreement-text-beginning": "Sunt de acord cu ",

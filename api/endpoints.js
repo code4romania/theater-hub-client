@@ -16,6 +16,8 @@ export class Endpoints {
 
     static Contact                              = '/users/contact';
 
+    static SubcribeToNewsletter                 = '/users/newsletter';
+
     static Register                             = '/users/register';
 
     static ManagedUserSignup                    = '/users/register/managed';
