@@ -16,7 +16,18 @@
       </v-flex>
       <v-flex xs12 mt-2>
         <nuxt-link :to="`/project/${id}`">
-            <h3 class="other-project-name">{{ name }}</h3>
+            <h3 class="other-project-name">
+                <v-chip
+                    v-if="isCompleted"
+                    class="ml-0 completed-project-tag"
+                    text-color="#FFF"
+                    color="#27AE60"
+                    label small
+                >
+                    {{ $t('application-data.completed') }}
+                </v-chip>
+                {{ name }}
+            </h3>
         </nuxt-link>
       </v-flex>
   </v-layout>
@@ -33,6 +44,9 @@ export default {
         },
         image: {
             type: String
+        },
+        isCompleted: {
+            type: Boolean
         }
     }
 }

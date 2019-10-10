@@ -75,12 +75,27 @@
                           </h3>
                         </v-flex>
                         <v-flex xs12 sm12 offset-md6 mt-2 d-flex justify-center>
-                          <v-text-field
-                            solo
-                            hide-details
-                            :placeholder="$t('fields.email.label')"
-                            class="newsletter-input">
-                          </v-text-field>
+                          <v-form
+                            ref="newsletterForm"
+                            class="newsletter-form"
+                            v-model="newsletterValid"
+                          >
+                            <v-text-field
+                              solo
+                              v-model="email"
+                              :rules="emailRules"
+                              hide-details
+                              validate-on-blur
+                              :placeholder="$t('fields.email.label')"
+                              class="newsletter-input">
+                            </v-text-field>
+                            <v-btn
+                              id="signup-to-newsletter"
+                              @click="newsletterSubmit"
+                            >
+                              {{ $t('shared.footer.signup-to-newsletter') }}
+                            </v-btn>
+                          </v-form>
                         </v-flex>
                       </v-layout>
                     </v-flex>
@@ -112,6 +127,12 @@
               {{ $t('shared.footer.code-description-link') }}
             </v-flex>
           </v-layout>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="3000">
+                {{ snackbarText }}
+                <v-btn color="blue" flat @click="snackbar = false">{{ $t('shared.content.close') }}</v-btn>
+        </v-snackbar>
 
       </footer>
 </template>
@@ -121,13 +142,24 @@
     import { mapGetters } from 'vuex';
     import { getConfig } from '~/config/env';
     import { LocaleType } from '~/store/entities';
+    import { Validators } from '~/utils';
 
     const config = getConfig();
 
     export default {
-        data: () => ({
-            searchTerm: ''
-        }),
+        data: function () {
+          return {
+              searchTerm: '',
+              newsletterValid: false,
+              email: '',
+              emailRules: [
+                  v => !!v && (v.length <= 100 || this.$t('fields.email.validation-errors.length')),
+                  v => !!v && (Validators.isValidEmailAddress(v) || this.$t('fields.email.validation-errors.invalid'))
+              ],
+              snackbar: false,
+              snackbarText: ''
+          }
+        },
         computed: {
             ...mapGetters({
                 locale: 'locale'
@@ -151,26 +183,30 @@
                 if (event.keyCode === 13) {
                   this.$router.push({ path: `/search/${this.searchTerm}` });
                 }
+            },
+            async newsletterSubmit () {
+              this.$refs.newsletterForm.validate();
+
+              if (!this.newsletterValid || !this.email) {
+                return;
+              }
+
+              await this.$store.dispatch('users/subcribeToNewsletter', {
+                Email: this.email
+              }).then(response => {
+                this.snackbarText = this.$t('shared.footer.snackbar-messages.subscribe-to-newsletter-success-message');
+                this.snackbar     = true;
+                this.email        = '';
+              }).catch(error => {
+                this.snackbarText = error.response.data;
+                this.snackbar     = true;
+                this.email        = '';
+              });
             }
         }
     }
 </script>
 
 
-<style lang="scss" scoped>
-
-    footer ul li a:link, footer a:visited {
-        text-decoration: none;
-        color: white;
-    }
-
-    ul {
-        list-style-position: inside; 
-        padding-left: 0;
-    }
-    
-    ul li {
-        list-style: none;
-    }
-
+<style lang="scss">
 </style>

@@ -1,6 +1,6 @@
 <template>
     <section class="search-section">
-        <v-container id="search-container" class="main-container pa-5 mt-5">
+        <v-container id="search-container" class="main-container">
 
             <v-layout
                 row wrap
@@ -65,7 +65,7 @@
                 </v-flex>
             </v-layout>
 
-            <v-layout mt-3>
+            <v-layout>
                 <v-flex xs12 text-xs-center text-sm-left>
                     <h2 class="mt-5 mb-4 ml-4">
                         {{ $t('pages.search.projects-results') }}

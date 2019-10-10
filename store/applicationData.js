@@ -93,9 +93,6 @@ export const getters = {
     currencies (state) {
         return state.currencies;
     },
-    projectTags (state) {
-        return state.tags.ProjectTags;
-    },
     projectNeedTags (state) {
         return state.tags.ProjectNeedTags;
     },

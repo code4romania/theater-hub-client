@@ -1,6 +1,9 @@
 <template>
   <section class="users-dashboard">
-    <v-container users-dashboard-container class="mt-5 pt-5">
+    <v-container
+        users-dashboard-container
+        class="main-container extra-large"
+    >
         <v-layout column>
             <v-flex>
                 <h1 class="page-title mb-3">
@@ -554,11 +557,6 @@
 </script>
 
 <style lang="scss">
-
-    .users-dashboard-container {
-        max-width: 1600px;
-        padding: 40px 40px 0px 40px;
-    }
 
     #invite-user-button {
         margin-left: 0px;

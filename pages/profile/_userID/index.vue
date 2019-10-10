@@ -1,7 +1,9 @@
 <template>
     <section class="profile-section">
-        <v-container id="profile-container" class="main-container mt-5 pa-5">
-
+        <v-container
+            id="profile-container"
+            class="main-container px-5"
+        >
             <v-layout row wrap v-if="!profile">
                 <v-flex>
                     <h1 class="mb-3">{{ $t('pages.profile.invalid-profile-title') }}</h1>
@@ -26,19 +28,33 @@
                         <v-flex xs12 sm12 md6 lg7 class="general-information">
                             <v-layout>
                                 <v-flex xs12 pl-4>
-                                    <v-flex xs12 class="profile-information-row">
+                                    <v-flex xs12 class="profile-information-row name-information-row">
                                         <span class="full-name-field">{{ fullName }}</span>
-                                        <span class="name-separator">,</span>
-                                        <span class="age-field">{{ age }} {{ $t('shared.content.years-old') }}</span>
+                                        <span
+                                            v-if="age"
+                                            class="name-separator"
+                                        >,</span>
+                                        <span
+                                            v-if="age"
+                                            class="age-field"
+                                        >{{ age }} {{ $t('shared.content.years-old') }}</span>
                                     </v-flex>
-                                    <v-flex xs12 mt-2 class="profile-information-row">
+                                    <v-flex
+                                        v-if="profile.profileGeneralInformation.email"
+                                        xs12 mt-2
+                                        class="profile-information-row"
+                                    >
                                         <span class="field-label">{{ $t('fields.email.label') }}: </span>
                                         <span class="email-field">{{ profile.profileGeneralInformation.email }}</span>
                                         <a class="email-icon" :href="`mailto:${profile.profileGeneralInformation.email}`">
                                             <v-icon>email</v-icon>
                                         </a>
                                     </v-flex>
-                                    <v-flex xs12 class="profile-information-row">
+                                    <v-flex
+                                        v-if="profile.profileGeneralInformation.phoneNumber"
+                                        xs12
+                                        class="profile-information-row"
+                                    >
                                         <span class="field-label">{{ $t('fields.phone-number.label') }}: </span>
                                         <span class="phone-number-field">{{ profile.profileGeneralInformation.phoneNumber }}</span>
                                         <a class="phone-icon" :href="`tel:${profile.profileGeneralInformation.phoneNumber}`">
@@ -51,16 +67,16 @@
                                     </v-flex>
                                     <v-flex mt-3 class="profile-information-row">
                                         <a v-if="profile.profileGeneralInformation.facebookLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.facebookLink" target="_blank">
-                                            <img class="social-media-icon" :src="require('~/assets/images/facebook.png')" />
+                                            <img class="social-media-icon" :src="require('~/assets/images/facebook.svg')" />
                                         </a>
                                         <a v-if="profile.profileGeneralInformation.instagramLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.instagramLink" target="_blank">
-                                            <img class="social-media-icon" :src="require('~/assets/images/instagram.png')" />
+                                            <img class="social-media-icon" :src="require('~/assets/images/instagram.svg')" />
                                         </a>
                                         <a v-if="profile.profileGeneralInformation.linkedinLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.linkedinLink" target="_blank">
-                                            <img class="social-media-icon" :src="require('~/assets/images/linkedin.png')" />
+                                            <img class="social-media-icon" :src="require('~/assets/images/linkedin.svg')" />
                                         </a>
                                         <a v-if="profile.profileGeneralInformation.youtubeLink" class="social-media-icon-wrapper" :href="profile.profileGeneralInformation.youtubeLink" target="_blank">
-                                            <img class="social-media-icon" :src="require('~/assets/images/youtube.png')" />
+                                            <img class="social-media-icon" :src="require('~/assets/images/youtube.svg')" />
                                         </a>
                                     </v-flex>
                                 </v-flex>
@@ -275,6 +291,7 @@
                                 :project_title="project.Name"
                                 :project_image="project.Image"
                                 :project_abstract="project.Abstract"
+                                :project_is_completed="project.IsCompleted"
                                 :has_border="false"
                             />
                         </v-flex>

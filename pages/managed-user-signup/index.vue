@@ -1,6 +1,9 @@
 <template>
   <section class="signup">
-    <v-container fluid managed-user-signup-container class="pa-5">
+    <v-container
+      managed-user-signup-container
+      class="main-container small px-5"
+    >
         <v-layout>
           <v-flex xs12 align-end flexbox>
             <h1 class="page-title my-3">{{ $t('pages.managed-user-signup.title') }}</h1>
@@ -166,10 +169,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-	.managed-user-signup-container {
-        max-width: 700px;
-    }
 
   .agree-to-terms-label {
     cursor: pointer;

@@ -1,15 +1,20 @@
 <template>
-    <section class="community-section">
-        <v-container id="community-container" class="main-container">
-            <v-layout row wrap class="community-header-bar" pt-4>
-                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2>
+    <section
+        class="community-section"
+    >
+        <v-container
+            class="main-container"
+        >
+            <v-layout row wrap class="community-header-bar">
+                <v-flex xs12 sm5 md5 lg5 mx-2 mb-1>
                     <v-text-field type="search" append-icon="search" solo
-                        hide-details single-line :placeholder="$t('fields.search.label')" id="members-search-box"
+                        hide-details single-line :placeholder="$t('fields.search.label')"
+                        id="members-search-box"
                         v-model="searchTerm"
                         @keyup="onSearchKeyup">
                     </v-text-field>
                 </v-flex>
-                <v-flex xs12 sm5 md5 lg5 mt-3 mx-2 class="skills-filter-container">
+                <v-flex xs12 sm5 md5 lg5 mx-2 mb-1 class="skills-filter-container">
                     <v-flex xs12>
                         <v-autocomplete 
                             item-text="Name"
@@ -31,10 +36,21 @@
             </v-layout>
 
             <v-layout column wrap class="community-layers-wrapper" v-if="inCommunityLayersView">
-                <v-layout column mt-5 class="skill-section" :key="i" v-for="(layer, i) in communityLayers">
+                <v-layout
+                    v-for="(layer, i) in communityLayers"
+                    :key="i"
+                    column
+                    class="skill-section"
+                >
+
                     <v-flex xs12 class="skill-section-title">
-                        <img width="40px" :src="require('~/assets/images/theater_hub_logo-1.jpg')" />
-                        <span class="skill-name">{{ layer.SkillName }}</span>
+                        <div
+                            v-if="layer.Image"
+                            :id="`skill-image-wrapper-${layer.SkillID}`"
+                            class="skill-image-wrapper"
+                        >
+                        </div>
+                        <span class="skill-name">{{ $t(`application-data.${layer.SkillName}`) }}</span>
                     </v-flex>
                     <v-flex xs12 class="skill-section-members">
                         <v-layout row wrap>
@@ -113,7 +129,6 @@
         },
         middleware: ['visitor-or-enabled-user', 'get-skills'],
         data: () => ({
-            localizedSkills: [],
             communityMembers: [],
             communitySize: 0,
             filterSkills: [],
@@ -159,9 +174,19 @@
             },
             initializeCommunityLayers: function () {
                 this.communityLayers.forEach(l => {
-                    l.SkillName = this.localizedSkills.find(s => s.ID === l.SkillID).Name;
+                    var skill   = this.skills.find(s => s.ID === l.SkillID);
+                    l.SkillName = skill.Name;
 
                     l.Members = this.initializeCommunityMembers(l.Members);
+                    l.Image   = skill.Image;
+
+                    setTimeout(() => {
+                        if (skill.Image) {
+                            var element = document.getElementById(`skill-image-wrapper-${l.SkillID}`);
+
+                            element.innerHTML = skill.Image;
+                        }
+                    }, 0);
                 });
 
                 this.communityLayers = this.communityLayers.sort((l1, l2) => l1.SkillName > l2.SkillName ? 1 : -1);
@@ -274,17 +299,17 @@
             },
             hasLoadedAll: function () {
 				return this.communityMembers.length === this.communitySize;
-            }
-        },
-        mounted: function () {
-            this.localizedSkills = this.skills.map(s => {
+            },
+            localizedSkills: function () {
+                return this.skills.map(s => {
                     return {
                         ...s,
                         Name: this.$t(`application-data.${s.Name}`)
                     };
                 }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
-
-
+            }
+        },
+        mounted: function () {
             this.initializeCommunityLayers();
         }
     }
@@ -296,7 +321,7 @@
     .community-header-bar {
         justify-content: center;
 
-        label, input, input::placeholder, input::-webkit-input-placeholder {
+        label {
             font-weight: 500;
             font-family: Titillium Web;
             font-style: normal;
@@ -305,12 +330,21 @@
             color: #000 !important;
         }
 
-        i {
-            color: #000 !important;
-        }
-
     }
 
+    .skill-section {
+        margin-top: 30px;
+
+        &:first-of-type {
+            margin-top: 0px;
+        }
+
+        .skill-image-wrapper {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+    }
 
     .skill-section-title {
         display: flex;

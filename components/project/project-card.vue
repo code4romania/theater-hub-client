@@ -16,9 +16,25 @@
     ></v-img>
     <v-card-title primary-title>
       <div>
-        <h4>
-          {{ project_title }}
-        </h4>
+        <v-layout row>
+          <v-flex
+            xs12
+            class="title-container"
+          >
+            <v-chip
+                v-if="project_is_completed"
+                class="ml-0 completed-project-tag"
+                text-color="#FFF"
+                color="#27AE60"
+                label small
+            >
+                {{ $t('application-data.completed') }}
+            </v-chip>
+            <h4>
+              {{ project_title }}
+            </h4>
+          </v-flex>
+        </v-layout>
         <div class="project__abstract d-flex">
           <p>{{ project_abstract }}</p>
           <p
@@ -87,6 +103,10 @@ export default {
       type: String,
       default: ''
     },
+    project_is_completed: {
+      type: Boolean,
+      default: false
+    },
     has_border: {
       type: Boolean,
       default: true
@@ -102,7 +122,9 @@ export default {
   &.border {
     border: 2px solid rgba(151, 151, 151, 0.6);
   }
-
+  .title-container {
+    display: flex;
+  }
   h4 {
     margin-bottom: 10px;
     font-size: 22px;

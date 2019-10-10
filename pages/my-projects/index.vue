@@ -2,7 +2,8 @@
     <section class="my-projects-section">
         <v-container 
             id="my-projects-container"
-            class="main-container pa-5">
+            class="main-container"
+        >
             <v-layout>
                 <v-flex xs12>
                     <h1 class="page-title">{{ $t('pages.my-projects.title') }}</h1>

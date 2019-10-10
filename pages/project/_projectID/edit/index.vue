@@ -55,6 +55,7 @@
                 <v-flex xs12 pt-4>
                     <SetProjectGeneralInformation 
                         :projectGeneralInformation="editedGeneralInformation"
+                        :isCreating="false"
                         @updateProjectGeneralInformation="updateEditedGeneralInformation"
                     />
                 </v-flex>
@@ -67,6 +68,7 @@
         :image="generalInformation.Image"
         :initiatorName="generalInformation.InitiatorName"
         :initiatorImage="generalInformation.InitiatorImage"
+        :isCompleted="generalInformation.IsCompleted"
       />
       <v-container mt-5>
         <v-layout column>
@@ -118,23 +120,6 @@
                   <span class="label">{{ $t('pages.project.budget') }}</span> {{ generalInformation.Budget }} {{ currency }}
                   <br>
                   <span class="label">{{ $t('pages.project.visibility') }}</span> {{ visibilityLiteral }}
-                  <div
-                      v-if="!generalInformation.Tags">
-                    <span class="label">{{ $t('pages.project.tags') }}</span>
-                    <span
-                      v-if="!generalInformation.Tags">
-                        {{ $t('pages.project.no-tags') }}
-                    </span>
-                    <v-chip
-                        :key="index"
-                        v-for="(tag, index) in generalInformation.Tags"
-                        class="ml-0"
-                        :text-color="tag.Color"
-                        :color="tag.BackgroundColor"
-                        label small>
-                        {{ $t(`application-data.${tag.ID.toLowerCase()}`) }}
-                    </v-chip>
-                  </div>
                   <br>
                   <nuxt-link
                       :to="`/project/${ID}`"
@@ -259,7 +244,6 @@ export default {
   async asyncData ({ store, query, params, error }) {
     const project = await store.dispatch('projects/getMyProject', params.projectID);
 
-
     if (!project) {
       return error({ statusCode: 404 });
     }
@@ -277,7 +261,7 @@ export default {
       Description: project.Description,
       InitiatorName: project.InitiatorName,
       InitiatorImage: project.InitiatorImage,
-      Tags: project.Tags
+      IsCompleted: project.IsCompleted
     };
 
     var needs = project.Needs.map(n => {
@@ -458,6 +442,8 @@ h2 {
 }
 
 .project__info {
+  border: 2px solid rgba(151, 151, 151, 0.6);
+  padding: 20px;
 
   span.label {
     font-weight: 700;

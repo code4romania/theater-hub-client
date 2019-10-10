@@ -1,6 +1,9 @@
 <template>
   <section class="projects">
-    <v-container fluid projects-dashboard-container class="main-container pa-5 mt-5">
+    <v-container
+        projects-dashboard-container
+        class="main-container extra-large"
+    >
         <v-layout column>
             <v-flex>
                 <h1
@@ -63,7 +66,7 @@
                                     <td class="text-xs-left">{{  getPrivacyElementText(dashboard.item.Visibility) }}</td>
                                     <td class="text-xs-left">
                                         <v-layout>
-                                            <v-flex xs12 md6 lg4>
+                                            <v-flex xs12>
                                                 <v-btn
                                                     v-if="showEnableProjectButton(dashboard.item)"
                                                     small
@@ -441,11 +444,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-    .projects-dashboard-container {
-        max-width: 1600px;
-        padding: 40px 40px 0px 40px;
-    }
 
     #projects-search-box {
         width: 400px;

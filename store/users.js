@@ -110,6 +110,9 @@ export const actions = {
             dispatch('setContactErrors', error.response.data.errors);
         });
     },
+    async subcribeToNewsletter ({ commit, dispatch }, request) {
+        return UserService.subcribeToNewsletter(request);
+    },
     async signup ({ commit, dispatch }, request) {
         await UserService.register(request).then(response => {
             dispatch('setSignupErrors', '');

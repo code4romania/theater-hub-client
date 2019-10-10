@@ -15,6 +15,7 @@
         "done": "FINALIZAT",
         "mandatory": "OBLIGATORIU",
         "urgent": "URGENT",
+        "completed": "FINALIZAT",
         "local": "Local",
         "facebook": "Facebook",
         "google": "Google",
@@ -64,7 +65,7 @@
             "label": "Mesaj",
             "validation-errors": {
                 "required": "Mesajul este obligatoriu",
-                "length": "Mesajul trebuie să aibă cel mult 200 de caractere"
+                "length": "Mesajul trebuie să aibă cel mult 500 de caractere"
             }
         },
         "first-name": {
@@ -167,9 +168,9 @@
         },
         "award": {
             "title": {
-                "label": "Titlu premiu",
+                "label": "Denumire premiu",
                 "validation-errors": {
-                    "required": "Titlul este obligatoriu"
+                    "required": "Denumirea premiului este obligatorie"
                 }
             },
             "issuer": {
@@ -190,9 +191,9 @@
         },
         "education": {
             "title": {
-                "label": "Titlu",
+                "label": "Specializare",
                 "validation-errors": {
-                    "required": "Titlul este obligatoriu"
+                    "required": "Specializarea este obligatorie"
                 }
             },
             "institution": {
@@ -241,7 +242,7 @@
             }
         },
         "search-by-skills": {
-            "label": "Caută după aptitudini"
+            "label": "Căutați după aptitudini..."
         },
         "search": {
             "label": "Căutați...",
@@ -250,10 +251,10 @@
             }
         },
         "site-search": {
-            "label": "Caută în sit"
+            "label": "Căutați în sit..."
         },
         "projects-search": {
-            "label": "Caută proiecte"
+            "label": "Căutați proiecte..."
         },
         "select-skills": {
             "label": "Aptitudinile profesionale ale dumneavoastră",
@@ -266,7 +267,10 @@
         },
         "photo-dropzone": {
             "label": "Apăsați sau plasați imagini aici",
-            "photo-remove-button": "ȘTERGE"
+            "photo-remove-button": "ȘTERGE",
+            "validation-errors": {
+                "count": "Prea multe fișiere"
+            }
         },
         "optional-user-message": {
             "label": "Mesaj opțional pentru utilizator",
@@ -301,7 +305,7 @@
         "budget": {
             "label": "Buget",
             "validation-errors": {
-                "invalid": "Bugetul trebuie sa fie valid"
+                "invalid": "Bugetul trebuie să fie valid"
             }
         },
         "currency": {
@@ -309,6 +313,9 @@
         },
         "project-date": {
             "label": "Data lansării"
+        },
+        "is-completed": {
+            "label": "E finalizat"
         },
         "need": {
             "description": {
@@ -354,8 +361,12 @@
             "cookie-policy-link": "Cookie policy",
             "contact-us-link": "Contactează-ne",
             "subscribe-newsletter-link": "Abonează-te la newsletter:",
+            "signup-to-newsletter": "Trimite",
             "code-description-link": "Organizație neguvernamentală independentă, neafiliată politic și apolitică.",
-            "copyright": "@ 2019 Code for Romania."
+            "copyright": "@ 2019 Code for Romania.",
+            "snackbar-messages": {
+                "subscribe-to-newsletter-success-message": "E-mail-ul a fost adăugat la newsletter"
+            }
         },
         "content": {
             "agreement-text-beginning": "Sunt de acord cu ",
@@ -413,21 +424,21 @@
         },
         "sign-up": {
             "title": "Înregistrare",
-            "submit-button": "EXECUTĂ",
+            "submit-button": "Creează cont",
             "separator-text": "SAU",
             "facebook-sign-up-button-text": "Continuă cu Facebook",
             "google-sign-up-button-text": "Înregistrare cu Google",
             "submit-success-message": "Un e-mail care conține link-ul de confirmare a înregistrării v-a fost trimis."            
         },
         "managed-user-signup": {
-            "title": "Finalizează Înregistrarea",
-            "submit-button": "EXECUTĂ"
+            "title": "Finalizează înregistrarea",
+            "submit-button": "TRIMITE"
         },
         "about": {
             "title": "Despre acest proiect",
-            "paragraph-1": "Theater Hub este un proiect dezvoltat de Code for Romania alaturi de asociatia Punct.Art. Aceasta platforma isi propune sa vina ca un sprijin pentru comunitatea de teatru independent din Romania si Republica Moldova. Membrii care isi creeaza cont in platforma vor putea sa isi construiasca un profil, sa isi adauge portofoliul de artist si sa se inscrie sa ia parte la proiecte cat mai diverse din orice regiune a celor doua tari.",
-            "paragraph-2": "Scopul Theater Hub este de a facilita comunicarea dintre grupurile de teatru independent, de a sprijini colaborarea in crearea de proiecte comune, de a ajuta initiatorii de proiecte sa ia contact mai usor cu specialisti din domenii conexe - designeri, oameni de marketing, ingineri de sunet, cameramani, etc - si de a-i sustine prin promovarea spectacolelor lor.",
-            "paragraph-3": "Platforma Theater Hub a fost dezvoltata pro-bono de voluntarii Code for Romania cu sprijinul si know-how-ul Punct.Art. Poti sustine cele doua initiative distribuind aceasta platforma sau donand direct catre cele doua organizatii."
+            "paragraph-1": "Theater Hub este un proiect dezvoltat de Code for Romania în parteneriat cu asociația Punct.Art. Această platformă își propune să vină ca un sprijin pentru comunitatea de teatru independent din Romania și Republica Moldova. Membrii care își creează cont în platformă vor putea să își construiască un profil, să își adauge portofoliul de artist și să se înscrie să ia parte la proiecte cat mai diverse din orice regiune a celor doua țări.",
+            "paragraph-2": "Scopul Theater Hub este de a facilita comunicarea dintre grupurile de teatru independent, de a sprijini colaborarea în crearea de proiecte comune, de a ajuta inițiatorii de proiecte să ia contact mai usor cu specialiști din domenii conexe - designeri, oameni de marketing, ingineri de sunet, cameramani, etc - și de a-i susține prin promovarea spectacolelor lor.",
+            "paragraph-3": "Platforma Theater Hub a fost dezvoltată pro-bono de voluntarii Code for Romania cu sprijinul și know-how-ul Punct.Art. Poți susține cele doua inițiative distribuind această platformă sau donând direct către cele doua organizații."
         },
         "contact": {
             "title": "Ia legătura cu noi",
@@ -440,7 +451,7 @@
         },
         "search": {
             "community-results": "Rezultate din comunitate:",
-            "projects-results": "Rezultate din proiecte:",
+            "projects-results": "Rezultate dintre proiecte:",
             "no-members-message": "Nu există rezultate",
             "no-projects-message": "Nu există rezultate"
         },
@@ -478,7 +489,7 @@
         "project": {
             "view-project-button": "Vizualizare proiect",
             "edit-general-information-title": "Editare informații generale",
-            "needs-title": "Necesități:",
+            "needs-title": "Solicitări:",
             "updates-title": "Noutăți:",
             "mandatory": "OBLIGATORIU",
             "initiator": "Inițiator proiect:",
@@ -488,20 +499,18 @@
             "city": "Oraș:",
             "budget": "Buget:",
             "visibility": "Vizibilitate:",
-            "tags": "Etichete:",
-            "no-tags": "Nu există etichete",
             "other-projects-by-title": "Alte Proiecte de către ",
-            "delete-need-message": "Sunteți sigur că doriți să ștergeți această nevoie?",
+            "delete-need-message": "Sunteți sigur că doriți să ștergeți această solicitare?",
             "delete-update-message": "Sunteți sigur că doriți să ștergeți această actualizare?",
-            "no-needs-message": "Nu ați adăugat nevoi",
+            "no-needs-message": "Nu ați adăugat solicitări",
             "no-updates-message": "Nu ați adăugat actualizări",
-            "share-on-facebook": "Afișează pe Facebook",
-            "share-on-twitter": "Afișează pe Twitter",
+            "share-on-facebook": "Distribuie pe Facebook",
+            "share-on-twitter": "Distribuie pe Twitter",
             "invalid-project-title": "Proiect",
             "invalid-project-content": "Proiectul pe care încercați să îl vizualizați este privat sau nu există.",
             "snackbar-messages": {
                 "update-general-information": "Secțiunea de informații generale a fost actualizată",
-                "update-needs": "Secțiunea de nevoi a fost actualizată",
+                "update-needs": "Secțiunea de solicitări a fost actualizată",
                 "update-updates": "Secțiunea de noutăți a fost actualizată"
             }
         },
@@ -511,7 +520,7 @@
                     "title": "General"
                 },
                 "needs": {
-                    "title": "Nevoi"
+                    "title": "Solicitări"
                 }
             }
         },
@@ -625,9 +634,9 @@
                 "enable-user-button": "ACTIVEAZĂ",
                 "disable-user-button": "DEZACTIVEAZĂ",
                 "delete-user-button": "ȘTERGE",
-                "enable-user-message": "Sunteți sigur că doriți să activați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
-                "disable-user-message": "Sunteți sigur că doriți să dezactivați contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
-                "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să oferiți un motiv utilizatorului:",
+                "enable-user-message": "Sunteți sigur că doriți să activați contul lui {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
+                "disable-user-message": "Sunteți sigur că doriți să dezactivați contul lui {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
+                "delete-user-message": "Sunteți sigur că doriți să ștergeți contul lui {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
                 "invited-by": "Invitat de:",
                 "snackbar-messages": {
                     "invite-user": "Invitație trimisă",
@@ -649,9 +658,9 @@
                 "enable-project-button": "ACTIVEAZĂ",
                 "disable-project-button": "DEZACTIVEAZĂ",
                 "delete-project-button": "ȘTERGE",
-                "enable-project-message": "Sunteți sigur că doriți să activați proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
-                "disable-project-message": "Sunteți sigur că doriți să dezactivați proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
-                "delete-project-message": "Sunteți sigur că doriți să ștergeți proiectul: {0}? Vă rugăm să oferiți un motiv inițiatorului:",
+                "enable-project-message": "Sunteți sigur că doriți să activați proiectul: {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
+                "disable-project-message": "Sunteți sigur că doriți să dezactivați proiectul: {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
+                "delete-project-message": "Sunteți sigur că doriți să ștergeți proiectul: {0}? Vă rugăm să transmiteți utilizatorului un mesaj personalizat:",
                 "snackbar-messages": {
                     "enable-project": "Proiect activat",
                     "disable-project": "Proiect dezactivat",
@@ -661,7 +670,7 @@
         },
         "errors": {
             "not-found-title": "Pagina nu a fost gasită",
-            "not-found-description": "Pagina pe care o căutați nu există!",
+            "not-found-description": "Pagina pe care o căutați nu există.",
             "error-title": "A avut loc o eroare neașteptată.",
             "error-description": "Vă rugăm să încercați din nou."
         }
