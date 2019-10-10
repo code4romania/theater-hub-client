@@ -60,6 +60,21 @@ footer {
 
     }
 
+    
+    ul li a:link, a:visited {
+      text-decoration: none;
+      color: white;
+    }
+
+    ul {
+        list-style-position: inside; 
+        padding-left: 0;
+    }
+    
+    ul li {
+        list-style: none;
+    }
+
     h3 {
         font-size: 16px;
     }
@@ -67,6 +82,10 @@ footer {
     .logo-wrapper {
         display: inline-block;
     }
+
+  .newsletter-form {
+    display: flex;
+  }
 
   .newsletter-input {
     background-color: #FFF;
@@ -83,6 +102,21 @@ footer {
     .v-input__slot::before {
       border: none;
     }
+
+    &.error--text {
+      border: 2px solid #F00;
+
+      .v-input__control {
+        min-height: 44px !important;
+      }
+    }
+  }
+
+  #signup-to-newsletter {
+    background-color: #AE2760;
+    color: #FFF;
+    margin-top: 0px;
+    height: 100%;
   }
 
   .useful-links-container {

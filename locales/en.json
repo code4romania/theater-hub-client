@@ -364,8 +364,12 @@
             "cookie-policy-link": "Cookie policy",
             "contact-us-link": "Contact us",
             "subscribe-newsletter-link": "Subscribe to our newsletter:",
+            "signup-to-newsletter": "Signup",
             "code-description-link": "An independent, non-partisan, non-political, non-governmental organization.",
-            "copyright": "@ 2019 Code for Romania."
+            "copyright": "@ 2019 Code for Romania.",
+            "snackbar-messages": {
+                "subscribe-to-newsletter-success-message": "E-mail was added to newsletter"
+            }
         },
         "content": {
             "agreement-text-beginning": "I agree to the ",
