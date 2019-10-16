@@ -250,7 +250,7 @@
         this.localizedSkills = this.skills.map(s => {
                 return {
                     ...s,
-                    Name: this.$t(`application-data.${s.Name}`)
+                    Name: this.$t(`application-data.skills.${s.ID}`)
                 };
             }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
 
