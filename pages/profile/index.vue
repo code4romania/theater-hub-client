@@ -732,7 +732,7 @@ export default {
                 return this.profile.profileGeneralInformation.profileImage.ThumbnailLocation;
             },
             skillNameList: function () {
-                return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.${s.Name}`)).sort();
+                return this.profile.profileSkills.selectedSkills.map(s => this.$t(`application-data.skills.${s.ID}`)).sort();
             },
             age: function () {
                 var currentDateMoment = moment(new Date());
