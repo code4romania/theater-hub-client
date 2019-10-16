@@ -71,7 +71,7 @@
 
     export default {
         layout: 'user',
-        middleware: ['authenticated', 'get-tags'],
+        middleware: ['authenticated', 'enabled', 'user', 'get-tags'],
         components: {
             ProjectListItem
         },
