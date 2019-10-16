@@ -369,7 +369,7 @@ main {
 .skill {
   border-radius: 0px;
   border: none;
-  width: 119px;
+  min-width: 80px;
   height: 26px;
   line-height: 26px;
   display: flex;

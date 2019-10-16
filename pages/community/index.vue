@@ -50,7 +50,7 @@
                             class="skill-image-wrapper"
                         >
                         </div>
-                        <span class="skill-name">{{ $t(`application-data.${layer.SkillName}`) }}</span>
+                        <span class="skill-name">{{ $t(`application-data.skills.${layer.SkillID}`) }}</span>
                     </v-flex>
                     <v-flex xs12 class="skill-section-members">
                         <v-layout row wrap>
@@ -304,7 +304,7 @@
                 return this.skills.map(s => {
                     return {
                         ...s,
-                        Name: this.$t(`application-data.${s.Name}`)
+                        Name: this.$t(`application-data.skills.${s.ID}`)
                     };
                 }).sort((s1, s2) => s2.Name > s1.Name ? -1 : 1);
             }
@@ -333,7 +333,7 @@
     }
 
     .skill-section {
-        margin-top: 30px;
+        margin-top: 40px;
 
         &:first-of-type {
             margin-top: 0px;
@@ -343,6 +343,12 @@
             width: 40px;
             height: 40px;
             margin-left: 10px;
+
+            svg {
+                width: 40px;
+                height: 40px;
+                fill: rgba(174, 39, 96, 0.46);
+            }
         }
     }
 

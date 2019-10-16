@@ -33,13 +33,25 @@
             <v-layout justify-end>
 
               <v-flex xs12 class="user-menu-items">
-                <nuxt-link to="/community" class="menu-link">
+                <nuxt-link
+                    v-if="isEnabled"
+                    to="/community"
+                    class="menu-link"
+                >
                     {{ $t('shared.header.community-link') }}
                 </nuxt-link>
-                <nuxt-link to="/projects" class="menu-link">
+                <nuxt-link
+                    v-if="isEnabled"
+                    to="/projects"
+                    class="menu-link"
+                >
                     {{ $t('shared.header.projects-link') }}
                 </nuxt-link>
-                <nuxt-link to="/create-project" class="menu-link">
+                <nuxt-link
+                    v-if="isEnabled"
+                    to="/create-project"
+                    class="menu-link"
+                >
                     {{ $t('shared.header.create-project-link') }}
                 </nuxt-link>
                 <v-menu offset-y>
@@ -61,14 +73,18 @@
                         </v-avatar>
                     </v-flex>
                     <v-list>
-                        <v-list-tile>
+                        <v-list-tile
+                            v-if="isEnabled"
+                        >
                             <v-list-tile-title>
                                 <nuxt-link to="/profile" class="menu-link">
                                     {{ $t('shared.header.profile-link') }}
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile>
+                        <v-list-tile
+                            v-if="isEnabled"
+                        >
                             <v-list-tile-title>
                                 <nuxt-link to="/my-projects" class="menu-link">
                                     {{ $t('shared.header.my-projects-link') }}
@@ -123,21 +139,28 @@
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile class="profile-menu-item">
+                        <v-list-tile
+                            v-if="isEnabled"
+                            class="profile-menu-item"
+                        >
                             <v-list-tile-title>
                                 <nuxt-link to="/profile" class="menu-link">
                                     {{ $t('shared.header.profile-link') }}
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile>
+                        <v-list-tile
+                            v-if="isEnabled"
+                        >
                             <v-list-tile-title>
                                 <nuxt-link to="/my-projects" class="menu-link">
                                     {{ $t('shared.header.my-projects-link') }}
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile>
+                        <v-list-tile
+                            v-if="isEnabled"
+                        >
                             <v-list-tile-title>
                                 <nuxt-link to="/create-project" class="menu-link">
                                     {{ $t('shared.header.create-project-link') }}
@@ -151,7 +174,9 @@
                                 </nuxt-link>
                             </v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile class="logout-menu-item">
+                        <v-list-tile
+                            class="logout-menu-item"
+                        >
                             <v-list-tile-title>
                                 <a id="logout-btn" v-on:click="onLogoutClick" class="menu-link">
                                     {{ $t('shared.header.logout-link') }}
