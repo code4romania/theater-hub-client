@@ -5,10 +5,10 @@
             class="main-container px-5"
         >
             <v-layout row wrap v-if="!profile">
-                <v-flex>
-                    <h1 class="mb-3">{{ $t('pages.profile.invalid-profile-title') }}</h1>
+                <v-flex mb-3>
+                    <h1 class="page-title">{{ $t('pages.profile.invalid-profile-title') }}</h1>
                 </v-flex>
-                <v-flex xs12>
+                <v-flex xs12 mt-3>
                     <p>
                         {{ $t('pages.profile.invalid-profile-content') }}
                     </p>
@@ -335,92 +335,96 @@
 
             var response = store.state.users.communityMemberProfile;
 
-            if (response) {
-                var skills   = store.getters['applicationData/skills'];
-
-                var profile = {};
-
-                profile.profileGeneralInformation   = {
-                    profileImage: response.ProfileImage || {},
-                    birthDate: response.BirthDate ? response.BirthDate.substr(0, 10) : '',
-                    phoneNumber: response.PhoneNumber,
-                    description: response.Description,
-                    website: response.Website,
-                    firstName: response.FirstName,
-                    lastName: response.LastName,
-                    email: response.Email,
-                    username: response.Username,
-                    instagramLink: response.InstagramLink,
-                    youtubeLink: response.YoutubeLink,
-                    facebookLink: response.FacebookLink,
-                    linkedinLink: response.LinkedinLink
-                };
-
-                profile.profileSkills = {
-                    selectedSkills: skills
-                            .filter(s => response.Skills.indexOf(s.ID.toString()) !== -1)
-                            .sort((s1, s2) => s2.Name > s1.Name)
-                };
-
-                profile.profilePhotoGallery = {
-                    photoGallery: response.PhotoGallery
-                };
-
-                profile.profileVideoGallery = {
-                    videoGallery: response.VideoGallery.map(v => {
-                        return {
-                            id: v.ID,
-                            link: v.Video,
-                            embedLink: SocialMediaManager.extractEmbedURLFromUnknownProvider(v.Video),
-                            isValid: true
-                        };
-                    })
-                };
-
-                profile.profileAwards = {
-                    awards: response.Awards.map(a => {
-                        return {
-                            id: a.ID,
-                            title: a.Title,
-                            issuer: a.Issuer,
-                            description: a.Description,
-                            date: a.Date.substr(0, 7)
-                        };
-                    })
-                };
-
-                profile.profileExperience = {
-                    experienceSteps: response.Experience.map(e => {
-                        return {
-                            id: e.ID,
-                            position: e.Position,
-                            employerName: e.Employer,
-                            description: e.Description,
-                            startDate: e.StartDate.substr(0, 7),
-                            endDate: e.EndDate.substr(0, 7)
-                        };
-                    })
-                };
-
-                profile.profileEducation = {
-                    educationSteps: response.Education.map(e => {
-                        return {
-                            id: e.ID,
-                            title: e.Title,
-                            institutionName: e.Institution,
-                            description: e.Description,
-                            startDate: e.StartDate.substr(0, 7),
-                            endDate: e.EndDate.substr(0, 7)
-                        };
-                    })
-                };
-
-                profile.projects = response.Projects;
-
+            if (!response) {
                 return {
-                    profile
+                    profile: null
                 };
             }
+
+            var skills   = store.getters['applicationData/skills'];
+
+            var profile = {};
+
+            profile.profileGeneralInformation   = {
+                profileImage: response.ProfileImage || {},
+                birthDate: response.BirthDate ? response.BirthDate.substr(0, 10) : '',
+                phoneNumber: response.PhoneNumber,
+                description: response.Description,
+                website: response.Website,
+                firstName: response.FirstName,
+                lastName: response.LastName,
+                email: response.Email,
+                username: response.Username,
+                instagramLink: response.InstagramLink,
+                youtubeLink: response.YoutubeLink,
+                facebookLink: response.FacebookLink,
+                linkedinLink: response.LinkedinLink
+            };
+
+            profile.profileSkills = {
+                selectedSkills: skills
+                        .filter(s => response.Skills.indexOf(s.ID.toString()) !== -1)
+                        .sort((s1, s2) => s2.Name > s1.Name)
+            };
+
+            profile.profilePhotoGallery = {
+                photoGallery: response.PhotoGallery
+            };
+
+            profile.profileVideoGallery = {
+                videoGallery: response.VideoGallery.map(v => {
+                    return {
+                        id: v.ID,
+                        link: v.Video,
+                        embedLink: SocialMediaManager.extractEmbedURLFromUnknownProvider(v.Video),
+                        isValid: true
+                    };
+                })
+            };
+
+            profile.profileAwards = {
+                awards: response.Awards.map(a => {
+                    return {
+                        id: a.ID,
+                        title: a.Title,
+                        issuer: a.Issuer,
+                        description: a.Description,
+                        date: a.Date.substr(0, 7)
+                    };
+                })
+            };
+
+            profile.profileExperience = {
+                experienceSteps: response.Experience.map(e => {
+                    return {
+                        id: e.ID,
+                        position: e.Position,
+                        employerName: e.Employer,
+                        description: e.Description,
+                        startDate: e.StartDate.substr(0, 7),
+                        endDate: e.EndDate.substr(0, 7)
+                    };
+                })
+            };
+
+            profile.profileEducation = {
+                educationSteps: response.Education.map(e => {
+                    return {
+                        id: e.ID,
+                        title: e.Title,
+                        institutionName: e.Institution,
+                        description: e.Description,
+                        startDate: e.StartDate.substr(0, 7),
+                        endDate: e.EndDate.substr(0, 7)
+                    };
+                })
+            };
+
+            profile.projects = response.Projects;
+
+            return {
+                profile
+            };
         },
         methods: {
             getTimelineDate (date) {
@@ -507,10 +511,6 @@
 
     .v-avatar img {
         border: 3px solid #e1e1e1;
-    }
-
-    .profile-section {
-        font-size: 20px;
     }
     
     .profile-information-row {

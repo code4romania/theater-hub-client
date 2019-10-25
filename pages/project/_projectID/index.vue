@@ -46,7 +46,7 @@
               </v-flex>
               <v-flex md3 offset-md1 mt-5 class="project-information-section">
                 <div class="project__info">
-                  <span class="label">{{ $t('pages.project.initiator') }}</span> {{ project.InitiatorName }}
+                  <span class="label">{{ $t('pages.project.initiator') }}</span> {{ initiatorName }}
                   <br>
                   <div v-if="project.PhoneNumber">
                     <span class="label">{{ $t('pages.project.contact-phone-number') }}</span> {{ project.PhoneNumber }}
@@ -121,7 +121,7 @@
                 v-if="hasOtherProjects"
                 md3 offset-md1 mt-5
               >
-                <h2 class="mb-5">{{ $t('pages.project.other-projects-by-title') }} {{ project.InitiatorName }}</h2>
+                <h2 class="mb-5">{{ $t('pages.project.other-projects-by-title') }} {{ initiatorName }}</h2>
                 <v-layout column>
                   <v-flex
                     xs12
@@ -201,6 +201,9 @@ export default {
     }),
     currency: function () {
         return this.project.Currency;
+    },
+    initiatorName: function () {
+        return this.project.InitiatorName || this.$t(`application-data.anonymous`);
     },
     pageURL: function () {
       return `${config.application.baseURL}/project`;

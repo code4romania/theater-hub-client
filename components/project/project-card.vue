@@ -47,6 +47,13 @@
             </nuxt-link>
           </p>
           <p
+            v-if="!project_initiator"
+            class="bold"
+          >
+            {{ $t('shared.content.project-initiator') }}
+            <span>{{ $t(`application-data.anonymous`) }}</span>
+          </p>
+          <p
             v-if="project_city"
             class="bold"
           >

@@ -151,7 +151,6 @@ export var HtmlHelpers = {
     var body = document.getElementsByTagName('body')[0];
 
     this.cloneElementDimensions(body, target);
-    target.style.minWidth   = target.style.width;
     target.style.minHeight  = target.style.height;
     target.style.width      = '100%';
     target.style.height     = '100%';

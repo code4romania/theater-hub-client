@@ -273,7 +273,8 @@
                         this.options.initializeProjectImage(this);
                     }
                 },
-                autocompleteService: null
+                autocompleteService: null,
+                canCallPlacesAutocomplete: true
             }
         },
         computed: {

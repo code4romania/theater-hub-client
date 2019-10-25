@@ -59,8 +59,11 @@
                         },
                         addFileEventHandler: (file) => {
                             var ids = this.profilePhotoGallery.photoGallery.map(p => p.ID);
+                            var fileSize = file.size / (1024 * 1024);
 
-                            if (ids.indexOf(file.upload.uuid) !== -1) {
+                            if (ids.indexOf(file.upload.uuid) !== -1 ||
+                                this.profilePhotoGallery.photoGallery.length >= this.photoGalleryDropzoneOptions.maxFiles ||
+                                fileSize > this.photoGalleryDropzoneOptions.maxFilesize) {
                                 return;
                             }
 
