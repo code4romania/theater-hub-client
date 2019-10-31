@@ -3,7 +3,7 @@
         class="community-section"
     >
         <v-container
-            class="main-container"
+            class="main-container large"
         >
             <v-layout row wrap class="community-header-bar">
                 <v-flex xs12 sm5 md5 lg5 mx-2 mb-1>
@@ -55,7 +55,7 @@
                     <v-flex xs12 class="skill-section-members">
                         <v-layout row wrap>
 
-                            <v-flex xs6 sm4 md3 lg3
+                            <v-flex xs12 sm4 md3 lg3
                                 community-member
                                 :key="i" v-for="(member, i) in layer.Members"
                                 class="mt-4">
@@ -67,7 +67,11 @@
                                     />
                             </v-flex>
 
-                            <v-flex xs6 sm4 md3 lg3 community-member class="mt-4" v-if="layer.HasMore">
+                            <v-flex
+                                v-if="layer.HasMore"
+                                xs12 sm4 md3 lg3 community-member
+                                class="mt-4"
+                            >
                                 <div class="view-all-container secondary-color" v-on:click="handleViewAllClick(layer)">
                                     <span class="view-all-text">{{ $t('pages.community.view-all') }}</span>
                                 </div>

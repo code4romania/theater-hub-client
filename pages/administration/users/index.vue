@@ -2,7 +2,7 @@
   <section class="users-dashboard">
     <v-container
         users-dashboard-container
-        class="main-container extra-large"
+        class="dashboard-container main-container extra-large"
     >
         <v-layout column>
             <v-flex>
@@ -91,7 +91,7 @@
                     class="elevation-1">
                         <template slot="items" slot-scope="dashboard">
                             <tr
-                                class="users-dashboard-row"
+                                class="users-dashboard-row dashboard-row"
                                 v-if="!isEditedUser(dashboard.item)"
                             >
                                 <td>
@@ -101,20 +101,37 @@
                                     </v-avatar>
                                 </td>
                                 <td class="text-xs-left">
+                                    <span class="field-label">{{ $t('pages.administration.users.full-name-header') }}:</span>
                                     <nuxt-link
                                         :to="`/profile/${dashboard.item.Username}`"
                                         target="_blank">
                                         <span class="member-name">{{ `${dashboard.item.FirstName} ${dashboard.item.LastName}` }}</span>
                                     </nuxt-link>
                                 </td>
-                                <td class="text-xs-left">{{  dashboard.item.Email }}</td>
-                                <td class="text-xs-left">{{  getRoleElementText(dashboard.item.Role) }}</td>
-                                <td class="text-xs-left">{{  getAccountStatusElementText(dashboard.item.AccountStatus) }}</td>
-                                <td class="text-xs-left">{{  dashboard.item.AccountSource }}</td>
-                                <td class="text-xs-left">{{  getPrivacyElementText(dashboard.item.ProfileVisibility) }}</td>
+                                <td class="text-xs-left">
+                                    <span class="field-label">{{ $t('pages.administration.users.email-address-header') }}:</span>
+                                    {{  dashboard.item.Email }}
+                                </td>
+                                <td class="text-xs-left">
+                                    <span class="field-label">{{ $t('pages.administration.users.role-header') }}:</span>
+                                    {{  getRoleElementText(dashboard.item.Role) }}
+                                </td>
+                                <td class="text-xs-left">
+                                    <span class="field-label">{{ $t('pages.administration.users.account-status-header') }}:</span>
+                                    {{  getAccountStatusElementText(dashboard.item.AccountStatus) }}
+                                </td>
+                                <td class="text-xs-left">
+                                    <span class="field-label">{{ $t('pages.administration.users.account-source-header') }}:</span>
+                                    {{  dashboard.item.AccountSource }}
+                                </td>
+                                <td class="text-xs-left">
+				                    <span class="field-label">{{ $t('pages.administration.users.profile-visibility-header') }}:</span>
+                                    {{  getPrivacyElementText(dashboard.item.ProfileVisibility) }}
+                                </td>
                                 <td class="text-xs-left">
                                     <v-layout>
                                         <v-flex xs12>
+				                            <span class="field-label">{{ $t('pages.administration.users.actions-header') }}:</span>
                                             <v-btn
                                                 v-if="showEnableUserButton(dashboard.item)"
                                                 small

@@ -13,7 +13,7 @@
                 :no-data-text="$t('fields.select-skills.no-results')"
                 color="#AE2760"
                 background-color="transparent"
-                :menu-props="{maxHeight: 160}">
+                :menu-props="{maxHeight: 200}">
             </v-autocomplete>
         </v-flex>
         <v-flex xs12 mt-3 class="skills-row">

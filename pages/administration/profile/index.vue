@@ -242,10 +242,6 @@
         justify-content: flex-end;
     }
 
-    .profile-section {
-        font-size: 20px;
-    }
-
     .profile-information-row {
         padding: 5px 0px;
     }

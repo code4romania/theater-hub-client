@@ -4,12 +4,12 @@
       <v-flex
         sm6 order-sm2>
         <v-img
-          v-if="image && image.Location"
+          v-if="image"
           class="projectHero__image"
-          :src="image.Location"
+          :src="image"
         ></v-img>
         <v-img
-            v-if="!image || !image.Location"
+            v-if="!image"
             class="projectHero__image"
             :src="require('~/assets/images/main_image.png')"
             aspect-ratio="1.7"
@@ -38,7 +38,7 @@
           <v-flex xs12 class="projectHero__initiator">
             <v-avatar size="200px">
               <img :src="require('~/assets/images/default-avatar.svg')" v-if="!initiatorImage">
-              <img :src="initiatorImage.ThumbnailLocation" v-if="initiatorImage">
+              <img :src="initiatorImage" v-if="initiatorImage">
             </v-avatar>
           </v-flex>
         </v-layout>

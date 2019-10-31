@@ -57,7 +57,7 @@
                             />
                             <img
                                 v-if="myProfileImage"
-                                :src="myProfileImage.Location"
+                                :src="myProfileImage"
                             />
                         </v-avatar>
                     </v-flex>
@@ -99,7 +99,7 @@
                           />
                           <img
                               v-if="myProfileImage"
-                              :src="myProfileImage.Location"
+                              :src="myProfileImage"
                            />
                       </v-avatar>
                   </v-flex>

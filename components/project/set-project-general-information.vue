@@ -230,7 +230,7 @@
                     acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                     initializeProjectImage: (dropzone) => {
                         if (this.generalInformation.Image && this.generalInformation.Image.ThumbnailLocation) {
-                            var projectImage    = this.generalInformation.Image || {};
+                            var projectImage    = this.generalInformation.Image;
                             var file            = { url: projectImage.ThumbnailLocation, size: projectImage.Size * 1000 * 1000 };
                             dropzone.emit('addedfile', file);
                             dropzone.emit('thumbnail', file, file.url);
@@ -273,7 +273,8 @@
                         this.options.initializeProjectImage(this);
                     }
                 },
-                autocompleteService: null
+                autocompleteService: null,
+                canCallPlacesAutocomplete: true
             }
         },
         computed: {

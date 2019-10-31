@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap>
-        <v-flex xs12 elevation-3 pa-5 ma-1>
+        <v-flex xs12 pa-5 ma-1>
             <v-form ref="experienceForm">
                 <v-layout row>
                     <v-flex xs12 sm12 md12 lg12  class="profile-row-actions">

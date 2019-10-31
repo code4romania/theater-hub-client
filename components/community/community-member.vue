@@ -75,6 +75,8 @@
     .member-skills-container {
         display: flex;
         justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     .member-skills-container > a {
@@ -82,7 +84,6 @@
     }
 
     .member-skill {
-        width: 80px;
         height: 20px;
 
         .v-chip__content.clickable {
@@ -91,7 +92,8 @@
     }
 
     .skill-surplus {
-        width: 25px;
+        width: 35px;
+        min-width: 35px;
         height: 20px;
     }
 

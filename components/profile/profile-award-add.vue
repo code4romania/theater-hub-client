@@ -23,7 +23,6 @@
                     </v-flex>
                     <v-flex xs12 sm12 md3 lg3 class="date-menu-container px-2">
                         <v-menu
-                            absolute top
                             content-class="date-picker-menu"
                             :close-on-content-click="false"
                             v-model="awardsFactory.isAwardDateMenuOpen"

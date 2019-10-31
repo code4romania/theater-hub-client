@@ -19,8 +19,16 @@
 					</v-text-field>
 				</v-flex>
 			</v-layout>
-			<v-layout row wrap mt-5>
-				<v-flex xs12 md6 project-card-col :key="i" v-for="(project, i) in projects">
+			<v-layout
+				row wrap
+				mt-5
+                v-bind:class="{'justify-center': projects.length === 1}"
+			>
+				<v-flex
+					xs12 md6
+					project-card-col
+					:key="i" v-for="(project, i) in projects"
+				>
 					<ProjectCard
 						:project_id="project.ID"
 						:project_title="project.Name"
@@ -149,9 +157,9 @@ export default {
 
 <style>
 
-	.projects-search-container {
-		padding: 0px 20px;
-	}
+  .projects-search-container {
+  	padding: 0px 20px;
+  }
 
   .project-card-col {
     padding: 20px;
