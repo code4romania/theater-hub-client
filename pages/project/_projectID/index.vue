@@ -4,12 +4,11 @@
     <v-layout
       v-if="!project"
       row wrap
-      text-center-xs
-      class="mt-5 pa-5 invalid-project-container">
-        <v-flex>
-            <h1 class="mb-3">{{ $t('pages.project.invalid-project-title') }}</h1>
+      class="invalid-project-container main-container px-5">
+        <v-flex mb-3>
+            <h1 class="page-title">{{ $t('pages.project.invalid-project-title') }}</h1>
         </v-flex>
-        <v-flex xs12>
+        <v-flex xs12 mt-3>
             <p>
                 {{ $t('pages.project.invalid-project-content') }}
             </p>
@@ -19,7 +18,7 @@
     <v-layout row wrap v-if="project">
       <Hero
         :title="project.Name"
-        :image="project.Image"
+        :image="project.Image ? project.Image.Location : ''"
         :initiatorImage="project.InitiatorImage"
         :isCompleted="project.IsCompleted"
       />
@@ -176,6 +175,12 @@ export default {
   async asyncData ({ store, query, params }) {
     const project = await store.dispatch('projects/getProject', params.projectID);
 
+    if (!project) {
+        return {
+            project: null
+        };
+    }
+
     project.Needs = project.Needs.map(n => {
       return {
         ...n,
@@ -229,7 +234,7 @@ h2 {
 .invalid-project-container {
   max-width: 960px;
   margin: 0px auto;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .theme--light.v-timeline:before {

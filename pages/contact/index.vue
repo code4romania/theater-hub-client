@@ -88,7 +88,7 @@
                                         </label>
                                         <nuxt-link
                                             class="agree-to-terms-link"
-                                            to="terms-and-conditions"
+                                            to="/terms-and-conditions"
                                             target="_blank">
                                             {{ $t('pages.contact.agreement-text-2') }}
                                         </nuxt-link>

@@ -567,6 +567,38 @@ main {
   font-size: 28px;
 }
 
+.dashboard-container .field-label {
+  font-weight: 700;
+  margin-right: 10px;
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+
+  .dashboard-container {
+
+      table {
+          display: flex;
+          flex-direction: column;
+      }
+
+      thead {
+          display: none;
+      }
+
+      .dashboard-row {
+          flex-direction: column;
+          display: flex;
+          padding-top: 24px;
+          padding-bottom: 24px;
+      }
+
+      .field-label {
+          display: initial;
+      }
+  }
+}
+
 @media screen and (min-width: 960px) {
 
   .facebook-link-container {

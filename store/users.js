@@ -355,7 +355,7 @@ export const getters = {
             return '';
         }
 
-        return getters.me.ProfileImage;
+        return getters.me.ProfileImage.ThumbnailLocation;
     },
     isManaged (state, getters) {
         if (!getters.me) {

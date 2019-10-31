@@ -2,7 +2,7 @@
   <section class="projects">
     <v-container
         projects-dashboard-container
-        class="main-container extra-large"
+        class="dashboard-container main-container extra-large"
     >
         <v-layout column>
             <v-flex>
@@ -44,29 +44,41 @@
                         class="elevation-1">
                             <template slot="items" slot-scope="dashboard">
                                 <tr
-                                    class="projects-dashboard-row"
+                                    class="projects-dashboard-row dashboard-row"
                                     v-if="!isEditedProject(dashboard.item)"
                                 >
                                     <td class="text-xs-left">
+                                        <span class="field-label">{{ $t('pages.administration.projects.name-header') }}:</span>
                                         <nuxt-link
                                             :to="`/project/${dashboard.item.ID}`"
                                             target="_blank">
                                             <span class="member-name">{{ dashboard.item.Name }}</span>
                                         </nuxt-link>
                                     </td>
-                                    <td class="text-xs-left">{{ dashboard.item.City }}</td>
                                     <td class="text-xs-left">
+                                        <span class="field-label">{{ $t('pages.administration.projects.city-header') }}:</span>
+                                        {{ dashboard.item.City }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <span class="field-label">{{ $t('pages.administration.projects.initiator-name-header') }}:</span>
                                         <nuxt-link
                                             :to="`/profile/${dashboard.item.InitiatorUsername}`"
                                             target="_blank">
                                             <span class="member-name">{{ dashboard.item.InitiatorName }}</span>
                                         </nuxt-link>
                                     </td>
-                                    <td class="text-xs-left">{{  getStatusElementText(dashboard.item.Status) }}</td>
-                                    <td class="text-xs-left">{{  getPrivacyElementText(dashboard.item.Visibility) }}</td>
+                                    <td class="text-xs-left">
+                                        <span class="field-label">{{ $t('pages.administration.projects.status-header') }}:</span>
+                                        {{  getStatusElementText(dashboard.item.Status) }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <span class="field-label">{{ $t('pages.administration.projects.visibility-header') }}:</span>
+                                        {{  getPrivacyElementText(dashboard.item.Visibility) }}
+                                    </td>
                                     <td class="text-xs-left">
                                         <v-layout>
                                             <v-flex xs12>
+                                                <span class="field-label">{{ $t('pages.administration.projects.actions-header') }}:</span>
                                                 <v-btn
                                                     v-if="showEnableProjectButton(dashboard.item)"
                                                     small
