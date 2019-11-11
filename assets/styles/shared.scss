@@ -582,8 +582,26 @@ main {
           flex-direction: column;
       }
 
-      thead {
+      thead tr:first-child {
+        height: 100%;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        th {
           display: none;
+
+          &.sortable {
+            padding: 0px;
+            min-width: 140px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+        
       }
 
       .dashboard-row {
