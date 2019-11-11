@@ -78,7 +78,7 @@ export default {
             return 'user';
         }
     },
-    middleware: ['visitor-or-enabled-user', 'get-tags'],
+    middleware: ['visitor-or-enabled-user'],
     async asyncData ({ store, query, params }) {
         var requestQuery = {
             searchTerm: '',

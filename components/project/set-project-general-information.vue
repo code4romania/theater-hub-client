@@ -27,15 +27,21 @@
                         </v-text-field>
                     </v-flex>
                     <v-flex xs12>
-                        <v-text-field
-                            id="city-input"
-                            placeholder=""
+                        <v-autocomplete
                             v-model="generalInformation.City"
-                            :rules="cityRules"
+                            :search-input.sync="searchedCity"
+                            :no-filter="true"
+                            :items="citiesList"
+                            :cache-items="false"
+                            persistent-hint
                             :label="`${$t('fields.city.label')}*`"
-                            @input="updateProjectGeneralInformationModel"
-                            validate-on-blur required>
-                        </v-text-field>
+                            :no-data-text="$t('fields.city.no-results')"
+                            color="#AE2760"
+                            background-color="transparent"
+                            :menu-props="{maxHeight: 200}"
+                            @input="updateProjectCity"
+                        >
+                        </v-autocomplete>
                     </v-flex>
                     <v-flex xs12 class="project-date-container">
                         <v-menu
@@ -166,7 +172,6 @@
 <script>
     import Dropzone from 'nuxt-dropzone';
     import { mapGetters } from 'vuex';
-    import { getConfig } from '~/config/env';
     import { Helpers, Validators } from '~/utils';
 
     import 'nuxt-dropzone/dropzone.css';
@@ -176,19 +181,6 @@
             Dropzone
         },
         props: ['projectGeneralInformation', 'isCreating'],
-        head () {
-            if (window.google) {
-                return [];
-            }
-
-            return {
-                script: [
-                    {
-                        src: `https://maps.googleapis.com/maps/api/js?key=${getConfig().google.placeAutocomplete.api_key}&libraries=places`
-                    }
-                ]
-            };
-        },
         data: function () {
             return {
                 generalInformation: Helpers.cloneObject(this.projectGeneralInformation),
@@ -220,6 +212,8 @@
                 descriptionRules: [
                     v => !v || v.length <= 5000 || this.$t('fields.project-description.validation-errors.length')
                 ],
+                citiesList: [],
+                searchedCity: '',
                 projectImageDropzoneOptions: {
                     url: '/',
                     maxFilesize: 5,
@@ -272,9 +266,7 @@
 
                         this.options.initializeProjectImage(this);
                     }
-                },
-                autocompleteService: null,
-                canCallPlacesAutocomplete: true
+                }
             }
         },
         computed: {
@@ -296,33 +288,22 @@
             updateProjectGeneralInformationModel: function () {
                 this.isProjectDateMenuOpen = false;
                 this.$emit('updateProjectGeneralInformation', this.generalInformation);
+            },
+            updateProjectCity: function (value) {
+                this.generalInformation.City = value;
+                this.updateProjectGeneralInformationModel();
             }
         },
-        mounted: function () {
-            const autocompleteServiceInterval = setInterval(() => {
-                if (this.autocompleteService) {
-                    clearInterval(autocompleteServiceInterval);
-                }
-
-                const google = window.google;
-
-                if (!google) {
+        watch: {
+            async searchedCity (value) {
+                if (!value) {
                     return;
                 }
 
-                this.autocompleteService = new google.maps.places.Autocomplete(
-                    (document.getElementById('city-input')),
-                    {types: ['(cities)']}
-                );
-
-                var $this = this;
-
-                google.maps.event.addListener(this.autocompleteService, 'place_changed', function () {
-                    $this.generalInformation.City = $this.autocompleteService.getPlace().formatted_address;
-                    $this.updateProjectGeneralInformationModel();
-                });
-            }, 100);
-
+                this.citiesList = await this.$store.dispatch('projects/getCities', value);
+            }
+        },
+        mounted: function () {
             this.$store.dispatch('projects/setCreateProjectErrors', []);
 
             if (this.currencyItems.length !== 0) {
