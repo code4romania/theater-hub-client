@@ -4,7 +4,6 @@
         "professional": "Profesionist",
         "institution": "Instituție",
         "sponsor": "Sponsor",
-        "done": "FINALIZAT",
         "mandatory": "OBLIGATORIU",
         "urgent": "URGENT",
         "completed": "FINALIZAT",
@@ -314,6 +313,7 @@
         },
         "city": {
             "label": "Oraș",
+            "no-results": "Nu există rezultate",
             "validation-errors": {
                 "required": "Orașul este obligatoriu",
                 "length": "Orașul trebuie să aibă cel mult 100 de caractere"

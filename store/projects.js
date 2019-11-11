@@ -1,4 +1,4 @@
-import { ProjectService } from '../api/services';
+import { ProjectService, HereMapsService } from '../api/services';
 
 export const state = () => ({
     newProject: null,
@@ -42,6 +42,9 @@ export const actions = {
     },
     async delete ({ commit, dispatch }, id) {
         await ProjectService.delete(id);
+    },
+    async getCities ({ commit, dispatch }, text) {
+        return HereMapsService.getCities(text);
     },
     setNewProject: ({ commit }, value) => {
         commit('SET_NEW_PROJECT', value);
