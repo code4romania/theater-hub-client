@@ -264,6 +264,7 @@
     }
 
     .hompage-hero-left-container {
+      padding: 20px;
       justify-content: flex-end;
       display: flex;
     }
@@ -327,7 +328,7 @@
       justify-content: center;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 1265px) {
 
     .view-link-container {
       padding-right: 0px;
