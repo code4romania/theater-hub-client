@@ -98,7 +98,7 @@ export default {
         isWizardStepValid: function () {
             switch (this.wizardStep) {
                 case 1:
-                    return (!this.generalInformation.Image || !this.generalInformation.Image.File || this.generalInformation.Image.File.accepted) &&
+                    return (!this.generalInformation.Image || !this.generalInformation.Image.File || this.generalInformation.Image.File.accepted === true) &&
                         this.generalInformation.Name && this.generalInformation.Name.length <= 100 &&
                          (!this.generalInformation.PhoneNumber || Validators.isValidPhoneNumber(this.generalInformation.PhoneNumber)) &&
                          (!this.generalInformation.Email || Validators.isValidEmailAddress(this.generalInformation.Email)) &&

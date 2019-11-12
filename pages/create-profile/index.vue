@@ -332,7 +332,7 @@ export default {
     isWizardStepValid: function () {
       switch (this.wizardStep) {
         case 1:
-            return (!this.profileGeneralInformation.profileImage || !this.profileGeneralInformation.profileImage.File || this.profileGeneralInformation.profileImage.File.accepted) &&
+            return (!this.profileGeneralInformation.profileImage || !this.profileGeneralInformation.profileImage.File || this.profileGeneralInformation.profileImage.File.accepted === true) &&
                     this.profileGeneralInformation.phoneNumber && Validators.isValidBirthDate(this.profileGeneralInformation.birthDate) &&
                         Validators.isValidPhoneNumber(this.profileGeneralInformation.phoneNumber) &&
                         (!this.profileGeneralInformation.website || Validators.isValidURL(this.profileGeneralInformation.website)) &&

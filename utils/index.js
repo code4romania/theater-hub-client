@@ -112,7 +112,7 @@ export var Validators = {
     lowerCasePassword !== upperCasePassword;
   },
   isValidPhoneNumber (phoneNumber) {
-    if (!phoneNumber) {
+    if (!phoneNumber || phoneNumber.length > 15) {
       return false;
     }
 
@@ -124,9 +124,15 @@ export var Validators = {
       phoneNumber = phoneNumber.substring(1, phoneNumber.length);
     }
 
+    if (phoneNumber.length > 15) {
+      return false;
+    }
+
     var parsedPhoneNumber = parseInt(phoneNumber);
 
-    return !!parsedPhoneNumber && parsedPhoneNumber.toString().length === phoneNumber.length && phoneNumber.length >= 6;
+    return !!parsedPhoneNumber &&
+      parsedPhoneNumber.toString().length === phoneNumber.length &&
+      phoneNumber.length >= 6;
   },
   isValidBirthDate (birthDate) {
     return moment().diff(new Date(birthDate), 'years') >= 18;

@@ -689,7 +689,7 @@ export default {
                 var isDescriptionFieldValid = !editedInformation.description ||
                                                 editedInformation.description.length <= 500;
 
-                return (editedInformation.profileImage && editedInformation.profileImage.File && !editedInformation.profileImage.File.accepted) ||
+                return (editedInformation.profileImage && editedInformation.profileImage.File && editedInformation.profileImage.File.accepted === false) ||
                     !editedInformation.firstName || !editedInformation.lastName ||
                         !editedInformation.phoneNumber ||
                         !Validators.isValidPhoneNumber(editedInformation.phoneNumber) ||
