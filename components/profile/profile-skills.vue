@@ -17,7 +17,7 @@
             </v-autocomplete>
         </v-flex>
         <v-flex xs12 mt-3 class="skills-row">
-            <v-chip close :key="i" v-for="(skill, i) in selectedSkillNames" @input="removeSkill(skill)"
+            <v-chip close :key="i" v-for="(skill, i) in sortedSelectedSkillNames" @input="removeSkill(skill)"
                                                                     class="skill secondary-color mr-2">{{ skill }}</v-chip>
         </v-flex>
     </v-layout>
@@ -58,6 +58,9 @@
             computed: {
                 skillNameList: function () {
                     return this.localizedSkills.map(s => s.Name).sort();
+                },
+                sortedSelectedSkillNames: function () {
+                    return this.selectedSkillNames.sort();
                 }
             },
             mounted: function () {
@@ -73,6 +76,5 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
 </style>

@@ -193,7 +193,10 @@
         </v-layout>
         <v-layout row wrap mt-5 pa-5 v-if="!isCreatingProfile && isCreatedProfile" class="create-account-success">
             <v-flex text-xs-center>
-                <h1 mb-3>{{ $t('pages.create-profile.profile-created-title') }}</h1>
+                <h1
+                    mb-3
+                    class="page-title"
+                >{{ $t('pages.create-profile.profile-created-title') }}</h1>
             </v-flex>
             <v-flex xs12 mt-5>
                 <p>
@@ -592,6 +595,17 @@ export default {
         skills: 'applicationData/skills',
         locale: 'locale'
     })
+  },
+  watch: {
+      wizardStep (value) {
+        setTimeout(() => {
+            const index = value === 1 ? 1 : value - 1;
+            var element = document.getElementsByClassName('v-stepper__content')[index];
+            if (!HtmlHelpers.isVerticallyFullyInViewport(element)) {
+                HtmlHelpers.scrollToElement(element, 0);
+            }
+        }, 500);
+      }
   },
   mounted () {
       this.endEditSectionSession();
