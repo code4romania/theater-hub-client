@@ -216,7 +216,7 @@
                 searchedCity: '',
                 projectImageDropzoneOptions: {
                     url: '/',
-                    maxFilesize: 5,
+                    maxFilesize: 10,
                     maxFiles: 1,
                     addRemoveLinks: true,
                     autoProcessQueue: false,
@@ -245,8 +245,8 @@
 
                         this.updateProjectGeneralInformationModel();
                     },
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 200,
+                    thumbnailWidth: 300,
+                    thumbnailHeight: 300,
                     init: function () {
                         this.on('removedfile', (file) => {
                             this.options.removedfileEventHandler(file);

@@ -683,18 +683,20 @@ export default {
                 return true;
             },
             isSaveEditGeneralInformationButtonDisabled: function () {
-                var isWebsiteFieldValid     = !this.editedProfile.profileGeneralInformation.website ||
-                                                Validators.isValidURL(this.editedProfile.profileGeneralInformation.website);
-                var isDescriptionFieldValid = !this.editedProfile.profileGeneralInformation.description ||
-                                                this.editedProfile.profileGeneralInformation.description.length <= 500;
+                const editedInformation     = this.editedProfile.profileGeneralInformation;
+                var isWebsiteFieldValid     = !editedInformation.website ||
+                                                Validators.isValidURL(editedInformation.website);
+                var isDescriptionFieldValid = !editedInformation.description ||
+                                                editedInformation.description.length <= 500;
 
-                return !this.editedProfile.profileGeneralInformation.firstName || !this.editedProfile.profileGeneralInformation.lastName ||
-                        !this.editedProfile.profileGeneralInformation.phoneNumber ||
-                        !Validators.isValidPhoneNumber(this.editedProfile.profileGeneralInformation.phoneNumber) ||
+                return (editedInformation.profileImage && editedInformation.profileImage.File && !editedInformation.profileImage.File.accepted) ||
+                    !editedInformation.firstName || !editedInformation.lastName ||
+                        !editedInformation.phoneNumber ||
+                        !Validators.isValidPhoneNumber(editedInformation.phoneNumber) ||
                         !isWebsiteFieldValid ||
                         !isDescriptionFieldValid ||
                         !this.areAllSocialMediaLinksValid() ||
-                        !Validators.isValidBirthDate(this.editedProfile.profileGeneralInformation.birthDate);
+                        !Validators.isValidBirthDate(editedInformation.birthDate);
             },
             handleCarouselItemClick: function (itemIndex) {
                 this.portfolioImagesIndex = itemIndex;

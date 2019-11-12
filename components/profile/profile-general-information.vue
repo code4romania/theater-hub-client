@@ -140,7 +140,7 @@
                     ],
                     profileImageDropzoneOptions: {
                         url: '/',
-                        maxFilesize: 5,
+                        maxFilesize: 10,
                         maxFiles: 1,
                         addRemoveLinks: true,
                         autoProcessQueue: false,
@@ -170,8 +170,8 @@
 
                             this.updateProfileGeneralInformationModel();
                         },
-                        thumbnailWidth: 200,
-                        thumbnailHeight: 200,
+                        thumbnailWidth: 300,
+                        thumbnailHeight: 300,
                         init: function () {
                             this.on('removedfile', (file) => {
                                 this.options.removedfileEventHandler(file);
@@ -196,7 +196,7 @@
                             var trgHeight = this.options.thumbnailHeight;
                             var trgX = 0;
 
-                            if (file.width > file.height) {
+                            if (file.width < file.height) {
                                 trgHeight = this.options.thumbnailWidth * file.height / file.width;
                             } else {
                                 trgWidth = this.options.thumbnailHeight * file.width / file.height;
