@@ -161,15 +161,16 @@ export var HtmlHelpers = {
     return clientRect.top >= 0 && clientRect.bottom <= window.innerHeight;
   },
   scrollToElement (element, offsetY = 0) {
-    const elementTop        = element.getBoundingClientRect().top;
+    const pageScrollTop     = document.documentElement.scrollTop;
+    const pageBottom        = pageScrollTop + document.documentElement.clientHeight;
+    const elementTop        = pageScrollTop + element.getBoundingClientRect().top;
     const elementHeight     = element.offsetHeight;
     const elementBottom     = elementTop + elementHeight;
-    const pageScrollTop     = document.body.scrollTop;
 
-    if (elementTop < 0) {
-      document.body.scrollTop = pageScrollTop + elementTop + offsetY;
-    } else if (elementBottom > document.body.offsetHeight) {
-      document.body.scrollTop = pageScrollTop + (elementBottom - document.body.offsetHeight) + offsetY;
+    if (elementTop < pageScrollTop) {
+      window.scrollTo(0, elementTop + offsetY);
+    } else if (elementBottom > pageBottom) {
+      window.scrollTo(0, pageScrollTop + (elementBottom - pageBottom) + offsetY);
     }
   }
 }
