@@ -4,7 +4,8 @@
     <v-layout
       v-if="!project"
       row wrap
-      class="invalid-project-container main-container px-5">
+      class="invalid-project-container main-container px-5"
+    >
         <v-flex mb-3>
             <h1 class="page-title">{{ $t('pages.project.invalid-project-title') }}</h1>
         </v-flex>
