@@ -176,20 +176,20 @@
         methods: {
             onAddUpdateClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedUpdates();
                 this.isAddingUpdate = true;
             },
             onEditUpdateClick: function (update, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedUpdates();
                 this.isEditingUpdates = true;
                 update.InEditMode = true;
             },
             onDeleteUpdateClick: function (update, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedUpdates();
                 this.isDeletingUpdate = true;
                 update.InDeleteMode = true;

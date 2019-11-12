@@ -168,20 +168,20 @@
         methods: {
             onAddEducationStepClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedEducationSteps();
                 this.isAddingEducationStep = true;
             },
             onEditEducationStepClick: function (educationStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedEducationSteps();
                 this.isEditingEducation = true;
                 educationStep.inEditMode = true;
             },
             onDeleteEducationStepClick: function (educationStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedEducationSteps();
                 this.isDeletingEducationStep = true;
                 educationStep.inDeleteMode = true;

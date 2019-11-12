@@ -157,20 +157,20 @@
         methods: {
             onAddAwardClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedAwards();
                 this.isAddingAward = true;
             },
             onEditAwardClick: function (award, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedAwards();
                 this.isEditingAwards = true;
                 award.inEditMode = true;
             },
             onDeleteAwardClick: function (award, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedAwards();
                 this.isDeletingAward = true;
                 award.inDeleteMode = true;
