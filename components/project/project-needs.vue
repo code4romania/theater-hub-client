@@ -224,20 +224,20 @@
         methods: {
             onAddNeedClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedNeeds();
                 this.isAddingNeed = true;
             },
             onEditNeedClick: function (need, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedNeeds();
                 this.isEditingNeeds = true;
                 need.InEditMode = true;
             },
             onDeleteNeedClick: function (need, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedNeeds();
                 this.isDeletingNeed = true;
                 need.InDeleteMode = true;

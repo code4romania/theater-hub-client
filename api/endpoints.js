@@ -121,4 +121,8 @@ export class Endpoints {
         DisableProject: '/administration/projects/{0}/disable',
         DeleteProject: '/administration/projects/{0}/delete'
     }
+
+    static HereMaps = {
+        GetAutocompleteSuggestions: 'http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id={0}&app_code={1}&query={2}'
+    };
 };

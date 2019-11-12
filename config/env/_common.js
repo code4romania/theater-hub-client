@@ -13,9 +13,8 @@ export const commonConfig = {
         aboutLinkRO: 'https://code4.ro/ro/cine-suntem/',
         aboutLinkEN: 'https://code4.ro/en/who-we-are/'
     },
-    google: {
-        placeAutocomplete: {
-            api_key: ''
-        }
+    Here_Maps: {
+        app_code: '',
+        app_id: ''
     }
  };

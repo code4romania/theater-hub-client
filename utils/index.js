@@ -112,7 +112,7 @@ export var Validators = {
     lowerCasePassword !== upperCasePassword;
   },
   isValidPhoneNumber (phoneNumber) {
-    if (!phoneNumber) {
+    if (!phoneNumber || phoneNumber.length > 15) {
       return false;
     }
 
@@ -124,9 +124,15 @@ export var Validators = {
       phoneNumber = phoneNumber.substring(1, phoneNumber.length);
     }
 
+    if (phoneNumber.length > 15) {
+      return false;
+    }
+
     var parsedPhoneNumber = parseInt(phoneNumber);
 
-    return !!parsedPhoneNumber && parsedPhoneNumber.toString().length === phoneNumber.length && phoneNumber.length >= 6;
+    return !!parsedPhoneNumber &&
+      parsedPhoneNumber.toString().length === phoneNumber.length &&
+      phoneNumber.length >= 6;
   },
   isValidBirthDate (birthDate) {
     return moment().diff(new Date(birthDate), 'years') >= 18;
@@ -161,11 +167,16 @@ export var HtmlHelpers = {
     return clientRect.top >= 0 && clientRect.bottom <= window.innerHeight;
   },
   scrollToElement (element, offsetY = 0) {
-    window.scrollTo(0, element.offsetTop - offsetY);
+    const pageScrollTop     = document.documentElement.scrollTop;
+    const pageBottom        = pageScrollTop + document.documentElement.clientHeight;
+    const elementTop        = pageScrollTop + element.getBoundingClientRect().top;
+    const elementHeight     = element.offsetHeight;
+    const elementBottom     = elementTop + elementHeight;
+
+    if (elementTop < pageScrollTop) {
+      window.scrollTo(0, elementTop + offsetY);
+    } else if (elementBottom > pageBottom) {
+      window.scrollTo(0, pageScrollTop + (elementBottom - pageBottom) + offsetY);
+    }
   }
 }
-
-export var NuxtDropzoneHelpers = {
-  addExistingFiles (dropzone, files) {
-  }
-};

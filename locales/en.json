@@ -315,6 +315,7 @@
         },
         "city": {
             "label": "City",
+            "no-results": "No results",
             "validation-errors": {
                 "required": "City name is required",
                 "length": "City name should have at most 100 characters"

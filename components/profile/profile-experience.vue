@@ -172,20 +172,20 @@
         methods: {
             onAddExperienceStepClick: function () {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedExperienceSteps();
                 this.isAddingExperienceStep = true;
             },
             onEditExperienceStepClick: function (experienceStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedExperienceSteps();
                 this.isEditingExperience = true;
                 experienceStep.inEditMode = true;
             },
             onDeleteExperienceStepClick: function (experienceStep, index) {
                 this.cancelAllUnsavedChanges();
-                this.initiateEditSectionSession(false);
+                this.initiateEditSectionSession(true);
                 this.cloneEditedExperienceSteps();
                 this.isDeletingExperienceStep = true;
                 experienceStep.inDeleteMode = true;

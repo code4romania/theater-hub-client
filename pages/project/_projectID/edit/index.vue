@@ -380,6 +380,7 @@ export default {
         this.isEditingUpdates 				    = false;
       },
       isSaveEditGeneralInformationButtonDisabled: function () {
+        var isProjectImageValid = !this.editedGeneralInformation.Image || !this.editedGeneralInformation.Image.File || this.editedGeneralInformation.Image.File.accepted !== false;
         var isNameFieldValid = this.editedGeneralInformation.Name && this.editedGeneralInformation.Name.length <= 100;
         var isPhoneNumberFieldValid = !this.editedGeneralInformation.PhoneNumber ||
                       Validators.isValidPhoneNumber(this.editedGeneralInformation.PhoneNumber);
@@ -388,7 +389,7 @@ export default {
         var isBudgetFieldValid = !this.editedGeneralInformation.Budget || Validators.isValidBudget(+this.editedGeneralInformation.Budget);
         var isDescriptionFieldValid = !this.editedGeneralInformation.Description || this.editedGeneralInformation.Description.length <= 500;
 
-        return !isNameFieldValid || !isPhoneNumberFieldValid ||
+        return !isProjectImageValid || !isNameFieldValid || !isPhoneNumberFieldValid ||
               !isEmailFieldValid || !isCityFieldValid ||
               !isBudgetFieldValid || !isDescriptionFieldValid;
       },

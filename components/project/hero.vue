@@ -2,7 +2,10 @@
   <v-container fluid pa-0>
     <v-layout row wrap class="projectHero">
       <v-flex
-        sm6 order-sm2>
+        xs12
+        sm6
+        order-sm2
+      >
         <v-img
           v-if="image"
           class="projectHero__image"
@@ -15,7 +18,13 @@
             aspect-ratio="1.7"
         ></v-img>
       </v-flex>
-      <v-flex sm6 class="projectHero__content" align-end>
+      <v-flex
+        xs12
+        sm6
+        pl-4
+        class="projectHero__content"
+        align-end
+      >
         <v-layout row>
           <v-layout
             row
