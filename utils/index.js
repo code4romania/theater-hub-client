@@ -161,11 +161,15 @@ export var HtmlHelpers = {
     return clientRect.top >= 0 && clientRect.bottom <= window.innerHeight;
   },
   scrollToElement (element, offsetY = 0) {
-    window.scrollTo(0, element.offsetTop - offsetY);
+    const elementTop        = element.getBoundingClientRect().top;
+    const elementHeight     = element.offsetHeight;
+    const elementBottom     = elementTop + elementHeight;
+    const pageScrollTop     = document.body.scrollTop;
+
+    if (elementTop < 0) {
+      document.body.scrollTop = pageScrollTop + elementTop + offsetY;
+    } else if (elementBottom > document.body.offsetHeight) {
+      document.body.scrollTop = pageScrollTop + (elementBottom - document.body.offsetHeight) + offsetY;
+    }
   }
 }
-
-export var NuxtDropzoneHelpers = {
-  addExistingFiles (dropzone, files) {
-  }
-};
