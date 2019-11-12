@@ -69,12 +69,12 @@
 
                     <v-flex xs12 sm12 md12>
                       <v-layout wrap class="newsletter-container">
-                        <v-flex xs12 sm12 offset-md6 class="text-xs-center text-md-left">
+                        <v-flex xs12 sm12 offset-md4 class="text-xs-center text-md-left">
                           <h3>
                             {{ $t('shared.footer.subscribe-newsletter-link') }}
                           </h3>
                         </v-flex>
-                        <v-flex xs12 sm12 offset-md6 mt-2 d-flex justify-center>
+                        <v-flex xs12 sm12 offset-md4 mt-2 d-flex justify-center>
                           <v-form
                             ref="newsletterForm"
                             class="newsletter-form"
