@@ -6,11 +6,11 @@ import { SocialMediaCategoryType,
 
 export var SocialMediaManager = {
   baseURL: {
-    instagramBaseURL: 'https://www.instagram.com',
-    youtubeBaseURL: 'https://www.youtube.com',
+    instagramBaseURL: 'instagram.com',
+    youtubeBaseURL: 'youtube.com',
     facebookBaseURL: 'facebook.com',
-    linkedinBaseURL: 'https://www.linkedin.com',
-    vimeoBaseURL: 'https://vimeo.com'
+    linkedinBaseURL: 'linkedin.com',
+    vimeoBaseURL: 'vimeo.com'
   },
   isValidURL (url, socialMediaCategory) {
     if (!url || typeof url !== 'string' || !Validators.isValidURL(url)) {
@@ -18,15 +18,15 @@ export var SocialMediaManager = {
     }
 
     if (socialMediaCategory === SocialMediaCategoryType.Instagram) {
-      return url.indexOf(this.baseURL.instagramBaseURL) === 0;
+      return url.includes(this.baseURL.instagramBaseURL);
     } else if (socialMediaCategory === SocialMediaCategoryType.Youtube) {
-      return url.indexOf(this.baseURL.youtubeBaseURL) === 0;
+      return url.includes(this.baseURL.youtubeBaseURL);
     } else if (socialMediaCategory === SocialMediaCategoryType.Facebook) {
-      return url.indexOf(this.baseURL.facebookBaseURL) !== -1;
+      return url.includes(this.baseURL.facebookBaseURL);
     } else if (socialMediaCategory === SocialMediaCategoryType.Linkedin) {
-      return url.indexOf(this.baseURL.linkedinBaseURL) === 0;
+      return url.includes(this.baseURL.linkedinBaseURL);
     } else if (socialMediaCategory === SocialMediaCategoryType.Vimeo) {
-      return url.indexOf(this.baseURL.vimeoBaseURL) === 0;
+      return url.includes(this.baseURL.vimeoBaseURL);
     }
 
     return false;
@@ -162,11 +162,19 @@ export var HtmlHelpers = {
     target.style.height     = '100%';
   },
   isVerticallyFullyInViewport (element) {
+    if (!element) {
+      return;
+    }
+
     var clientRect = element.getBoundingClientRect();
 
     return clientRect.top >= 0 && clientRect.bottom <= window.innerHeight;
   },
   scrollToElement (element, offsetY = 0) {
+    if (!element) {
+      return;
+    }
+
     const pageScrollTop     = document.documentElement.scrollTop;
     const pageBottom        = pageScrollTop + document.documentElement.clientHeight;
     const elementTop        = pageScrollTop + element.getBoundingClientRect().top;

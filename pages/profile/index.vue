@@ -430,12 +430,12 @@ export default {
                         employerName: e.Employer,
                         description: e.Description,
                         startDate: e.StartDate.substr(0, 7),
-                        endDate: e.EndDate.substr(0, 7),
+                        endDate: e.EndDate ? e.EndDate.substr(0, 7) : undefined,
                         originalPosition: e.Position,
                         originalEmployerName: e.Employer,
                         originalDescription: e.Description,
                         originalStartDate: e.StartDate.substr(0, 7),
-                        originalEndDate: e.EndDate.substr(0, 7),
+                        originalEndDate: e.EndDate ? e.EndDate.substr(0, 7) : undefined,
                         hasBeenUpdated: function () {
                             return this.position !== this.originalPosition || this.employerName !== this.originalEmployerName ||
                                 this.description !== this.originalDescription || this.startDate !== this.originalStartDate ||
@@ -456,12 +456,12 @@ export default {
                         institutionName: e.Institution,
                         description: e.Description,
                         startDate: e.StartDate.substr(0, 7),
-                        endDate: e.EndDate.substr(0, 7),
+                        endDate: e.EndDate ? e.EndDate.substr(0, 7) : undefined,
                         originalTitle: e.Title,
                         originalInstitutionName: e.Institution,
                         originalDescription: e.Description,
                         originalStartDate: e.StartDate.substr(0, 7),
-                        originalEndDate: e.EndDate.substr(0, 7),
+                        originalEndDate: e.EndDate ? e.EndDate.substr(0, 7) : undefined,
                         hasBeenUpdated: function () {
                             return this.title !== this.originalTitle || this.institutionName !== this.originalInstitutionName ||
                                 this.description !== this.originalDescription || this.startDate !== this.originalStartDate ||
@@ -487,6 +487,10 @@ export default {
                 }, 100);
             },
             getTimelineDate (date) {
+                if (!date) {
+                    return this.$t('shared.content.present');
+                }
+
                 return moment(date).format('MM/YYYY');
             },
             initiateEditSectionSession (navigateToElement, profileSection) {

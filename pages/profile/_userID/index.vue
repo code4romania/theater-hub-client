@@ -428,6 +428,10 @@
         },
         methods: {
             getTimelineDate (date) {
+                if (!date) {
+                    return this.$t('shared.content.present');
+                }
+
                 return moment(date).format('MM/YYYY');
             },
             handleCarouselItemClick: function (itemIndex) {

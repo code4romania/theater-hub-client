@@ -35,11 +35,12 @@
                             min-width="290px"
                         >
                             <v-text-field slot="activator" type="month" v-model="awardsFactory.date"
-                                :label="$t('fields.award.date.label')"
+                                :label="`${$t('fields.award.date.label')}*`"
                                 prepend-icon="event" readonly>
                             </v-text-field>
                             <v-date-picker
                                 v-model="awardsFactory.date"
+                                :max="currentDate"
                                 type="month"
                                 :locale="locale"
                                 @input="awardsFactory.isAwardDateMenuOpen = false">
@@ -84,12 +85,13 @@
                     title: '',
                     issuer: '',
                     description: '',
-                    date: new Date().toISOString().substr(0, 7),
+                    date: null,
                     isValid: false,
                     isAwardDateMenuOpen: false,
                     index: null,
                     inEditMode: false
-                }
+                },
+                currentDate: new Date().toISOString()
             };
         },
         methods: {
@@ -97,7 +99,7 @@
                 this.$emit('addAward', null);
             },
             isAwardValid: function (award) {
-                return award.title !== '' && award.issuer !== '';
+                return award.title !== '' && award.issuer !== '' && award.date;
             },
             isAwardButtonDisabled: function () {
                 return !this.isAwardValid(this.awardsFactory);

@@ -28,10 +28,12 @@
                             :close-on-content-click="false" v-model="educationFactory.isStartDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                             <v-text-field slot="activator" type="month" v-model="educationFactory.startDate"
-                                    :label="$t('fields.education.start-date.label')" prepend-icon="event" readonly>
+                                    :label="`${$t('fields.education.start-date.label')}*`"
+                                    prepend-icon="event" readonly>
                             </v-text-field>
                             <v-date-picker
                                 v-model="educationFactory.startDate"
+                                :max="getStartDateMaxValue"
                                 type="month"
                                 :locale="locale"
                                 @input="educationFactory.isStartDateMenuOpen = false">
@@ -49,6 +51,7 @@
                             <v-date-picker
                                 v-model="educationFactory.endDate"
                                 type="month"
+                                :min="getEndDateMinValue"
                                 :locale="locale"
                                 @input="educationFactory.isEndDateMenuOpen = false">
                             </v-date-picker>
@@ -91,7 +94,8 @@
                     ],
                     educationFactory: {
                         ...this.educationStep
-                    }
+                    },
+                    currentDate: new Date()
                 };
             },
             methods: {
@@ -108,7 +112,9 @@
                     this.$emit('editEducationStep', this.educationFactory, this.index);
                 },
                 isEducationStepValid: function (educationStep) {
-                    return educationStep.title !== '' && educationStep.institutionName !== '';
+                    return educationStep.title !== '' &&
+                           educationStep.institutionName !== '' &&
+                           educationStep.startDate;
                 },
                 isEducationStepButtonDisabled: function () {
                     return !this.isEducationStepValid(this.educationFactory);
@@ -117,7 +123,20 @@
             computed: {
                 ...mapGetters({
                     locale: 'locale'
-                })
+                }),
+                getStartDateMaxValue: function () {
+                    if (!this.educationFactory.endDate  ||
+                            this.educationFactory.endDate > this.currentDate) {
+                        return this.currentDate.toISOString().substr(0, 7);
+                    }
+
+                    return this.educationFactory.endDate;
+                },
+                getEndDateMinValue: function () {
+                    if (this.educationFactory.startDate) {
+                        return this.educationFactory.startDate;
+                    }
+                }
             }
     }
 </script>

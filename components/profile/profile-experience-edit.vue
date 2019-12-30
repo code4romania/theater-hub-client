@@ -28,11 +28,13 @@
                             :close-on-content-click="false" v-model="experienceFactory.isStartDateMenuOpen" :nudge-right="40"
                             lazy transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                             <v-text-field slot="activator" type="month" v-model="experienceFactory.startDate"
-                                    :label="$t('fields.experience.start-date.label')" prepend-icon="event" readonly>
+                                    :label="`${$t('fields.experience.start-date.label')}*`"
+                                    prepend-icon="event" readonly>
                             </v-text-field>
                             <v-date-picker
                                 v-model="experienceFactory.startDate"
                                 type="month"
+                                :max="getStartDateMaxValue"
                                 :locale="locale"
                                 @input="experienceFactory.isStartDateMenuOpen = false">
                             </v-date-picker>
@@ -49,6 +51,7 @@
                             <v-date-picker
                                 v-model="experienceFactory.endDate"
                                 type="month"
+                                :min="getEndDateMinValue"
                                 :locale="locale"
                                 @input="experienceFactory.isEndDateMenuOpen = false">
                             </v-date-picker>
@@ -91,7 +94,8 @@
                     ],
                     experienceFactory: {
                         ...this.experienceStep
-                    }
+                    },
+                    currentDate: new Date()
                 };
             },
             methods: {
@@ -108,7 +112,9 @@
                     this.$emit('editExperienceStep', this.experienceFactory, this.index);
                 },
                 isExperienceStepValid: function (experienceStep) {
-                    return experienceStep.position !== '' && experienceStep.employerName !== '';
+                    return experienceStep.position !== '' &&
+                           experienceStep.employerName !== '' &&
+                           experienceStep.startDate;
                 },
                 isExperienceStepButtonDisabled: function () {
                     return !this.isExperienceStepValid(this.experienceFactory);
@@ -117,7 +123,20 @@
             computed: {
                 ...mapGetters({
                     locale: 'locale'
-                })
+                }),
+                getStartDateMaxValue: function () {
+                    if (!this.experienceFactory.endDate  ||
+                            this.experienceFactory.endDate > this.currentDate) {
+                        return this.currentDate.toISOString().substr(0, 7);
+                    }
+
+                    return this.experienceFactory.endDate;
+                },
+                getEndDateMinValue: function () {
+                    if (this.experienceFactory.startDate) {
+                        return this.experienceFactory.startDate;
+                    }
+                }
             }
     }
 </script>

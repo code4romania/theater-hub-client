@@ -416,7 +416,8 @@
             "city": "City:",
             "view-project-link": "View project",
             "view-profile-link": "View profile",
-            "show-more-button": "Show More"
+            "show-more-button": "Show More",
+            "present": "Present"
         }
     },
     "pages": {

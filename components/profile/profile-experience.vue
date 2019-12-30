@@ -191,7 +191,8 @@
                 experienceStep.inDeleteMode = true;
             },
             addExperienceStep: function (experienceStep) {
-                let newExperienceStep = {};
+                let newExperienceStep   = {};
+                const endDate           = experienceStep && experienceStep.endDate ? experienceStep.endDate.substr(0, 7) : undefined;
 
                 if (experienceStep) {
                     newExperienceStep = {
@@ -199,7 +200,7 @@
                         employerName: experienceStep.employerName,
                         description: experienceStep.description,
                         startDate: experienceStep.startDate.substr(0, 7),
-                        endDate: experienceStep.endDate.substr(0, 7),
+                        endDate,
                         isHovered: false,
                         inEditMode: false,
                         inDeleteMode: false
@@ -212,7 +213,7 @@
                         Employer: experienceStep.employerName,
                         Description: experienceStep.description,
                         StartDate: experienceStep.startDate.substr(0, 7),
-                        EndDate: experienceStep.endDate.substr(0, 7)
+                        EndDate: endDate
                     };
 
                     this.$store.dispatch('experience/create', request).then((response) => {
@@ -237,7 +238,8 @@
                 this.endEditSectionSession();
             },
             editExperienceStep: function (experienceStep, index) {
-                let newExperienceStep = {};
+                let newExperienceStep   = {};
+                const endDate           = experienceStep && experienceStep.endDate ? experienceStep.endDate.substr(0, 7) : undefined;
 
                 if (experienceStep) {
                     newExperienceStep = {
@@ -245,7 +247,7 @@
                         employerName: experienceStep.employerName,
                         description: experienceStep.description,
                         startDate: experienceStep.startDate.substr(0, 7),
-                        endDate: experienceStep.endDate.substr(0, 7)
+                        endDate
                     };
                 }
 
@@ -256,7 +258,7 @@
                         Employer: experienceStep.employer,
                         Description: experienceStep.description,
                         StartDate: experienceStep.startDate.substr(0, 7),
-                        EndDate: experienceStep.endDate.substr(0, 7)
+                        EndDate: endDate
                     };
 
                     this.$store.dispatch('experience/update', request).then(() => {
@@ -328,6 +330,10 @@
                 return this.experienceSteps.length !== 0;
             },
             getTimelineDate (date) {
+                if (!date) {
+                    return this.$t('shared.content.present');
+                }
+
                 return moment(date).format('MM/YYYY');
             }
         }

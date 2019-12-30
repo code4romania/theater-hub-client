@@ -351,7 +351,7 @@
             svg {
                 width: 40px;
                 height: 40px;
-                fill: rgba(174, 39, 96, 0.46);
+                fill: #F8BBD0;
             }
         }
     }
