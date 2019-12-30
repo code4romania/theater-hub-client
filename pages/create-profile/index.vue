@@ -286,7 +286,8 @@ export default {
     isEditingVideoGallery: false,
     isEditingAwards: false,
     isEditingExperience: false,
-    isEditingEducation: false
+    isEditingEducation: false,
+    isSubmitted: false
   }),
   asyncData ({ store, query }) {
       return {
@@ -449,6 +450,11 @@ export default {
         return true;
     },
     async createProfile () {
+        if (this.isSubmitted) {
+            return;
+        }
+
+        this.isSubmitted = true;
         var createProfileFormData = new FormData();
 
         var profileImage    = this.profileGeneralInformation.profileImage.File;

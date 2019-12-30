@@ -4,7 +4,7 @@
             <div class="carousel-items-wrapper">
 			    <img class="carousel-arrow left-arrow"
                     :src="require('~/assets/images/left-arrow.png')"
-                    v-if="displayCarouselLeftArrow"
+                    v-bind:class="{'hidden': !displayCarouselLeftArrow}"
                     v-on:click="onCarouselLeftArrowClick" />
                 <ul id="carousel-items">
                     <li class="carousel-item" v-for="(item, itemIndex) in items" :key="`item-${itemIndex}`" @click="handleCarouselItemClick(itemIndex)">
@@ -13,7 +13,7 @@
                 </ul>
                 <img class="carousel-arrow right-arrow"
                     :src="require('~/assets/images/right-arrow.png')"
-                    v-if="displayCarouselRightArrow"
+                    v-bind:class="{'hidden': !displayCarouselRightArrow}"
                     v-on:click="onCarouselRightArrowClick" />
             </div>
         </v-flex>

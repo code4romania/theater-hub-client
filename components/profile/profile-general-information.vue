@@ -30,6 +30,7 @@
                                 </v-text-field>
                                 <v-date-picker
                                     v-model="profileGeneralInformationModel.birthDate"
+                                    :max="currentDate"
                                     @input="updateProfileGeneralInformationModel"
                                     :locale="locale">
                                 </v-date-picker>
@@ -215,7 +216,8 @@
                                 trgHeight
                             };
                         }
-                    }
+                    },
+                    currentDate: new Date().toISOString()
                 };
             },
             methods: {

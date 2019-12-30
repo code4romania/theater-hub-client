@@ -187,7 +187,8 @@
                 educationStep.inDeleteMode = true;
             },
             addEducationStep: function (educationStep) {
-                let newEducationStep = {};
+                let newEducationStep    = {};
+                const endDate           = educationStep && educationStep.endDate ? educationStep.endDate.substr(0, 7) : undefined;
 
                 if (educationStep) {
                     newEducationStep = {
@@ -195,7 +196,7 @@
                         institutionName: educationStep.institutionName,
                         description: educationStep.description,
                         startDate: educationStep.startDate.substr(0, 7),
-                        endDate: educationStep.endDate.substr(0, 7),
+                        endDate,
                         isHovered: false,
                         inEditMode: false,
                         inDeleteMode: false
@@ -208,7 +209,7 @@
                         Institution: educationStep.institutionName,
                         Description: educationStep.description,
                         StartDate: educationStep.startDate.substr(0, 7),
-                        EndDate: educationStep.endDate.substr(0, 7)
+                        EndDate: endDate
                     };
 
                     this.$store.dispatch('education/create', request).then((response) => {
@@ -232,7 +233,8 @@
                 this.endEditSectionSession();
             },
             editEducationStep: function (educationStep, index) {
-                let newEducationStep = {};
+                let newEducationStep    = {};
+                const endDate           = educationStep && educationStep.endDate ? educationStep.endDate.substr(0, 7) : undefined;
 
                 if (educationStep) {
                     newEducationStep = {
@@ -240,7 +242,7 @@
                         institutionName: educationStep.institutionName,
                         description: educationStep.description,
                         startDate: educationStep.startDate.substr(0, 7),
-                        endDate: educationStep.endDate.substr(0, 7)
+                        endDate
                     };
                 }
 
@@ -251,7 +253,7 @@
                         Institution: educationStep.institutionName,
                         Description: educationStep.description,
                         StartDate: educationStep.startDate.substr(0, 7),
-                        EndDate: educationStep.endDate.substr(0, 7)
+                        EndDate: endDate
                     };
 
                     this.$store.dispatch('education/update', request).then(() => {
@@ -323,6 +325,10 @@
                 return this.educationSteps.length !== 0;
             },
             getTimelineDate (date) {
+                if (!date) {
+                    return this.$t('shared.content.present');
+                }
+
                 return moment(date).format('MM/YYYY');
             }
         }
