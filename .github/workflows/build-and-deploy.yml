@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-          
+
       - name: Install Dependencies
         run: npm install
 
@@ -28,9 +28,9 @@ jobs:
 
       - name: Rename config files
         run: | 
-          cp config/env/_common.js config/env/common.js \
-          cp config/env/_development.js config/env/development.js \
-          cp config/env/_production.js config/env/productions.js
+          cp config/env/_common.js config/env/common.js |
+          cp config/env/_development.js config/env/development.js |
+          cp config/env/_production.js config/env/production.js
 
       - name: Build
         run: npm run build
