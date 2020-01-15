@@ -38,7 +38,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Move dist to AWS
+      - name: Deploy to S3
         run: |
           aws s3 sync ./dist s3://test.theaterhub.ro --acl public
         env:
