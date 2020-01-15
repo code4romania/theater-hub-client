@@ -24,7 +24,7 @@ jobs:
           node-version: '10.x'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --no-save --no-audit
 
       - name: Lint
         run: npm run lint
