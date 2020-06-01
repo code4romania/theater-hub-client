@@ -247,7 +247,10 @@
                         employerName: experienceStep.employerName,
                         description: experienceStep.description,
                         startDate: experienceStep.startDate.substr(0, 7),
-                        endDate
+                        endDate,
+                        isHovered: true,
+                        inEditMode: false,
+                        inDeleteMode: false,
                     };
                 }
 

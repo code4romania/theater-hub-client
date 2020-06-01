@@ -242,7 +242,10 @@
                         institutionName: educationStep.institutionName,
                         description: educationStep.description,
                         startDate: educationStep.startDate.substr(0, 7),
-                        endDate
+                        endDate,
+                        isHovered: true,
+                        inEditMode: false,
+                        inDeleteMode: false,
                     };
                 }
 
