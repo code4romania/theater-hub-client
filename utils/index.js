@@ -100,7 +100,7 @@ export var Validators = {
     return validator.isEmail(emailAddress);
   },
   isValidPassword (password) {
-    if (password.length < 7 || password.length > 100) {
+    if (password.length < 7 || password.length > 50) {
       return false;
     }
 
