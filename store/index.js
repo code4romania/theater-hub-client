@@ -42,7 +42,9 @@ export const actions = {
   setLocale ({ commit, dispatch }, value) {
     commit('SET_LOCALE', value);
 
-    this.$router.push({ path: `${this.$router.currentRoute.path}?lang=${value}` });
+    if (value) {
+      this.$router.push({ path: `${this.$router.currentRoute.path}?lang=${value}` });
+    }
   },
   setLocaleWithoutRedirect ({ commit, dispatch }, value) {
     commit('SET_LOCALE', value);

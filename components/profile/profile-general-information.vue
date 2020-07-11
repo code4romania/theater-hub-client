@@ -148,10 +148,28 @@
                         dictRemoveFile: this.$t('fields.profile-photo-dropzone.photo-remove-button'),
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializeProfileImage: (dropzone) => {
-                            if (this.profileGeneralInformation.profileImage &&
-                                        this.profileGeneralInformation.profileImage.ThumbnailLocation) {
-                                var profileImage = this.profileGeneralInformation.profileImage || {};
-                                var file     = { url: profileImage.ThumbnailLocation, size: profileImage.Size * 1000 * 1000 };
+                            if (!this.profileGeneralInformation.profileImage) {
+                                return;
+                            }
+
+                            var profileImage = this.profileGeneralInformation.profileImage || {};
+                            var file;
+
+                            if (this.profileGeneralInformation.profileImage.ThumbnailLocation) {
+                                file = { url: profileImage.ThumbnailLocation, size: profileImage.Size * 1000 * 1000 };
+                                dropzone.emit('addedfile', file);
+                                dropzone.emit('thumbnail', file, file.url);
+                                dropzone.createThumbnailFromUrl(file, file.url, null, null);
+                                dropzone.emit('complete', file);
+                                dropzone.files.push(file);
+                            } else if (this.profileGeneralInformation.profileImage.File) {
+                                const url = profileImage.File.url || profileImage.File.dataURL;
+                                const size = profileImage.File.size || profileImage.File.upload.total;
+
+                                file = {
+                                    url,
+                                    size
+                                };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);
@@ -182,7 +200,7 @@
                                 if (this.files.length === 2) {
                                     this.removeFile(this.files[0]);
                                 }
-
+    
                                 this.options.addFileEventHandler(file);
                             });
 
