@@ -230,7 +230,7 @@
                         date: award.date,
                         isHovered: true,
                         inEditMode: false,
-                        inDeleteMode: false,
+                        inDeleteMode: false
                     };
                 }
 

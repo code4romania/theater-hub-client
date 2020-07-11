@@ -245,7 +245,7 @@
                         endDate,
                         isHovered: true,
                         inEditMode: false,
-                        inDeleteMode: false,
+                        inDeleteMode: false
                     };
                 }
 
