@@ -7,6 +7,7 @@ export const state = () => ({
     me: null,
     myProfile: null,
     communityMemberProfile: null,
+    createProfileState: null,
     isFinishRegistrationSuccessful: false,
     isEditingProfileSection: false,
     contactErrors: [],
@@ -29,7 +30,8 @@ const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: (state) => ({
       me: state.me,
-      myProfile: state.myProfile
+      myProfile: state.myProfile,
+      createProfile: state.createProfile
   })
 });
 
@@ -87,6 +89,9 @@ export const mutations = {
     },
     SET_COMMUNITY_MEMBER_PROFILE: (state, value) => {
         state.communityMemberProfile = value;
+    },
+    SET_CREATE_PROFILE_STATE: (state, value) => {
+        state.createProfileState = value;
     },
     ENABLE_ME: (state) => {
         state.me.AccountStatus = UserAccountStatusType.Enabled;
@@ -161,6 +166,9 @@ export const actions = {
         }).catch(error => {
             dispatch('setChangePasswordErrors', error.response.data.errors);
         });
+    },
+    async updateCreateProfileState ({ commit, dispatch }, model) {
+        dispatch('setCreateProfileState', model);
     },
     async createProfile ({ commit, dispatch }, request) {
         await UserService.createProfile(request).then(response => {
@@ -325,6 +333,9 @@ export const actions = {
     setCommunityMemberProfile: ({ commit }, value) => {
         commit('SET_COMMUNITY_MEMBER_PROFILE', value);
     },
+    setCreateProfileState: ({ commit }, value) => {
+        commit('SET_CREATE_PROFILE_STATE', value);
+    },
     clearUsersData: ({ commit }) => {
         commit('CLEAR_USERS_DATA');
         localStorage.removeItem('me');
@@ -356,6 +367,9 @@ export const getters = {
         }
 
         return getters.me.ProfileImage.ThumbnailLocation;
+    },
+    createProfileState (state, getters) {
+        return state.createProfileState;
     },
     isManaged (state, getters) {
         if (!getters.me) {

@@ -47,7 +47,10 @@
                         acceptedMimeTypes: 'image/gif, image/png, image/jpeg, image/bmp, image/webp, image/x-icon, image/vnd.microsoft.icon',
                         initializePhotoGallery: (dropzone) => {
                             this.profilePhotoGallery.photoGallery.forEach(photo => {
-                                var file     = { url: photo.ThumbnailLocation, size: photo.Size * 1000 * 1000, upload: { uuid: photo.ID } };
+                                const url = photo.ThumbnailLocation || photo.File.dataURL;
+                                const size = photo.Size * 1000 * 1000 || photo.File.upload.total;
+                                const uuid = photo.ID || photo.File.upload.uuid;
+                                var file     = { url, size, upload: { uuid } };
                                 dropzone.emit('addedfile', file);
                                 dropzone.emit('thumbnail', file, file.url);
                                 dropzone.createThumbnailFromUrl(file, file.url, null, null);

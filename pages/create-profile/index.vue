@@ -290,6 +290,10 @@ export default {
     isSubmitted: false
   }),
   asyncData ({ store, query }) {
+      if (store.getters['users/createProfileState']) {
+          return store.getters['users/createProfileState'];
+      }
+
       return {
           localeSetting: store.state.locale
       };
@@ -319,6 +323,8 @@ export default {
     }
 
     if (hasFinishRegistrationQuery && (!isAuthenticated || isRegistered)) {
+        store.dispatch('users/updateCreateProfileState', null);
+
         await store.dispatch('users/finishRegistration', {
             Email: query.email,
             RegistrationID: query.registrationID
@@ -457,7 +463,7 @@ export default {
         this.isSubmitted = true;
         var createProfileFormData = new FormData();
 
-        var profileImage    = this.profileGeneralInformation.profileImage.File;
+        var profileImage    = this.profileGeneralInformation.profileImage ? this.profileGeneralInformation.profileImage.File : null;
         var birthDate       = this.profileGeneralInformation.birthDate;
         var phoneNumber     = this.profileGeneralInformation.phoneNumber;
         var description     = this.profileGeneralInformation.description;
@@ -527,6 +533,7 @@ export default {
         .then(() => {
             if (!this.users.createProfileErrors) {
                 this.$store.dispatch('users/enableMe');
+                this.$store.dispatch('users/updateCreateProfileState', null);
                 this.isCreatingProfile = false;
                 this.isCreatedProfile = true;
             }
@@ -600,7 +607,8 @@ export default {
     ...mapState([ 'applicationData', 'users' ]),
     ...mapGetters({
         skills: 'applicationData/skills',
-        locale: 'locale'
+        locale: 'locale',
+        createProfileState: 'users/createProfileState'
     })
   },
   watch: {
@@ -616,6 +624,20 @@ export default {
   },
   mounted () {
       this.endEditSectionSession();
+
+      window.onbeforeunload = () => {
+        this.$store.dispatch('users/updateCreateProfileState', {
+            ...this.$data,
+            wizardStep: 1,
+            profileGeneralInformation: {
+                ...this.$data.profileGeneralInformation,
+                profileImage: {}
+            },
+            profilePhotoGallery: {
+                photoGallery: []
+            }
+        });
+      };
   }
 }
 </script>
