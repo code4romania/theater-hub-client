@@ -227,7 +227,10 @@
                         title: award.title,
                         issuer: award.issuer,
                         description: award.description,
-                        date: award.date
+                        date: award.date,
+                        isHovered: true,
+                        inEditMode: false,
+                        inDeleteMode: false
                     };
                 }
 

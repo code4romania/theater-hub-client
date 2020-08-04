@@ -92,6 +92,7 @@
                             :member="member"
                             :showName="true"
                             @handleSkillClick="handleSkillClick"
+                            :hasClickableSkills="true"
                         />
                 </v-flex>
 
