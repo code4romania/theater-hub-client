@@ -9,48 +9,64 @@
                 <h1 class="page-title">{{ $t('pages.terms-and-conditions.title') }}</h1>
             </v-flex>
             <v-flex xs12 class="terms-and-conditions-text">
-                <pre v-if="isRoLanguage">
-                
-Asociația Code for Romania este o persoană juridică, avand sediul in Mun. Bucuresti, Piata Alba Iulia nr. 7, bloc I6, etaj 1, ap. 6, inregistrata in registrul special, Partea A, sectiunea I 67/06.07.2016.
+                <p>{{ $t('pages.terms-and-conditions.content-general-text1') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-general-text2') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-general-text3') }}</p>
 
-1. Datele personale prelucrate
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective1-title') }}</h2>
+                <p>{{ $t('pages.terms-and-conditions.content-objective1-text') }}</p>
 
-Completând formularul pus la dispoziție pentru inregistrare, sau formularul de abonare la newsletter, putem colecta următoarele date cu caracter personal:
-(please list all the required fields that are personal information. Ex: age, name, email, address, city) from all the forms present on the website 
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective2-title') }}</h2>
+                <p class="terms-and-conditions-paragraph">{{ $t('pages.terms-and-conditions.content-objective2-text1') }}</p>
+                <ul>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective2-li1') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective2-li2') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective2-li3') }}</li>
+                </ul>
+                <p>{{ $t('pages.terms-and-conditions.content-objective2-text2') }}</p>
 
-2. Scop și temei
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective3-title') }}</h2>
+                <p>{{ $t('pages.terms-and-conditions.content-objective3-text1') }}</p>
 
-Code for Romania prelucrează date cu caracter personal doar în interesul utilizatorilor website-ului www.theaterhub.ro care își exprimă consimțământul cu privire la a fi adaugati ca membri in comunitate si/sau adăugați la baza de date de newsletter a platformei.  
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective4-title') }}</h2>
+                <p class="terms-and-conditions-paragraph">{{ $t('pages.terms-and-conditions.content-objective4-text1') }}</p>
+                <ul>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective4-li1') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective4-li2') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective4-li3') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective4-li41') }} <a href="https://www.dataprotection.ro/" target="_blank">www.dataprotection.ro</a>) {{ $t('pages.terms-and-conditions.content-objective4-li42') }}</li>
+                </ul>
+                <p>{{ $t('pages.terms-and-conditions.content-objective4-text2') }}</p>
 
-3. Drepturile tale
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective5-title') }}</h2>
+                <p>{{ $t('pages.terms-and-conditions.content-objective5-text1') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective5-text2') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective5-text3') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective5-text4') }}</p>
 
-În calitate de utilizator al www.theaterhub.ro, potrivit Legii nr. 677/2001, precum și, începând cu 25 mai 2018, potrivit Regulamentului general privind protecția datelor, ai următoarele drepturi:
-Dreptul la informare cu privire la prelucrarea datelor personale de către Code for Romania;
-Dreptul de acces la datele personale, la cerere și în mod gratuit pentru o solicitare pe an;
-Dreptul de intervenție, rectificare sau ștergere a datelor personale, la cerere și în mod gratuit;
-Dreptul de a te adresa Autorității Naționale de Supraveghere privind Prelucrarea Datelor cu Caracter Personal (cu sediul în Bucureşti, sector 1, B-dul G-ral. Gheorghe Magheru, www.dataprotection.ro) sau justiției, pentru apărarea oricăror drepturi garantate de lege;
-Începând cu 25 mai 2018, potrivit Regulamentului general privind protecția datelor, Dreptul la restricționarea prelucrării.
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective6-title') }}</h2>
+                <p class="terms-and-conditions-paragraph">{{ $t('pages.terms-and-conditions.content-objective6-text') }}</p>
+                <ul class="terms-and-conditions-ul">
+                    <li>{{ $t('pages.terms-and-conditions.content-objective6-li1') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective6-li2') }}</li>
+                    <li>{{ $t('pages.terms-and-conditions.content-objective6-li3') }}</li>
+                </ul>
 
-6. Securitate și confidențialitate
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective7-title') }}</h2>
+                <p>{{ $t('pages.terms-and-conditions.content-objective7-text1') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective7-text2') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective7-text3') }} <a href = "mailto:contact@code4.ro">contact@code4.ro</a>.</p>
 
-Protecția informațiilor în cursul prelucrării Datelor tale personale este o preocupare majoră a Code for Romania, de aceea toate Datele personale colectate în cursul vizitelor pe www.theaterhub.ro sunt prelucrate conform prevederilor legale în vigoare în România. Code for Romania folosește tehnologii de ultimă generație și ia toate măsurile tehnice rezonabile pentru transmiterea și păstrarea Datelor personale în condiții de deplină securitate și confidențialitate.
-Toate Datele personale de pe site sunt stocate și procesate pe servere situate în Uniunea Europeana, ce cad sub incidența legislației europene de protecție a datelor personale. Nicio informație oferită pe acest site nu părăsește teritoriul Uniunii Europene.
-Code for Romania se angajează să nu dezvăluie Datele personale cu privire la vizitele tale pe www.theaterhub.ro, exceptând situațiile legale sau situațiile prezentate în această Notă de informare.
-Dacă descoperim un incident cu privire la securitatea datelor personale care prezintă un risc pentru drepturile și libertățile utilizatorilor noștri, vom notifica Autoritatea Națională de Supraveghere privind Prelucrarea Datelor cu Caracter Personale în termen de 72 de ore. Dacă incidentul de securitate este de natură să prezinte un risc ridicat pentru drepturile și libertățile tale, vei fi, de asemenea, notificat.
-
-7. Contactează Code for Romania
-
-Pentru orice întrebări sau preocupări, precum și pentru exercitarea drepturilor tale legate de prelucrarea Datelor personale de către Code for Romania, ne poti contacta la:
-Adresa: Piata Alba Iulia nr. 7, bloc I6, etaj 1, ap. 6, mun. Bucuresti, Romania
-E-mail: contact@code4.ro
-
-            </pre>
-
-            <pre v-if="!isRoLanguage">
-                
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui.
-
-            </pre>
+                <h2 class="terms-and-conditions-subtitle">{{ $t('pages.terms-and-conditions.content-objective8-title') }}</h2>
+                <span v-if="isRoLanguage">
+                    <p>{{ $t('pages.terms-and-conditions.content-objective8-text1') }} <a href="https://code4.ro/ro/codul-de-conduita/" target="_blank">codul de conduită</a>.</p>
+                </span>
+                <span v-if="!isRoLanguage">
+                    <p>{{ $t('pages.terms-and-conditions.content-objective8-text1') }} <a href="https://code4.ro/ro/codul-de-conduita/" target="_blank">code of conduct</a>.</p>
+                </span>
+                <p>{{ $t('pages.terms-and-conditions.content-objective8-text2') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective8-text3') }}</p>
+                <p>{{ $t('pages.terms-and-conditions.content-objective8-text4') }} <a href = "mailto:contact@code4.ro">contact@code4.ro</a></p>
             </v-flex>
         </v-layout>
     </v-container>
@@ -86,14 +102,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et vi
 
 <style lang="scss" scoped>
 
-    .terms-and-conditions-text pre {
-        font-family: Titillium Web;
-        font-size: 16px;
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
+    .terms-and-conditions-paragraph {
+        margin-bottom: 0px;
     }
 
+    .terms-and-conditions-ul {
+        margin-bottom: 16px;
+    }
+    
+    // .terms-and-conditions-text pre {
+    //     font-family: Titillium Web;
+    //     font-size: 16px;
+    //     white-space: pre-wrap;
+    //     white-space: -moz-pre-wrap;
+    //     white-space: -pre-wrap;
+    //     white-space: -o-pre-wrap;
+    //     word-wrap: break-word;
+    // }
+
+    .terms-and-conditions-subtitle {
+        font-size: 16px;
+        color: #AE2760;
+    }
 </style>

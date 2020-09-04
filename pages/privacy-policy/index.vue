@@ -8,18 +8,77 @@
             <v-flex mb-3>
                 <h1 class="page-title">{{ $t('pages.privacy-policy.title') }}</h1>
             </v-flex>
+
             <v-flex xs12 class="privacy-policy-text">
-                <pre v-if="isRoLanguage">
+                <!-- <pre> -->
+                <p>{{ $t('pages.privacy-policy.content-general-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-general-text2') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-general-text3') }}</p>
                 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui. 
-
-            </pre>
-
-            <pre v-if="!isRoLanguage">
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy1-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy1-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy1-text2') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy1-text3') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy1-text4') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy1-text5') }}</p>
                 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et viverra luctus, urna massa lobortis dui, vel lacinia metus ipsum egestas mauris. Aliquam imperdiet quam eget posuere vulputate. Nunc molestie dignissim dapibus. Aenean laoreet condimentum justo, id finibus nunc luctus ut. Fusce diam ipsum, convallis ac tincidunt eget, finibus vitae ipsum. Vestibulum accumsan nulla eget mi tempor, eget pulvinar elit tincidunt. Ut a euismod nunc. Vivamus non posuere risus. Suspendisse eget nunc imperdiet arcu tincidunt hendrerit blandit quis sem. Quisque eget tellus ut quam dapibus pellentesque non a neque. Duis placerat, enim ut bibendum maximus, nunc lectus sodales mi, sit amet volutpat neque ante viverra dui.
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy2-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy2-text1') }}</p>
 
-            </pre>
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy3-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy3-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy4-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy4-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy5-title') }}</h2>
+                <p class="privacy-policy-paragraph">{{ $t('pages.privacy-policy.content-privacy5-text1') }}</p>
+                <ul>
+                    <li>{{ $t('pages.privacy-policy.content-privacy5-li1') }}</li>
+                    <li>{{ $t('pages.privacy-policy.content-privacy5-li2') }}</li>
+                </ul>
+                <p>{{ $t('pages.privacy-policy.content-privacy5-text2') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy6-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy6-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy7-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy7-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy8-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy8-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy9-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy9-text1') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy10-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy10-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy10-text2') }}</p>
+                
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy11-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy11-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy11-text2') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy11-text3') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy12-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy12-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy12-text2') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy13-title') }}</h2>
+                <p class="privacy-policy-paragraph">{{ $t('pages.privacy-policy.content-privacy13-text1') }}</p>
+                <ul>
+                    <li>{{ $t('pages.privacy-policy.content-privacy13-li1') }}</li>
+                    <li>{{ $t('pages.privacy-policy.content-privacy13-li2') }}</li>
+                </ul>
+                <p>{{ $t('pages.privacy-policy.content-privacy13-text2') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy13-text3') }}</p>
+
+                <h2 class="privacy-policy-subtitle">{{ $t('pages.privacy-policy.content-privacy14-title') }}</h2>
+                <p>{{ $t('pages.privacy-policy.content-privacy14-text1') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy14-text2') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy14-text3') }}</p>
+                <p>{{ $t('pages.privacy-policy.content-privacy14-text4') }} <a href="https://www.youronlinechoices.com/ro/" target="_blank">https://www.youronlinechoices.com/ro/</a></p>
+                <!-- </pre> -->
             </v-flex>
         </v-layout>
     </v-container>
@@ -55,14 +114,38 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, dui et vi
 
 <style lang="scss" scoped>
 
-    .privacy-policy-text pre {
+    .privacy-policy-text {
         font-family: Titillium Web;
         font-size: 16px;
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
+        word-wrap: break-word;  
     }
 
+    .privacy-policy-paragraph {
+        margin-bottom: 0px;
+    }
+    
+    // .privacy-policy-text pre {
+    //     font-family: Titillium Web;
+    //     font-size: 16px;
+    //     white-space: pre-wrap;
+    //     white-space: -moz-pre-wrap;
+    //     white-space: -pre-wrap;
+    //     white-space: -o-pre-wrap;
+    //     word-wrap: break-word;
+    // }
+
+    // .privacy-policy-paragraph-text {
+    //     font-family: Titillium Web;
+    //     font-size: 12px;
+    //     white-space: pre-wrap;
+    //     white-space: -moz-pre-wrap;
+    //     white-space: -pre-wrap;
+    //     white-space: -o-pre-wrap;
+    //     word-wrap: break-word;
+    // }
+
+    .privacy-policy-subtitle {
+        font-size: 16px;
+        color: #AE2760;
+    }
 </style>
