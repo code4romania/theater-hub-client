@@ -18,7 +18,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.19",
     "moment": "^2.22.2",
-    "nuxt": "^2.2.0",
+    "nuxt": "^2.15.8",
     "nuxt-dropzone": "^0.2.7",
     "validator": "^10.9.0",
     "vue": "^2.5.18",
